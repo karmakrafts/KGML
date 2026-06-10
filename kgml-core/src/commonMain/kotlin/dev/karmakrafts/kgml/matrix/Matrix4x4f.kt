@@ -16,6 +16,7 @@
 
 package dev.karmakrafts.kgml.matrix
 
+import dev.karmakrafts.kgml.util.fma
 import kotlin.jvm.JvmField
 import kotlin.reflect.KClass
 
@@ -43,9 +44,37 @@ data class Matrix4x4f(
         override val rows: Int = 4
         override val columns: Int = 4
         override val components: Array<MatrixComponent> = MatrixComponent.entries.toTypedArray()
+
+        val identity: Matrix4x4f = Matrix4x4f()
     }
 
+    constructor() : this( // @formatter:off
+        1F, 0F, 0F, 0F,
+        0F, 1F, 0F, 0F,
+        0F, 0F, 1F, 0F,
+        0F, 0F, 0F, 1F
+    ) // @formatter:on
+
     override val type: MatrixType get() = Matrix4x4f
+
+    operator fun times(other: Matrix4x4f): Matrix4x4f = Matrix4x4f(
+        fma(fma(fma(m00, other.m00, m10), other.m01, m20), other.m02, m30) * other.m03,
+        fma(fma(fma(m01, other.m00, m11), other.m01, m21), other.m02, m31) * other.m03,
+        fma(fma(fma(m02, other.m00, m12), other.m01, m22), other.m02, m32) * other.m03,
+        fma(fma(fma(m03, other.m00, m13), other.m01, m23), other.m02, m33) * other.m03,
+        fma(fma(fma(m00, other.m10, m10), other.m11, m20), other.m12, m30) * other.m13,
+        fma(fma(fma(m01, other.m10, m11), other.m11, m21), other.m12, m31) * other.m13,
+        fma(fma(fma(m02, other.m10, m12), other.m11, m22), other.m12, m32) * other.m13,
+        fma(fma(fma(m03, other.m10, m13), other.m11, m23), other.m12, m33) * other.m13,
+        fma(fma(fma(m00, other.m20, m10), other.m21, m20), other.m22, m30) * other.m23,
+        fma(fma(fma(m01, other.m20, m11), other.m21, m21), other.m22, m31) * other.m23,
+        fma(fma(fma(m02, other.m20, m12), other.m21, m22), other.m22, m32) * other.m23,
+        fma(fma(fma(m03, other.m20, m13), other.m21, m23), other.m22, m33) * other.m23,
+        fma(fma(fma(m00, other.m30, m10), other.m31, m20), other.m32, m30) * other.m33,
+        fma(fma(fma(m01, other.m30, m11), other.m31, m31), other.m32, m31) * other.m33,
+        fma(fma(fma(m02, other.m30, m12), other.m31, m32), other.m32, m32) * other.m33,
+        fma(fma(fma(m03, other.m30, m13), other.m31, m33), other.m32, m33) * other.m33
+    )
 
     override fun get(index: Int): Float = when (index) {
         0 -> m00

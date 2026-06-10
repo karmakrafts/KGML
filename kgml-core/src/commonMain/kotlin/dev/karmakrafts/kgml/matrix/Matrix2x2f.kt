@@ -36,7 +36,14 @@ data class Matrix2x2f( // @formatter:off
             MatrixComponent.M00, MatrixComponent.M01,
             MatrixComponent.M10, MatrixComponent.M11
         ) // @formatter:on
+
+        val identity: Matrix2x2f = Matrix2x2f()
     }
+
+    constructor() : this( // @formatter:off
+        1F, 0F,
+        0F, 1F
+    ) // @formatter:on
 
     override val type: MatrixType get() = Matrix2x2f
 

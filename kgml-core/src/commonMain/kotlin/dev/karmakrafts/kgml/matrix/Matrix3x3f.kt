@@ -42,7 +42,15 @@ data class Matrix3x3f(
             MatrixComponent.M10, MatrixComponent.M11, MatrixComponent.M12,
             MatrixComponent.M20, MatrixComponent.M21, MatrixComponent.M22
         ) // @formatter:on
+
+        val identity: Matrix3x3f = Matrix3x3f()
     }
+
+    constructor() : this( // @formatter:off
+        1F, 0F, 0F,
+        0F, 1F, 0F,
+        0F, 0F, 1F
+    ) // @formatter:on
 
     override val type: MatrixType get() = Matrix3x3f
 
