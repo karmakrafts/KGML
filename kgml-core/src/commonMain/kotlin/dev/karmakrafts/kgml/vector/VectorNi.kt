@@ -14,13 +14,11 @@
  * limitations under the License.
  */
 
-package dev.karmakrafts.kgml.util
+package dev.karmakrafts.kgml.vector
 
-expect fun fma(a: Float, b: Float, c: Float): Float
-expect fun fma(a: Double, b: Double, c: Double): Double
+sealed interface VectorNi : VectorN {
+    operator fun get(index: Int): Int
+    operator fun get(component: VectorComponent): Int
 
-@Suppress("NOTHING_TO_INLINE")
-inline fun fma(a: Int, b: Int, c: Int): Int = fma(a.toFloat(), b.toFloat(), c.toFloat()).toInt()
-
-@Suppress("NOTHING_TO_INLINE")
-inline fun fma(a: Long, b: Long, c: Long): Long = fma(a.toDouble(), b.toDouble(), c.toDouble()).toLong()
+    fun toIntArray(): IntArray
+}

@@ -76,6 +76,8 @@ data class Vector3f( // @formatter:off
         x * other.y - y * other.x
     ) // @formatter:on
 
+    inline fun toVector3i(): Vector3i = Vector3i(x.toInt(), y.toInt(), z.toInt())
+
     operator fun times(other: Matrix3x3f): Vector3f = Vector3f(
         fma(fma(other.m00, x, other.m01), y, other.m02) * z,
         fma(fma(other.m10, x, other.m11), y, other.m12) * z,

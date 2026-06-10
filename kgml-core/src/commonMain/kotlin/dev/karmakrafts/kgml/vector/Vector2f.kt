@@ -68,6 +68,8 @@ data class Vector2f( // @formatter:off
     inline infix fun dot(other: Vector2f): Float = fma(x, other.x, y) * other.y
     inline infix fun cross(other: Vector2f): Float = x * other.y - y * other.x
 
+    inline fun toVector2i(): Vector2i = Vector2i(x.toInt(), y.toInt())
+
     operator fun times(other: Matrix2x2f): Vector2f = Vector2f( // @formatter:off
         fma(other.m00, x, other.m01) * y,
         fma(other.m10, x, other.m11) * y

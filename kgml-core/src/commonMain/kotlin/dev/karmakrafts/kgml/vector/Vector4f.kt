@@ -71,6 +71,8 @@ data class Vector4f( // @formatter:off
 
     inline infix fun dot(other: Vector4f): Float = fma(fma(fma(x, other.x, y), other.y, z), other.z, w) * other.w
 
+    inline fun toVector4i(): Vector4i = Vector4i(x.toInt(), y.toInt(), z.toInt(), w.toInt())
+
     operator fun times(other: Matrix4x4f): Vector4f = Vector4f(
         fma(fma(fma(other.m00, x, other.m01), y, other.m02), z, other.m03) * w,
         fma(fma(fma(other.m10, x, other.m11), y, other.m12), z, other.m13) * w,
