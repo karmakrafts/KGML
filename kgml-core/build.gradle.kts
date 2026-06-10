@@ -57,6 +57,13 @@ kotlin {
         binaries {
             test(listOf(NativeBuildType.RELEASE))
         }
+        compilations {
+            named("main") {
+                cinterops {
+                    create("builtins")
+                }
+            }
+        }
     }
     withJvm {
         testRuns {

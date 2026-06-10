@@ -14,7 +14,13 @@
  * limitations under the License.
  */
 
+@file:OptIn(ExperimentalForeignApi::class)
+
 package dev.karmakrafts.kgml.util
 
-actual fun fma(a: Float, b: Float, c: Float): Float = a * b + c
-actual fun fma(a: Double, b: Double, c: Double): Double = a * b + c
+import dev.karmakrafts.kgml.builtins.kgml_fmad
+import dev.karmakrafts.kgml.builtins.kgml_fmaf
+import kotlinx.cinterop.ExperimentalForeignApi
+
+actual fun fma(a: Float, b: Float, c: Float): Float = kgml_fmaf(a, b, c)
+actual fun fma(a: Double, b: Double, c: Double): Double = kgml_fmad(a, b, c)

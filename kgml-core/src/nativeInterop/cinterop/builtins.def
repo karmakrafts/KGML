@@ -1,0 +1,21 @@
+package = dev.karmakrafts.kgml.builtins
+
+---
+
+#define KGML_EXPORT __attribute__((visibility("default")))
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+KGML_EXPORT static inline float kgml_fmaf(float a, float b, float c) {
+    return __builtin_fmaf(a, b, c);
+}
+
+KGML_EXPORT static inline double kgml_fmad(double a, double b, double c) {
+    return __builtin_fma(a, b, c);
+}
+
+#ifdef __cplusplus
+};
+#endif
