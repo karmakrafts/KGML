@@ -65,7 +65,7 @@ data class Matrix2x2f( // @formatter:off
         fma(m10, other.x, m11) * other.y
     ) // @formatter:on
 
-    override fun get(index: Int): Float = when (index) {
+    override operator fun get(index: Int): Float = when (index) {
         0 -> m00
         1 -> m01
         2 -> m10
@@ -73,7 +73,7 @@ data class Matrix2x2f( // @formatter:off
         else -> throw IllegalArgumentException("Invalid matrix component $index for Matrix2x2f")
     }
 
-    override fun get(component: MatrixComponent): Float = when (component) {
+    override operator fun get(component: MatrixComponent): Float = when (component) {
         MatrixComponent.M00 -> m00
         MatrixComponent.M01 -> m01
         MatrixComponent.M10 -> m10

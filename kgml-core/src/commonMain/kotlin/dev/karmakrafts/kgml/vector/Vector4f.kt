@@ -62,6 +62,8 @@ data class Vector4f( // @formatter:off
     inline fun lengthSq(): Float = fma(fma(fma(x, x, y), y, z), z, w) * w
     inline fun length(): Float = sqrt(lengthSq())
 
+    inline infix fun dot(other: Vector4f): Float = fma(fma(fma(x, other.x, y), other.y, z), other.z, w) * other.w
+
     operator fun times(other: Matrix4x4f): Vector4f = Vector4f(
         fma(fma(fma(other.m00, x, other.m01), y, other.m02), z, other.m03) * w,
         fma(fma(fma(other.m10, x, other.m11), y, other.m12), z, other.m13) * w,
@@ -69,7 +71,7 @@ data class Vector4f( // @formatter:off
         fma(fma(fma(other.m30, x, other.m31), y, other.m32), z, other.m33) * w
     )
 
-    override fun get(index: Int): Float = when (index) {
+    override operator fun get(index: Int): Float = when (index) {
         0 -> x
         1 -> y
         2 -> z
@@ -77,7 +79,7 @@ data class Vector4f( // @formatter:off
         else -> throw IllegalArgumentException("Invalid vector component $index for Vector4f")
     }
 
-    override fun get(component: VectorComponent): Float = when (component) {
+    override operator fun get(component: VectorComponent): Float = when (component) {
         VectorComponent.X -> x
         VectorComponent.Y -> y
         VectorComponent.Z -> z

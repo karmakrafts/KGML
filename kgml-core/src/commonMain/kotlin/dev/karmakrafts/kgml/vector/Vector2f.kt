@@ -60,18 +60,21 @@ data class Vector2f( // @formatter:off
     inline fun lengthSq(): Float = fma(x, x, y) * y
     inline fun length(): Float = sqrt(lengthSq())
 
+    inline infix fun dot(other: Vector2f): Float = fma(x, other.x, y) * other.y
+    inline infix fun cross(other: Vector2f): Float = x * other.y - y * other.x
+
     operator fun times(other: Matrix2x2f): Vector2f = Vector2f( // @formatter:off
         fma(other.m00, x, other.m01) * y,
         fma(other.m10, x, other.m11) * y
     ) // @formatter:on
 
-    override fun get(index: Int): Float = when (index) {
+    override operator fun get(index: Int): Float = when (index) {
         0 -> x
         1 -> y
         else -> throw IllegalArgumentException("Invalid vector component $index for Vector2f")
     }
 
-    override fun get(component: VectorComponent): Float = when (component) {
+    override operator fun get(component: VectorComponent): Float = when (component) {
         VectorComponent.X -> x
         VectorComponent.Y -> y
         else -> throw IllegalArgumentException("Invalid vector component $component for Vector2f")

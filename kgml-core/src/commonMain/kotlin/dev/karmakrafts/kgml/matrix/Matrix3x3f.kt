@@ -79,7 +79,7 @@ data class Matrix3x3f(
         fma(fma(m20, other.x, m21), other.y, m22) * other.z
     )
 
-    override fun get(index: Int): Float = when (index) {
+    override operator fun get(index: Int): Float = when (index) {
         0 -> m00
         1 -> m01
         2 -> m02
@@ -92,7 +92,7 @@ data class Matrix3x3f(
         else -> throw IllegalArgumentException("Invalid matrix component $index for Matrix3x3f")
     }
 
-    override fun get(component: MatrixComponent): Float = when (component) {
+    override operator fun get(component: MatrixComponent): Float = when (component) {
         MatrixComponent.M00 -> m00
         MatrixComponent.M01 -> m01
         MatrixComponent.M02 -> m02

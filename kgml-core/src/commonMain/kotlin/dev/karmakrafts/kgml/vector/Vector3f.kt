@@ -62,20 +62,28 @@ data class Vector3f( // @formatter:off
     inline fun lengthSq(): Float = fma(fma(x, x, y), y, z) * z
     inline fun length(): Float = sqrt(lengthSq())
 
+    inline infix fun dot(other: Vector3f): Float = fma(fma(x, other.x, y), other.y, z) * other.z
+
+    inline infix fun cross(other: Vector3f): Vector3f = Vector3f( // @formatter:off
+        y * other.z - z * other.y,
+        z * other.x - x * other.z,
+        x * other.y - y * other.x
+    ) // @formatter:on
+
     operator fun times(other: Matrix3x3f): Vector3f = Vector3f(
         fma(fma(other.m00, x, other.m01), y, other.m02) * z,
         fma(fma(other.m10, x, other.m11), y, other.m12) * z,
         fma(fma(other.m20, x, other.m21), y, other.m22) * z
     )
 
-    override fun get(index: Int): Float = when (index) {
+    override operator fun get(index: Int): Float = when (index) {
         0 -> x
         1 -> y
         2 -> z
         else -> throw IllegalArgumentException("Invalid vector component $index for Vector3f")
     }
 
-    override fun get(component: VectorComponent): Float = when (component) {
+    override operator fun get(component: VectorComponent): Float = when (component) {
         VectorComponent.X -> x
         VectorComponent.Y -> y
         VectorComponent.Z -> z

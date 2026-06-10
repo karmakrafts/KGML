@@ -91,7 +91,7 @@ data class Matrix4x4f(
         fma(fma(fma(m30, other.x, m31), other.y, m32), other.z, m33) * other.w
     )
 
-    override fun get(index: Int): Float = when (index) {
+    override operator fun get(index: Int): Float = when (index) {
         0 -> m00
         1 -> m01
         2 -> m02
@@ -111,7 +111,7 @@ data class Matrix4x4f(
         else -> throw IllegalArgumentException("Invalid matrix component $index for Matrix4x4f")
     }
 
-    override fun get(component: MatrixComponent): Float = when (component) {
+    override operator fun get(component: MatrixComponent): Float = when (component) {
         MatrixComponent.M00 -> m00
         MatrixComponent.M01 -> m01
         MatrixComponent.M02 -> m02
