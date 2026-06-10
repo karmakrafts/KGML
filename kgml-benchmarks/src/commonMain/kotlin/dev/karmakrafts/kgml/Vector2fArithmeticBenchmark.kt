@@ -14,28 +14,20 @@
  * limitations under the License.
  */
 
-rootProject.name = "kgml"
+package dev.karmakrafts.kgml
 
-pluginManagement {
-    repositories {
-        google()
-        mavenCentral()
-        mavenLocal()
-        gradlePluginPortal()
-        maven("https://central.sonatype.com/repository/maven-snapshots")
+import kotlinx.benchmark.Benchmark
+import kotlinx.benchmark.Scope
+import kotlinx.benchmark.State
+import kotlin.jvm.JvmName
+
+@State(Scope.Benchmark)
+open class Vector2fArithmeticBenchmark {
+    @JvmName("run")
+    @Benchmark
+    fun run(): Vector2f {
+        val v1 = Vector2f(1F, 2F)
+        val v2 = Vector2f(4F, 8F)
+        return v1 * v2
     }
 }
-
-@Suppress("UnstableApiUsage")
-dependencyResolutionManagement {
-    repositories {
-        google()
-        mavenCentral()
-        mavenLocal()
-        maven("https://central.sonatype.com/repository/maven-snapshots")
-    }
-}
-
-enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
-include("kgml-core")
-include("kgml-benchmarks")

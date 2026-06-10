@@ -14,28 +14,20 @@
  * limitations under the License.
  */
 
-rootProject.name = "kgml"
+package dev.karmakrafts.kgml
 
-pluginManagement {
-    repositories {
-        google()
-        mavenCentral()
-        mavenLocal()
-        gradlePluginPortal()
-        maven("https://central.sonatype.com/repository/maven-snapshots")
+import kotlinx.benchmark.Benchmark
+import kotlinx.benchmark.Scope
+import kotlinx.benchmark.State
+import kotlin.jvm.JvmName
+
+@State(Scope.Benchmark)
+open class FloatArray4ArithmeticBenchmark {
+    @JvmName("run")
+    @Benchmark
+    fun run(): FloatArray {
+        val a1 = floatArrayOf(1F, 2F, 4F, 8F)
+        val a2 = floatArrayOf(4F, 8F, 16F, 32F)
+        return floatArrayOf(a1[0] * a2[0], a1[1] * a2[1], a1[2] * a2[2], a1[3] * a2[3])
     }
 }
-
-@Suppress("UnstableApiUsage")
-dependencyResolutionManagement {
-    repositories {
-        google()
-        mavenCentral()
-        mavenLocal()
-        maven("https://central.sonatype.com/repository/maven-snapshots")
-    }
-}
-
-enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
-include("kgml-core")
-include("kgml-benchmarks")
