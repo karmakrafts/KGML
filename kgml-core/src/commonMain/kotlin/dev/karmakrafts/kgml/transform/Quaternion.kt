@@ -80,4 +80,12 @@ value class Quaternion(val value: Vector4f) {
             1F
         )
     }
+
+    @Suppress("NOTHING_TO_INLINE")
+    inline fun copy( // @formatter:off
+        x: Float = this.x,
+        y: Float = this.y,
+        z: Float = this.z,
+        w: Float = this.w
+    ): Quaternion = Quaternion(Vector4f(x, y, z, w)) // @formatter:on
 }
