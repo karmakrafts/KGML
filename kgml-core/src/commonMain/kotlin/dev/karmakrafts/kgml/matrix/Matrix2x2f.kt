@@ -17,6 +17,7 @@
 package dev.karmakrafts.kgml.matrix
 
 import dev.karmakrafts.kgml.util.fma
+import dev.karmakrafts.kgml.vector.Vector2f
 import kotlin.jvm.JvmField
 import kotlin.reflect.KClass
 
@@ -58,6 +59,11 @@ data class Matrix2x2f( // @formatter:off
         fma(m10, other.m00, m11) * other.m10,
         fma(m10, other.m01, m11) * other.m11
     )
+
+    operator fun times(other: Vector2f): Vector2f = Vector2f( // @formatter:off
+        fma(m00, other.x, m01) * other.y,
+        fma(m10, other.x, m11) * other.y
+    ) // @formatter:on
 
     override fun get(index: Int): Float = when (index) {
         0 -> m00

@@ -17,6 +17,7 @@
 package dev.karmakrafts.kgml.matrix
 
 import dev.karmakrafts.kgml.util.fma
+import dev.karmakrafts.kgml.vector.Vector4f
 import kotlin.jvm.JvmField
 import kotlin.reflect.KClass
 
@@ -81,6 +82,13 @@ data class Matrix4x4f(
         fma(fma(fma(m01, other.m30, m11), other.m31, m31), other.m32, m31) * other.m33,
         fma(fma(fma(m02, other.m30, m12), other.m31, m32), other.m32, m32) * other.m33,
         fma(fma(fma(m03, other.m30, m13), other.m31, m33), other.m32, m33) * other.m33
+    )
+
+    operator fun times(other: Vector4f): Vector4f = Vector4f(
+        fma(fma(fma(m00, other.x, m01), other.y, m02), other.z, m03) * other.w,
+        fma(fma(fma(m10, other.x, m11), other.y, m12), other.z, m13) * other.w,
+        fma(fma(fma(m20, other.x, m21), other.y, m22), other.z, m23) * other.w,
+        fma(fma(fma(m30, other.x, m31), other.y, m32), other.z, m33) * other.w
     )
 
     override fun get(index: Int): Float = when (index) {
