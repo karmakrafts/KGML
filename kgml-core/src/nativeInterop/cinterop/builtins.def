@@ -1,3 +1,0 @@
-package = dev.karmakrafts.kgml.builtins
-headers = kgml.h
-compilerOpts = -Isrc/nativeMain/c
