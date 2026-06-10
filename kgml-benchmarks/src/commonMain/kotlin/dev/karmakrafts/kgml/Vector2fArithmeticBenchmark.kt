@@ -16,6 +16,7 @@
 
 package dev.karmakrafts.kgml
 
+import dev.karmakrafts.kgml.vector.Vector2f
 import kotlinx.benchmark.Benchmark
 import kotlinx.benchmark.Scope
 import kotlinx.benchmark.State

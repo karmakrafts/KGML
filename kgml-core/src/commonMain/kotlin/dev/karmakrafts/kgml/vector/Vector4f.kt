@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package dev.karmakrafts.kgml
+package dev.karmakrafts.kgml.vector
 
 import kotlin.jvm.JvmField
 import kotlin.math.sqrt

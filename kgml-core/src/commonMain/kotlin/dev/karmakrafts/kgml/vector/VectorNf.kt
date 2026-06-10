@@ -14,21 +14,6 @@
  * limitations under the License.
  */
 
-package dev.karmakrafts.kgml
+package dev.karmakrafts.kgml.vector
 
-import dev.karmakrafts.kgml.vector.Vector4f
-import kotlinx.benchmark.Benchmark
-import kotlinx.benchmark.Scope
-import kotlinx.benchmark.State
-import kotlin.jvm.JvmName
-
-@State(Scope.Benchmark)
-open class Vector4fArithmeticBenchmark {
-    @JvmName("run")
-    @Benchmark
-    fun run(): Vector4f {
-        val v1 = Vector4f(1F, 2F, 4F, 8F)
-        val v2 = Vector4f(4F, 8F, 16F, 32F)
-        return v1 * v2
-    }
-}
+sealed interface VectorNf : VectorN

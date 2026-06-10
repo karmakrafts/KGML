@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package dev.karmakrafts.kgml
+package dev.karmakrafts.kgml.matrix
 
 import kotlin.reflect.KClass
 

@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 
-package dev.karmakrafts.kgml
+package dev.karmakrafts.kgml.vector
 
-sealed interface MatrixNxN {
-    val type: MatrixType
+sealed interface VectorN {
+    val type: VectorType
 }

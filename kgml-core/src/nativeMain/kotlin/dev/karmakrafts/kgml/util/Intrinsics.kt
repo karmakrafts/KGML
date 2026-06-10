@@ -14,11 +14,7 @@
  * limitations under the License.
  */
 
-package dev.karmakrafts.kgml
+package dev.karmakrafts.kgml.util
 
-import kotlin.reflect.KClass
-
-sealed interface VectorType {
-    val componentType: KClass<*>
-    val dimensions: Int
-}
+actual fun fma(a: Float, b: Float, c: Float): Float = a * b + c
+actual fun fma(a: Double, b: Double, c: Double): Double = a * b + c

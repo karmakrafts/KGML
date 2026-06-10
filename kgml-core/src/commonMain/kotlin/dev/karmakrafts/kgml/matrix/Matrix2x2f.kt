@@ -14,34 +14,30 @@
  * limitations under the License.
  */
 
-package dev.karmakrafts.kgml
+package dev.karmakrafts.kgml.matrix
 
+import dev.karmakrafts.kgml.util.fma
 import kotlin.jvm.JvmField
 import kotlin.reflect.KClass
 
-data class Matrix4x4f(
+data class Matrix2x2f( // @formatter:off
     @JvmField val m00: Float,
     @JvmField val m01: Float,
-    @JvmField val m02: Float,
-    @JvmField val m03: Float,
     @JvmField val m10: Float,
-    @JvmField val m11: Float,
-    @JvmField val m12: Float,
-    @JvmField val m13: Float,
-    @JvmField val m20: Float,
-    @JvmField val m21: Float,
-    @JvmField val m22: Float,
-    @JvmField val m23: Float,
-    @JvmField val m30: Float,
-    @JvmField val m31: Float,
-    @JvmField val m32: Float,
-    @JvmField val m33: Float
-) : MatrixNxNf {
+    @JvmField val m11: Float
+) : MatrixNxNf { // @formatter:on
     companion object : MatrixType {
         override val elementType: KClass<*> = Float::class
-        override val rows: Int = 4
-        override val columns: Int = 4
+        override val rows: Int = 2
+        override val columns: Int = 2
     }
 
-    override val type: MatrixType get() = Matrix4x4f
+    override val type: MatrixType get() = Matrix2x2f
+
+    operator fun times(other: Matrix2x2f): Matrix2x2f = Matrix2x2f(
+        fma(m00, other.m00, m01) * other.m10,
+        fma(m00, other.m01, m01) * other.m11,
+        fma(m10, other.m00, m11) * other.m10,
+        fma(m10, other.m01, m11) * other.m11
+    )
 }

@@ -14,27 +14,34 @@
  * limitations under the License.
  */
 
-package dev.karmakrafts.kgml
+package dev.karmakrafts.kgml.matrix
 
 import kotlin.jvm.JvmField
 import kotlin.reflect.KClass
 
-data class Matrix3x3f(
+data class Matrix4x4f(
     @JvmField val m00: Float,
     @JvmField val m01: Float,
     @JvmField val m02: Float,
+    @JvmField val m03: Float,
     @JvmField val m10: Float,
     @JvmField val m11: Float,
     @JvmField val m12: Float,
+    @JvmField val m13: Float,
     @JvmField val m20: Float,
     @JvmField val m21: Float,
-    @JvmField val m22: Float
+    @JvmField val m22: Float,
+    @JvmField val m23: Float,
+    @JvmField val m30: Float,
+    @JvmField val m31: Float,
+    @JvmField val m32: Float,
+    @JvmField val m33: Float
 ) : MatrixNxNf {
     companion object : MatrixType {
         override val elementType: KClass<*> = Float::class
-        override val rows: Int = 3
-        override val columns: Int = 3
+        override val rows: Int = 4
+        override val columns: Int = 4
     }
 
-    override val type: MatrixType get() = Matrix3x3f
+    override val type: MatrixType get() = Matrix4x4f
 }

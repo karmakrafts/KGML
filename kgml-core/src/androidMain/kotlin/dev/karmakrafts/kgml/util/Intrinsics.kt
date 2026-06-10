@@ -14,22 +14,20 @@
  * limitations under the License.
  */
 
-package dev.karmakrafts.kgml
+package dev.karmakrafts.kgml.util
 
-import kotlin.jvm.JvmField
-import kotlin.reflect.KClass
+import android.os.Build
 
-data class Matrix2x2f( // @formatter:off
-    @JvmField val m00: Float,
-    @JvmField val m01: Float,
-    @JvmField val m10: Float,
-    @JvmField val m11: Float
-) : MatrixNxNf { // @formatter:on
-    companion object : MatrixType {
-        override val elementType: KClass<*> = Float::class
-        override val rows: Int = 2
-        override val columns: Int = 2
+actual fun fma(a: Float, b: Float, c: Float): Float {
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+        return Math.fma(a, b, c)
     }
+    return a * b + c
+}
 
-    override val type: MatrixType get() = Matrix2x2f
+actual fun fma(a: Double, b: Double, c: Double): Double {
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+        return Math.fma(a, b, c)
+    }
+    return a * b + c
 }
