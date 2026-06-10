@@ -34,9 +34,13 @@ data class Vector4f( // @formatter:off
         override val componentSize: Int = Float.SIZE_BYTES
         override val dimensions: Int = 4
         override val components: Array<VectorComponent> = VectorComponent.entries.toTypedArray()
+
+        val zero: Vector4f = Vector4f()
+        val one: Vector4f = Vector4f(1F)
     }
 
     constructor(xyzw: Float) : this(xyzw, xyzw, xyzw, xyzw)
+    constructor() : this(0F)
 
     override val type: VectorType get() = Vector4f
 

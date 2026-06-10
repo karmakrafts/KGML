@@ -34,9 +34,13 @@ data class Vector3f( // @formatter:off
         override val dimensions: Int = 3
         override val components: Array<VectorComponent> =
             arrayOf(VectorComponent.X, VectorComponent.Y, VectorComponent.Z)
+
+        val zero: Vector3f = Vector3f()
+        val one: Vector3f = Vector3f(1F)
     }
 
     constructor(xyz: Float) : this(xyz, xyz, xyz)
+    constructor() : this(0F)
 
     override val type: VectorType get() = Vector3f
 

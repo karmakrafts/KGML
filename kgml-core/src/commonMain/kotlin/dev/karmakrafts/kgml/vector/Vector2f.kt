@@ -32,9 +32,13 @@ data class Vector2f( // @formatter:off
         override val componentSize: Int = Float.SIZE_BYTES
         override val dimensions: Int = 2
         override val components: Array<VectorComponent> = arrayOf(VectorComponent.X, VectorComponent.Y)
+
+        val zero: Vector2f = Vector2f()
+        val one: Vector2f = Vector2f(1F)
     }
 
     constructor(xy: Float) : this(xy, xy)
+    constructor() : this(0F)
 
     override val type: VectorType get() = Vector2f
 
