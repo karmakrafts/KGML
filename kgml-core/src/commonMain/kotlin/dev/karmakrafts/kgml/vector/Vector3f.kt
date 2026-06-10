@@ -37,6 +37,12 @@ data class Vector3f( // @formatter:off
 
         val zero: Vector3f = Vector3f()
         val one: Vector3f = Vector3f(1F)
+
+        inline fun fromArray(array: FloatArray, offset: Int = 0): Vector3f = Vector3f( // @formatter:off
+            array[offset],
+            array[offset + 1],
+            array[offset + 2]
+        ) // @formatter:on
     }
 
     constructor(xyz: Float) : this(xyz, xyz, xyz)

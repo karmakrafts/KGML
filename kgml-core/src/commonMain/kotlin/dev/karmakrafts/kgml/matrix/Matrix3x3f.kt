@@ -45,6 +45,18 @@ data class Matrix3x3f(
         ) // @formatter:on
 
         val identity: Matrix3x3f = Matrix3x3f()
+
+        fun fromArray(array: FloatArray, offset: Int = 0): Matrix3x3f = Matrix3x3f( // @formatter:off
+            array[offset],
+            array[offset + 1],
+            array[offset + 2],
+            array[offset + 3],
+            array[offset + 4],
+            array[offset + 5],
+            array[offset + 6],
+            array[offset + 7],
+            array[offset + 8]
+        ) // @formatter:on
     }
 
     constructor() : this( // @formatter:off

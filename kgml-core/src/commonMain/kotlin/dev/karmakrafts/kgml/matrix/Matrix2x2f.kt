@@ -39,6 +39,13 @@ data class Matrix2x2f( // @formatter:off
         ) // @formatter:on
 
         val identity: Matrix2x2f = Matrix2x2f()
+
+        fun fromArray(array: FloatArray, offset: Int = 0): Matrix2x2f = Matrix2x2f( // @formatter:off
+            array[offset],
+            array[offset + 1],
+            array[offset + 2],
+            array[offset + 3]
+        ) // @formatter:on
     }
 
     constructor() : this( // @formatter:off

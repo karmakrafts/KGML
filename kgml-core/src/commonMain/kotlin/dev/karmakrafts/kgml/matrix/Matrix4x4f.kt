@@ -47,6 +47,25 @@ data class Matrix4x4f(
         override val components: Array<MatrixComponent> = MatrixComponent.entries.toTypedArray()
 
         val identity: Matrix4x4f = Matrix4x4f()
+
+        fun fromArray(array: FloatArray, offset: Int = 0): Matrix4x4f = Matrix4x4f( // @formatter:off
+            array[offset],
+            array[offset + 1],
+            array[offset + 2],
+            array[offset + 3],
+            array[offset + 4],
+            array[offset + 5],
+            array[offset + 6],
+            array[offset + 7],
+            array[offset + 8],
+            array[offset + 9],
+            array[offset + 10],
+            array[offset + 11],
+            array[offset + 12],
+            array[offset + 13],
+            array[offset + 14],
+            array[offset + 15]
+        ) // @formatter:on
     }
 
     constructor() : this( // @formatter:off

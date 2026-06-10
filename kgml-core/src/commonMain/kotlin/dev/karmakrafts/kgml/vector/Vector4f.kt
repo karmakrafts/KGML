@@ -37,6 +37,13 @@ data class Vector4f( // @formatter:off
 
         val zero: Vector4f = Vector4f()
         val one: Vector4f = Vector4f(1F)
+
+        inline fun fromArray(array: FloatArray, offset: Int = 0): Vector4f = Vector4f( // @formatter:off
+            array[offset],
+            array[offset + 1],
+            array[offset + 2],
+            array[offset + 3]
+        ) // @formatter:on
     }
 
     constructor(xyzw: Float) : this(xyzw, xyzw, xyzw, xyzw)

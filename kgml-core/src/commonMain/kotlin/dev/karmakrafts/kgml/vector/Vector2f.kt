@@ -35,6 +35,11 @@ data class Vector2f( // @formatter:off
 
         val zero: Vector2f = Vector2f()
         val one: Vector2f = Vector2f(1F)
+
+        inline fun fromArray(array: FloatArray, offset: Int = 0): Vector2f = Vector2f( // @formatter:off
+            array[offset],
+            array[offset + 1]
+        ) // @formatter:on
     }
 
     constructor(xy: Float) : this(xy, xy)
