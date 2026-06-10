@@ -16,14 +16,9 @@
 
 package dev.karmakrafts.kgml.matrix
 
-import kotlin.reflect.KClass
-
-sealed interface MatrixType {
-    val componentType: KClass<*>
-    val componentSize: Int
-    val rows: Int
-    val columns: Int
-    val components: Array<MatrixComponent>
-}
-
-inline val MatrixType.size: Int get() = componentSize * (rows * columns)
+enum class MatrixComponent { // @formatter:off
+    M00, M01, M02, M03,
+    M10, M11, M12, M13,
+    M20, M21, M22, M23,
+    M30, M31, M32, M33
+} // @formatter:on

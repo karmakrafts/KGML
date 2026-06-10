@@ -16,4 +16,9 @@
 
 package dev.karmakrafts.kgml.vector
 
-sealed interface VectorNf : VectorN
+sealed interface VectorNf : VectorN {
+    operator fun get(index: Int): Float
+    operator fun get(component: VectorComponent): Float
+
+    fun toFloatArray(): FloatArray
+}

@@ -29,7 +29,9 @@ data class Vector4f( // @formatter:off
 ) : VectorNf { // @formatter:on
     companion object : VectorType {
         override val componentType: KClass<*> = Float::class
+        override val componentSize: Int = Float.SIZE_BYTES
         override val dimensions: Int = 4
+        override val components: Array<VectorComponent> = VectorComponent.entries.toTypedArray()
     }
 
     constructor(xyzw: Float) : this(xyzw, xyzw, xyzw, xyzw)
@@ -53,4 +55,21 @@ data class Vector4f( // @formatter:off
 
     inline fun lengthSq(): Float = x * x + y * y + z * z + w * w
     inline fun length(): Float = sqrt(lengthSq())
+
+    override fun get(index: Int): Float = when (index) {
+        0 -> x
+        1 -> y
+        2 -> z
+        3 -> w
+        else -> throw IllegalArgumentException("Invalid vector component $index for Vector4f")
+    }
+
+    override fun get(component: VectorComponent): Float = when (component) {
+        VectorComponent.X -> x
+        VectorComponent.Y -> y
+        VectorComponent.Z -> z
+        VectorComponent.W -> w
+    }
+
+    override fun toFloatArray(): FloatArray = floatArrayOf(x, y, z, w)
 }

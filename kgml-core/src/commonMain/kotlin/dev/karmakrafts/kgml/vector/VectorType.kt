@@ -20,5 +20,9 @@ import kotlin.reflect.KClass
 
 sealed interface VectorType {
     val componentType: KClass<*>
+    val componentSize: Int
     val dimensions: Int
+    val components: Array<VectorComponent>
 }
+
+inline val VectorType.size: Int get() = componentSize * dimensions

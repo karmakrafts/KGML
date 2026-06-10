@@ -16,4 +16,9 @@
 
 package dev.karmakrafts.kgml.matrix
 
-sealed interface MatrixNxNf : MatrixNxN
+sealed interface MatrixNxNf : MatrixNxN {
+    operator fun get(index: Int): Float
+    operator fun get(component: MatrixComponent): Float
+
+    fun toFloatArray(): FloatArray
+}

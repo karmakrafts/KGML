@@ -14,16 +14,13 @@
  * limitations under the License.
  */
 
-package dev.karmakrafts.kgml.matrix
+package dev.karmakrafts.kgml.vector
 
-import kotlin.reflect.KClass
-
-sealed interface MatrixType {
-    val componentType: KClass<*>
-    val componentSize: Int
-    val rows: Int
-    val columns: Int
-    val components: Array<MatrixComponent>
+enum class VectorComponent {
+    // @formatter:off
+    X,
+    Y,
+    Z,
+    W
+    // @formatter:on
 }
-
-inline val MatrixType.size: Int get() = componentSize * (rows * columns)

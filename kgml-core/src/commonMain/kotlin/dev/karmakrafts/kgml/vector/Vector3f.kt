@@ -28,7 +28,10 @@ data class Vector3f( // @formatter:off
 ) : VectorNf { // @formatter:on
     companion object : VectorType {
         override val componentType: KClass<*> = Float::class
+        override val componentSize: Int = Float.SIZE_BYTES
         override val dimensions: Int = 3
+        override val components: Array<VectorComponent> =
+            arrayOf(VectorComponent.X, VectorComponent.Y, VectorComponent.Z)
     }
 
     constructor(xyz: Float) : this(xyz, xyz, xyz)
@@ -52,4 +55,20 @@ data class Vector3f( // @formatter:off
 
     inline fun lengthSq(): Float = x * x + y * y + z * z
     inline fun length(): Float = sqrt(lengthSq())
+
+    override fun get(index: Int): Float = when (index) {
+        0 -> x
+        1 -> y
+        2 -> z
+        else -> throw IllegalArgumentException("Invalid vector component $index for Vector3f")
+    }
+
+    override fun get(component: VectorComponent): Float = when (component) {
+        VectorComponent.X -> x
+        VectorComponent.Y -> y
+        VectorComponent.Z -> z
+        else -> throw IllegalArgumentException("Invalid vector component $component for Vector3f")
+    }
+
+    override fun toFloatArray(): FloatArray = floatArrayOf(x, y, z)
 }
