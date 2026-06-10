@@ -16,64 +16,36 @@
 
 package dev.karmakrafts.kgml
 
+import kotlin.jvm.JvmField
+import kotlin.reflect.KClass
+
 @Suppress("NOTHING_TO_INLINE")
-expect value class Vector3f(val data: FloatArray) {
-    inline operator fun plus(other: Float): Vector3f
-    inline operator fun minus(other: Float): Vector3f
-    inline operator fun times(other: Float): Vector3f
-    inline operator fun div(other: Float): Vector3f
-    inline operator fun rem(other: Float): Vector3f
+data class Vector3f( // @formatter:off
+    @JvmField val x: Float,
+    @JvmField val y: Float,
+    @JvmField val z: Float
+) : VectorNf { // @formatter:on
+    companion object : VectorType {
+        override val componentType: KClass<*> = Float::class
+        override val dimensions: Int = 3
+    }
 
-    inline operator fun plusAssign(other: Float)
-    inline operator fun minusAssign(other: Float)
-    inline operator fun timesAssign(other: Float)
-    inline operator fun divAssign(other: Float)
-    inline operator fun remAssign(other: Float)
+    constructor(xyz: Float) : this(xyz, xyz, xyz)
 
-    inline operator fun plus(other: Vector3f): Vector3f
-    inline operator fun minus(other: Vector3f): Vector3f
-    inline operator fun times(other: Vector3f): Vector3f
-    inline operator fun div(other: Vector3f): Vector3f
-    inline operator fun rem(other: Vector3f): Vector3f
+    override val type: VectorType get() = Vector3f
 
-    inline operator fun plusAssign(other: Vector3f)
-    inline operator fun minusAssign(other: Vector3f)
-    inline operator fun timesAssign(other: Vector3f)
-    inline operator fun divAssign(other: Vector3f)
-    inline operator fun remAssign(other: Vector3f)
+    inline operator fun plus(xyz: Float): Vector3f = Vector3f(x + xyz, y + xyz, z + xyz)
+    inline operator fun plus(other: Vector3f): Vector3f = Vector3f(x + other.x, y + other.y, z + other.z)
 
-    inline operator fun unaryMinus(): Vector3f
-    inline operator fun unaryPlus(): Vector3f
+    inline operator fun minus(xyz: Float): Vector3f = Vector3f(x - xyz, y - xyz, z - xyz)
+    inline operator fun minus(other: Vector3f): Vector3f = Vector3f(x - other.x, y - other.y, z - other.z)
 
-    inline fun lengthSq(): Float
-    inline fun length(): Float
+    inline operator fun times(xyz: Float): Vector3f = Vector3f(x * xyz, y * xyz, z * xyz)
+    inline operator fun times(other: Vector3f): Vector3f = Vector3f(x * other.x, y * other.y, z * other.z)
 
-    inline fun normalize()
-    inline fun normalized(): Vector3f
+    inline operator fun div(xyz: Float): Vector3f = Vector3f(x / xyz, y / xyz, z / xyz)
+    inline operator fun div(other: Vector3f): Vector3f = Vector3f(x / other.x, y / other.y, z / other.z)
 
-    inline fun copy(): Vector3f
+    inline operator fun rem(xyz: Float): Vector3f = Vector3f(x % xyz, y % xyz, z % xyz)
+    inline operator fun rem(other: Vector3f): Vector3f = Vector3f(x % other.x, y % other.y, z % other.z)
 }
-
-@Suppress("NOTHING_TO_INLINE")
-inline fun Vector3f(xyz: Float): Vector3f = Vector3f(FloatArray(3) { xyz })
-
-@Suppress("NOTHING_TO_INLINE")
-inline fun Vector3f(x: Float, y: Float, z: Float): Vector3f = Vector3f(floatArrayOf(x, y, z))
-
-inline var Vector3f.x: Float
-    get() = data[0]
-    set(value) {
-        data[0] = value
-    }
-
-inline var Vector3f.y: Float
-    get() = data[1]
-    set(value) {
-        data[1] = value
-    }
-
-inline var Vector3f.z: Float
-    get() = data[2]
-    set(value) {
-        data[2] = value
-    }

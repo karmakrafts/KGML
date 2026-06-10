@@ -16,70 +16,37 @@
 
 package dev.karmakrafts.kgml
 
+import kotlin.jvm.JvmField
+import kotlin.reflect.KClass
+
 @Suppress("NOTHING_TO_INLINE")
-expect value class Vector4f(val data: FloatArray) {
-    inline operator fun plus(other: Float): Vector4f
-    inline operator fun minus(other: Float): Vector4f
-    inline operator fun times(other: Float): Vector4f
-    inline operator fun div(other: Float): Vector4f
-    inline operator fun rem(other: Float): Vector4f
+data class Vector4f( // @formatter:off
+    @JvmField val x: Float,
+    @JvmField val y: Float,
+    @JvmField val z: Float,
+    @JvmField val w: Float
+) : VectorNf { // @formatter:on
+    companion object : VectorType {
+        override val componentType: KClass<*> = Float::class
+        override val dimensions: Int = 4
+    }
 
-    inline operator fun plusAssign(other: Float)
-    inline operator fun minusAssign(other: Float)
-    inline operator fun timesAssign(other: Float)
-    inline operator fun divAssign(other: Float)
-    inline operator fun remAssign(other: Float)
+    constructor(xyzw: Float) : this(xyzw, xyzw, xyzw, xyzw)
 
-    inline operator fun plus(other: Vector4f): Vector4f
-    inline operator fun minus(other: Vector4f): Vector4f
-    inline operator fun times(other: Vector4f): Vector4f
-    inline operator fun div(other: Vector4f): Vector4f
-    inline operator fun rem(other: Vector4f): Vector4f
+    override val type: VectorType get() = Vector4f
 
-    inline operator fun plusAssign(other: Vector4f)
-    inline operator fun minusAssign(other: Vector4f)
-    inline operator fun timesAssign(other: Vector4f)
-    inline operator fun divAssign(other: Vector4f)
-    inline operator fun remAssign(other: Vector4f)
+    inline operator fun plus(xyzw: Float): Vector4f = Vector4f(x + xyzw, y + xyzw, z + xyzw, w + xyzw)
+    inline operator fun plus(other: Vector4f): Vector4f = Vector4f(x + other.x, y + other.y, z + other.z, w + other.w)
 
-    inline operator fun unaryMinus(): Vector4f
-    inline operator fun unaryPlus(): Vector4f
+    inline operator fun minus(xyzw: Float): Vector4f = Vector4f(x - xyzw, y - xyzw, z - xyzw, w - xyzw)
+    inline operator fun minus(other: Vector4f): Vector4f = Vector4f(x - other.x, y - other.y, z - other.z, w - other.w)
 
-    inline fun lengthSq(): Float
-    inline fun length(): Float
+    inline operator fun times(xyzw: Float): Vector4f = Vector4f(x * xyzw, y * xyzw, z * xyzw, w * xyzw)
+    inline operator fun times(other: Vector4f): Vector4f = Vector4f(x * other.x, y * other.y, z * other.z, w * other.w)
 
-    inline fun normalize()
-    inline fun normalized(): Vector4f
+    inline operator fun div(xyzw: Float): Vector4f = Vector4f(x / xyzw, y / xyzw, z / xyzw, w / xyzw)
+    inline operator fun div(other: Vector4f): Vector4f = Vector4f(x / other.x, y / other.y, z / other.z, w / other.w)
 
-    inline fun copy(): Vector4f
+    inline operator fun rem(xyzw: Float): Vector4f = Vector4f(x % xyzw, y % xyzw, z % xyzw, w % xyzw)
+    inline operator fun rem(other: Vector4f): Vector4f = Vector4f(x % other.x, y % other.y, z % other.z, w % other.w)
 }
-
-@Suppress("NOTHING_TO_INLINE")
-inline fun Vector4f(xyzw: Float): Vector4f = Vector4f(FloatArray(4) { xyzw })
-
-@Suppress("NOTHING_TO_INLINE")
-inline fun Vector4f(x: Float, y: Float, z: Float, w: Float): Vector4f = Vector4f(floatArrayOf(x, y, z, w))
-
-inline var Vector4f.x: Float
-    get() = data[0]
-    set(value) {
-        data[0] = value
-    }
-
-inline var Vector4f.y: Float
-    get() = data[1]
-    set(value) {
-        data[1] = value
-    }
-
-inline var Vector4f.z: Float
-    get() = data[2]
-    set(value) {
-        data[2] = value
-    }
-
-inline var Vector4f.w: Float
-    get() = data[3]
-    set(value) {
-        data[3] = value
-    }

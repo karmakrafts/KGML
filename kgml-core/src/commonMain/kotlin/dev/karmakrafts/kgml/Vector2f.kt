@@ -16,58 +16,35 @@
 
 package dev.karmakrafts.kgml
 
+import kotlin.jvm.JvmField
+import kotlin.reflect.KClass
+
 @Suppress("NOTHING_TO_INLINE")
-expect value class Vector2f(val data: FloatArray) {
-    inline operator fun plus(other: Float): Vector2f
-    inline operator fun minus(other: Float): Vector2f
-    inline operator fun times(other: Float): Vector2f
-    inline operator fun div(other: Float): Vector2f
-    inline operator fun rem(other: Float): Vector2f
+data class Vector2f( // @formatter:off
+    @JvmField val x: Float,
+    @JvmField val y: Float
+) : VectorNf { // @formatter:on
+    companion object : VectorType {
+        override val componentType: KClass<*> = Float::class
+        override val dimensions: Int = 2
+    }
 
-    inline operator fun plusAssign(other: Float)
-    inline operator fun minusAssign(other: Float)
-    inline operator fun timesAssign(other: Float)
-    inline operator fun divAssign(other: Float)
-    inline operator fun remAssign(other: Float)
+    constructor(xy: Float) : this(xy, xy)
 
-    inline operator fun plus(other: Vector2f): Vector2f
-    inline operator fun minus(other: Vector2f): Vector2f
-    inline operator fun times(other: Vector2f): Vector2f
-    inline operator fun div(other: Vector2f): Vector2f
-    inline operator fun rem(other: Vector2f): Vector2f
+    override val type: VectorType get() = Vector2f
 
-    inline operator fun plusAssign(other: Vector2f)
-    inline operator fun minusAssign(other: Vector2f)
-    inline operator fun timesAssign(other: Vector2f)
-    inline operator fun divAssign(other: Vector2f)
-    inline operator fun remAssign(other: Vector2f)
+    inline operator fun plus(xy: Float): Vector2f = Vector2f(x + xy, y + xy)
+    inline operator fun plus(other: Vector2f): Vector2f = Vector2f(x + other.x, y + other.y)
 
-    inline operator fun unaryMinus(): Vector2f
-    inline operator fun unaryPlus(): Vector2f
+    inline operator fun minus(xy: Float): Vector2f = Vector2f(x - xy, y - xy)
+    inline operator fun minus(other: Vector2f): Vector2f = Vector2f(x - other.x, y - other.y)
 
-    inline fun lengthSq(): Float
-    inline fun length(): Float
+    inline operator fun times(xy: Float): Vector2f = Vector2f(x * xy, y * xy)
+    inline operator fun times(other: Vector2f): Vector2f = Vector2f(x * other.x, y * other.y)
 
-    inline fun normalize()
-    inline fun normalized(): Vector2f
+    inline operator fun div(xy: Float): Vector2f = Vector2f(x / xy, y / xy)
+    inline operator fun div(other: Vector2f): Vector2f = Vector2f(x / other.x, y / other.y)
 
-    inline fun copy(): Vector2f
+    inline operator fun rem(xy: Float): Vector2f = Vector2f(x % xy, y % xy)
+    inline operator fun rem(other: Vector2f): Vector2f = Vector2f(x % other.x, y % other.y)
 }
-
-@Suppress("NOTHING_TO_INLINE")
-inline fun Vector2f(xy: Float): Vector2f = Vector2f(FloatArray(2) { xy })
-
-@Suppress("NOTHING_TO_INLINE")
-inline fun Vector2f(x: Float, y: Float): Vector2f = Vector2f(floatArrayOf(x, y))
-
-inline var Vector2f.x: Float
-    get() = data[0]
-    set(value) {
-        data[0] = value
-    }
-
-inline var Vector2f.y: Float
-    get() = data[1]
-    set(value) {
-        data[1] = value
-    }
