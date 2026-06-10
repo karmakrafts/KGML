@@ -16,6 +16,7 @@
 
 package dev.karmakrafts.kgml.matrix
 
+import dev.karmakrafts.kgml.util.fma
 import kotlin.jvm.JvmField
 import kotlin.reflect.KClass
 
@@ -44,6 +45,18 @@ data class Matrix3x3f(
     }
 
     override val type: MatrixType get() = Matrix3x3f
+
+    operator fun times(other: Matrix3x3f): Matrix3x3f = Matrix3x3f(
+        fma(fma(m00, other.m00, m10), other.m01, m20) * other.m02,
+        fma(fma(m00, other.m10, m10), other.m11, m20) * other.m12,
+        fma(fma(m00, other.m20, m10), other.m21, m20) * other.m22,
+        fma(fma(m01, other.m00, m11), other.m01, m21) * other.m02,
+        fma(fma(m01, other.m10, m11), other.m11, m21) * other.m12,
+        fma(fma(m01, other.m20, m11), other.m21, m21) * other.m22,
+        fma(fma(m02, other.m00, m12), other.m01, m22) * other.m02,
+        fma(fma(m02, other.m10, m12), other.m11, m22) * other.m12,
+        fma(fma(m02, other.m20, m12), other.m21, m22) * other.m22
+    )
 
     override fun get(index: Int): Float = when (index) {
         0 -> m00
