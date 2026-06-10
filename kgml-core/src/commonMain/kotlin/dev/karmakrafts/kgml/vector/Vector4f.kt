@@ -16,6 +16,7 @@
 
 package dev.karmakrafts.kgml.vector
 
+import dev.karmakrafts.kgml.util.fma
 import kotlin.jvm.JvmField
 import kotlin.math.sqrt
 import kotlin.reflect.KClass
@@ -53,7 +54,7 @@ data class Vector4f( // @formatter:off
     inline operator fun rem(xyzw: Float): Vector4f = Vector4f(x % xyzw, y % xyzw, z % xyzw, w % xyzw)
     inline operator fun rem(other: Vector4f): Vector4f = Vector4f(x % other.x, y % other.y, z % other.z, w % other.w)
 
-    inline fun lengthSq(): Float = x * x + y * y + z * z + w * w
+    inline fun lengthSq(): Float = fma(fma(fma(x, x, y), y, z), z, w) * w
     inline fun length(): Float = sqrt(lengthSq())
 
     override fun get(index: Int): Float = when (index) {

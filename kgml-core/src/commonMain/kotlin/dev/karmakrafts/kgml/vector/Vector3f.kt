@@ -16,6 +16,7 @@
 
 package dev.karmakrafts.kgml.vector
 
+import dev.karmakrafts.kgml.util.fma
 import kotlin.jvm.JvmField
 import kotlin.math.sqrt
 import kotlin.reflect.KClass
@@ -53,7 +54,7 @@ data class Vector3f( // @formatter:off
     inline operator fun rem(xyz: Float): Vector3f = Vector3f(x % xyz, y % xyz, z % xyz)
     inline operator fun rem(other: Vector3f): Vector3f = Vector3f(x % other.x, y % other.y, z % other.z)
 
-    inline fun lengthSq(): Float = x * x + y * y + z * z
+    inline fun lengthSq(): Float = fma(fma(x, x, y), y, z) * z
     inline fun length(): Float = sqrt(lengthSq())
 
     override fun get(index: Int): Float = when (index) {
