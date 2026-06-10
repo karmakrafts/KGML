@@ -6,9 +6,9 @@ KGML_API_BEGIN
 
 KGML_DEFINE_VEC_TYPE(float, 4)
 
-KGML_EXPORT static inline kgml_float4_t kgml_float4_create(float x, float y, float z) {
+KGML_EXPORT static inline kgml_float4_t kgml_float4_create(float x, float y, float z, float w) {
     kgml_float4_t result = {};
-    const __kgml_float4 value = {x, y, z};
+    const __kgml_float4 value = {x, y, z, w};
     result.value = value;
     return result;
 }
