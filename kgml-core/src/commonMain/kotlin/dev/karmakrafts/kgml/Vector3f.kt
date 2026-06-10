@@ -17,6 +17,7 @@
 package dev.karmakrafts.kgml
 
 import kotlin.jvm.JvmField
+import kotlin.math.sqrt
 import kotlin.reflect.KClass
 
 @Suppress("NOTHING_TO_INLINE")
@@ -48,4 +49,7 @@ data class Vector3f( // @formatter:off
 
     inline operator fun rem(xyz: Float): Vector3f = Vector3f(x % xyz, y % xyz, z % xyz)
     inline operator fun rem(other: Vector3f): Vector3f = Vector3f(x % other.x, y % other.y, z % other.z)
+
+    inline fun lengthSq(): Float = x * x + y * y + z * z
+    inline fun length(): Float = sqrt(lengthSq())
 }
