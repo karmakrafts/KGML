@@ -16,6 +16,7 @@
 
 package dev.karmakrafts.kgml.vector
 
+import dev.karmakrafts.kgml.matrix.Matrix3x3f
 import dev.karmakrafts.kgml.util.fma
 import kotlin.jvm.JvmField
 import kotlin.math.sqrt
@@ -57,6 +58,12 @@ data class Vector3f( // @formatter:off
     inline fun lengthSq(): Float = fma(fma(x, x, y), y, z) * z
     inline fun length(): Float = sqrt(lengthSq())
 
+    operator fun times(other: Matrix3x3f): Vector3f = Vector3f(
+        fma(fma(other.m00, x, other.m01), y, other.m02) * z,
+        fma(fma(other.m10, x, other.m11), y, other.m12) * z,
+        fma(fma(other.m20, x, other.m21), y, other.m22) * z
+    )
+
     override fun get(index: Int): Float = when (index) {
         0 -> x
         1 -> y
@@ -72,4 +79,15 @@ data class Vector3f( // @formatter:off
     }
 
     override fun toFloatArray(): FloatArray = floatArrayOf(x, y, z)
+
+    inline fun swizzle( // @formatter:off
+        x: VectorComponent,
+        y: VectorComponent,
+        z: VectorComponent
+    ): Vector3f = Vector3f(this[x], this[y], this[z]) // @formatter:on
+
+    inline fun swizzle2( // @formatter:off
+        x: VectorComponent,
+        y: VectorComponent
+    ): Vector2f = Vector2f(this[x], this[y]) // @formatter:on
 }

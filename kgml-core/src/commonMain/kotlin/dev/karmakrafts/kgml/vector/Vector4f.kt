@@ -16,6 +16,7 @@
 
 package dev.karmakrafts.kgml.vector
 
+import dev.karmakrafts.kgml.matrix.Matrix4x4f
 import dev.karmakrafts.kgml.util.fma
 import kotlin.jvm.JvmField
 import kotlin.math.sqrt
@@ -57,6 +58,13 @@ data class Vector4f( // @formatter:off
     inline fun lengthSq(): Float = fma(fma(fma(x, x, y), y, z), z, w) * w
     inline fun length(): Float = sqrt(lengthSq())
 
+    operator fun times(other: Matrix4x4f): Vector4f = Vector4f(
+        fma(fma(fma(other.m00, x, other.m01), y, other.m02), z, other.m03) * w,
+        fma(fma(fma(other.m10, x, other.m11), y, other.m12), z, other.m13) * w,
+        fma(fma(fma(other.m20, x, other.m21), y, other.m22), z, other.m23) * w,
+        fma(fma(fma(other.m30, x, other.m31), y, other.m32), z, other.m33) * w
+    )
+
     override fun get(index: Int): Float = when (index) {
         0 -> x
         1 -> y
@@ -73,4 +81,22 @@ data class Vector4f( // @formatter:off
     }
 
     override fun toFloatArray(): FloatArray = floatArrayOf(x, y, z, w)
+
+    inline fun swizzle( // @formatter:off
+        x: VectorComponent,
+        y: VectorComponent,
+        z: VectorComponent,
+        w: VectorComponent
+    ): Vector4f = Vector4f(this[x], this[y], this[z], this[w]) // @formatter:on
+
+    inline fun swizzle3( // @formatter:off
+        x: VectorComponent,
+        y: VectorComponent,
+        z: VectorComponent
+    ): Vector3f = Vector3f(this[x], this[y], this[z]) // @formatter:on
+
+    inline fun swizzle2( // @formatter:off
+        x: VectorComponent,
+        y: VectorComponent
+    ): Vector2f = Vector2f(this[x], this[y]) // @formatter:on
 }

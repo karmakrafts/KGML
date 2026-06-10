@@ -52,6 +52,12 @@ data class Matrix3x3f(
         0F, 0F, 1F
     ) // @formatter:on
 
+    constructor(value: Float) : this( // @formatter:off
+        value, value, value,
+        value, value, value,
+        value, value, value
+    ) // @formatter:on
+
     override val type: MatrixType get() = Matrix3x3f
 
     operator fun times(other: Matrix3x3f): Matrix3x3f = Matrix3x3f(

@@ -45,6 +45,11 @@ data class Matrix2x2f( // @formatter:off
         0F, 1F
     ) // @formatter:on
 
+    constructor(value: Float) : this( // @formatter:off
+        value, value,
+        value, value
+    ) // @formatter:on
+
     override val type: MatrixType get() = Matrix2x2f
 
     operator fun times(other: Matrix2x2f): Matrix2x2f = Matrix2x2f(

@@ -55,6 +55,13 @@ data class Matrix4x4f(
         0F, 0F, 0F, 1F
     ) // @formatter:on
 
+    constructor(value: Float) : this( // @formatter:off
+        value, value, value, value,
+        value, value, value, value,
+        value, value, value, value,
+        value, value, value, value
+    ) // @formatter:on
+
     override val type: MatrixType get() = Matrix4x4f
 
     operator fun times(other: Matrix4x4f): Matrix4x4f = Matrix4x4f(
