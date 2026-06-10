@@ -59,3 +59,6 @@ fun Matrix3x3f.Companion.rotationYRad(rad: Float): Matrix3x3f {
 
 @Suppress("NOTHING_TO_INLINE")
 inline fun Matrix3x3f.Companion.rotationY(deg: Float): Matrix3x3f = rotationYRad((deg * TO_RAD).toFloat())
+
+@Suppress("NOTHING_TO_INLINE")
+inline operator fun Matrix3x3f.times(quat: Quaternion): Matrix3x3f = this * quat.toRotationMatrix3x3()
