@@ -29,3 +29,11 @@ fun Matrix2x2f.Companion.rotationRad(rad: Float): Matrix2x2f {
 
 @Suppress("NOTHING_TO_INLINE")
 inline fun Matrix2x2f.Companion.rotation(deg: Float): Matrix2x2f = rotationRad((deg * TO_RAD).toFloat())
+
+fun Matrix2x2f.Companion.scale(scaleX: Float, scaleY: Float): Matrix2x2f = Matrix2x2f( // @formatter:off
+    scaleX, 0F,
+    0F, scaleY
+) // @formatter:on
+
+@Suppress("NOTHING_TO_INLINE")
+inline fun Matrix2x2f.Companion.scale(scale: Float): Matrix2x2f = scale(scale, scale)

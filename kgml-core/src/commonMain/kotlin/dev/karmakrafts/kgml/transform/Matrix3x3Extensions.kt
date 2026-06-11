@@ -14,6 +14,8 @@
  * limitations under the License.
  */
 
+@file:Suppress("NOTHING_TO_INLINE")
+
 package dev.karmakrafts.kgml.transform
 
 import dev.karmakrafts.kgml.matrix.Matrix3x3f
@@ -31,7 +33,6 @@ fun Matrix3x3f.Companion.rotationZRad(rad: Float): Matrix3x3f {
     ) // @formatter:on
 }
 
-@Suppress("NOTHING_TO_INLINE")
 inline fun Matrix3x3f.Companion.rotationZ(deg: Float): Matrix3x3f = rotationZRad((deg * TO_RAD).toFloat())
 
 fun Matrix3x3f.Companion.rotationXRad(rad: Float): Matrix3x3f {
@@ -44,7 +45,6 @@ fun Matrix3x3f.Companion.rotationXRad(rad: Float): Matrix3x3f {
     ) // @formatter:on
 }
 
-@Suppress("NOTHING_TO_INLINE")
 inline fun Matrix3x3f.Companion.rotationX(deg: Float): Matrix3x3f = rotationXRad((deg * TO_RAD).toFloat())
 
 fun Matrix3x3f.Companion.rotationYRad(rad: Float): Matrix3x3f {
@@ -57,8 +57,28 @@ fun Matrix3x3f.Companion.rotationYRad(rad: Float): Matrix3x3f {
     ) // @formatter:on
 }
 
-@Suppress("NOTHING_TO_INLINE")
 inline fun Matrix3x3f.Companion.rotationY(deg: Float): Matrix3x3f = rotationYRad((deg * TO_RAD).toFloat())
 
-@Suppress("NOTHING_TO_INLINE")
+fun Matrix3x3f.Companion.rotationRad( // @formatter:off
+    angleX: Float,
+    angleY: Float,
+    angleZ: Float
+): Matrix3x3f = rotationXRad(angleX) * rotationYRad(angleY) * rotationZRad(angleZ) // @formatter:on
+
+inline fun Matrix3x3f.Companion.rotation( // @formatter:off
+    angleX: Float,
+    angleY: Float,
+    angleZ: Float
+): Matrix3x3f = rotationRad(
+    (angleX * TO_RAD).toFloat(),
+    (angleY * TO_RAD).toFloat(),
+    (angleZ * TO_RAD).toFloat()
+) // @formatter:on
+
 inline operator fun Matrix3x3f.times(quat: Quaternion): Matrix3x3f = this * quat.toRotationMatrix3x3()
+
+fun Matrix3x3f.Companion.translation(x: Float, y: Float): Matrix3x3f = Matrix3x3f( // @formatter:off
+    1F, 0F, x,
+    0F, 1F, y,
+    0F, 0F, 1F
+) // @formatter:on

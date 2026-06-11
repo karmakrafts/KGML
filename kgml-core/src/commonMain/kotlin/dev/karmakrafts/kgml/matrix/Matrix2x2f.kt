@@ -21,6 +21,7 @@ import dev.karmakrafts.kgml.vector.Vector2f
 import kotlin.jvm.JvmField
 import kotlin.reflect.KClass
 
+@Suppress("NOTHING_TO_INLINE")
 data class Matrix2x2f( // @formatter:off
     @JvmField val m00: Float,
     @JvmField val m01: Float,
@@ -59,6 +60,12 @@ data class Matrix2x2f( // @formatter:off
     ) // @formatter:on
 
     override val type: MatrixType get() = Matrix2x2f
+
+    inline fun extend(): Matrix3x3f = Matrix3x3f( // @formatter:off
+        m00, m01, 0F,
+        m10, m11, 0F,
+        0F,  0F,  1F
+    ) // @formatter:on
 
     operator fun times(other: Matrix2x2f): Matrix2x2f = Matrix2x2f(
         fma(m00, other.m00, m01) * other.m10,
