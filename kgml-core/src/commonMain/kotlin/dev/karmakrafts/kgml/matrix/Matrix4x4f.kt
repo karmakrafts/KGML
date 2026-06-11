@@ -23,6 +23,26 @@ import kotlin.jvm.JvmField
 import kotlin.jvm.JvmRecord
 import kotlin.reflect.KClass
 
+/**
+ * A 4x4 float matrix.
+ *
+ * @property m00 Row 0, Column 0
+ * @property m01 Row 0, Column 1
+ * @property m02 Row 0, Column 2
+ * @property m03 Row 0, Column 3
+ * @property m10 Row 1, Column 0
+ * @property m11 Row 1, Column 1
+ * @property m12 Row 1, Column 2
+ * @property m13 Row 1, Column 3
+ * @property m20 Row 2, Column 0
+ * @property m21 Row 2, Column 1
+ * @property m22 Row 2, Column 2
+ * @property m23 Row 2, Column 3
+ * @property m30 Row 3, Column 0
+ * @property m31 Row 3, Column 1
+ * @property m32 Row 3, Column 2
+ * @property m33 Row 3, Column 3
+ */
 @Suppress("NOTHING_TO_INLINE")
 @JvmRecord
 data class Matrix4x4f(
@@ -43,6 +63,9 @@ data class Matrix4x4f(
     @JvmField val m32: Float,
     @JvmField val m33: Float
 ) : MatrixNxNf {
+    /**
+     * The type of [Matrix4x4f].
+     */
     companion object : MatrixType {
         override val componentType: KClass<*> = Float::class
         override val componentSize: Int = Float.SIZE_BYTES
@@ -50,8 +73,18 @@ data class Matrix4x4f(
         override val columns: Int = 4
         override val components: Array<MatrixComponent> = MatrixComponent.entries.toTypedArray()
 
+        /**
+         * The identity matrix for [Matrix4x4f].
+         */
         val identity: Matrix4x4f = Matrix4x4f()
 
+        /**
+         * Creates a [Matrix4x4f] from the given float array.
+         *
+         * @param array The array to read from.
+         * @param offset The offset in the array.
+         * @return The created matrix.
+         */
         fun fromArray(array: FloatArray, offset: Int = 0): Matrix4x4f = Matrix4x4f( // @formatter:off
             array[offset],
             array[offset + 1],
@@ -72,6 +105,9 @@ data class Matrix4x4f(
         ) // @formatter:on
     }
 
+    /**
+     * Creates an identity matrix.
+     */
     constructor() : this( // @formatter:off
         1F, 0F, 0F, 0F,
         0F, 1F, 0F, 0F,
@@ -79,6 +115,11 @@ data class Matrix4x4f(
         0F, 0F, 0F, 1F
     ) // @formatter:on
 
+    /**
+     * Creates a matrix with all components set to the given value.
+     *
+     * @param value The value to set all components to.
+     */
     constructor(value: Float) : this( // @formatter:off
         value, value, value, value,
         value, value, value, value,
@@ -86,8 +127,16 @@ data class Matrix4x4f(
         value, value, value, value
     ) // @formatter:on
 
+    /**
+     * The type of the matrix.
+     */
     override val type: MatrixType get() = Matrix4x4f
 
+    /**
+     * Transposes this matrix.
+     *
+     * @return The transposed matrix.
+     */
     fun transpose(): Matrix4x4f = Matrix4x4f( // @formatter:off
         m00, m10, m20, m30,
         m01, m11, m21, m31,
@@ -95,6 +144,12 @@ data class Matrix4x4f(
         m03, m13, m23, m33
     ) // @formatter:on
 
+    /**
+     * Multiplies this matrix with another 4x4 matrix.
+     *
+     * @param other The matrix to multiply with.
+     * @return The result of the multiplication.
+     */
     operator fun times(other: Matrix4x4f): Matrix4x4f = Matrix4x4f(
         fma(m00, other.m00, fma(m01, other.m10, fma(m02, other.m20, m03 * other.m30))),
         fma(m00, other.m01, fma(m01, other.m11, fma(m02, other.m21, m03 * other.m31))),
@@ -114,6 +169,12 @@ data class Matrix4x4f(
         fma(m30, other.m03, fma(m31, other.m13, fma(m32, other.m23, m33 * other.m33)))
     )
 
+    /**
+     * Multiplies this matrix with a 4D vector.
+     *
+     * @param other The vector to multiply with.
+     * @return The result of the multiplication.
+     */
     operator fun times(other: Vector4f): Vector4f = Vector4f(
         fma(m00, other.x, fma(m01, other.y, fma(m02, other.z, m03 * other.w))),
         fma(m10, other.x, fma(m11, other.y, fma(m12, other.z, m13 * other.w))),
@@ -121,16 +182,37 @@ data class Matrix4x4f(
         fma(m30, other.x, fma(m31, other.y, fma(m32, other.z, m33 * other.w)))
     )
 
+    /**
+     * Multiplies this matrix with another matrix.
+     *
+     * @param other The matrix to multiply with.
+     * @return The result of the multiplication.
+     * @throws IllegalArgumentException If the other matrix is not a [Matrix4x4f].
+     */
     override fun times(other: MatrixNxN): MatrixNxN = when (other) {
         is Matrix4x4f -> this * other
         else -> throw IllegalArgumentException("Unsupported matrix type for multiplication")
     }
 
+    /**
+     * Multiplies this matrix with a vector.
+     *
+     * @param other The vector to multiply with.
+     * @return The result of the multiplication.
+     * @throws IllegalArgumentException If the other vector is not a [Vector4f].
+     */
     override fun times(other: VectorN): VectorN = when (other) {
         is Vector4f -> this * other
         else -> throw IllegalArgumentException("Unsupported vector type for multiplication")
     }
 
+    /**
+     * Gets the component at the given index.
+     *
+     * @param index The index of the component.
+     * @return The component at the given index.
+     * @throws IllegalArgumentException If the index is out of bounds.
+     */
     override operator fun get(index: Int): Float = when (index) {
         0 -> m00
         1 -> m01
@@ -151,6 +233,12 @@ data class Matrix4x4f(
         else -> throw IllegalArgumentException("Invalid matrix component $index for Matrix4x4f")
     }
 
+    /**
+     * Gets the component for the given [MatrixComponent].
+     *
+     * @param component The component to get.
+     * @return The component for the given [MatrixComponent].
+     */
     override operator fun get(component: MatrixComponent): Float = when (component) {
         MatrixComponent.M00 -> m00
         MatrixComponent.M01 -> m01
@@ -170,6 +258,11 @@ data class Matrix4x4f(
         MatrixComponent.M33 -> m33
     }
 
+    /**
+     * Converts this matrix to a float array.
+     *
+     * @return The matrix as a float array.
+     */
     override fun toFloatArray(): FloatArray = floatArrayOf( // @formatter:off
         m00, m01, m02, m03,
         m10, m11, m12, m13,

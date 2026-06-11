@@ -16,9 +16,30 @@
 
 package dev.karmakrafts.kgml.vector
 
+/**
+ * Base interface for all float vectors.
+ */
 sealed interface VectorNf : VectorN {
+    /**
+     * Gets the component at the given [index].
+     *
+     * @param index The index of the component.
+     * @return The component at the given [index].
+     */
     operator fun get(index: Int): Float
+
+    /**
+     * Gets the component for the given [component].
+     *
+     * @param component The component to get.
+     * @return The value of the component.
+     */
     operator fun get(component: VectorComponent): Float
 
+    /**
+     * Returns the components of this vector as a [FloatArray].
+     *
+     * @return The components of this vector.
+     */
     fun toFloatArray(): FloatArray
 }

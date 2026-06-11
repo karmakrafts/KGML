@@ -16,6 +16,14 @@
 
 package dev.karmakrafts.kgml.vector
 
+/**
+ * Base interface for all vectors.
+ */
 sealed interface VectorN {
+    /**
+     * The type information for this vector.
+     *
+     * @return The type information.
+     */
     val type: VectorType
 }

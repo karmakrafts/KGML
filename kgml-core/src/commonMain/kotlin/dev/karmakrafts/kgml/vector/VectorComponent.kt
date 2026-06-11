@@ -16,11 +16,29 @@
 
 package dev.karmakrafts.kgml.vector
 
+/**
+ * Represents the components of a vector.
+ */
 enum class VectorComponent {
     // @formatter:off
+    /**
+     * The X component.
+     */
     X,
+
+    /**
+     * The Y component.
+     */
     Y,
+
+    /**
+     * The Z component.
+     */
     Z,
+
+    /**
+     * The W component.
+     */
     W
     // @formatter:on
 }

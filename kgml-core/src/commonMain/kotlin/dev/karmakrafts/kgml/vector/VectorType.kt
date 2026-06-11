@@ -18,11 +18,42 @@ package dev.karmakrafts.kgml.vector
 
 import kotlin.reflect.KClass
 
+/**
+ * Represents the type information for a vector.
+ */
 sealed interface VectorType {
+    /**
+     * The type of the components in the vector.
+     *
+     * @return The component type.
+     */
     val componentType: KClass<*>
+
+    /**
+     * The size of a single component in bytes.
+     *
+     * @return The component size in bytes.
+     */
     val componentSize: Int
+
+    /**
+     * The number of dimensions in the vector.
+     *
+     * @return The number of dimensions.
+     */
     val dimensions: Int
+
+    /**
+     * The components of the vector.
+     *
+     * @return The components.
+     */
     val components: Array<VectorComponent>
 }
 
+/**
+ * The total size of the vector in bytes.
+ *
+ * @return The total size in bytes.
+ */
 inline val VectorType.size: Int get() = componentSize * dimensions

@@ -18,9 +18,28 @@ package dev.karmakrafts.kgml.matrix
 
 import dev.karmakrafts.kgml.vector.VectorN
 
+/**
+ * Base interface for all square matrices.
+ */
 sealed interface MatrixNxN {
+    /**
+     * The type of the matrix.
+     */
     val type: MatrixType
 
+    /**
+     * Multiplies this matrix with another matrix.
+     *
+     * @param other The matrix to multiply with.
+     * @return The result of the multiplication.
+     */
     operator fun times(other: MatrixNxN): MatrixNxN
+
+    /**
+     * Multiplies this matrix with a vector.
+     *
+     * @param other The vector to multiply with.
+     * @return The result of the multiplication.
+     */
     operator fun times(other: VectorN): VectorN
 }

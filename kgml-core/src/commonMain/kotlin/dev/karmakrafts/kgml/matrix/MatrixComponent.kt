@@ -16,9 +16,12 @@
 
 package dev.karmakrafts.kgml.matrix
 
+/**
+ * Enumeration of all possible matrix components.
+ */
 enum class MatrixComponent { // @formatter:off
-    M00, M01, M02, M03,
-    M10, M11, M12, M13,
-    M20, M21, M22, M23,
-    M30, M31, M32, M33
+    /** Row 0, Column 0 */ M00, /** Row 0, Column 1 */ M01, /** Row 0, Column 2 */ M02, /** Row 0, Column 3 */ M03,
+    /** Row 1, Column 0 */ M10, /** Row 1, Column 1 */ M11, /** Row 1, Column 2 */ M12, /** Row 1, Column 3 */ M13,
+    /** Row 2, Column 0 */ M20, /** Row 2, Column 1 */ M21, /** Row 2, Column 2 */ M22, /** Row 2, Column 3 */ M23,
+    /** Row 3, Column 0 */ M30, /** Row 3, Column 1 */ M31, /** Row 3, Column 2 */ M32, /** Row 3, Column 3 */ M33
 } // @formatter:on

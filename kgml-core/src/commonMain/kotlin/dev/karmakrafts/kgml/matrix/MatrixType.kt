@@ -18,12 +18,37 @@ package dev.karmakrafts.kgml.matrix
 
 import kotlin.reflect.KClass
 
+/**
+ * Represents the type of a matrix, including its component type and dimensions.
+ */
 sealed interface MatrixType {
+    /**
+     * The type of the components in the matrix.
+     */
     val componentType: KClass<*>
+
+    /**
+     * The size of a single component in bytes.
+     */
     val componentSize: Int
+
+    /**
+     * The number of rows in the matrix.
+     */
     val rows: Int
+
+    /**
+     * The number of columns in the matrix.
+     */
     val columns: Int
+
+    /**
+     * The components present in the matrix.
+     */
     val components: Array<MatrixComponent>
 }
 
+/**
+ * The total size of the matrix in bytes.
+ */
 inline val MatrixType.size: Int get() = componentSize * (rows * columns)
