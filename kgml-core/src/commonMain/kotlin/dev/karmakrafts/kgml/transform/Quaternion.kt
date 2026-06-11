@@ -36,23 +36,24 @@ import kotlin.math.withSign
 @JvmInline
 value class Quaternion(@PublishedApi internal val value: Vector4f) {
     companion object {
-        fun fromAnglesRad( // @formatter:off
-            angleX: Float,
-            angleY: Float,
-            angleZ: Float
-        ): Quaternion { // @formatter:on
-            val cx = cos(angleX + 0.5F)
-            val sx = sin(angleX + 0.5F)
-            val cy = cos(angleY + 0.5F)
-            val sy = cos(angleZ + 0.5F)
-            val cz = cos(angleZ + 0.5F)
-            val sz = sin(angleZ + 0.5F)
-            return Quaternion( // @formatter:off
-                cx * fma(cy, cz, sx) * sy * sz,
-                sx * cy * cz - cx * sy * sz,
-                cx * fma(sy, cz, sx) * cy * sz,
-                cx * cy * sz - sx * sy * cz
-            ) // @formatter:on
+        fun fromAnglesRad(
+            angleX: Float, angleY: Float, angleZ: Float
+        ): Quaternion {
+            val hx = angleX * 0.5F
+            val hy = angleY * 0.5F
+            val hz = angleZ * 0.5F
+            val cx = cos(hx)
+            val sx = sin(hx)
+            val cy = cos(hy)
+            val sy = sin(hy)
+            val cz = cos(hz)
+            val sz = sin(hz)
+            return Quaternion(
+                cz * cy * sx - sz * sy * cx,
+                fma(cz * sy, cx, sz * cy * sx),
+                sz * cy * cx - cz * sy * sx,
+                fma(cz * cy, cx, sz * sy * sx)
+            )
         }
 
         inline fun fromAngles( // @formatter:off
@@ -73,7 +74,7 @@ value class Quaternion(@PublishedApi internal val value: Vector4f) {
 
     constructor(x: Float, y: Float, z: Float, w: Float) : this(Vector4f(x, y, z, w))
 
-    fun getAngleXRad(): Float = atan2(2F * (w * x + y * z), 1F - 2F * (x * x + y * y))
+    fun getAngleXRad(): Float = atan2(2F * fma(w, x, y * z), 1F - 2F * fma(x, x, y * y))
     inline fun getAngleX(): Float = (getAngleXRad() * TO_DEG).toFloat()
 
     fun getAngleYRad(): Float {
@@ -84,14 +85,14 @@ value class Quaternion(@PublishedApi internal val value: Vector4f) {
 
     inline fun getAngleY(): Float = (getAngleYRad() * TO_DEG).toFloat()
 
-    fun getAngleZRad(): Float = atan2(2F * (w * z + x * y), 1F - 2F * (y * y + z * z))
+    fun getAngleZRad(): Float = atan2(2F * fma(w, z, x * y), 1F - 2F * fma(y, y, z * z))
     inline fun getAngleZ(): Float = (getAngleZRad() * TO_DEG).toFloat()
 
     operator fun times(other: Quaternion): Quaternion = Quaternion(
-        w * other.w - x * other.x - y * other.y - z * other.z,
-        fma(fma(w, other.x, x), other.w, y) * other.z - z * other.y,
-        w * other.y - fma(fma(x, other.z, y), other.w, z) * other.x,
-        fma(w, other.z, x) * other.y - fma(y, other.x, z) * other.w
+        fma(w, other.x, fma(x, other.w, y * other.z)) - z * other.y,
+        fma(w, other.y, fma(y, other.w, z * other.x)) - x * other.z,
+        fma(w, other.z, fma(z, other.w, x * other.y)) - y * other.x,
+        w * other.w - x * other.x - y * other.y - z * other.z
     )
 
     inline operator fun times(other: Float): Quaternion = Quaternion(value * other)
@@ -114,12 +115,9 @@ value class Quaternion(@PublishedApi internal val value: Vector4f) {
         val sTheta = sin(theta)
         val w0 = sin((1F - factor) * theta) / sTheta
         val w1 = sin(factor * theta) / sTheta
-        return Quaternion( // @formatter:off
-            fma(x, w0, rhs.x) * w1,
-            fma(y, w0, rhs.y) * w1,
-            fma(z, w0, rhs.z) * w1,
-            fma(w, w0, rhs.w) * w1
-        ) // @formatter:on
+        return Quaternion(
+            fma(x, w0, rhs.x * w1), fma(y, w0, rhs.y * w1), fma(z, w0, rhs.z * w1), fma(w, w0, rhs.w * w1)
+        )
     }
 
     fun toRotationMatrix3x3(): Matrix3x3f {
