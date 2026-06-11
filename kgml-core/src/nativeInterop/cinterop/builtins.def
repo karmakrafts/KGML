@@ -2,6 +2,9 @@ package = dev.karmakrafts.kgml.builtins
 
 ---
 
+#include <string.h>
+#include <stdint.h>
+
 #define KGML_EXPORT __attribute__((visibility("default")))
 
 #ifdef __cplusplus
