@@ -22,6 +22,7 @@ import dev.karmakrafts.kgml.vector.VectorN
 import kotlin.jvm.JvmField
 import kotlin.reflect.KClass
 
+@Suppress("NOTHING_TO_INLINE")
 data class Matrix4x4f(
     @JvmField val m00: Float,
     @JvmField val m01: Float,
@@ -84,6 +85,13 @@ data class Matrix4x4f(
     ) // @formatter:on
 
     override val type: MatrixType get() = Matrix4x4f
+
+    inline fun transpose(): Matrix4x4f = Matrix4x4f( // @formatter:off
+        m00, m10, m20, m30,
+        m01, m11, m21, m31,
+        m02, m12, m22, m32,
+        m03, m13, m23, m33
+    ) // @formatter:on
 
     operator fun times(other: Matrix4x4f): Matrix4x4f = Matrix4x4f(
         fma(fma(fma(m00, other.m00, m10), other.m01, m20), other.m02, m30) * other.m03,

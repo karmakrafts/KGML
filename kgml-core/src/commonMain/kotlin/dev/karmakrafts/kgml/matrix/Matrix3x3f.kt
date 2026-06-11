@@ -82,6 +82,12 @@ data class Matrix3x3f(
         0F,  0F,  0F,  1F
     ) // @formatter:on
 
+    inline fun transpose(): Matrix3x3f = Matrix3x3f( // @formatter:off
+        m00, m10, m20,
+        m01, m11, m21,
+        m02, m12, m22
+    ) // @formatter:on
+
     operator fun times(other: Matrix3x3f): Matrix3x3f = Matrix3x3f(
         fma(fma(m00, other.m00, m10), other.m01, m20) * other.m02,
         fma(fma(m00, other.m10, m10), other.m11, m20) * other.m12,

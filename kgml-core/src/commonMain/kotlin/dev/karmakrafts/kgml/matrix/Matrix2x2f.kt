@@ -68,6 +68,11 @@ data class Matrix2x2f( // @formatter:off
         0F,  0F,  1F
     ) // @formatter:on
 
+    inline fun transpose(): Matrix2x2f = Matrix2x2f( // @formatter:off
+        m00, m10,
+        m01, m11
+    ) // @formatter:on
+
     operator fun times(other: Matrix2x2f): Matrix2x2f = Matrix2x2f(
         fma(m00, other.m00, m01) * other.m10,
         fma(m00, other.m01, m01) * other.m11,
