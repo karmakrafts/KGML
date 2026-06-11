@@ -17,7 +17,7 @@ stages:
 variables:
   GRADLE_OPTS: -Dorg.gradle.daemon=false
   FF_USE_FASTZIP: "true"
-  DOCS_URL: "https://docs.karmakrafts.dev/kompress-core"
+  DOCS_URL: "https://docs.karmakrafts.dev/kgml-core"
 
 # ------------------------------ Conditions
 
@@ -72,7 +72,7 @@ update_changelog:
       git config user.email "gitlab-ci@example.com"
       git add CHANGELOG.md
       git commit -m "[skip-ci] Update changelog for next release"
-      git push https://gitlab-ci-token:${CI_PUSH_TOKEN}@git.karmakrafts.dev/kk/kompress.git
+      git push https://gitlab-ci-token:${CI_PUSH_TOKEN}@git.karmakrafts.dev/kk/kgml.git
       cd ..
       rm -rf update-changelog
   tags:
@@ -183,7 +183,7 @@ release:github:
     - *if-release
   variables:
     GITHUB_API: "https://api.github.com"
-    GITHUB_REPO: "karmakrafts/kompress"
+    GITHUB_REPO: "karmakrafts/kgml"
     CHANGELOG_URL: "$CI_PROJECT_URL/-/blob/$CI_COMMIT_TAG/CHANGELOG.md"
     GITLAB_RELEASE_URL: "$CI_PROJECT_URL/-/releases/$CI_COMMIT_TAG"
   script:
