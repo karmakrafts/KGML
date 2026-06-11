@@ -14,6 +14,8 @@
  * limitations under the License.
  */
 
+@file:JvmName("Intrinsics$")
+
 package dev.karmakrafts.kgml.util
 
 import android.os.Build
