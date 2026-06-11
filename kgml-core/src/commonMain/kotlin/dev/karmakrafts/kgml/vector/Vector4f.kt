@@ -82,20 +82,30 @@ data class Vector4f( // @formatter:off
         fma(other.w - w, factor, w)
     ) // @formatter:on
 
-    fun lengthSq(): Float = fma(fma(fma(x, x, y), y, z), z, w) * w
+    fun distanceSq(other: Vector4f): Float {
+        val dx = other.x - x
+        val dy = other.y - y
+        val dz = other.z - z
+        val dw = other.w - w
+        return fma(dx, dx, fma(dy, dy, fma(dz, dz, dw * dw)))
+    }
+
+    inline fun distance(other: Vector4f): Float = sqrt(distanceSq(other))
+
+    fun lengthSq(): Float = fma(x, x, fma(y, y, fma(z, z, w * w)))
     inline fun length(): Float = sqrt(lengthSq())
 
     inline fun normalized(): Vector4f = this / length()
 
-    infix fun dot(other: Vector4f): Float = fma(fma(fma(x, other.x, y), other.y, z), other.z, w) * other.w
+    infix fun dot(other: Vector4f): Float = fma(x, other.x, fma(y, other.y, fma(z, other.z, w * other.w)))
 
     inline fun toVector4i(): Vector4i = Vector4i(x.toInt(), y.toInt(), z.toInt(), w.toInt())
 
     operator fun times(other: Matrix4x4f): Vector4f = Vector4f(
-        fma(fma(fma(other.m00, x, other.m01), y, other.m02), z, other.m03) * w,
-        fma(fma(fma(other.m10, x, other.m11), y, other.m12), z, other.m13) * w,
-        fma(fma(fma(other.m20, x, other.m21), y, other.m22), z, other.m23) * w,
-        fma(fma(fma(other.m30, x, other.m31), y, other.m32), z, other.m33) * w
+        fma(other.m00, x, fma(other.m01, y, fma(other.m02, z, other.m03 * w))),
+        fma(other.m10, x, fma(other.m11, y, fma(other.m12, z, other.m13 * w))),
+        fma(other.m20, x, fma(other.m21, y, fma(other.m22, z, other.m23 * w))),
+        fma(other.m30, x, fma(other.m31, y, fma(other.m32, z, other.m33 * w)))
     )
 
     override operator fun get(index: Int): Float = when (index) {

@@ -81,12 +81,12 @@ data class Vector4i( // @formatter:off
         fma((other.w - w).toFloat(), factor, w.toFloat()).toInt()
     ) // @formatter:on
 
-    fun lengthSq(): Int = fma(fma(fma(x, x, y), y, z), z, w) * w
+    fun lengthSq(): Int = fma(x, x, fma(y, y, fma(z, z, w * w)))
     inline fun length(): Int = sqrt(lengthSq().toFloat()).toInt()
 
     inline fun normalized(): Vector4i = this / length()
 
-    infix fun dot(other: Vector4i): Int = fma(fma(fma(x, other.x, y), other.y, z), other.z, w) * other.w
+    infix fun dot(other: Vector4i): Int = fma(x, other.x, fma(y, other.y, fma(z, other.z, w * other.w)))
 
     inline fun toVector4f(): Vector4f = Vector4f(x.toFloat(), y.toFloat(), z.toFloat(), w.toFloat())
 
@@ -95,7 +95,7 @@ data class Vector4i( // @formatter:off
         1 -> y
         2 -> z
         3 -> w
-        else -> throw IllegalArgumentException("Invalid vector component $index for Vector4f")
+        else -> throw IllegalArgumentException("Invalid vector component $index for Vector4i")
     }
 
     override operator fun get(component: VectorComponent): Int = when (component) {

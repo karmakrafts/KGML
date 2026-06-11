@@ -79,12 +79,21 @@ data class Vector3f( // @formatter:off
         fma(other.z - z, factor, z)
     ) // @formatter:on
 
-    fun lengthSq(): Float = fma(fma(x, x, y), y, z) * z
+    fun distanceSq(other: Vector3f): Float {
+        val dx = other.x - x
+        val dy = other.y - y
+        val dz = other.z - z
+        return fma(dx, dx, fma(dy, dy, dz * dz))
+    }
+
+    inline fun distance(other: Vector3f): Float = sqrt(distanceSq(other))
+
+    fun lengthSq(): Float = fma(x, x, fma(y, y, z * z))
     inline fun length(): Float = sqrt(lengthSq())
 
     inline fun normalized(): Vector3f = this / length()
 
-    infix fun dot(other: Vector3f): Float = fma(fma(x, other.x, y), other.y, z) * other.z
+    infix fun dot(other: Vector3f): Float = fma(x, other.x, fma(y, other.y, z * other.z))
 
     infix fun cross(other: Vector3f): Vector3f = Vector3f( // @formatter:off
         y * other.z - z * other.y,
@@ -95,9 +104,9 @@ data class Vector3f( // @formatter:off
     inline fun toVector3i(): Vector3i = Vector3i(x.toInt(), y.toInt(), z.toInt())
 
     operator fun times(other: Matrix3x3f): Vector3f = Vector3f(
-        fma(fma(other.m00, x, other.m01), y, other.m02) * z,
-        fma(fma(other.m10, x, other.m11), y, other.m12) * z,
-        fma(fma(other.m20, x, other.m21), y, other.m22) * z
+        fma(other.m00, x, fma(other.m01, y, other.m02 * z)),
+        fma(other.m10, x, fma(other.m11, y, other.m12 * z)),
+        fma(other.m20, x, fma(other.m21, y, other.m22 * z))
     )
 
     override operator fun get(index: Int): Float = when (index) {

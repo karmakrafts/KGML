@@ -74,19 +74,27 @@ data class Vector2f( // @formatter:off
         fma(other.y - y, factor, y)
     ) // @formatter:on
 
-    fun lengthSq(): Float = fma(x, x, y) * y
+    fun distanceSq(other: Vector2f): Float {
+        val dx = other.x - x
+        val dy = other.y - y
+        return fma(dx, dx, dy * dy)
+    }
+
+    inline fun distance(other: Vector2f): Float = sqrt(distanceSq(other))
+
+    fun lengthSq(): Float = fma(x, x, y * y)
     inline fun length(): Float = sqrt(lengthSq())
 
     inline fun normalized(): Vector2f = this / length()
 
-    infix fun dot(other: Vector2f): Float = fma(x, other.x, y) * other.y
+    infix fun dot(other: Vector2f): Float = fma(x, other.x, y * other.y)
     infix fun cross(other: Vector2f): Float = x * other.y - y * other.x
 
     inline fun toVector2i(): Vector2i = Vector2i(x.toInt(), y.toInt())
 
     operator fun times(other: Matrix2x2f): Vector2f = Vector2f( // @formatter:off
-        fma(other.m00, x, other.m01) * y,
-        fma(other.m10, x, other.m11) * y
+        fma(other.m00, x, other.m01 * y),
+        fma(other.m10, x, other.m11 * y)
     ) // @formatter:on
 
     override operator fun get(index: Int): Float = when (index) {

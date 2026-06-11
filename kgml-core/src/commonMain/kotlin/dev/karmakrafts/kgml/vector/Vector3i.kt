@@ -78,12 +78,12 @@ data class Vector3i( // @formatter:off
         fma((other.z - z).toFloat(), factor, z.toFloat()).toInt()
     ) // @formatter:on
 
-    fun lengthSq(): Int = fma(fma(x, x, y), y, z) * z
+    fun lengthSq(): Int = fma(x, x, fma(y, y, z * z))
     inline fun length(): Int = sqrt(lengthSq().toFloat()).toInt()
 
     inline fun normalized(): Vector3i = this / length()
 
-    infix fun dot(other: Vector3i): Int = fma(fma(x, other.x, y), other.y, z) * other.z
+    infix fun dot(other: Vector3i): Int = fma(x, other.x, fma(y, other.y, z * other.z))
 
     infix fun cross(other: Vector3i): Vector3i = Vector3i( // @formatter:off
         y * other.z - z * other.y,
@@ -97,14 +97,14 @@ data class Vector3i( // @formatter:off
         0 -> x
         1 -> y
         2 -> z
-        else -> throw IllegalArgumentException("Invalid vector component $index for Vector3f")
+        else -> throw IllegalArgumentException("Invalid vector component $index for Vector3i")
     }
 
     override operator fun get(component: VectorComponent): Int = when (component) {
         VectorComponent.X -> x
         VectorComponent.Y -> y
         VectorComponent.Z -> z
-        else -> throw IllegalArgumentException("Invalid vector component $component for Vector3f")
+        else -> throw IllegalArgumentException("Invalid vector component $component for Vector3i")
     }
 
     override fun toIntArray(): IntArray = intArrayOf(x, y, z)
