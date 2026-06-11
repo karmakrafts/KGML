@@ -14,6 +14,8 @@
  * limitations under the License.
  */
 
+@file:JvmName("Intrinsics$")
+
 package dev.karmakrafts.kgml.util
 
 actual fun fma(a: Float, b: Float, c: Float): Float = Math.fma(a, b, c)
