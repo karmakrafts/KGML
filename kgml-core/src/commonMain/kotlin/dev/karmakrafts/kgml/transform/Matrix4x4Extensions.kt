@@ -33,36 +33,44 @@ inline fun Matrix4x4f.Companion.rotationY(deg: Float): Matrix4x4f = rotationYRad
 inline fun Matrix4x4f.Companion.rotationZRad(rad: Float): Matrix4x4f = Matrix3x3f.rotationZRad(rad).extend()
 inline fun Matrix4x4f.Companion.rotationZ(deg: Float): Matrix4x4f = rotationZRad((deg * TO_RAD).toFloat())
 
-fun Matrix4x4f.Companion.rotationRad(
-    angleX: Float,
-    angleY: Float,
-    angleZ: Float
-): Matrix4x4f = rotationXRad(angleX) * rotationYRad(angleY) * rotationZRad(angleZ)
+fun Matrix4x4f.Companion.rotationRad( // @formatter:off
+    angleX: Float = 0F,
+    angleY: Float = 0F,
+    angleZ: Float = 0F
+): Matrix4x4f = rotationXRad(angleX) * rotationYRad(angleY) * rotationZRad(angleZ) // @formatter:on
 
-fun Matrix4x4f.Companion.translation(x: Float, y: Float, z: Float): Matrix4x4f = Matrix4x4f( // @formatter:off
+fun Matrix4x4f.Companion.translation( // @formatter:off
+    x: Float = 0F,
+    y: Float = 0F,
+    z: Float = 0F
+): Matrix4x4f = Matrix4x4f(
     1F, 0F, 0F, x,
     0F, 1F, 0F, y,
     0F, 0F, 1F, z,
     0F, 0F, 0F, 1F
 ) // @formatter:on
 
-fun Matrix4x4f.Companion.scale(x: Float, y: Float, z: Float): Matrix4x4f = Matrix4x4f(
+fun Matrix4x4f.Companion.scale( // @formatter:off
+    x: Float = 0F,
+    y: Float = 0F,
+    z: Float = 0F
+): Matrix4x4f = Matrix4x4f(
     x,  0F, 0F, 0F,
     0F, y,  0F, 0F,
     0F, 0F, z,  0F,
     0F, 0F, 0F, 1F
-)
+) // @formatter:on
 
-fun Matrix4x4f.Companion.skew(
-    xy: Float,
-    xz: Float,
-    yx: Float,
-    yz: Float,
-    zx: Float,
-    zy: Float
+fun Matrix4x4f.Companion.skew( // @formatter:off
+    xy: Float = 0F,
+    xz: Float = 0F,
+    yx: Float = 0F,
+    yz: Float = 0F,
+    zx: Float = 0F,
+    zy: Float = 0F
 ): Matrix4x4f = Matrix4x4f(
     1F, xy, xz, 0F,
     yx, 1F, yz, 0F,
     zx, zy, 1F, 0F,
     0F, 0F, 0F, 1F
-)
+) // @formatter:on
