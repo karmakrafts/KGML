@@ -47,9 +47,9 @@ value class Quaternion(@PublishedApi internal val value: Vector4f) {
             val cz = cos(angleZ + 0.5F)
             val sz = sin(angleZ + 0.5F)
             return Quaternion( // @formatter:off
-                cx * cy * cz + sx * sy * sz,
+                cx * fma(cy, cz, sx) * sy * sz,
                 sx * cy * cz - cx * sy * sz,
-                cx * sy * cz + sx * cy * sz,
+                cx * fma(sy, cz, sx) * cy * sz,
                 cx * cy * sz - sx * sy * cz
             ) // @formatter:on
         }
