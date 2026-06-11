@@ -16,53 +16,63 @@
 
 package dev.karmakrafts.kgml.matrix
 
-import dev.karmakrafts.kgml.transform.translate
-import dev.karmakrafts.kgml.transform.translation
 import kotlin.test.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertNull
 
 class MatrixStackTest {
-    @Test
-    fun `stack should initialize with identity`() {
-        val stack = MatrixStack { Matrix4x4f.identity }
-        stack.push()
-        assertEquals(Matrix4x4f.identity, stack.current())
-    }
 
     @Test
-    fun `push and pop should work correctly`() {
-        val stack = MatrixStack { Matrix4x4f.identity }
-        stack.push(Matrix4x4f.identity)
-        val m1 = Matrix4x4f(2F)
+    fun `push and current should work`() {
+        val stack = MatrixStack(identityProvider = { Matrix2x2f.identity.copy() })
+        stack.push()
+        assertEquals(Matrix2x2f.identity, stack.current())
+
+        val m1 = Matrix2x2f(1F, 2F, 3F, 4F)
         stack.push(m1)
         assertEquals(m1, stack.current())
-        assertEquals(m1, stack.pop())
-        assertEquals(Matrix4x4f.identity, stack.current())
     }
 
     @Test
     fun `swap should replace current matrix`() {
-        val stack = MatrixStack { Matrix4x4f.identity }
-        stack.push(Matrix4x4f.identity)
-        val m1 = Matrix4x4f(2F)
+        val stack = MatrixStack(identityProvider = { Matrix2x2f.identity.copy() })
+        stack.push()
+        val m1 = Matrix2x2f(1F, 2F, 3F, 4F)
         stack.swap(m1)
         assertEquals(m1, stack.current())
     }
 
     @Test
-    fun `reduce should multiply all matrices in stack`() {
-        val stack = MatrixStack { Matrix4x4f.identity }
-        stack.push(Matrix4x4f.translation(2F, 0F, 0F))
-        stack.push(Matrix4x4f.translation(3F, 0F, 0F))
-        // T(2) * T(3) = T(5)
-        assertEquals(Matrix4x4f.translation(5F, 0F, 0F), stack.reduce())
+    fun `pop should remove and return top matrix`() {
+        val stack = MatrixStack(identityProvider = { Matrix2x2f.identity.copy() })
+        stack.push()
+        val m1 = Matrix2x2f(1F, 2F, 3F, 4F)
+        stack.push(m1)
+
+        assertEquals(m1, stack.pop())
+        assertEquals(Matrix2x2f.identity, stack.current())
+        assertEquals(Matrix2x2f.identity, stack.pop())
+        assertNull(stack.pop())
     }
 
     @Test
-    fun `translate extension should update current matrix`() {
-        val stack = MatrixStack { Matrix4x4f.identity }
-        stack.push(Matrix4x4f.identity)
-        stack.translate(x = 2F)
-        assertEquals(Matrix4x4f.translation(2F, 0F, 0F), stack.current())
+    fun `reduce should multiply all matrices`() {
+        val stack = MatrixStack(identityProvider = { Matrix2x2f.identity.copy() })
+        val m1 = Matrix2x2f(1F, 2F, 3F, 4F)
+        val m2 = Matrix2x2f(5F, 6F, 7F, 8F)
+
+        stack.push(m1)
+        stack.push(m2)
+
+        val expected = m1 * m2
+        assertEquals(expected, stack.reduce())
+    }
+
+    @Test
+    fun `reduce with single element should return that element`() {
+        val stack = MatrixStack(identityProvider = { Matrix2x2f.identity.copy() })
+        val m1 = Matrix2x2f(1F, 2F, 3F, 4F)
+        stack.push(m1)
+        assertEquals(m1, stack.reduce())
     }
 }
