@@ -16,6 +16,11 @@
 
 package dev.karmakrafts.kgml.matrix
 
+import dev.karmakrafts.kgml.vector.VectorN
+
 sealed interface MatrixNxN {
     val type: MatrixType
+
+    operator fun times(other: MatrixNxN): MatrixNxN
+    operator fun times(other: VectorN): VectorN
 }

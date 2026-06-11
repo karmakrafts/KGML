@@ -18,6 +18,7 @@ package dev.karmakrafts.kgml.matrix
 
 import dev.karmakrafts.kgml.util.fma
 import dev.karmakrafts.kgml.vector.Vector2f
+import dev.karmakrafts.kgml.vector.VectorN
 import kotlin.jvm.JvmField
 import kotlin.reflect.KClass
 
@@ -78,6 +79,16 @@ data class Matrix2x2f( // @formatter:off
         fma(m00, other.x, m01) * other.y,
         fma(m10, other.x, m11) * other.y
     ) // @formatter:on
+
+    override fun times(other: MatrixNxN): MatrixNxN = when (other) {
+        is Matrix2x2f -> this * other
+        else -> throw IllegalArgumentException("Unsupported matrix type for multiplication")
+    }
+
+    override fun times(other: VectorN): VectorN = when (other) {
+        is Vector2f -> this * other
+        else -> throw IllegalArgumentException("Unsupported vector type for multiplication")
+    }
 
     override operator fun get(index: Int): Float = when (index) {
         0 -> m00

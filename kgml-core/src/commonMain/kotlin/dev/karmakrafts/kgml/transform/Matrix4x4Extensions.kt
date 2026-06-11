@@ -39,6 +39,12 @@ fun Matrix4x4f.Companion.rotationRad( // @formatter:off
     angleZ: Float = 0F
 ): Matrix4x4f = rotationXRad(angleX) * rotationYRad(angleY) * rotationZRad(angleZ) // @formatter:on
 
+fun Matrix4x4f.Companion.rotation( // @formatter:off
+    angleX: Float = 0F,
+    angleY: Float = 0F,
+    angleZ: Float = 0F
+): Matrix4x4f = rotationX(angleX) * rotationY(angleY) * rotationZ(angleZ) // @formatter:on
+
 fun Matrix4x4f.Companion.translation( // @formatter:off
     x: Float = 0F,
     y: Float = 0F,
@@ -51,14 +57,14 @@ fun Matrix4x4f.Companion.translation( // @formatter:off
 ) // @formatter:on
 
 fun Matrix4x4f.Companion.scale( // @formatter:off
-    x: Float = 0F,
-    y: Float = 0F,
-    z: Float = 0F
+    scaleX: Float = 1F,
+    scaleY: Float = 1F,
+    scaleZ: Float = 1F
 ): Matrix4x4f = Matrix4x4f(
-    x,  0F, 0F, 0F,
-    0F, y,  0F, 0F,
-    0F, 0F, z,  0F,
-    0F, 0F, 0F, 1F
+    scaleX, 0F,     0F,     0F,
+    0F,     scaleY, 0F,     0F,
+    0F,     0F,     scaleZ, 0F,
+    0F,     0F,     0F,     1F
 ) // @formatter:on
 
 fun Matrix4x4f.Companion.skew( // @formatter:off
