@@ -50,7 +50,7 @@ class Vector4fTest {
     }
 
     @Test
-    fun `components should return X, Y, Z and W`() {
+    fun `components should return X Y Z and W`() {
         assertContentEquals(VectorComponent.entries.toTypedArray(), Vector4f.components)
     }
 
@@ -141,7 +141,7 @@ class Vector4fTest {
     }
 
     @Test
-    fun `fma should calculate fused multiply-add`() {
+    fun `fma should calculate fused multiply add`() {
         val vector = Vector4f(2F, 3F, 6F, 9F)
         val other = Vector4f(5F, 7F, 11F, 13F)
         assertEquals(Vector4f(12F, 23F, 68F, 119F), vector.fma(other, Vector4f(2F, 2F, 2F, 2F)))

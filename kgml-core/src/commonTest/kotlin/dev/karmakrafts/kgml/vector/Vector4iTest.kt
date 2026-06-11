@@ -48,7 +48,7 @@ class Vector4iTest {
     }
 
     @Test
-    fun `components should return X, Y, Z and W`() {
+    fun `components should return X Y Z and W`() {
         assertContentEquals(VectorComponent.entries.toTypedArray(), Vector4i.components)
     }
 
@@ -139,7 +139,7 @@ class Vector4iTest {
     }
 
     @Test
-    fun `fma should calculate fused multiply-add`() {
+    fun `fma should calculate fused multiply add`() {
         val vector = Vector4i(2, 3, 6, 9)
         val other = Vector4i(5, 7, 11, 13)
         assertEquals(Vector4i(12, 23, 68, 119), vector.fma(other, Vector4i(2, 2, 2, 2)))

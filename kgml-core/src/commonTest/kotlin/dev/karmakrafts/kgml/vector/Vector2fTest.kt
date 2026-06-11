@@ -140,7 +140,7 @@ class Vector2fTest {
     }
 
     @Test
-    fun `fma should calculate fused multiply-add`() {
+    fun `fma should calculate fused multiply add`() {
         val vector = Vector2f(3F, 4F)
         val other = Vector2f(5F, 6F)
         assertEquals(Vector2f(17F, 26F), vector.fma(other, Vector2f(2F, 2F)))

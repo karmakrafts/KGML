@@ -48,7 +48,7 @@ class Vector3iTest {
     }
 
     @Test
-    fun `components should return X, Y and Z`() {
+    fun `components should return X Y and Z`() {
         assertContentEquals(arrayOf(VectorComponent.X, VectorComponent.Y, VectorComponent.Z), Vector3i.components)
     }
 
@@ -139,7 +139,7 @@ class Vector3iTest {
     }
 
     @Test
-    fun `fma should calculate fused multiply-add`() {
+    fun `fma should calculate fused multiply add`() {
         val vector = Vector3i(2, 3, 6)
         val other = Vector3i(5, 7, 11)
         assertEquals(Vector3i(12, 23, 68), vector.fma(other, Vector3i(2, 2, 2)))
