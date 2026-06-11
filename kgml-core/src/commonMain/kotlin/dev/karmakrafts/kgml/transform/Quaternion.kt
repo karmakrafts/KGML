@@ -18,9 +18,15 @@ package dev.karmakrafts.kgml.transform
 
 import dev.karmakrafts.kgml.matrix.Matrix3x3f
 import dev.karmakrafts.kgml.matrix.Matrix4x4f
+import dev.karmakrafts.kgml.util.TO_DEG
 import dev.karmakrafts.kgml.util.fma
 import dev.karmakrafts.kgml.vector.Vector4f
 import kotlin.jvm.JvmInline
+import kotlin.math.PI
+import kotlin.math.abs
+import kotlin.math.asin
+import kotlin.math.atan2
+import kotlin.math.withSign
 
 @JvmInline
 value class Quaternion(@PublishedApi internal val value: Vector4f) {
@@ -30,6 +36,20 @@ value class Quaternion(@PublishedApi internal val value: Vector4f) {
     inline val w: Float get() = value.w
 
     constructor(x: Float, y: Float, z: Float, w: Float) : this(Vector4f(x, y, z, w))
+
+    fun getAngleXRad(): Float = atan2(2F * (w * x + y * z), 1F - 2F * (x * x + y * y))
+    fun getAngleX(): Float = (getAngleXRad() * TO_DEG).toFloat()
+
+    fun getAngleYRad(): Float {
+        val sinp = 2F * (w * y - z * x)
+        return if (abs(sinp) >= 1F) (PI * 0.5).toFloat().withSign(sinp)
+        else asin(sinp)
+    }
+
+    fun getAngleY(): Float = (getAngleYRad() * TO_DEG).toFloat()
+
+    fun getAngleZRad(): Float = atan2(2F * (w * z + x * y), 1F - 2F * (y * y + z * z))
+    fun getAngleZ(): Float = (getAngleZRad() * TO_DEG).toFloat()
 
     operator fun times(other: Quaternion): Quaternion = Quaternion(
         w * other.w - x * other.x - y * other.y - z * other.z,
@@ -90,6 +110,9 @@ value class Quaternion(@PublishedApi internal val value: Vector4f) {
             1F
         )
     }
+
+    @Suppress("NOTHING_TO_INLINE")
+    inline fun asVector4f(): Vector4f = value
 
     @Suppress("NOTHING_TO_INLINE")
     inline fun copy( // @formatter:off
