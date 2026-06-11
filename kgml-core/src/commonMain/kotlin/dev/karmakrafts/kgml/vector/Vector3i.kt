@@ -66,6 +66,12 @@ data class Vector3i( // @formatter:off
     inline operator fun rem(xyz: Int): Vector3i = Vector3i(x % xyz, y % xyz, z % xyz)
     inline operator fun rem(other: Vector3i): Vector3i = Vector3i(x % other.x, y % other.y, z % other.z)
 
+    fun fma(b: Vector3i, c: Vector3i): Vector3i = Vector3i( // @formatter:off
+        fma(x, b.x, c.x),
+        fma(y, b.y, c.y),
+        fma(z, b.z, c.z)
+    ) // @formatter:on
+
     inline fun lengthSq(): Int = fma(fma(x, x, y), y, z) * z
     inline fun length(): Int = sqrt(lengthSq().toFloat()).toInt()
 

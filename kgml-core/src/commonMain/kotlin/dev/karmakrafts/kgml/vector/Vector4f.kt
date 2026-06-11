@@ -68,6 +68,13 @@ data class Vector4f( // @formatter:off
     inline operator fun rem(xyzw: Float): Vector4f = Vector4f(x % xyzw, y % xyzw, z % xyzw, w % xyzw)
     inline operator fun rem(other: Vector4f): Vector4f = Vector4f(x % other.x, y % other.y, z % other.z, w % other.w)
 
+    fun fma(b: Vector4f, c: Vector4f): Vector4f = Vector4f( // @formatter:off
+        fma(x, b.x, c.x),
+        fma(y, b.y, c.y),
+        fma(z, b.z, c.z),
+        fma(w, b.w, c.w)
+    ) // @formatter:on
+
     inline fun lengthSq(): Float = fma(fma(fma(x, x, y), y, z), z, w) * w
     inline fun length(): Float = sqrt(lengthSq())
 

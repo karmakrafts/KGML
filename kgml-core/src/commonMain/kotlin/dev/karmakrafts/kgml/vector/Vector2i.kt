@@ -63,6 +63,11 @@ data class Vector2i( // @formatter:off
     inline operator fun rem(xy: Int): Vector2i = Vector2i(x % xy, y % xy)
     inline operator fun rem(other: Vector2i): Vector2i = Vector2i(x % other.x, y % other.y)
 
+    fun fma(b: Vector2i, c: Vector2i): Vector2i = Vector2i( // @formatter:off
+        fma(x, b.x, c.x),
+        fma(y, b.y, c.y)
+    ) // @formatter:on
+
     inline fun lengthSq(): Int = fma(x, x, y) * y
     inline fun length(): Int = sqrt(lengthSq().toFloat()).toInt()
 

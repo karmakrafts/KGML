@@ -25,6 +25,7 @@ import dev.karmakrafts.kgml.vector.Vector4f
 import kotlin.jvm.JvmInline
 import kotlin.math.PI
 import kotlin.math.abs
+import kotlin.math.acos
 import kotlin.math.asin
 import kotlin.math.atan2
 import kotlin.math.cos
@@ -92,6 +93,34 @@ value class Quaternion(@PublishedApi internal val value: Vector4f) {
         w * other.y - fma(fma(x, other.z, y), other.w, z) * other.x,
         fma(w, other.z, x) * other.y - fma(y, other.x, z) * other.w
     )
+
+    inline operator fun times(other: Float): Quaternion = Quaternion(value * other)
+
+    fun slerp(other: Quaternion, factor: Float): Quaternion {
+        var rhs = other.value
+        var dot = value dot value
+        // Ensure we take the shortest path
+        if (dot < 0F) {
+            rhs = rhs * -1F
+            dot = -dot
+        }
+        // If the quaternions are very close already, we use regular lerping
+        if (dot > 0.9995F) {
+            val result = value.fma(Vector4f(1F - factor), rhs * factor)
+            return Quaternion(result.normalized())
+        }
+        // Otherwise we use spherical lerping
+        val theta = acos(dot)
+        val sTheta = sin(theta)
+        val w0 = sin((1F - factor) * theta) / sTheta
+        val w1 = sin(factor * theta) / sTheta
+        return Quaternion( // @formatter:off
+            fma(x, w0, rhs.x) * w1,
+            fma(y, w0, rhs.y) * w1,
+            fma(z, w0, rhs.z) * w1,
+            fma(w, w0, rhs.w) * w1
+        ) // @formatter:on
+    }
 
     fun toRotationMatrix3x3(): Matrix3x3f {
         val xx = x * x
