@@ -18,5 +18,12 @@ package dev.karmakrafts.kgml.util
 
 import kotlin.math.PI
 
+/**
+ * Constant factor for converting degrees to radians.
+ */
 const val TO_RAD: Double = PI / 180.0
+
+/**
+ * Constant factor for converting radians to degrees.
+ */
 const val TO_DEG: Double = 180.0 / PI

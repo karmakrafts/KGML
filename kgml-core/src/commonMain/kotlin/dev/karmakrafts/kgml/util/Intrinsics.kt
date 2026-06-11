@@ -16,11 +16,44 @@
 
 package dev.karmakrafts.kgml.util
 
+/**
+ * Computes a fused multiply-add operation: `(a * b) + c`.
+ *
+ * @param a The first operand.
+ * @param b The second operand.
+ * @param c The third operand.
+ * @return The result of `(a * b) + c`.
+ */
 expect fun fma(a: Float, b: Float, c: Float): Float
+
+/**
+ * Computes a fused multiply-add operation: `(a * b) + c`.
+ *
+ * @param a The first operand.
+ * @param b The second operand.
+ * @param c The third operand.
+ * @return The result of `(a * b) + c`.
+ */
 expect fun fma(a: Double, b: Double, c: Double): Double
 
+/**
+ * Computes a fused multiply-add operation: `(a * b) + c`.
+ *
+ * @param a The first operand.
+ * @param b The second operand.
+ * @param c The third operand.
+ * @return The result of `(a * b) + c`.
+ */
 @Suppress("NOTHING_TO_INLINE")
 inline fun fma(a: Int, b: Int, c: Int): Int = fma(a.toFloat(), b.toFloat(), c.toFloat()).toInt()
 
+/**
+ * Computes a fused multiply-add operation: `(a * b) + c`.
+ *
+ * @param a The first operand.
+ * @param b The second operand.
+ * @param c The third operand.
+ * @return The result of `(a * b) + c`.
+ */
 @Suppress("NOTHING_TO_INLINE")
 inline fun fma(a: Long, b: Long, c: Long): Long = fma(a.toDouble(), b.toDouble(), c.toDouble()).toLong()
