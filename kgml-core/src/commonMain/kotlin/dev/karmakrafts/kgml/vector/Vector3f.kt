@@ -19,10 +19,12 @@ package dev.karmakrafts.kgml.vector
 import dev.karmakrafts.kgml.matrix.Matrix3x3f
 import dev.karmakrafts.kgml.util.fma
 import kotlin.jvm.JvmField
+import kotlin.jvm.JvmRecord
 import kotlin.math.sqrt
 import kotlin.reflect.KClass
 
 @Suppress("NOTHING_TO_INLINE")
+@JvmRecord
 data class Vector3f( // @formatter:off
     @JvmField val x: Float,
     @JvmField val y: Float,

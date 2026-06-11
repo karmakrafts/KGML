@@ -20,9 +20,11 @@ import dev.karmakrafts.kgml.util.fma
 import dev.karmakrafts.kgml.vector.Vector3f
 import dev.karmakrafts.kgml.vector.VectorN
 import kotlin.jvm.JvmField
+import kotlin.jvm.JvmRecord
 import kotlin.reflect.KClass
 
 @Suppress("NOTHING_TO_INLINE")
+@JvmRecord
 data class Matrix3x3f(
     @JvmField val m00: Float,
     @JvmField val m01: Float,

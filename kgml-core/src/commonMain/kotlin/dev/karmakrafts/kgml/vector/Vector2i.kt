@@ -18,10 +18,12 @@ package dev.karmakrafts.kgml.vector
 
 import dev.karmakrafts.kgml.util.fma
 import kotlin.jvm.JvmField
+import kotlin.jvm.JvmRecord
 import kotlin.math.sqrt
 import kotlin.reflect.KClass
 
 @Suppress("NOTHING_TO_INLINE")
+@JvmRecord
 data class Vector2i( // @formatter:off
     @JvmField val x: Int,
     @JvmField val y: Int
