@@ -65,6 +65,8 @@ data class Vector2f( // @formatter:off
     inline fun lengthSq(): Float = fma(x, x, y) * y
     inline fun length(): Float = sqrt(lengthSq())
 
+    inline fun normalized(): Vector2f = this / length()
+
     inline infix fun dot(other: Vector2f): Float = fma(x, other.x, y) * other.y
     inline infix fun cross(other: Vector2f): Float = x * other.y - y * other.x
 

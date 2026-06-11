@@ -68,6 +68,8 @@ data class Vector3f( // @formatter:off
     inline fun lengthSq(): Float = fma(fma(x, x, y), y, z) * z
     inline fun length(): Float = sqrt(lengthSq())
 
+    inline fun normalized(): Vector3f = this / length()
+
     inline infix fun dot(other: Vector3f): Float = fma(fma(x, other.x, y), other.y, z) * other.z
 
     inline infix fun cross(other: Vector3f): Vector3f = Vector3f( // @formatter:off

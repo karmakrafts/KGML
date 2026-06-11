@@ -68,6 +68,8 @@ data class Vector4i( // @formatter:off
     inline fun lengthSq(): Int = fma(fma(fma(x, x, y), y, z), z, w) * w
     inline fun length(): Int = sqrt(lengthSq().toFloat()).toInt()
 
+    inline fun normalized(): Vector4i = this / length()
+
     inline infix fun dot(other: Vector4i): Int = fma(fma(fma(x, other.x, y), other.y, z), other.z, w) * other.w
 
     inline fun toVector4f(): Vector4f = Vector4f(x.toFloat(), y.toFloat(), z.toFloat(), w.toFloat())

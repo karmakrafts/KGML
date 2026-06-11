@@ -67,6 +67,8 @@ data class Vector3i( // @formatter:off
     inline fun lengthSq(): Int = fma(fma(x, x, y), y, z) * z
     inline fun length(): Int = sqrt(lengthSq().toFloat()).toInt()
 
+    inline fun normalized(): Vector3i = this / length()
+
     inline infix fun dot(other: Vector3i): Int = fma(fma(x, other.x, y), other.y, z) * other.z
 
     inline infix fun cross(other: Vector3i): Vector3i = Vector3i( // @formatter:off
