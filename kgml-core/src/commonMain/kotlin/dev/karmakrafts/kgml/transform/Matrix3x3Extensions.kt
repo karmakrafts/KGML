@@ -82,3 +82,9 @@ fun Matrix3x3f.Companion.translation(x: Float, y: Float): Matrix3x3f = Matrix3x3
     0F, 1F, y,
     0F, 0F, 1F
 ) // @formatter:on
+
+fun Matrix3x3f.Companion.scale(x: Float, y: Float): Matrix3x3f = Matrix3x3f( // @formatter:off
+    x,  0F, 0F,
+    0F, y,  0F,
+    0F, 0F, 1F
+) // @formatter:on

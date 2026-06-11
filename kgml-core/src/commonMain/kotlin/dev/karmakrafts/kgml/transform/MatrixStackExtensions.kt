@@ -15,9 +15,67 @@
  */
 
 package dev.karmakrafts.kgml.transform
-
+ 
+import dev.karmakrafts.kgml.matrix.Matrix2x2f
+import dev.karmakrafts.kgml.matrix.Matrix3x3f
 import dev.karmakrafts.kgml.matrix.Matrix4x4f
 import dev.karmakrafts.kgml.matrix.MatrixStack
+import kotlin.jvm.JvmName
+
+// 1D transformations
+
+fun MatrixStack<Matrix2x2f>.rotateRad(angle: Float) {
+    swap(current() * Matrix2x2f.rotationRad(angle))
+}
+
+fun MatrixStack<Matrix2x2f>.rotate(angle: Float) {
+    swap(current() * Matrix2x2f.rotation(angle))
+}
+
+@JvmName("scale22")
+fun MatrixStack<Matrix2x2f>.scale( // @formatter:off
+    scaleX: Float = 1F,
+    scaleY: Float = 1F
+) { // @formatter:on
+    swap(current() * Matrix2x2f.scale(scaleX, scaleY))
+}
+
+// 2D transformations
+
+@JvmName("rotateRad33")
+fun MatrixStack<Matrix3x3f>.rotateRad( // @formatter:off
+    angleX: Float = 0F,
+    angleY: Float = 0F,
+    angleZ: Float = 0F
+) { // @formatter:on
+    swap(current() * Matrix3x3f.rotationRad(angleX, angleY, angleZ))
+}
+
+@JvmName("rotate33")
+fun MatrixStack<Matrix3x3f>.rotate( // @formatter:off
+    angleX: Float = 0F,
+    angleY: Float = 0F,
+    angleZ: Float = 0F
+) { // @formatter:on
+    swap(current() * Matrix3x3f.rotation(angleX, angleY, angleZ))
+}
+
+@JvmName("scale33")
+fun MatrixStack<Matrix3x3f>.scale( // @formatter:off
+    scaleX: Float = 1F,
+    scaleY: Float = 1F
+) { // @formatter:on
+    swap(current() * Matrix3x3f.scale(scaleX, scaleY))
+}
+
+fun MatrixStack<Matrix3x3f>.translate( // @formatter:off
+    x: Float = 0F,
+    y: Float = 0F
+) { // @formatter:on
+    swap(current() * Matrix3x3f.translation(x, y))
+}
+
+// 3D transformations
 
 fun MatrixStack<Matrix4x4f>.rotateRad( // @formatter:off
     angleX: Float = 0F,
