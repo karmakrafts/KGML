@@ -64,13 +64,13 @@ data class Matrix2x2f( // @formatter:off
 
     override val type: MatrixType get() = Matrix2x2f
 
-    inline fun extend(): Matrix3x3f = Matrix3x3f( // @formatter:off
+    fun extend(): Matrix3x3f = Matrix3x3f( // @formatter:off
         m00, m01, 0F,
         m10, m11, 0F,
         0F,  0F,  1F
     ) // @formatter:on
 
-    inline fun transpose(): Matrix2x2f = Matrix2x2f( // @formatter:off
+    fun transpose(): Matrix2x2f = Matrix2x2f( // @formatter:off
         m00, m10,
         m01, m11
     ) // @formatter:on

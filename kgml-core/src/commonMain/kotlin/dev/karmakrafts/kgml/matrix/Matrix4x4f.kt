@@ -88,7 +88,7 @@ data class Matrix4x4f(
 
     override val type: MatrixType get() = Matrix4x4f
 
-    inline fun transpose(): Matrix4x4f = Matrix4x4f( // @formatter:off
+    fun transpose(): Matrix4x4f = Matrix4x4f( // @formatter:off
         m00, m10, m20, m30,
         m01, m11, m21, m31,
         m02, m12, m22, m32,

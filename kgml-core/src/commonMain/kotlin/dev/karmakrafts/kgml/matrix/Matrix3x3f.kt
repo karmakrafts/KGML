@@ -77,14 +77,14 @@ data class Matrix3x3f(
 
     override val type: MatrixType get() = Matrix3x3f
 
-    inline fun extend(): Matrix4x4f = Matrix4x4f( // @formatter:off
+    fun extend(): Matrix4x4f = Matrix4x4f( // @formatter:off
         m00, m01, m02, 0F,
         m10, m11, m12, 0F,
         m20, m21, m22, 0F,
         0F,  0F,  0F,  1F
     ) // @formatter:on
 
-    inline fun transpose(): Matrix3x3f = Matrix3x3f( // @formatter:off
+    fun transpose(): Matrix3x3f = Matrix3x3f( // @formatter:off
         m00, m10, m20,
         m01, m11, m21,
         m02, m12, m22

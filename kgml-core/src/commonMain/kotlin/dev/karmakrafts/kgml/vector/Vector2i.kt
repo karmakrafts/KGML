@@ -73,13 +73,13 @@ data class Vector2i( // @formatter:off
         fma((other.y - y).toFloat(), factor, y.toFloat()).toInt()
     ) // @formatter:on
 
-    inline fun lengthSq(): Int = fma(x, x, y) * y
+    fun lengthSq(): Int = fma(x, x, y) * y
     inline fun length(): Int = sqrt(lengthSq().toFloat()).toInt()
 
     inline fun normalized(): Vector2i = this / length()
 
-    inline infix fun dot(other: Vector2i): Int = fma(x, other.x, y) * other.y
-    inline infix fun cross(other: Vector2i): Int = x * other.y - y * other.x
+    infix fun dot(other: Vector2i): Int = fma(x, other.x, y) * other.y
+    infix fun cross(other: Vector2i): Int = x * other.y - y * other.x
 
     inline fun toVector2f(): Vector2f = Vector2f(x.toFloat(), y.toFloat())
 
