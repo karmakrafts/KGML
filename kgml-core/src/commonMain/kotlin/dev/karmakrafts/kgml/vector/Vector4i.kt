@@ -29,7 +29,7 @@ data class Vector4i( // @formatter:off
     @JvmField val y: Int,
     @JvmField val z: Int,
     @JvmField val w: Int
-) : VectorNi { // @formatter:on
+) : VectorNi, Comparable<Vector4i> { // @formatter:on
     companion object : VectorType {
         override val componentType: KClass<*> = Int::class
         override val componentSize: Int = Int.SIZE_BYTES
@@ -89,6 +89,18 @@ data class Vector4i( // @formatter:off
     infix fun dot(other: Vector4i): Int = fma(x, other.x, fma(y, other.y, fma(z, other.z, w * other.w)))
 
     inline fun toVector4f(): Vector4f = Vector4f(x.toFloat(), y.toFloat(), z.toFloat(), w.toFloat())
+
+    override operator fun compareTo(other: Vector4i): Int {
+        // Lexicographical comparison
+        return if (x != other.x) x.compareTo(other.x)
+        else {
+            if (y != other.y) y.compareTo(other.y)
+            else {
+                if (z != other.z) z.compareTo(other.z)
+                else w.compareTo(other.w)
+            }
+        }
+    }
 
     override operator fun get(index: Int): Int = when (index) {
         0 -> x

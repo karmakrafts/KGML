@@ -107,7 +107,7 @@ data class Vector4f( // @formatter:off
         else {
             if (y != other.y) y.compareTo(other.y)
             else {
-                if(z != other.z) z.compareTo(other.z)
+                if (z != other.z) z.compareTo(other.z)
                 else w.compareTo(other.w)
             }
         }
