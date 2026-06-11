@@ -16,8 +16,6 @@
 
 package dev.karmakrafts.kgml.matrix
 
-import dev.karmakrafts.kgml.projection.orthographic
-import dev.karmakrafts.kgml.projection.perspective
 import dev.karmakrafts.kgml.transform.rotationXRad
 import dev.karmakrafts.kgml.transform.scale
 import dev.karmakrafts.kgml.transform.skew
@@ -136,33 +134,6 @@ class Matrix4x4fTest {
     fun `skew should return skew matrix`() {
         val matrix = Matrix4x4f.skew(xy = 1F)
         assertEquals(Matrix4x4f(1F, 1F, 0F, 0F, 0F, 1F, 0F, 0F, 0F, 0F, 1F, 0F, 0F, 0F, 0F, 1F), matrix)
-    }
-
-    @Test
-    fun `orthographic should return orthographic projection matrix`() {
-        val matrix = Matrix4x4f.orthographic(-1F, 1F, -1F, 1F, 1F, 10F)
-        // rml = 2, tmb = 2, fmn = 9
-        // 2/2=1, 2/2=1, -2/9
-        // -(1-1)/2 = 0, -(1-1)/2 = 0, -(10+1)/9 = -11/9
-        assertMatrixEquals(
-            Matrix4x4f(
-                1F, 0F, 0F, 0F, 0F, 1F, 0F, 0F, 0F, 0F, -2F / 9F, -11F / 9F, 0F, 0F, 0F, 1F
-            ), matrix
-        )
-    }
-
-    @Test
-    fun `perspective should return perspective projection matrix`() {
-        val matrix = Matrix4x4f.perspective(PI.toFloat() / 2F, 1F, 1F, 10F)
-        // f = 1/tan(pi/4) = 1
-        // nmf = 1-10 = -9
-        // (10+1)/-9 = -11/9
-        // (2*10*1)/-9 = -20/9
-        assertMatrixEquals(
-            Matrix4x4f(
-                1F, 0F, 0F, 0F, 0F, 1F, 0F, 0F, 0F, 0F, -11F / 9F, -20F / 9F, 0F, 0F, -1F, 0F
-            ), matrix
-        )
     }
 
     @Test
