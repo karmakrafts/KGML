@@ -36,6 +36,8 @@ import kotlin.math.withSign
 @JvmInline
 value class Quaternion(@PublishedApi internal val value: Vector4f) : Transform<Matrix4x4f> {
     companion object {
+        val identity: Quaternion = Quaternion()
+
         fun fromAnglesRad(
             angleX: Float, angleY: Float, angleZ: Float
         ): Quaternion {
@@ -73,6 +75,7 @@ value class Quaternion(@PublishedApi internal val value: Vector4f) : Transform<M
     inline val w: Float get() = value.w
 
     constructor(x: Float, y: Float, z: Float, w: Float) : this(Vector4f(x, y, z, w))
+    constructor() : this(0F, 0F, 0F, 1F)
 
     fun getAngleXRad(): Float = atan2(2F * fma(w, x, y * z), 1F - 2F * fma(x, x, y * y))
     inline fun getAngleX(): Float = (getAngleXRad() * TO_DEG).toFloat()

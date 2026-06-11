@@ -72,14 +72,14 @@ class MatrixStackTransformTest {
 
     @Test
     fun `MatrixStack 2x2 rotation should work`() {
-        val stack = MatrixStack(identityProvider = { Matrix2x2f.identity.copy() }).apply { push() }
+        val stack = MatrixStack(identityProvider = { Matrix2x2f.identity }).apply { push() }
         stack.rotate(90f)
         assertMatrix2x2Equals(Matrix2x2f.rotation(90f), stack.current())
     }
 
     @Test
     fun `MatrixStack 2x2 rotationRad should work`() {
-        val stack = MatrixStack(identityProvider = { Matrix2x2f.identity.copy() }).apply { push() }
+        val stack = MatrixStack(identityProvider = { Matrix2x2f.identity }).apply { push() }
         val rad = (PI / 2).toFloat()
         stack.rotateRad(rad)
         assertMatrix2x2Equals(Matrix2x2f.rotationRad(rad), stack.current())
@@ -87,21 +87,21 @@ class MatrixStackTransformTest {
 
     @Test
     fun `MatrixStack 2x2 scale should work`() {
-        val stack = MatrixStack(identityProvider = { Matrix2x2f.identity.copy() }).apply { push() }
+        val stack = MatrixStack(identityProvider = { Matrix2x2f.identity }).apply { push() }
         stack.scale(2f, 3f)
         assertMatrix2x2Equals(Matrix2x2f.scale(2f, 3f), stack.current())
     }
 
     @Test
     fun `MatrixStack 3x3 rotation should work`() {
-        val stack = MatrixStack(identityProvider = { Matrix3x3f.identity.copy() }).apply { push() }
+        val stack = MatrixStack(identityProvider = Matrix3x3f::identity).apply { push() }
         stack.rotate(90f, 0f, 0f)
         assertMatrix3x3Equals(Matrix3x3f.rotationX(90f), stack.current())
     }
 
     @Test
     fun `MatrixStack 3x3 rotationRad should work`() {
-        val stack = MatrixStack(identityProvider = { Matrix3x3f.identity.copy() }).apply { push() }
+        val stack = MatrixStack(identityProvider = Matrix3x3f::identity).apply { push() }
         val rad = (PI / 2).toFloat()
         stack.rotateRad(0f, rad, 0f)
         assertMatrix3x3Equals(Matrix3x3f.rotationYRad(rad), stack.current())
@@ -109,19 +109,19 @@ class MatrixStackTransformTest {
 
     @Test
     fun `MatrixStack 3x3 scale should work`() {
-        val stack = MatrixStack(identityProvider = { Matrix3x3f.identity.copy() }).apply { push() }
+        val stack = MatrixStack(identityProvider = Matrix3x3f::identity).apply { push() }
         stack.scale(2f, 3f)
         assertMatrix3x3Equals(Matrix3x3f.scale(2f, 3f), stack.current())
     }
 
     @Test
     fun `MatrixStack 3x3 translate should work`() {
-        val stack = MatrixStack(identityProvider = { Matrix3x3f.identity.copy() }).apply { push() }
+        val stack = MatrixStack(identityProvider = Matrix3x3f::identity).apply { push() }
         stack.translate(2f, 3f)
         assertMatrix3x3Equals(Matrix3x3f.translation(2f, 3f), stack.current())
     }
 
-    private fun createStack() = MatrixStack(identityProvider = { Matrix4x4f.identity.copy() }).apply { push() }
+    private fun createStack() = MatrixStack(identityProvider = Matrix4x4f::identity).apply { push() }
 
     private fun assertMatrix2x2Equals(expected: Matrix2x2f, actual: Matrix2x2f) {
         for (i in 0 until 4) {

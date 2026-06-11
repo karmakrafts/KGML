@@ -22,6 +22,12 @@ import kotlin.jvm.JvmInline
 
 @JvmInline
 value class Translation3f(val translation: Vector3f) : Transform<Matrix4x4f> {
+    constructor( // @formatter:off
+        x: Float = 0F,
+        y: Float = 0F,
+        z: Float = 0F
+    ) : this(Vector3f(x, y, z)) // @formatter:on
+
     override fun transform(matrix: Matrix4x4f): Matrix4x4f = matrix * Matrix4x4f.translation(
         translation.x,
         translation.y,

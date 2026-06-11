@@ -17,11 +17,26 @@
 package dev.karmakrafts.kgml.transform
 
 import dev.karmakrafts.kgml.matrix.Matrix3x3f
+import dev.karmakrafts.kgml.util.TO_RAD
 import dev.karmakrafts.kgml.vector.Vector3f
 import kotlin.jvm.JvmInline
 
 @JvmInline
 value class Rotation3f(val rotation: Vector3f) : Transform<Matrix3x3f> {
+    companion object {
+        fun fromDegrees(rotation: Vector3f): Rotation3f = Rotation3f( // @formatter:off
+            (rotation.x * TO_RAD).toFloat(),
+            (rotation.y * TO_RAD).toFloat(),
+            (rotation.z * TO_RAD).toFloat()
+        ) // @formatter:on
+    }
+
+    constructor( // @formatter:off
+        angleX: Float = 0F,
+        angleY: Float = 0F,
+        angleZ: Float = 0F
+    ) : this(Vector3f(angleX, angleY, angleZ)) // @formatter:on
+
     override fun transform(matrix: Matrix3x3f): Matrix3x3f = matrix * Matrix3x3f.rotationRad( // @formatter:off
         rotation.x,
         rotation.y,

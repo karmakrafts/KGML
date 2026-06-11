@@ -22,5 +22,11 @@ import kotlin.jvm.JvmInline
 
 @JvmInline
 value class Scale3f(val scale: Vector3f) : Transform<Matrix4x4f> {
+    constructor( // @formatter:off
+        scaleX: Float = 1F,
+        scaleY: Float = 1F,
+        scaleZ: Float = 1F
+    ) : this(Vector3f(scaleX, scaleY, scaleZ)) // @formatter:on
+
     override fun transform(matrix: Matrix4x4f): Matrix4x4f = matrix * Matrix4x4f.scale(scale.x, scale.y, scale.z)
 }
