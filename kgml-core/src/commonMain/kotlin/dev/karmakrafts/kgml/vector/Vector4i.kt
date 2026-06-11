@@ -39,6 +39,19 @@ data class Vector4i( // @formatter:off
         val zero: Vector4i = Vector4i()
         val one: Vector4i = Vector4i(1)
 
+        val lexComparator: Comparator<Vector4i> = { a, b ->
+            val (ax, ay, az, aw) = a
+            val (bx, by, bz, bw) = b
+            if (ax != bx) ax.compareTo(bx)
+            else {
+                if (ay != by) ay.compareTo(by)
+                else {
+                    if (az != bz) az.compareTo(bz)
+                    else aw.compareTo(bw)
+                }
+            }
+        }
+
         inline fun fromArray(array: IntArray, offset: Int = 0): Vector4i = Vector4i( // @formatter:off
             array[offset],
             array[offset + 1],
@@ -91,15 +104,7 @@ data class Vector4i( // @formatter:off
     inline fun toVector4f(): Vector4f = Vector4f(x.toFloat(), y.toFloat(), z.toFloat(), w.toFloat())
 
     override operator fun compareTo(other: Vector4i): Int {
-        // Lexicographical comparison
-        return if (x != other.x) x.compareTo(other.x)
-        else {
-            if (y != other.y) y.compareTo(other.y)
-            else {
-                if (z != other.z) z.compareTo(other.z)
-                else w.compareTo(other.w)
-            }
-        }
+        return length().compareTo(other.length())
     }
 
     override operator fun get(index: Int): Int = when (index) {

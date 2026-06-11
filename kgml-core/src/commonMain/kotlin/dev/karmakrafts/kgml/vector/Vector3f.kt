@@ -40,6 +40,16 @@ data class Vector3f( // @formatter:off
         val zero: Vector3f = Vector3f()
         val one: Vector3f = Vector3f(1F)
 
+        val lexComparator: Comparator<Vector3f> = { a, b ->
+            val (ax, ay, az) = a
+            val (bx, by, bz) = b
+            if (ax != bx) ax.compareTo(bx)
+            else {
+                if (ay != by) ay.compareTo(by)
+                else az.compareTo(bz)
+            }
+        }
+
         inline fun fromArray(array: FloatArray, offset: Int = 0): Vector3f = Vector3f( // @formatter:off
             array[offset],
             array[offset + 1],
@@ -104,12 +114,7 @@ data class Vector3f( // @formatter:off
     inline fun toVector3i(): Vector3i = Vector3i(x.toInt(), y.toInt(), z.toInt())
 
     override operator fun compareTo(other: Vector3f): Int {
-        // Lexicographical comparison
-        return if (x != other.x) x.compareTo(other.x)
-        else {
-            if (y != other.y) y.compareTo(other.y)
-            else z.compareTo(other.z)
-        }
+        return length().compareTo(other.length())
     }
 
     operator fun times(other: Matrix3x3f): Vector3f = Vector3f(

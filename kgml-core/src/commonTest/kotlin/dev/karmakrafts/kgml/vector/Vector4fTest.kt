@@ -22,6 +22,7 @@ import kotlin.test.Test
 import kotlin.test.assertContentEquals
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
+import kotlin.test.assertTrue
 
 class Vector4fTest {
     @Test
@@ -244,6 +245,25 @@ class Vector4fTest {
     fun `swizzle2 should return swizzled vector`() {
         val vector = Vector4f(2F, 3F, 6F, 9F)
         assertEquals(Vector2f(9F, 2F), vector.swizzle2(VectorComponent.W, VectorComponent.X))
+    }
+
+    @Test
+    fun `compareTo should return magnitude comparison`() {
+        val v1 = Vector4f(1F, 2F, 3F, 4F)
+        val v2 = Vector4f(1F, 2F, 3F, 4F)
+        val v3 = Vector4f(2F, 1F, 1F, 1F)
+        val v4 = Vector4f(1F, 3F, 2F, 2F)
+        val v5 = Vector4f(1F, 2F, 4F, 3F)
+        val v6 = Vector4f(1F, 2F, 3F, 5F)
+
+        assertEquals(0, v1.compareTo(v2))
+        assertTrue(v1 > v3)
+        assertTrue(v3 < v1)
+        assertTrue(v1 > v4)
+        assertTrue(v4 < v1)
+        assertEquals(0, v1.compareTo(v5))
+        assertTrue(v1 < v6)
+        assertTrue(v6 > v1)
     }
 
     private fun assertVectorEquals(expected: Vector4f, actual: Vector4f) {

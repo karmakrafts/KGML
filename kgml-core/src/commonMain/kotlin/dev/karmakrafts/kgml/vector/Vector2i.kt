@@ -37,6 +37,13 @@ data class Vector2i( // @formatter:off
         val zero: Vector2i = Vector2i()
         val one: Vector2i = Vector2i(1)
 
+        val lexComparator: Comparator<Vector2i> = { a, b ->
+            val (ax, ay) = a
+            val (bx, by) = b
+            if (ax != bx) ax.compareTo(bx)
+            else ay.compareTo(by)
+        }
+
         inline fun fromArray(array: IntArray, offset: Int = 0): Vector2i = Vector2i( // @formatter:off
             array[offset],
             array[offset + 1]
@@ -84,8 +91,7 @@ data class Vector2i( // @formatter:off
     inline fun toVector2f(): Vector2f = Vector2f(x.toFloat(), y.toFloat())
 
     override operator fun compareTo(other: Vector2i): Int {
-        // Lexicographical comparison
-        return if (x != other.x) x.compareTo(other.x) else y.compareTo(other.y)
+        return length().compareTo(other.length())
     }
 
     override operator fun get(index: Int): Int = when (index) {

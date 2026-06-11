@@ -39,6 +39,16 @@ data class Vector3i( // @formatter:off
         val zero: Vector3i = Vector3i()
         val one: Vector3i = Vector3i(1)
 
+        val lexComparator: Comparator<Vector3i> = { a, b ->
+            val (ax, ay, az) = a
+            val (bx, by, bz) = b
+            if (ax != bx) ax.compareTo(bx)
+            else {
+                if (ay != by) ay.compareTo(by)
+                else az.compareTo(bz)
+            }
+        }
+
         inline fun fromArray(array: IntArray, offset: Int = 0): Vector3i = Vector3i( // @formatter:off
             array[offset],
             array[offset + 1],
@@ -94,12 +104,7 @@ data class Vector3i( // @formatter:off
     inline fun toVector3f(): Vector3f = Vector3f(x.toFloat(), y.toFloat(), z.toFloat())
 
     override operator fun compareTo(other: Vector3i): Int {
-        // Lexicographical comparison
-        return if (x != other.x) x.compareTo(other.x)
-        else {
-            if (y != other.y) y.compareTo(other.y)
-            else z.compareTo(other.z)
-        }
+        return length().compareTo(other.length())
     }
 
     override operator fun get(index: Int): Int = when (index) {
