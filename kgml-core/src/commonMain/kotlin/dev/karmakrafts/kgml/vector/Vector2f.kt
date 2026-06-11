@@ -20,6 +20,8 @@ import dev.karmakrafts.kgml.matrix.Matrix2x2f
 import dev.karmakrafts.kgml.util.fma
 import kotlin.jvm.JvmField
 import kotlin.jvm.JvmRecord
+import kotlin.math.max
+import kotlin.math.min
 import kotlin.math.sqrt
 import kotlin.reflect.KClass
 
@@ -79,6 +81,26 @@ data class Vector2f( // @formatter:off
     fun lerp(other: Vector2f, factor: Float): Vector2f = Vector2f( // @formatter:off
         fma(other.x - x, factor, x),
         fma(other.y - y, factor, y)
+    ) // @formatter:on
+
+    infix fun min(other: Vector2f): Vector2f = when {
+        this > other -> other
+        else -> this
+    }
+
+    infix fun minComponents(other: Vector2f): Vector2f = Vector2f( // @formatter:off
+        min(x, other.x),
+        min(y, other.y)
+    ) // @formatter:on
+
+    infix fun max(other: Vector2f): Vector2f = when {
+        this < other -> other
+        else -> this
+    }
+
+    infix fun maxComponents(other: Vector2f): Vector2f = Vector2f( // @formatter:off
+        max(x, other.x),
+        max(y, other.y)
     ) // @formatter:on
 
     fun distanceSq(other: Vector2f): Float {

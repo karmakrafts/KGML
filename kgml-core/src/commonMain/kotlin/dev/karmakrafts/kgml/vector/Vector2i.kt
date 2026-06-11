@@ -19,6 +19,8 @@ package dev.karmakrafts.kgml.vector
 import dev.karmakrafts.kgml.util.fma
 import kotlin.jvm.JvmField
 import kotlin.jvm.JvmRecord
+import kotlin.math.max
+import kotlin.math.min
 import kotlin.math.sqrt
 import kotlin.reflect.KClass
 
@@ -78,6 +80,26 @@ data class Vector2i( // @formatter:off
     fun lerp(other: Vector2i, factor: Float): Vector2i = Vector2i( // @formatter:off
         fma((other.x - x).toFloat(), factor, x.toFloat()).toInt(),
         fma((other.y - y).toFloat(), factor, y.toFloat()).toInt()
+    ) // @formatter:on
+
+    infix fun min(other: Vector2i): Vector2i = when {
+        this > other -> other
+        else -> this
+    }
+
+    infix fun minComponents(other: Vector2i): Vector2i = Vector2i( // @formatter:off
+        min(x, other.x),
+        min(y, other.y)
+    ) // @formatter:on
+
+    infix fun max(other: Vector2i): Vector2i = when {
+        this < other -> other
+        else -> this
+    }
+
+    infix fun maxComponents(other: Vector2i): Vector2i = Vector2i( // @formatter:off
+        max(x, other.x),
+        max(y, other.y)
     ) // @formatter:on
 
     fun lengthSq(): Int = fma(x, x, y * y)

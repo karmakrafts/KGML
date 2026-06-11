@@ -20,6 +20,8 @@ import dev.karmakrafts.kgml.matrix.Matrix3x3f
 import dev.karmakrafts.kgml.util.fma
 import kotlin.jvm.JvmField
 import kotlin.jvm.JvmRecord
+import kotlin.math.max
+import kotlin.math.min
 import kotlin.math.sqrt
 import kotlin.reflect.KClass
 
@@ -87,6 +89,28 @@ data class Vector3f( // @formatter:off
         fma(other.x - x, factor, x),
         fma(other.y - y, factor, y),
         fma(other.z - z, factor, z)
+    ) // @formatter:on
+
+    infix fun min(other: Vector3f): Vector3f = when {
+        this > other -> other
+        else -> this
+    }
+
+    infix fun minComponents(other: Vector3f): Vector3f = Vector3f( // @formatter:off
+        min(x, other.x),
+        min(y, other.y),
+        min(z, other.z)
+    ) // @formatter:on
+
+    infix fun max(other: Vector3f): Vector3f = when {
+        this < other -> other
+        else -> this
+    }
+
+    infix fun maxComponents(other: Vector3f): Vector3f = Vector3f( // @formatter:off
+        max(x, other.x),
+        max(y, other.y),
+        max(z, other.z)
     ) // @formatter:on
 
     fun distanceSq(other: Vector3f): Float {
