@@ -156,6 +156,36 @@ class Vector4fTest {
     }
 
     @Test
+    fun `min should return the smaller vector`() {
+        val v1 = Vector4f(1F, 2F, 3F, 4F)
+        val v2 = Vector4f(5F, 6F, 7F, 8F)
+        assertEquals(v1, v1 min v2)
+        assertEquals(v1, v2 min v1)
+    }
+
+    @Test
+    fun `minComponents should return the component-wise minimum`() {
+        val v1 = Vector4f(1F, 7F, 3F, 9F)
+        val v2 = Vector4f(5F, 2F, 8F, 4F)
+        assertEquals(Vector4f(1F, 2F, 3F, 4F), v1 minComponents v2)
+    }
+
+    @Test
+    fun `max should return the larger vector`() {
+        val v1 = Vector4f(1F, 2F, 3F, 4F)
+        val v2 = Vector4f(5F, 6F, 7F, 8F)
+        assertEquals(v2, v1 max v2)
+        assertEquals(v2, v2 max v1)
+    }
+
+    @Test
+    fun `maxComponents should return the component-wise maximum`() {
+        val v1 = Vector4f(1F, 7F, 3F, 9F)
+        val v2 = Vector4f(5F, 2F, 8F, 4F)
+        assertEquals(Vector4f(5F, 7F, 8F, 9F), v1 maxComponents v2)
+    }
+
+    @Test
     fun `lengthSq should return squared length of vector`() {
         val vector = Vector4f(2F, 3F, 6F, 9F)
         assertEquals(130F, vector.lengthSq())

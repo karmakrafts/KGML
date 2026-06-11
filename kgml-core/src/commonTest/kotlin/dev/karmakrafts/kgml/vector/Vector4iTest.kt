@@ -154,6 +154,36 @@ class Vector4iTest {
     }
 
     @Test
+    fun `min should return the smaller vector`() {
+        val v1 = Vector4i(1, 2, 3, 4)
+        val v2 = Vector4i(5, 6, 7, 8)
+        assertEquals(v1, v1 min v2)
+        assertEquals(v1, v2 min v1)
+    }
+
+    @Test
+    fun `minComponents should return the component-wise minimum`() {
+        val v1 = Vector4i(1, 7, 3, 9)
+        val v2 = Vector4i(5, 2, 8, 4)
+        assertEquals(Vector4i(1, 2, 3, 4), v1 minComponents v2)
+    }
+
+    @Test
+    fun `max should return the larger vector`() {
+        val v1 = Vector4i(1, 2, 3, 4)
+        val v2 = Vector4i(5, 6, 7, 8)
+        assertEquals(v2, v1 max v2)
+        assertEquals(v2, v2 max v1)
+    }
+
+    @Test
+    fun `maxComponents should return the component-wise maximum`() {
+        val v1 = Vector4i(1, 7, 3, 9)
+        val v2 = Vector4i(5, 2, 8, 4)
+        assertEquals(Vector4i(5, 7, 8, 9), v1 maxComponents v2)
+    }
+
+    @Test
     fun `lengthSq should return squared length of vector`() {
         val vector = Vector4i(2, 3, 6, 9)
         assertEquals(130, vector.lengthSq())

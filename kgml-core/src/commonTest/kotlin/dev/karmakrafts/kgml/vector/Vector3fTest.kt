@@ -155,6 +155,36 @@ class Vector3fTest {
     }
 
     @Test
+    fun `min should return the smaller vector`() {
+        val v1 = Vector3f(1F, 2F, 3F)
+        val v2 = Vector3f(4F, 5F, 6F)
+        assertEquals(v1, v1 min v2)
+        assertEquals(v1, v2 min v1)
+    }
+
+    @Test
+    fun `minComponents should return the component-wise minimum`() {
+        val v1 = Vector3f(1F, 5F, 3F)
+        val v2 = Vector3f(4F, 2F, 6F)
+        assertEquals(Vector3f(1F, 2F, 3F), v1 minComponents v2)
+    }
+
+    @Test
+    fun `max should return the larger vector`() {
+        val v1 = Vector3f(1F, 2F, 3F)
+        val v2 = Vector3f(4F, 5F, 6F)
+        assertEquals(v2, v1 max v2)
+        assertEquals(v2, v2 max v1)
+    }
+
+    @Test
+    fun `maxComponents should return the component-wise maximum`() {
+        val v1 = Vector3f(1F, 5F, 3F)
+        val v2 = Vector3f(4F, 2F, 6F)
+        assertEquals(Vector3f(4F, 5F, 6F), v1 maxComponents v2)
+    }
+
+    @Test
     fun `lengthSq should return squared length of vector`() {
         val vector = Vector3f(2F, 3F, 6F)
         assertEquals(49F, vector.lengthSq())
