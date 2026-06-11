@@ -28,7 +28,7 @@ data class Vector3i( // @formatter:off
     @JvmField val x: Int,
     @JvmField val y: Int,
     @JvmField val z: Int
-) : VectorNi { // @formatter:on
+) : VectorNi, Comparable<Vector3i> { // @formatter:on
     companion object : VectorType {
         override val componentType: KClass<*> = Int::class
         override val componentSize: Int = Int.SIZE_BYTES
@@ -92,6 +92,15 @@ data class Vector3i( // @formatter:off
     ) // @formatter:on
 
     inline fun toVector3f(): Vector3f = Vector3f(x.toFloat(), y.toFloat(), z.toFloat())
+
+    override operator fun compareTo(other: Vector3i): Int {
+        // Lexicographical comparison
+        return if (x != other.x) x.compareTo(other.x)
+        else {
+            if (y != other.y) y.compareTo(other.y)
+            else z.compareTo(other.z)
+        }
+    }
 
     override operator fun get(index: Int): Int = when (index) {
         0 -> x

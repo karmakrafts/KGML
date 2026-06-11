@@ -28,7 +28,7 @@ import kotlin.reflect.KClass
 data class Vector2f( // @formatter:off
     @JvmField val x: Float,
     @JvmField val y: Float
-) : VectorNf { // @formatter:on
+) : VectorNf, Comparable<Vector2f> { // @formatter:on
     companion object : VectorType {
         override val componentType: KClass<*> = Float::class
         override val componentSize: Int = Float.SIZE_BYTES
@@ -91,6 +91,11 @@ data class Vector2f( // @formatter:off
     infix fun cross(other: Vector2f): Float = x * other.y - y * other.x
 
     inline fun toVector2i(): Vector2i = Vector2i(x.toInt(), y.toInt())
+
+    override operator fun compareTo(other: Vector2f): Int {
+        // Lexicographical comparison
+        return if (x != other.x) x.compareTo(other.x) else y.compareTo(other.y)
+    }
 
     operator fun times(other: Matrix2x2f): Vector2f = Vector2f( // @formatter:off
         fma(other.m00, x, other.m01 * y),

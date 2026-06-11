@@ -27,7 +27,7 @@ import kotlin.reflect.KClass
 data class Vector2i( // @formatter:off
     @JvmField val x: Int,
     @JvmField val y: Int
-) : VectorNi { // @formatter:on
+) : VectorNi, Comparable<Vector2i> { // @formatter:on
     companion object : VectorType {
         override val componentType: KClass<*> = Int::class
         override val componentSize: Int = Int.SIZE_BYTES
@@ -82,6 +82,11 @@ data class Vector2i( // @formatter:off
     infix fun cross(other: Vector2i): Int = x * other.y - y * other.x
 
     inline fun toVector2f(): Vector2f = Vector2f(x.toFloat(), y.toFloat())
+
+    override operator fun compareTo(other: Vector2i): Int {
+        // Lexicographical comparison
+        return if (x != other.x) x.compareTo(other.x) else y.compareTo(other.y)
+    }
 
     override operator fun get(index: Int): Int = when (index) {
         0 -> x

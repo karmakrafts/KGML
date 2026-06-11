@@ -29,7 +29,7 @@ data class Vector3f( // @formatter:off
     @JvmField val x: Float,
     @JvmField val y: Float,
     @JvmField val z: Float
-) : VectorNf { // @formatter:on
+) : VectorNf, Comparable<Vector3f> { // @formatter:on
     companion object : VectorType {
         override val componentType: KClass<*> = Float::class
         override val componentSize: Int = Float.SIZE_BYTES
@@ -102,6 +102,15 @@ data class Vector3f( // @formatter:off
     ) // @formatter:on
 
     inline fun toVector3i(): Vector3i = Vector3i(x.toInt(), y.toInt(), z.toInt())
+
+    override operator fun compareTo(other: Vector3f): Int {
+        // Lexicographical comparison
+        return if (x != other.x) x.compareTo(other.x)
+        else {
+            if (y != other.y) y.compareTo(other.y)
+            else z.compareTo(other.z)
+        }
+    }
 
     operator fun times(other: Matrix3x3f): Vector3f = Vector3f(
         fma(other.m00, x, fma(other.m01, y, other.m02 * z)),

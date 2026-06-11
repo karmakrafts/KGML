@@ -30,7 +30,7 @@ data class Vector4f( // @formatter:off
     @JvmField val y: Float,
     @JvmField val z: Float,
     @JvmField val w: Float
-) : VectorNf { // @formatter:on
+) : VectorNf, Comparable<Vector4f> { // @formatter:on
     companion object : VectorType {
         override val componentType: KClass<*> = Float::class
         override val componentSize: Int = Float.SIZE_BYTES
@@ -100,6 +100,18 @@ data class Vector4f( // @formatter:off
     infix fun dot(other: Vector4f): Float = fma(x, other.x, fma(y, other.y, fma(z, other.z, w * other.w)))
 
     inline fun toVector4i(): Vector4i = Vector4i(x.toInt(), y.toInt(), z.toInt(), w.toInt())
+
+    override operator fun compareTo(other: Vector4f): Int {
+        // Lexicographical comparison
+        return if (x != other.x) x.compareTo(other.x)
+        else {
+            if (y != other.y) y.compareTo(other.y)
+            else {
+                if(z != other.z) z.compareTo(other.z)
+                else w.compareTo(other.w)
+            }
+        }
+    }
 
     operator fun times(other: Matrix4x4f): Vector4f = Vector4f(
         fma(other.m00, x, fma(other.m01, y, fma(other.m02, z, other.m03 * w))),
