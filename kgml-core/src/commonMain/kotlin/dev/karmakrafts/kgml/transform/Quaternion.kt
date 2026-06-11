@@ -34,7 +34,7 @@ import kotlin.math.withSign
 
 @Suppress("NOTHING_TO_INLINE")
 @JvmInline
-value class Quaternion(@PublishedApi internal val value: Vector4f) {
+value class Quaternion(@PublishedApi internal val value: Vector4f) : Transform<Matrix4x4f> {
     companion object {
         fun fromAnglesRad(
             angleX: Float, angleY: Float, angleZ: Float
@@ -183,4 +183,6 @@ value class Quaternion(@PublishedApi internal val value: Vector4f) {
         z: Float = this.z,
         w: Float = this.w
     ): Quaternion = Quaternion(Vector4f(x, y, z, w)) // @formatter:on
+
+    override fun transform(matrix: Matrix4x4f): Matrix4x4f = matrix * this
 }

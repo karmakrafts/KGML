@@ -15,12 +15,17 @@
  */
 
 package dev.karmakrafts.kgml.transform
- 
+
 import dev.karmakrafts.kgml.matrix.Matrix2x2f
 import dev.karmakrafts.kgml.matrix.Matrix3x3f
 import dev.karmakrafts.kgml.matrix.Matrix4x4f
+import dev.karmakrafts.kgml.matrix.MatrixNxN
 import dev.karmakrafts.kgml.matrix.MatrixStack
 import kotlin.jvm.JvmName
+
+fun <M : MatrixNxN> MatrixStack<M>.apply(transform: Transform<M>) {
+    swap(transform.transform(current()))
+}
 
 // 1D transformations
 
