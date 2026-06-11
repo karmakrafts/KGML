@@ -37,5 +37,5 @@ class MatrixStack<M : MatrixNxN>( // @formatter:off
     inline fun pop(): M? = matrices.removeLastOrNull()
 
     @Suppress("UNCHECKED_CAST")
-    inline fun reduce(): M = matrices.reduce(MatrixNxN::times) as M
+    inline fun reduce(reducer: (M, M) -> M = { a, b -> (a * b) as M }): M = matrices.reduce(reducer)
 }
