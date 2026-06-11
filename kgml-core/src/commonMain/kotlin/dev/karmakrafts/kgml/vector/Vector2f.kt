@@ -247,7 +247,7 @@ data class Vector2f( // @formatter:off
      * @param other The other vector.
      * @return The squared distance.
      */
-    fun distanceSq(other: Vector2f): Float {
+    infix fun distanceSq(other: Vector2f): Float {
         val dx = other.x - x
         val dy = other.y - y
         return fma(dx, dx, dy * dy)
@@ -259,7 +259,7 @@ data class Vector2f( // @formatter:off
      * @param other The other vector.
      * @return The distance.
      */
-    inline fun distance(other: Vector2f): Float = sqrt(distanceSq(other))
+    inline infix fun distance(other: Vector2f): Float = sqrt(distanceSq(other))
 
     /**
      * Calculates the squared length of this vector.

@@ -205,13 +205,13 @@ class Vector2fTest {
     @Test
     fun `distanceSq should return squared distance to another vector`() {
         val vector = Vector2f(3F, 4F)
-        assertEquals(8F, vector.distanceSq(Vector2f(1F, 2F)))
+        assertEquals(8F, vector distanceSq Vector2f(1F, 2F))
     }
 
     @Test
     fun `distance should return distance to another vector`() {
         val vector = Vector2f(3F, 4F)
-        assertFloatEquals(5F, vector.distance(Vector2f(0F, 0F)))
+        assertFloatEquals(5F, vector distance Vector2f(0F, 0F))
     }
 
     @Test

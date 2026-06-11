@@ -206,6 +206,27 @@ data class Vector3i( // @formatter:off
     ) // @formatter:on
 
     /**
+     * Calculates the squared distance between this vector and [other].
+     *
+     * @param other The other vector.
+     * @return The squared distance.
+     */
+    infix fun distanceSq(other: Vector3i): Int {
+        val dx = other.x - x
+        val dy = other.y - y
+        val dz = other.z - z
+        return fma(dx, dx, fma(dy, dy, dz * dz))
+    }
+
+    /**
+     * Calculates the distance between this vector and [other].
+     *
+     * @param other The other vector.
+     * @return The distance.
+     */
+    inline infix fun distance(other: Vector3i): Int = sqrt(distanceSq(other).toFloat()).toInt()
+
+    /**
      * Returns the minimum of this vector and [other] based on their length.
      *
      * @param other The other vector.

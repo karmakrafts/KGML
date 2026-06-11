@@ -24,6 +24,18 @@ import kotlin.test.assertTrue
 
 class Vector3iTest {
     @Test
+    fun `distanceSq should return squared distance to another vector`() {
+        val vector = Vector3i(2, 3, 6)
+        assertEquals(30, vector distanceSq Vector3i(1, 1, 1))
+    }
+
+    @Test
+    fun `distance should return distance to another vector`() {
+        val vector = Vector3i(2, 3, 6)
+        assertEquals(7, vector distance Vector3i(0, 0, 0))
+    }
+
+    @Test
     fun `constructor should initialize components to zero`() {
         assertEquals(Vector3i(0, 0, 0), Vector3i())
     }
