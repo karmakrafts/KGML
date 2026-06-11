@@ -11,6 +11,18 @@
 The Kotlin Graphics Maths Library for Kotlin Multiplatform.  
 A GLM/JOML inspired library with a touch of idiomatic Kotlin.
 
+### Features
+
+- 2, 3 and 4-dimensional float vector types
+- 3, 4 and 4-dimensional integer vector types
+- 2x2, 3x3 and 4x4 float matrices
+- Matrix-vector-multiplication
+- Orthographic and perspective projection
+- Matrix stacks
+- Quaternions
+- Composition based transformation API
+- Hardware acceleration on JVM and native using FMA
+
 ### How to use it
 
 First, add the official Maven Central repository to your settings.gradle.kts:
