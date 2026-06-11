@@ -28,7 +28,7 @@ value class Translation3f(val translation: Vector3f) : Transform<Matrix4x4f> {
         z: Float = 0F
     ) : this(Vector3f(x, y, z)) // @formatter:on
 
-    override fun transform(matrix: Matrix4x4f): Matrix4x4f = matrix * Matrix4x4f.translation(
+    override operator fun invoke(matrix: Matrix4x4f): Matrix4x4f = matrix * Matrix4x4f.translation(
         translation.x,
         translation.y,
         translation.z,

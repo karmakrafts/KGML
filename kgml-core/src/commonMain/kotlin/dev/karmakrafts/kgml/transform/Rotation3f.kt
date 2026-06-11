@@ -37,7 +37,7 @@ value class Rotation3f(val rotation: Vector3f) : Transform<Matrix3x3f> {
         angleZ: Float = 0F
     ) : this(Vector3f(angleX, angleY, angleZ)) // @formatter:on
 
-    override fun transform(matrix: Matrix3x3f): Matrix3x3f = matrix * Matrix3x3f.rotationRad( // @formatter:off
+    override operator fun invoke(matrix: Matrix3x3f): Matrix3x3f = matrix * Matrix3x3f.rotationRad( // @formatter:off
         rotation.x,
         rotation.y,
         rotation.z

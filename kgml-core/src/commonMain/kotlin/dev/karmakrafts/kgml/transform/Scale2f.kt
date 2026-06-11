@@ -27,5 +27,5 @@ value class Scale2f(val value: Vector2f) : Transform<Matrix3x3f> {
         scaleY: Float = 1F
     ) : this(Vector2f(scaleX, scaleY)) // @formatter:on
 
-    override fun transform(matrix: Matrix3x3f): Matrix3x3f = matrix * Matrix3x3f.scale(value.x, value.y)
+    override operator fun invoke(matrix: Matrix3x3f): Matrix3x3f = matrix * Matrix3x3f.scale(value.x, value.y)
 }

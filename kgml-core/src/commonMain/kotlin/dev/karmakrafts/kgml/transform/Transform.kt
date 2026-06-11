@@ -19,5 +19,5 @@ package dev.karmakrafts.kgml.transform
 import dev.karmakrafts.kgml.matrix.MatrixNxN
 
 sealed interface Transform<M : MatrixNxN> {
-    fun transform(matrix: M): M
+    operator fun invoke(matrix: M): M
 }

@@ -24,7 +24,7 @@ import dev.karmakrafts.kgml.matrix.MatrixStack
 import kotlin.jvm.JvmName
 
 fun <M : MatrixNxN> MatrixStack<M>.apply(transform: Transform<M>) {
-    swap(transform.transform(current()))
+    swap(transform(current()))
 }
 
 // 1D transformations
