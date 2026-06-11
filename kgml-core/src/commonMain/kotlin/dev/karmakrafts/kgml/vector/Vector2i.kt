@@ -68,6 +68,11 @@ data class Vector2i( // @formatter:off
         fma(y, b.y, c.y)
     ) // @formatter:on
 
+    fun lerp(other: Vector2i, factor: Float): Vector2i = Vector2i( // @formatter:off
+        fma((other.x - x).toFloat(), factor, x.toFloat()).toInt(),
+        fma((other.y - y).toFloat(), factor, y.toFloat()).toInt()
+    ) // @formatter:on
+
     inline fun lengthSq(): Int = fma(x, x, y) * y
     inline fun length(): Int = sqrt(lengthSq().toFloat()).toInt()
 

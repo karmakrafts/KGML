@@ -73,6 +73,12 @@ data class Vector3f( // @formatter:off
         fma(z, b.z, c.z)
     ) // @formatter:on
 
+    fun lerp(other: Vector3f, factor: Float): Vector3f = Vector3f( // @formatter:off
+        fma(other.x - x, factor, x),
+        fma(other.y - y, factor, y),
+        fma(other.z - z, factor, z)
+    ) // @formatter:on
+
     inline fun lengthSq(): Float = fma(fma(x, x, y), y, z) * z
     inline fun length(): Float = sqrt(lengthSq())
 

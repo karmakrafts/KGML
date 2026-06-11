@@ -72,6 +72,12 @@ data class Vector3i( // @formatter:off
         fma(z, b.z, c.z)
     ) // @formatter:on
 
+    fun lerp(other: Vector3i, factor: Float): Vector3i = Vector3i( // @formatter:off
+        fma((other.x - x).toFloat(), factor, x.toFloat()).toInt(),
+        fma((other.y - y).toFloat(), factor, y.toFloat()).toInt(),
+        fma((other.z - z).toFloat(), factor, z.toFloat()).toInt()
+    ) // @formatter:on
+
     inline fun lengthSq(): Int = fma(fma(x, x, y), y, z) * z
     inline fun length(): Int = sqrt(lengthSq().toFloat()).toInt()
 
