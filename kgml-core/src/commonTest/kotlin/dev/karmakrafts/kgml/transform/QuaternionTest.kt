@@ -63,7 +63,7 @@ class QuaternionTest {
         val qX = Quaternion.fromAngles(90F, 0F, 0F)
         val qY = Quaternion.fromAngles(0F, 90F, 0F)
         val qYX = qY * qX
-        
+
         // This should be equivalent to fromAngles(90, 90, 0)
         assertQuaternionEquals(Quaternion.fromAngles(90F, 90F, 0F), qYX)
     }
@@ -86,7 +86,7 @@ class QuaternionTest {
     fun `slerp should interpolate between quaternions`() {
         val q1 = Quaternion.fromAngles(0F, 0F, 0F)
         val q2 = Quaternion.fromAngles(90F, 0F, 0F)
-        
+
         assertQuaternionEquals(q1, q1.slerp(q2, 0F))
         assertQuaternionEquals(q2, q1.slerp(q2, 1F))
         assertQuaternionEquals(Quaternion.fromAngles(45F, 0F, 0F), q1.slerp(q2, 0.5F))

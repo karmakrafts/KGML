@@ -31,13 +31,10 @@ fun Matrix4x4f.Companion.orthographic( // @formatter:off
     val tmb = top - bottom
     val fmn = far - near
     return Matrix4x4f(
-        2F / rml, 0F, 0F, 0F,
-        0F, 2F / tmb, 0F, 0F,
-        0F, 0F, -2F / fmn, 0F,
-        -(right + left) / rml,
-        -(top + bottom) / tmb,
-        -(far + near) / fmn,
-        1F
+        2F / rml, 0F, 0F, -(right + left) / rml,
+        0F, 2F / tmb, 0F, -(top + bottom) / tmb,
+        0F, 0F, -2F / fmn, -(far + near) / fmn,
+        0F, 0F, 0F, 1F
     )
 } // @formatter:on
 
@@ -52,7 +49,7 @@ fun Matrix4x4f.Companion.perspective( // @formatter:off
     return Matrix4x4f(
         f / aspect, 0F, 0F, 0F,
         0F, f, 0F, 0F,
-        0F, 0F, (far + near) / nmf, -1F,
-        0F, 0F, (2F * far * near) / nmf, 0F
+        0F, 0F, (far + near) / nmf, (2F * far * near) / nmf,
+        0F, 0F, -1F, 0F
     )
 } // @formatter:on

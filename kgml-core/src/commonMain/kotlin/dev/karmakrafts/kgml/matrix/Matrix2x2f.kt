@@ -76,15 +76,15 @@ data class Matrix2x2f( // @formatter:off
     ) // @formatter:on
 
     operator fun times(other: Matrix2x2f): Matrix2x2f = Matrix2x2f(
-        fma(m00, other.m00, m01) * other.m10,
-        fma(m00, other.m01, m01) * other.m11,
-        fma(m10, other.m00, m11) * other.m10,
-        fma(m10, other.m01, m11) * other.m11
+        fma(m00, other.m00, m01 * other.m10),
+        fma(m00, other.m01, m01 * other.m11),
+        fma(m10, other.m00, m11 * other.m10),
+        fma(m10, other.m01, m11 * other.m11)
     )
 
     operator fun times(other: Vector2f): Vector2f = Vector2f( // @formatter:off
-        fma(m00, other.x, m01) * other.y,
-        fma(m10, other.x, m11) * other.y
+        fma(m00, other.x, m01 * other.y),
+        fma(m10, other.x, m11 * other.y)
     ) // @formatter:on
 
     override fun times(other: MatrixNxN): MatrixNxN = when (other) {

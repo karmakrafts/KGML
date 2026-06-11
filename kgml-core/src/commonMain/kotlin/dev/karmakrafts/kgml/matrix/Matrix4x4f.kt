@@ -96,29 +96,29 @@ data class Matrix4x4f(
     ) // @formatter:on
 
     operator fun times(other: Matrix4x4f): Matrix4x4f = Matrix4x4f(
-        fma(fma(fma(m00, other.m00, m10), other.m01, m20), other.m02, m30) * other.m03,
-        fma(fma(fma(m01, other.m00, m11), other.m01, m21), other.m02, m31) * other.m03,
-        fma(fma(fma(m02, other.m00, m12), other.m01, m22), other.m02, m32) * other.m03,
-        fma(fma(fma(m03, other.m00, m13), other.m01, m23), other.m02, m33) * other.m03,
-        fma(fma(fma(m00, other.m10, m10), other.m11, m20), other.m12, m30) * other.m13,
-        fma(fma(fma(m01, other.m10, m11), other.m11, m21), other.m12, m31) * other.m13,
-        fma(fma(fma(m02, other.m10, m12), other.m11, m22), other.m12, m32) * other.m13,
-        fma(fma(fma(m03, other.m10, m13), other.m11, m23), other.m12, m33) * other.m13,
-        fma(fma(fma(m00, other.m20, m10), other.m21, m20), other.m22, m30) * other.m23,
-        fma(fma(fma(m01, other.m20, m11), other.m21, m21), other.m22, m31) * other.m23,
-        fma(fma(fma(m02, other.m20, m12), other.m21, m22), other.m22, m32) * other.m23,
-        fma(fma(fma(m03, other.m20, m13), other.m21, m23), other.m22, m33) * other.m23,
-        fma(fma(fma(m00, other.m30, m10), other.m31, m20), other.m32, m30) * other.m33,
-        fma(fma(fma(m01, other.m30, m11), other.m31, m31), other.m32, m31) * other.m33,
-        fma(fma(fma(m02, other.m30, m12), other.m31, m32), other.m32, m32) * other.m33,
-        fma(fma(fma(m03, other.m30, m13), other.m31, m33), other.m32, m33) * other.m33
+        fma(m00, other.m00, fma(m01, other.m10, fma(m02, other.m20, m03 * other.m30))),
+        fma(m00, other.m01, fma(m01, other.m11, fma(m02, other.m21, m03 * other.m31))),
+        fma(m00, other.m02, fma(m01, other.m12, fma(m02, other.m22, m03 * other.m32))),
+        fma(m00, other.m03, fma(m01, other.m13, fma(m02, other.m23, m03 * other.m33))),
+        fma(m10, other.m00, fma(m11, other.m10, fma(m12, other.m20, m13 * other.m30))),
+        fma(m10, other.m01, fma(m11, other.m11, fma(m12, other.m21, m13 * other.m31))),
+        fma(m10, other.m02, fma(m11, other.m12, fma(m12, other.m22, m13 * other.m32))),
+        fma(m10, other.m03, fma(m11, other.m13, fma(m12, other.m23, m13 * other.m33))),
+        fma(m20, other.m00, fma(m21, other.m10, fma(m22, other.m20, m23 * other.m30))),
+        fma(m20, other.m01, fma(m21, other.m11, fma(m22, other.m21, m23 * other.m31))),
+        fma(m20, other.m02, fma(m21, other.m12, fma(m22, other.m22, m23 * other.m32))),
+        fma(m20, other.m03, fma(m21, other.m13, fma(m22, other.m23, m23 * other.m33))),
+        fma(m30, other.m00, fma(m31, other.m10, fma(m32, other.m20, m33 * other.m30))),
+        fma(m30, other.m01, fma(m31, other.m11, fma(m32, other.m21, m33 * other.m31))),
+        fma(m30, other.m02, fma(m31, other.m12, fma(m32, other.m22, m33 * other.m32))),
+        fma(m30, other.m03, fma(m31, other.m13, fma(m32, other.m23, m33 * other.m33)))
     )
 
     operator fun times(other: Vector4f): Vector4f = Vector4f(
-        fma(fma(fma(m00, other.x, m01), other.y, m02), other.z, m03) * other.w,
-        fma(fma(fma(m10, other.x, m11), other.y, m12), other.z, m13) * other.w,
-        fma(fma(fma(m20, other.x, m21), other.y, m22), other.z, m23) * other.w,
-        fma(fma(fma(m30, other.x, m31), other.y, m32), other.z, m33) * other.w
+        fma(m00, other.x, fma(m01, other.y, fma(m02, other.z, m03 * other.w))),
+        fma(m10, other.x, fma(m11, other.y, fma(m12, other.z, m13 * other.w))),
+        fma(m20, other.x, fma(m21, other.y, fma(m22, other.z, m23 * other.w))),
+        fma(m30, other.x, fma(m31, other.y, fma(m32, other.z, m33 * other.w)))
     )
 
     override fun times(other: MatrixNxN): MatrixNxN = when (other) {

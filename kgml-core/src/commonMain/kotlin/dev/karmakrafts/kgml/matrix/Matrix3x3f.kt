@@ -91,21 +91,21 @@ data class Matrix3x3f(
     ) // @formatter:on
 
     operator fun times(other: Matrix3x3f): Matrix3x3f = Matrix3x3f(
-        fma(fma(m00, other.m00, m10), other.m01, m20) * other.m02,
-        fma(fma(m00, other.m10, m10), other.m11, m20) * other.m12,
-        fma(fma(m00, other.m20, m10), other.m21, m20) * other.m22,
-        fma(fma(m01, other.m00, m11), other.m01, m21) * other.m02,
-        fma(fma(m01, other.m10, m11), other.m11, m21) * other.m12,
-        fma(fma(m01, other.m20, m11), other.m21, m21) * other.m22,
-        fma(fma(m02, other.m00, m12), other.m01, m22) * other.m02,
-        fma(fma(m02, other.m10, m12), other.m11, m22) * other.m12,
-        fma(fma(m02, other.m20, m12), other.m21, m22) * other.m22
+        fma(m00, other.m00, fma(m01, other.m10, m02 * other.m20)),
+        fma(m00, other.m01, fma(m01, other.m11, m02 * other.m21)),
+        fma(m00, other.m02, fma(m01, other.m12, m02 * other.m22)),
+        fma(m10, other.m00, fma(m11, other.m10, m12 * other.m20)),
+        fma(m10, other.m01, fma(m11, other.m11, m12 * other.m21)),
+        fma(m10, other.m02, fma(m11, other.m12, m12 * other.m22)),
+        fma(m20, other.m00, fma(m21, other.m10, m22 * other.m20)),
+        fma(m20, other.m01, fma(m21, other.m11, m22 * other.m21)),
+        fma(m20, other.m02, fma(m21, other.m12, m22 * other.m22))
     )
 
     operator fun times(other: Vector3f): Vector3f = Vector3f(
-        fma(fma(m00, other.x, m01), other.y, m02) * other.z,
-        fma(fma(m10, other.x, m11), other.y, m12) * other.z,
-        fma(fma(m20, other.x, m21), other.y, m22) * other.z
+        fma(m00, other.x, fma(m01, other.y, m02 * other.z)),
+        fma(m10, other.x, fma(m11, other.y, m12 * other.z)),
+        fma(m20, other.x, fma(m21, other.y, m22 * other.z))
     )
 
     override fun times(other: MatrixNxN): MatrixNxN = when (other) {
