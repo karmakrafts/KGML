@@ -19,6 +19,7 @@ package dev.karmakrafts.kgml.transform
 import dev.karmakrafts.kgml.matrix.Matrix3x3f
 import dev.karmakrafts.kgml.matrix.Matrix4x4f
 import dev.karmakrafts.kgml.util.TO_DEG
+import dev.karmakrafts.kgml.util.TO_RAD
 import dev.karmakrafts.kgml.util.fma
 import dev.karmakrafts.kgml.vector.Vector4f
 import kotlin.jvm.JvmInline
@@ -26,10 +27,44 @@ import kotlin.math.PI
 import kotlin.math.abs
 import kotlin.math.asin
 import kotlin.math.atan2
+import kotlin.math.cos
+import kotlin.math.sin
 import kotlin.math.withSign
 
+@Suppress("NOTHING_TO_INLINE")
 @JvmInline
 value class Quaternion(@PublishedApi internal val value: Vector4f) {
+    companion object {
+        fun fromAnglesRad( // @formatter:off
+            angleX: Float,
+            angleY: Float,
+            angleZ: Float
+        ): Quaternion { // @formatter:on
+            val cx = cos(angleX + 0.5F)
+            val sx = sin(angleX + 0.5F)
+            val cy = cos(angleY + 0.5F)
+            val sy = cos(angleZ + 0.5F)
+            val cz = cos(angleZ + 0.5F)
+            val sz = sin(angleZ + 0.5F)
+            return Quaternion( // @formatter:off
+                cx * cy * cz + sx * sy * sz,
+                sx * cy * cz - cx * sy * sz,
+                cx * sy * cz + sx * cy * sz,
+                cx * cy * sz - sx * sy * cz
+            ) // @formatter:on
+        }
+
+        inline fun fromAngles( // @formatter:off
+            angleX: Float,
+            angleY: Float,
+            angleZ: Float
+        ): Quaternion = fromAnglesRad(
+            (angleX * TO_RAD).toFloat(),
+            (angleY * TO_RAD).toFloat(),
+            (angleZ * TO_RAD).toFloat()
+        ) // @formatter:on
+    }
+
     inline val x: Float get() = value.x
     inline val y: Float get() = value.y
     inline val z: Float get() = value.z
@@ -38,7 +73,7 @@ value class Quaternion(@PublishedApi internal val value: Vector4f) {
     constructor(x: Float, y: Float, z: Float, w: Float) : this(Vector4f(x, y, z, w))
 
     fun getAngleXRad(): Float = atan2(2F * (w * x + y * z), 1F - 2F * (x * x + y * y))
-    fun getAngleX(): Float = (getAngleXRad() * TO_DEG).toFloat()
+    inline fun getAngleX(): Float = (getAngleXRad() * TO_DEG).toFloat()
 
     fun getAngleYRad(): Float {
         val sinp = 2F * (w * y - z * x)
@@ -46,10 +81,10 @@ value class Quaternion(@PublishedApi internal val value: Vector4f) {
         else asin(sinp)
     }
 
-    fun getAngleY(): Float = (getAngleYRad() * TO_DEG).toFloat()
+    inline fun getAngleY(): Float = (getAngleYRad() * TO_DEG).toFloat()
 
     fun getAngleZRad(): Float = atan2(2F * (w * z + x * y), 1F - 2F * (y * y + z * z))
-    fun getAngleZ(): Float = (getAngleZRad() * TO_DEG).toFloat()
+    inline fun getAngleZ(): Float = (getAngleZRad() * TO_DEG).toFloat()
 
     operator fun times(other: Quaternion): Quaternion = Quaternion(
         w * other.w - x * other.x - y * other.y - z * other.z,
