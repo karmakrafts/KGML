@@ -21,9 +21,20 @@ import dev.karmakrafts.kgml.util.TO_RAD
 import dev.karmakrafts.kgml.vector.Vector3f
 import kotlin.jvm.JvmInline
 
+/**
+ * A transformation representing a rotation in 3D space.
+ *
+ * @property rotation The rotation angles in radians for each axis.
+ */
 @JvmInline
 value class Rotation3f(val rotation: Vector3f) : Transform<Matrix3x3f> {
     companion object {
+        /**
+         * Creates a rotation from the given angles in degrees.
+         *
+         * @param rotation The rotation angles in degrees.
+         * @return A new [Rotation3f].
+         */
         fun fromDegrees(rotation: Vector3f): Rotation3f = Rotation3f( // @formatter:off
             (rotation.x * TO_RAD).toFloat(),
             (rotation.y * TO_RAD).toFloat(),
@@ -31,12 +42,25 @@ value class Rotation3f(val rotation: Vector3f) : Transform<Matrix3x3f> {
         ) // @formatter:on
     }
 
+    /**
+     * Creates a rotation from the given angles in radians.
+     *
+     * @param angleX The angle around the X axis in radians.
+     * @param angleY The angle around the Y axis in radians.
+     * @param angleZ The angle around the Z axis in radians.
+     */
     constructor( // @formatter:off
         angleX: Float = 0F,
         angleY: Float = 0F,
         angleZ: Float = 0F
     ) : this(Vector3f(angleX, angleY, angleZ)) // @formatter:on
 
+    /**
+     * Applies this rotation to the given matrix.
+     *
+     * @param matrix The matrix to transform.
+     * @return The transformed matrix.
+     */
     override operator fun invoke(matrix: Matrix3x3f): Matrix3x3f = matrix * Matrix3x3f.rotationRad( // @formatter:off
         rotation.x,
         rotation.y,

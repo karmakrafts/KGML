@@ -18,6 +18,17 @@ package dev.karmakrafts.kgml.transform
 
 import dev.karmakrafts.kgml.matrix.MatrixNxN
 
+/**
+ * A transformation that can be applied to a matrix.
+ *
+ * @param M The matrix type.
+ */
 sealed interface Transform<M : MatrixNxN> {
+    /**
+     * Applies this transformation to the given matrix.
+     *
+     * @param matrix The matrix to transform.
+     * @return The transformed matrix.
+     */
     operator fun invoke(matrix: M): M
 }

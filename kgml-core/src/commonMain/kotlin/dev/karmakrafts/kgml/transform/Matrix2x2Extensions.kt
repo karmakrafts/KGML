@@ -21,19 +21,44 @@ import dev.karmakrafts.kgml.util.TO_RAD
 import kotlin.math.cos
 import kotlin.math.sin
 
+/**
+ * Creates a rotation matrix from the given angle in radians.
+ *
+ * @param rad The angle in radians.
+ * @return A new rotation [Matrix2x2f].
+ */
 fun Matrix2x2f.Companion.rotationRad(rad: Float): Matrix2x2f {
     val c = cos(rad)
     val s = sin(rad)
     return Matrix2x2f(c, -s, s, c)
 }
 
+/**
+ * Creates a rotation matrix from the given angle in degrees.
+ *
+ * @param deg The angle in degrees.
+ * @return A new rotation [Matrix2x2f].
+ */
 @Suppress("NOTHING_TO_INLINE")
 inline fun Matrix2x2f.Companion.rotation(deg: Float): Matrix2x2f = rotationRad((deg * TO_RAD).toFloat())
 
+/**
+ * Creates a scale matrix from the given X and Y scale factors.
+ *
+ * @param scaleX The scale factor on the X axis.
+ * @param scaleY The scale factor on the Y axis.
+ * @return A new scale [Matrix2x2f].
+ */
 fun Matrix2x2f.Companion.scale(scaleX: Float, scaleY: Float): Matrix2x2f = Matrix2x2f( // @formatter:off
     scaleX, 0F,
     0F, scaleY
 ) // @formatter:on
 
+/**
+ * Creates a uniform scale matrix from the given scale factor.
+ *
+ * @param scale The scale factor on all axes.
+ * @return A new scale [Matrix2x2f].
+ */
 @Suppress("NOTHING_TO_INLINE")
 inline fun Matrix2x2f.Companion.scale(scale: Float): Matrix2x2f = scale(scale, scale)

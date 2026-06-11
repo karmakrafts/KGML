@@ -19,6 +19,17 @@ package dev.karmakrafts.kgml.projection
 import dev.karmakrafts.kgml.matrix.Matrix4x4f
 import kotlin.math.tan
 
+/**
+ * Creates an orthographic projection matrix.
+ *
+ * @param left The left coordinate of the clipping volume.
+ * @param right The right coordinate of the clipping volume.
+ * @param bottom The bottom coordinate of the clipping volume.
+ * @param top The top coordinate of the clipping volume.
+ * @param near The near coordinate of the clipping volume.
+ * @param far The far coordinate of the clipping volume.
+ * @return A new orthographic projection [Matrix4x4f].
+ */
 fun Matrix4x4f.Companion.orthographic( // @formatter:off
     left: Float,
     right: Float,
@@ -38,6 +49,15 @@ fun Matrix4x4f.Companion.orthographic( // @formatter:off
     )
 } // @formatter:on
 
+/**
+ * Creates a perspective projection matrix.
+ *
+ * @param fov The field of view in radians.
+ * @param aspect The aspect ratio.
+ * @param near The near coordinate of the clipping volume.
+ * @param far The far coordinate of the clipping volume.
+ * @return A new perspective projection [Matrix4x4f].
+ */
 fun Matrix4x4f.Companion.perspective( // @formatter:off
     fov: Float,
     aspect: Float,

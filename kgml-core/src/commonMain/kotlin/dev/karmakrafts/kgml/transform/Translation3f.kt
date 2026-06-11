@@ -20,14 +20,32 @@ import dev.karmakrafts.kgml.matrix.Matrix4x4f
 import dev.karmakrafts.kgml.vector.Vector3f
 import kotlin.jvm.JvmInline
 
+/**
+ * A transformation representing a translation in 3D space.
+ *
+ * @property translation The translation offsets for the X, Y, and Z axes.
+ */
 @JvmInline
 value class Translation3f(val translation: Vector3f) : Transform<Matrix4x4f> {
+    /**
+     * Creates a translation from the given offsets.
+     *
+     * @param x The translation on the X axis.
+     * @param y The translation on the Y axis.
+     * @param z The translation on the Z axis.
+     */
     constructor( // @formatter:off
         x: Float = 0F,
         y: Float = 0F,
         z: Float = 0F
     ) : this(Vector3f(x, y, z)) // @formatter:on
 
+    /**
+     * Applies this translation to the given matrix.
+     *
+     * @param matrix The matrix to transform.
+     * @return The transformed matrix.
+     */
     override operator fun invoke(matrix: Matrix4x4f): Matrix4x4f = matrix * Matrix4x4f.translation(
         translation.x,
         translation.y,

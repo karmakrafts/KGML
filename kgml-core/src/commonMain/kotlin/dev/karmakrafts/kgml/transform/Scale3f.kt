@@ -20,13 +20,31 @@ import dev.karmakrafts.kgml.matrix.Matrix4x4f
 import dev.karmakrafts.kgml.vector.Vector3f
 import kotlin.jvm.JvmInline
 
+/**
+ * A transformation representing a scale in 3D space.
+ *
+ * @property scale The scale factors for the X, Y, and Z axes.
+ */
 @JvmInline
 value class Scale3f(val scale: Vector3f) : Transform<Matrix4x4f> {
+    /**
+     * Creates a scale from the given factors.
+     *
+     * @param scaleX The scale factor on the X axis.
+     * @param scaleY The scale factor on the Y axis.
+     * @param scaleZ The scale factor on the Z axis.
+     */
     constructor( // @formatter:off
         scaleX: Float = 1F,
         scaleY: Float = 1F,
         scaleZ: Float = 1F
     ) : this(Vector3f(scaleX, scaleY, scaleZ)) // @formatter:on
 
+    /**
+     * Applies this scale to the given matrix.
+     *
+     * @param matrix The matrix to transform.
+     * @return The transformed matrix.
+     */
     override operator fun invoke(matrix: Matrix4x4f): Matrix4x4f = matrix * Matrix4x4f.scale(scale.x, scale.y, scale.z)
 }
