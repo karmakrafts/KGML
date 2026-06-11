@@ -98,7 +98,7 @@ value class Quaternion(@PublishedApi internal val value: Vector4f) {
 
     fun slerp(other: Quaternion, factor: Float): Quaternion {
         var rhs = other.value
-        var dot = value dot value
+        var dot = value dot rhs
         // Ensure we take the shortest path
         if (dot < 0F) {
             rhs = rhs * -1F
