@@ -31,7 +31,7 @@ kotlin {
     sourceSets {
         commonMain {
             dependencies {
-                implementation("dev.karmakrafts.kompress:kgml-core:<version>")
+                implementation("dev.karmakrafts.kgml:kgml-core:<version>")
             }
         }
     }
