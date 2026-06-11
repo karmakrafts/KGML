@@ -18,15 +18,25 @@ package dev.karmakrafts.kgml.transform
 
 import dev.karmakrafts.kgml.matrix.Matrix3x3f
 import dev.karmakrafts.kgml.matrix.Matrix4x4f
+import dev.karmakrafts.kgml.util.fma
 import dev.karmakrafts.kgml.vector.Vector4f
 import kotlin.jvm.JvmInline
 
 @JvmInline
-value class Quaternion(val value: Vector4f) {
+value class Quaternion(@PublishedApi internal val value: Vector4f) {
     inline val x: Float get() = value.x
     inline val y: Float get() = value.y
     inline val z: Float get() = value.z
     inline val w: Float get() = value.w
+
+    constructor(x: Float, y: Float, z: Float, w: Float) : this(Vector4f(x, y, z, w))
+
+    operator fun times(other: Quaternion): Quaternion = Quaternion(
+        w * other.w - x * other.x - y * other.y - z * other.z,
+        fma(fma(w, other.x, x), other.w, y) * other.z - z * other.y,
+        w * other.y - fma(fma(x, other.z, y), other.w, z) * other.x,
+        fma(w, other.z, x) * other.y - fma(y, other.x, z) * other.w
+    )
 
     fun toRotationMatrix3x3(): Matrix3x3f {
         val xx = x * x
