@@ -44,9 +44,24 @@ data class Vector4i( // @formatter:off
      * The type of [Vector4i].
      */
     companion object : VectorType {
+        /**
+         * The type of the components in the vector.
+         */
         override val componentType: KClass<*> = Int::class
+
+        /**
+         * The size of a single component in bytes.
+         */
         override val componentSize: Int = Int.SIZE_BYTES
+
+        /**
+         * The number of dimensions in the vector.
+         */
         override val dimensions: Int = 4
+
+        /**
+         * The components of the vector.
+         */
         override val components: Array<VectorComponent> = VectorComponent.entries.toTypedArray()
 
         /**
@@ -59,13 +74,44 @@ data class Vector4i( // @formatter:off
          */
         val ONE: Vector4i = Vector4i(1)
 
+        /**
+         * A vector with the X component set to 1 and all other components set to 0.
+         */
         val X_POS: Vector4i = Vector4i(1, 0, 0, 0)
+
+        /**
+         * A vector with the X component set to -1 and all other components set to 0.
+         */
         val X_NEG: Vector4i = Vector4i(-1, 0, 0, 0)
+
+        /**
+         * A vector with the Y component set to 1 and all other components set to 0.
+         */
         val Y_POS: Vector4i = Vector4i(0, 1, 0, 0)
+
+        /**
+         * A vector with the Y component set to -1 and all other components set to 0.
+         */
         val Y_NEG: Vector4i = Vector4i(0, -1, 0, 0)
+
+        /**
+         * A vector with the Z component set to 1 and all other components set to 0.
+         */
         val Z_POS: Vector4i = Vector4i(0, 0, 1, 0)
+
+        /**
+         * A vector with the Z component set to -1 and all other components set to 0.
+         */
         val Z_NEG: Vector4i = Vector4i(0, 0, -1, 0)
+
+        /**
+         * A vector with the W component set to 1 and all other components set to 0.
+         */
         val W_POS: Vector4i = Vector4i(0, 0, 0, 1)
+
+        /**
+         * A vector with the W component set to -1 and all other components set to 0.
+         */
         val W_NEG: Vector4i = Vector4i(0, 0, 0, -1)
 
         /**
@@ -111,6 +157,9 @@ data class Vector4i( // @formatter:off
      */
     constructor() : this(0)
 
+    /**
+     * The type of [Vector4i].
+     */
     override val type: VectorType get() = Vector4i
 
     /**

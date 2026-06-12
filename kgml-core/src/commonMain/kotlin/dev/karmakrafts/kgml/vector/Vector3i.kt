@@ -44,9 +44,24 @@ data class Vector3i( // @formatter:off
      * The type of [Vector3i].
      */
     companion object : VectorType {
+        /**
+         * The type of the components in the vector.
+         */
         override val componentType: KClass<*> = Int::class
+
+        /**
+         * The size of a single component in bytes.
+         */
         override val componentSize: Int = Int.SIZE_BYTES
+
+        /**
+         * The number of dimensions in the vector.
+         */
         override val dimensions: Int = 3
+
+        /**
+         * The components of the vector.
+         */
         override val components: Array<VectorComponent> =
             arrayOf(VectorComponent.X, VectorComponent.Y, VectorComponent.Z)
 
@@ -60,11 +75,34 @@ data class Vector3i( // @formatter:off
          */
         val ONE: Vector3i = Vector3i(1)
 
+        /**
+         * A vector with the X component set to 1 and all other components set to 0.
+         */
         val X_POS: Vector3i = Vector3i(1, 0, 0)
+
+        /**
+         * A vector with the X component set to -1 and all other components set to 0.
+         */
         val X_NEG: Vector3i = Vector3i(-1, 0, 0)
+
+        /**
+         * A vector with the Y component set to 1 and all other components set to 0.
+         */
         val Y_POS: Vector3i = Vector3i(0, 1, 0)
+
+        /**
+         * A vector with the Y component set to -1 and all other components set to 0.
+         */
         val Y_NEG: Vector3i = Vector3i(0, -1, 0)
+
+        /**
+         * A vector with the Z component set to 1 and all other components set to 0.
+         */
         val Z_POS: Vector3i = Vector3i(0, 0, 1)
+
+        /**
+         * A vector with the Z component set to -1 and all other components set to 0.
+         */
         val Z_NEG: Vector3i = Vector3i(0, 0, -1)
 
         /**
@@ -106,6 +144,9 @@ data class Vector3i( // @formatter:off
      */
     constructor() : this(0)
 
+    /**
+     * The type of [Vector3i].
+     */
     override val type: VectorType get() = Vector3i
 
     /**
@@ -235,14 +276,33 @@ data class Vector3i( // @formatter:off
      */
     inline infix fun distance(other: Vector3i): Int = sqrt(distanceSq(other).toFloat()).toInt()
 
+    /**
+     * Calculates the angle in radians between this vector and [other].
+     *
+     * @param other The other vector.
+     * @return The angle in radians.
+     */
     infix fun angleRad(other: Vector3i): Int {
         val cross = this cross other
         val dot = this dot other
         return atan2(cross.length().toFloat(), dot.toFloat()).toInt()
     }
 
+    /**
+     * Calculates the angle in degrees between this vector and [other].
+     *
+     * @param other The other vector.
+     * @return The angle in degrees.
+     */
     inline infix fun angle(other: Vector3i): Int = (angleRad(other) * TO_DEG).toInt()
 
+    /**
+     * Calculates the signed angle in radians between this vector and [other] around the given [axis].
+     *
+     * @param other The other vector.
+     * @param axis The axis to calculate the angle around.
+     * @return The signed angle in radians.
+     */
     fun signedAngleRad(other: Vector3i, axis: Vector3i): Int {
         val cross = this cross other
         val y = axis dot cross
@@ -250,6 +310,13 @@ data class Vector3i( // @formatter:off
         return atan2(y.toFloat(), x.toFloat()).toInt()
     }
 
+    /**
+     * Calculates the signed angle in degrees between this vector and [other] around the given [axis].
+     *
+     * @param other The other vector.
+     * @param axis The axis to calculate the angle around.
+     * @return The signed angle in degrees.
+     */
     inline fun signedAngle(other: Vector3i, axis: Vector3i): Int = (signedAngleRad(other, axis) * TO_DEG).toInt()
 
     /**

@@ -43,9 +43,24 @@ data class Vector2f( // @formatter:off
      * The type of [Vector2f].
      */
     companion object : VectorType {
+        /**
+         * The type of the components in the vector.
+         */
         override val componentType: KClass<*> = Float::class
+
+        /**
+         * The size of a single component in bytes.
+         */
         override val componentSize: Int = Float.SIZE_BYTES
+
+        /**
+         * The number of dimensions in the vector.
+         */
         override val dimensions: Int = 2
+
+        /**
+         * The components of the vector.
+         */
         override val components: Array<VectorComponent> = arrayOf(VectorComponent.X, VectorComponent.Y)
 
         /**
@@ -58,9 +73,24 @@ data class Vector2f( // @formatter:off
          */
         val ONE: Vector2f = Vector2f(1F)
 
+        /**
+         * A vector with the X component set to 1 and all other components set to 0.
+         */
         val X_POS: Vector2f = Vector2f(1F, 0F)
+
+        /**
+         * A vector with the X component set to -1 and all other components set to 0.
+         */
         val X_NEG: Vector2f = Vector2f(-1F, 0F)
+
+        /**
+         * A vector with the Y component set to 1 and all other components set to 0.
+         */
         val Y_POS: Vector2f = Vector2f(0F, 1F)
+
+        /**
+         * A vector with the Y component set to -1 and all other components set to 0.
+         */
         val Y_NEG: Vector2f = Vector2f(0F, -1F)
 
         /**
@@ -98,6 +128,9 @@ data class Vector2f( // @formatter:off
      */
     constructor() : this(0F)
 
+    /**
+     * The type of [Vector2f].
+     */
     override val type: VectorType get() = Vector2f
 
     /**
@@ -268,8 +301,20 @@ data class Vector2f( // @formatter:off
      */
     inline infix fun distance(other: Vector2f): Float = sqrt(distanceSq(other))
 
+    /**
+     * Calculates the angle in radians between this vector and [other].
+     *
+     * @param other The other vector.
+     * @return The angle in radians.
+     */
     infix fun angleRad(other: Vector2f): Float = atan2(this cross other, this dot other)
 
+    /**
+     * Calculates the angle in degrees between this vector and [other].
+     *
+     * @param other The other vector.
+     * @return The angle in degrees.
+     */
     inline infix fun angle(other: Vector2f): Float = (angleRad(other) * TO_DEG).toFloat()
 
     /**
