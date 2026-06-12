@@ -30,6 +30,7 @@ import kotlin.reflect.KClass
  * @property m01 Row 0, Column 1
  * @property m10 Row 1, Column 0
  * @property m11 Row 1, Column 1
+ * @property properties The properties of the matrix.
  */
 @Suppress("NOTHING_TO_INLINE")
 @JvmRecord
@@ -78,6 +79,14 @@ data class Matrix2x2f( // @formatter:off
             properties
         ) // @formatter:on
 
+        /**
+         * Creates a [Matrix2x2f] from the given rows.
+         *
+         * @param row0 The first row.
+         * @param row1 The second row.
+         * @param properties The properties of the matrix.
+         * @return The created matrix.
+         */
         inline fun fromRows( // @formatter:off
             row0: Vector2f,
             row1: Vector2f,
@@ -88,6 +97,14 @@ data class Matrix2x2f( // @formatter:off
             properties
         ) // @formatter:on
 
+        /**
+         * Creates a [Matrix2x2f] from the given columns.
+         *
+         * @param column0 The first column.
+         * @param column1 The second column.
+         * @param properties The properties of the matrix.
+         * @return The created matrix.
+         */
         inline fun fromColumns( // @formatter:off
             column0: Vector2f,
             column1: Vector2f,
@@ -118,10 +135,32 @@ data class Matrix2x2f( // @formatter:off
         value, value
     ) // @formatter:on
 
+    /**
+     * The first row of the matrix.
+     *
+     * @return The first row.
+     */
     inline val row0: Vector2f get() = Vector2f(m00, m01)
+
+    /**
+     * The second row of the matrix.
+     *
+     * @return The second row.
+     */
     inline val row1: Vector2f get() = Vector2f(m10, m11)
 
+    /**
+     * The first column of the matrix.
+     *
+     * @return The first column.
+     */
     inline val column0: Vector2f get() = Vector2f(m00, m10)
+
+    /**
+     * The second column of the matrix.
+     *
+     * @return The second column.
+     */
     inline val column1: Vector2f get() = Vector2f(m01, m11)
 
     /**
@@ -131,6 +170,8 @@ data class Matrix2x2f( // @formatter:off
 
     /**
      * Extends this 2x2 matrix to a 3x3 matrix.
+     *
+     * @return The extended 3x3 matrix.
      */
     inline fun extend(): Matrix3x3f = Matrix3x3f( // @formatter:off
         m00, m01, 0F,

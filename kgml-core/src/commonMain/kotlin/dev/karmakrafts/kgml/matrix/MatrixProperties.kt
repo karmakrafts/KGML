@@ -18,29 +18,95 @@ package dev.karmakrafts.kgml.matrix
 
 import kotlin.jvm.JvmInline
 
+/**
+ * Represents a set of properties that can be associated with a matrix.
+ *
+ * @property value The raw value of the properties.
+ */
 @Suppress("NOTHING_TO_INLINE")
 @JvmInline
 value class MatrixProperties @PublishedApi internal constructor(
     @PublishedApi internal val value: UInt
 ) {
+    /**
+     * Constants for common matrix properties.
+     */
     companion object {
+        /**
+         * No properties.
+         */
         val NONE: MatrixProperties = MatrixProperties(0x0U)
+
+        /**
+         * The matrix is an identity matrix.
+         */
         val IDENTITY: MatrixProperties = MatrixProperties(0x1U)
+
+        /**
+         * The matrix is an affine matrix.
+         */
         val AFFINE: MatrixProperties = MatrixProperties(0x2U)
+
+        /**
+         * The matrix is a translation matrix.
+         */
         val TRANSLATION: MatrixProperties = MatrixProperties(0x4U)
+
+        /**
+         * The matrix is a perspective matrix.
+         */
         val PERSPECTIVE: MatrixProperties = MatrixProperties(0x8U)
     }
 
+    /**
+     * Whether the matrix is an identity matrix.
+     */
     inline val isIdentity: Boolean get() = IDENTITY in this
+
+    /**
+     * Whether the matrix is an affine matrix.
+     */
     inline val isAffine: Boolean get() = AFFINE in this
+
+    /**
+     * Whether the matrix is a translation matrix.
+     */
     inline val isTranslation: Boolean get() = TRANSLATION in this
+
+    /**
+     * Whether the matrix is a perspective matrix.
+     */
     inline val isPerspective: Boolean get() = PERSPECTIVE in this
 
+    /**
+     * Combines these properties with another set of properties.
+     *
+     * @param other The other properties to combine with.
+     * @return The combined properties.
+     */
     inline infix fun or(other: MatrixProperties): MatrixProperties = MatrixProperties(value or other.value)
+
+    /**
+     * Intersects these properties with another set of properties.
+     *
+     * @param other The other properties to intersect with.
+     * @return The intersected properties.
+     */
     inline infix fun and(other: MatrixProperties): MatrixProperties = MatrixProperties(value and other.value)
 
+    /**
+     * Inverts these properties.
+     *
+     * @return The inverted properties.
+     */
     inline fun inv(): MatrixProperties = MatrixProperties(value.inv())
 
+    /**
+     * Checks whether these properties contain the given property.
+     *
+     * @param other The property to check for.
+     * @return Whether these properties contain the given property.
+     */
     inline operator fun contains(other: MatrixProperties): Boolean {
         return value and other.value == other.value
     }

@@ -24,12 +24,16 @@ import dev.karmakrafts.kgml.vector.VectorN
 sealed interface MatrixNxN {
     /**
      * The type of the matrix.
+     *
+     * @return The matrix type.
      */
     val type: MatrixType
 
     /**
      * The specific properties of this matrix.
      * May be used to optimize expensive operations.
+     *
+     * @return The matrix properties.
      */
     val properties: MatrixProperties
 

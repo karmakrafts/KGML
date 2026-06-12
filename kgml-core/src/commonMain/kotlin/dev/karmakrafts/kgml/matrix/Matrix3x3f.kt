@@ -35,6 +35,7 @@ import kotlin.reflect.KClass
  * @property m20 Row 2, Column 0
  * @property m21 Row 2, Column 1
  * @property m22 Row 2, Column 2
+ * @property properties The properties of the matrix.
  */
 @Suppress("NOTHING_TO_INLINE")
 @JvmRecord
@@ -94,6 +95,15 @@ data class Matrix3x3f(
             properties
         ) // @formatter:on
 
+        /**
+         * Creates a [Matrix3x3f] from the given rows.
+         *
+         * @param row0 The first row.
+         * @param row1 The second row.
+         * @param row2 The third row.
+         * @param properties The properties of the matrix.
+         * @return The created matrix.
+         */
         inline fun fromRows( // @formatter:off
             row0: Vector3f,
             row1: Vector3f,
@@ -106,6 +116,15 @@ data class Matrix3x3f(
             properties
         ) // @formatter:on
 
+        /**
+         * Creates a [Matrix3x3f] from the given columns.
+         *
+         * @param column0 The first column.
+         * @param column1 The second column.
+         * @param column2 The third column.
+         * @param properties The properties of the matrix.
+         * @return The created matrix.
+         */
         inline fun fromColumns( // @formatter:off
             column0: Vector3f,
             column1: Vector3f,
@@ -140,12 +159,46 @@ data class Matrix3x3f(
         value, value, value
     ) // @formatter:on
 
+    /**
+     * The first row of the matrix.
+     *
+     * @return The first row.
+     */
     inline val row0: Vector3f get() = Vector3f(m00, m01, m02)
+
+    /**
+     * The second row of the matrix.
+     *
+     * @return The second row.
+     */
     inline val row1: Vector3f get() = Vector3f(m10, m11, m12)
+
+    /**
+     * The third row of the matrix.
+     *
+     * @return The third row.
+     */
     inline val row2: Vector3f get() = Vector3f(m20, m21, m22)
 
+    /**
+     * The first column of the matrix.
+     *
+     * @return The first column.
+     */
     inline val column0: Vector3f get() = Vector3f(m00, m10, m20)
+
+    /**
+     * The second column of the matrix.
+     *
+     * @return The second column.
+     */
     inline val column1: Vector3f get() = Vector3f(m01, m11, m21)
+
+    /**
+     * The third column of the matrix.
+     *
+     * @return The third column.
+     */
     inline val column2: Vector3f get() = Vector3f(m02, m12, m22)
 
     /**
