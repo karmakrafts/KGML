@@ -154,6 +154,7 @@ data class Matrix4x4f(
      * @return The result of the multiplication.
      */
     operator fun times(other: Matrix4x4f): Matrix4x4f = when {
+        other.properties.isPerspective -> multiplyGeneric(other) // Perspective is expensive!
         other.properties.isTranslation -> multiplyAffineTranslationR(other)
         other.properties.isAffine -> multiplyAffineR(other)
         properties.isIdentity -> other
