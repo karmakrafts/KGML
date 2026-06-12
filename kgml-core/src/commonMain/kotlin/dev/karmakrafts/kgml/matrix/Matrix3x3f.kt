@@ -184,18 +184,31 @@ data class Matrix3x3f(
      * @param other The matrix to multiply with.
      * @return The result of the multiplication.
      */
-    operator fun times(other: Matrix3x3f): Matrix3x3f = Matrix3x3f(
-        fma(m00, other.m00, fma(m01, other.m10, m02 * other.m20)),
-        fma(m00, other.m01, fma(m01, other.m11, m02 * other.m21)),
-        fma(m00, other.m02, fma(m01, other.m12, m02 * other.m22)),
-        fma(m10, other.m00, fma(m11, other.m10, m12 * other.m20)),
-        fma(m10, other.m01, fma(m11, other.m11, m12 * other.m21)),
-        fma(m10, other.m02, fma(m11, other.m12, m12 * other.m22)),
-        fma(m20, other.m00, fma(m21, other.m10, m22 * other.m20)),
-        fma(m20, other.m01, fma(m21, other.m11, m22 * other.m21)),
-        fma(m20, other.m02, fma(m21, other.m12, m22 * other.m22)),
-        properties or other.properties
-    )
+    operator fun times(other: Matrix3x3f): Matrix3x3f = when {
+        properties.isIdentity -> other
+        other.properties.isIdentity -> this
+        else -> multiplyGeneric(other)
+    }
+
+    private fun multiplyGeneric(other: Matrix3x3f): Matrix3x3f {
+        val ( // @formatter:off
+            o00, o01, o02,
+            o10, o11, o12,
+            o20, o21, o22
+        ) = other // @formatter:on
+        return Matrix3x3f(
+            fma(m00, o00, fma(m01, o10, m02 * o20)),
+            fma(m00, o01, fma(m01, o11, m02 * o21)),
+            fma(m00, o02, fma(m01, o12, m02 * o22)),
+            fma(m10, o00, fma(m11, o10, m12 * o20)),
+            fma(m10, o01, fma(m11, o11, m12 * o21)),
+            fma(m10, o02, fma(m11, o12, m12 * o22)),
+            fma(m20, o00, fma(m21, o10, m22 * o20)),
+            fma(m20, o01, fma(m21, o11, m22 * o21)),
+            fma(m20, o02, fma(m21, o12, m22 * o22)),
+            properties or other.properties
+        )
+    }
 
     /**
      * Multiplies this matrix with a 3D vector.

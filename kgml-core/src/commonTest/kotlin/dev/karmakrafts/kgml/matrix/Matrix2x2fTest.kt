@@ -25,6 +25,7 @@ import kotlin.test.Test
 import kotlin.test.assertContentEquals
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
+import kotlin.test.assertSame
 
 class Matrix2x2fTest {
     @Test
@@ -94,6 +95,16 @@ class Matrix2x2fTest {
         val identity = Matrix2x2f.identity
         assertEquals(m1, m1 * identity, "m1 * identity should be m1")
         assertEquals(m1, identity * m1, "identity * m1 should be m1")
+    }
+
+    @Test
+    fun `times operator with identity should return existing matrix`() {
+        val matrix = Matrix2x2f(1F, 2F, 3F, 4F, MatrixProperties.AFFINE)
+        val identity = Matrix2x2f.identity
+        assertSame(matrix, matrix * identity)
+        assertSame(matrix, identity * matrix)
+        assertEquals(MatrixProperties.AFFINE, (matrix * identity).properties)
+        assertEquals(MatrixProperties.AFFINE, (identity * matrix).properties)
     }
 
     @Test

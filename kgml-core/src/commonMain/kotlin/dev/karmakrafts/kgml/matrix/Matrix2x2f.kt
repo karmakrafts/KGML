@@ -156,13 +156,25 @@ data class Matrix2x2f( // @formatter:off
      * @param other The matrix to multiply with.
      * @return The result of the multiplication.
      */
-    operator fun times(other: Matrix2x2f): Matrix2x2f = Matrix2x2f(
-        fma(m00, other.m00, m01 * other.m10),
-        fma(m00, other.m01, m01 * other.m11),
-        fma(m10, other.m00, m11 * other.m10),
-        fma(m10, other.m01, m11 * other.m11),
-        properties or other.properties
-    )
+    operator fun times(other: Matrix2x2f): Matrix2x2f = when {
+        properties.isIdentity -> other
+        other.properties.isIdentity -> this
+        else -> multiplyGeneric(other)
+    }
+
+    private fun multiplyGeneric(other: Matrix2x2f): Matrix2x2f {
+        val ( // @formatter:off
+            o00, o01,
+            o10, o11
+        ) = other // @formatter:on
+        return Matrix2x2f(
+            fma(m00, o00, m01 * o10),
+            fma(m00, o01, m01 * o11),
+            fma(m10, o00, m11 * o10),
+            fma(m10, o01, m11 * o11),
+            properties or other.properties
+        )
+    }
 
     /**
      * Multiplies this matrix with a 2D vector.
