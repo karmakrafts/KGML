@@ -24,7 +24,7 @@ package dev.karmakrafts.kgml.util
  * @param c The third operand.
  * @return The result of `(a * b) + c`.
  */
-expect fun fma(a: Float, b: Float, c: Float): Float
+expect inline fun fma(a: Float, b: Float, c: Float): Float
 
 /**
  * Computes a fused multiply-add operation: `(a * b) + c`.
@@ -34,7 +34,7 @@ expect fun fma(a: Float, b: Float, c: Float): Float
  * @param c The third operand.
  * @return The result of `(a * b) + c`.
  */
-expect fun fma(a: Double, b: Double, c: Double): Double
+expect inline fun fma(a: Double, b: Double, c: Double): Double
 
 /**
  * Computes a fused multiply-add operation: `(a * b) + c`.

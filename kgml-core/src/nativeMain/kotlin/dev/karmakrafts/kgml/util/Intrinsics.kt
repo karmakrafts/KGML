@@ -22,5 +22,8 @@ import dev.karmakrafts.kgml.builtins.kgml_fmad
 import dev.karmakrafts.kgml.builtins.kgml_fmaf
 import kotlinx.cinterop.ExperimentalForeignApi
 
-actual fun fma(a: Float, b: Float, c: Float): Float = kgml_fmaf(a, b, c)
-actual fun fma(a: Double, b: Double, c: Double): Double = kgml_fmad(a, b, c)
+@Suppress("NOTHING_TO_INLINE")
+actual inline fun fma(a: Float, b: Float, c: Float): Float = kgml_fmaf(a, b, c)
+
+@Suppress("NOTHING_TO_INLINE")
+actual inline fun fma(a: Double, b: Double, c: Double): Double = kgml_fmad(a, b, c)

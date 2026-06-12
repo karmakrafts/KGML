@@ -18,5 +18,8 @@
 
 package dev.karmakrafts.kgml.util
 
-actual fun fma(a: Float, b: Float, c: Float): Float = Math.fma(a, b, c)
-actual fun fma(a: Double, b: Double, c: Double): Double = Math.fma(a, b, c)
+@Suppress("NOTHING_TO_INLINE")
+actual inline fun fma(a: Float, b: Float, c: Float): Float = Math.fma(a, b, c)
+
+@Suppress("NOTHING_TO_INLINE")
+actual inline fun fma(a: Double, b: Double, c: Double): Double = Math.fma(a, b, c)

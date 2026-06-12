@@ -150,24 +150,26 @@ data class Matrix4x4f(
      * @param other The matrix to multiply with.
      * @return The result of the multiplication.
      */
-    operator fun times(other: Matrix4x4f): Matrix4x4f = Matrix4x4f(
-        fma(m00, other.m00, fma(m01, other.m10, fma(m02, other.m20, m03 * other.m30))),
-        fma(m00, other.m01, fma(m01, other.m11, fma(m02, other.m21, m03 * other.m31))),
-        fma(m00, other.m02, fma(m01, other.m12, fma(m02, other.m22, m03 * other.m32))),
-        fma(m00, other.m03, fma(m01, other.m13, fma(m02, other.m23, m03 * other.m33))),
-        fma(m10, other.m00, fma(m11, other.m10, fma(m12, other.m20, m13 * other.m30))),
-        fma(m10, other.m01, fma(m11, other.m11, fma(m12, other.m21, m13 * other.m31))),
-        fma(m10, other.m02, fma(m11, other.m12, fma(m12, other.m22, m13 * other.m32))),
-        fma(m10, other.m03, fma(m11, other.m13, fma(m12, other.m23, m13 * other.m33))),
-        fma(m20, other.m00, fma(m21, other.m10, fma(m22, other.m20, m23 * other.m30))),
-        fma(m20, other.m01, fma(m21, other.m11, fma(m22, other.m21, m23 * other.m31))),
-        fma(m20, other.m02, fma(m21, other.m12, fma(m22, other.m22, m23 * other.m32))),
-        fma(m20, other.m03, fma(m21, other.m13, fma(m22, other.m23, m23 * other.m33))),
-        fma(m30, other.m00, fma(m31, other.m10, fma(m32, other.m20, m33 * other.m30))),
-        fma(m30, other.m01, fma(m31, other.m11, fma(m32, other.m21, m33 * other.m31))),
-        fma(m30, other.m02, fma(m31, other.m12, fma(m32, other.m22, m33 * other.m32))),
-        fma(m30, other.m03, fma(m31, other.m13, fma(m32, other.m23, m33 * other.m33)))
-    )
+    operator fun times(other: Matrix4x4f): Matrix4x4f {
+        return Matrix4x4f(
+            fma(m00, other.m00, fma(m01, other.m10, fma(m02, other.m20, m03 * other.m30))),
+            fma(m00, other.m01, fma(m01, other.m11, fma(m02, other.m21, m03 * other.m31))),
+            fma(m00, other.m02, fma(m01, other.m12, fma(m02, other.m22, m03 * other.m32))),
+            fma(m00, other.m03, fma(m01, other.m13, fma(m02, other.m23, m03 * other.m33))),
+            fma(m10, other.m00, fma(m11, other.m10, fma(m12, other.m20, m13 * other.m30))),
+            fma(m10, other.m01, fma(m11, other.m11, fma(m12, other.m21, m13 * other.m31))),
+            fma(m10, other.m02, fma(m11, other.m12, fma(m12, other.m22, m13 * other.m32))),
+            fma(m10, other.m03, fma(m11, other.m13, fma(m12, other.m23, m13 * other.m33))),
+            fma(m20, other.m00, fma(m21, other.m10, fma(m22, other.m20, m23 * other.m30))),
+            fma(m20, other.m01, fma(m21, other.m11, fma(m22, other.m21, m23 * other.m31))),
+            fma(m20, other.m02, fma(m21, other.m12, fma(m22, other.m22, m23 * other.m32))),
+            fma(m20, other.m03, fma(m21, other.m13, fma(m22, other.m23, m23 * other.m33))),
+            fma(m30, other.m00, fma(m31, other.m10, fma(m32, other.m20, m33 * other.m30))),
+            fma(m30, other.m01, fma(m31, other.m11, fma(m32, other.m21, m33 * other.m31))),
+            fma(m30, other.m02, fma(m31, other.m12, fma(m32, other.m22, m33 * other.m32))),
+            fma(m30, other.m03, fma(m31, other.m13, fma(m32, other.m23, m33 * other.m33)))
+        )
+    }
 
     /**
      * Multiplies this matrix with a 4D vector.
