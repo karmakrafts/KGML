@@ -15,6 +15,7 @@ gradleNexus = "2.0.0" # https://github.com/gradle-nexus/publish-plugin/releases
 
 kotlinxBenchmark = "0.4.17" # https://github.com/Kotlin/kotlinx-benchmark/releases
 jmh = "1.37" # https://github.com/openjdk/jmh/tags
+joml = "1.10.9" # https://github.com/JOML-CI/JOML/releases
 
 [libraries]
 
@@ -26,6 +27,7 @@ kotlin-wrappers-browser = { module = "org.jetbrains.kotlin-wrappers:kotlin-brows
 
 kotlinx-benchmark-runtime = { module = "org.jetbrains.kotlinx:kotlinx-benchmark-runtime", version.ref = "kotlinxBenchmark" }
 jmh-core = { module = "org.openjdk.jmh:jmh-core", version.ref = "jmh" }
+joml = { module = "org.joml:joml", version.ref = "joml" }
 
 [plugins]
 

@@ -59,6 +59,7 @@ kotlin {
         jvmMain {
             dependencies {
                 implementation(libs.jmh.core)
+                implementation(libs.joml)
             }
         }
     }
@@ -75,6 +76,20 @@ benchmark {
     }
     configurations {
         named("main") {
+            warmups = 10
+            iterations = 10
+            iterationTime = 1
+            iterationTimeUnit = "s"
+        }
+        register("matrix") {
+            include("dev.karmakrafts.kgml.*Matrix*")
+            warmups = 10
+            iterations = 10
+            iterationTime = 1
+            iterationTimeUnit = "s"
+        }
+        register("vector") {
+            include("dev.karmakrafts.kgml.*Vector*")
             warmups = 10
             iterations = 10
             iterationTime = 1

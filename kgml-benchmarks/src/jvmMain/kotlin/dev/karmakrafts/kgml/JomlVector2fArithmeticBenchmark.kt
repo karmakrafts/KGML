@@ -16,22 +16,18 @@
 
 package dev.karmakrafts.kgml
 
-import dev.karmakrafts.kgml.matrix.Matrix4x4f
-import dev.karmakrafts.kgml.projection.perspective
-import dev.karmakrafts.kgml.transform.rotationX
 import kotlinx.benchmark.Benchmark
 import kotlinx.benchmark.Scope
 import kotlinx.benchmark.State
-import kotlin.jvm.JvmName
+import org.joml.Vector2f
 
 @State(Scope.Benchmark)
-open class Matrix4x4fArithmeticBenchmark {
-    val m1 = Matrix4x4f.perspective(70F, 1920F / 1080F, 0.1F, 100F)
-    val m2 = Matrix4x4f.rotationX(45F)
-
+open class JomlVector2fArithmeticBenchmark {
     @JvmName("run")
     @Benchmark
-    fun run(): Matrix4x4f {
-        return m1 * m2
+    fun run(): Vector2f {
+        val v1 = Vector2f(1F, 2F)
+        val v2 = Vector2f(4F, 8F)
+        return v1.mul(v2)
     }
 }
