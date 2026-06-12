@@ -17,6 +17,7 @@
 package dev.karmakrafts.kgml.vector
 
 import dev.karmakrafts.kgml.util.fma
+import dev.karmakrafts.kgml.util.fma4
 import kotlin.jvm.JvmField
 import kotlin.jvm.JvmRecord
 import kotlin.math.max
@@ -191,12 +192,11 @@ data class Vector4i( // @formatter:off
      * @param c The addend.
      * @return The result of the fused multiply-add.
      */
-    fun fma(b: Vector4i, c: Vector4i): Vector4i = Vector4i( // @formatter:off
-        fma(x, b.x, c.x),
-        fma(y, b.y, c.y),
-        fma(z, b.z, c.z),
-        fma(w, b.w, c.w)
-    ) // @formatter:on
+    fun fma(b: Vector4i, c: Vector4i): Vector4i = fma4( // @formatter:off
+        x.toFloat(), y.toFloat(), z.toFloat(), w.toFloat(),
+        b.x.toFloat(), b.y.toFloat(), b.z.toFloat(), b.w.toFloat(),
+        c.x.toFloat(), c.y.toFloat(), c.z.toFloat(), c.w.toFloat()
+    ).toVector4i() // @formatter:on
 
     /**
      * Linearly interpolates between this vector and [other] by [factor].

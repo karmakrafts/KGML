@@ -77,7 +77,11 @@ data class Matrix3x3f(
          * @param offset The offset in the array.
          * @return The created matrix.
          */
-        fun fromArray(array: FloatArray, offset: Int = 0): Matrix3x3f = Matrix3x3f( // @formatter:off
+        inline fun fromArray( // @formatter:off
+            array: FloatArray,
+            offset: Int = 0,
+            properties: MatrixProperties = MatrixProperties.NONE
+        ): Matrix3x3f = Matrix3x3f(
             array[offset],
             array[offset + 1],
             array[offset + 2],
@@ -86,7 +90,32 @@ data class Matrix3x3f(
             array[offset + 5],
             array[offset + 6],
             array[offset + 7],
-            array[offset + 8]
+            array[offset + 8],
+            properties
+        ) // @formatter:on
+
+        inline fun fromRows( // @formatter:off
+            row0: Vector3f,
+            row1: Vector3f,
+            row2: Vector3f,
+            properties: MatrixProperties = MatrixProperties.NONE
+        ): Matrix3x3f = Matrix3x3f(
+            row0.x, row0.y, row0.z,
+            row1.x, row1.y, row1.z,
+            row2.x, row2.y, row2.z,
+            properties
+        ) // @formatter:on
+
+        inline fun fromColumns( // @formatter:off
+            column0: Vector3f,
+            column1: Vector3f,
+            column2: Vector3f,
+            properties: MatrixProperties = MatrixProperties.NONE
+        ): Matrix3x3f = Matrix3x3f(
+            column0.x, column1.x, column2.x,
+            column0.y, column1.y, column2.y,
+            column0.z, column1.z, column2.z,
+            properties
         ) // @formatter:on
     }
 
@@ -111,6 +140,14 @@ data class Matrix3x3f(
         value, value, value
     ) // @formatter:on
 
+    inline val row0: Vector3f get() = Vector3f(m00, m01, m02)
+    inline val row1: Vector3f get() = Vector3f(m10, m11, m12)
+    inline val row2: Vector3f get() = Vector3f(m20, m21, m22)
+
+    inline val column0: Vector3f get() = Vector3f(m00, m10, m20)
+    inline val column1: Vector3f get() = Vector3f(m01, m11, m21)
+    inline val column2: Vector3f get() = Vector3f(m02, m12, m22)
+
     /**
      * The type of the matrix.
      */
@@ -121,7 +158,7 @@ data class Matrix3x3f(
      *
      * @return The extended 4x4 matrix.
      */
-    fun extend(): Matrix4x4f = Matrix4x4f( // @formatter:off
+    inline fun extend(): Matrix4x4f = Matrix4x4f( // @formatter:off
         m00, m01, m02, 0F,
         m10, m11, m12, 0F,
         m20, m21, m22, 0F,
@@ -134,7 +171,7 @@ data class Matrix3x3f(
      *
      * @return The transposed matrix.
      */
-    fun transpose(): Matrix3x3f = Matrix3x3f( // @formatter:off
+    inline fun transpose(): Matrix3x3f = Matrix3x3f( // @formatter:off
         m00, m10, m20,
         m01, m11, m21,
         m02, m12, m22,

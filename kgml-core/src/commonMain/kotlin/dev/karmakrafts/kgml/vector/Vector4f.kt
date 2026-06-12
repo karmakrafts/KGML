@@ -18,6 +18,7 @@ package dev.karmakrafts.kgml.vector
 
 import dev.karmakrafts.kgml.matrix.Matrix4x4f
 import dev.karmakrafts.kgml.util.fma
+import dev.karmakrafts.kgml.util.fma4
 import kotlin.jvm.JvmField
 import kotlin.jvm.JvmRecord
 import kotlin.math.max
@@ -192,11 +193,10 @@ data class Vector4f( // @formatter:off
      * @param c The addend.
      * @return The result of the fused multiply-add.
      */
-    fun fma(b: Vector4f, c: Vector4f): Vector4f = Vector4f( // @formatter:off
-        fma(x, b.x, c.x),
-        fma(y, b.y, c.y),
-        fma(z, b.z, c.z),
-        fma(w, b.w, c.w)
+    fun fma(b: Vector4f, c: Vector4f): Vector4f = fma4( // @formatter:off
+        x, y, z, w,
+        b.x, b.y, b.z, b.w,
+        c.x, c.y, c.z, c.w
     ) // @formatter:on
 
     /**

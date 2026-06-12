@@ -16,6 +16,8 @@
 
 package dev.karmakrafts.kgml.util
 
+import dev.karmakrafts.kgml.vector.Vector4f
+
 /**
  * Computes a fused multiply-add operation: `(a * b) + c`.
  *
@@ -57,3 +59,9 @@ inline fun fma(a: Int, b: Int, c: Int): Int = fma(a.toFloat(), b.toFloat(), c.to
  */
 @Suppress("NOTHING_TO_INLINE")
 inline fun fma(a: Long, b: Long, c: Long): Long = fma(a.toDouble(), b.toDouble(), c.toDouble()).toLong()
+
+internal expect fun fma4( // @formatter:off
+    ax: Float, ay: Float, az: Float, aw: Float,
+    bx: Float, by: Float, bz: Float, bw: Float,
+    cx: Float, cy: Float, cz: Float, cw: Float
+): Vector4f // @formatter:on

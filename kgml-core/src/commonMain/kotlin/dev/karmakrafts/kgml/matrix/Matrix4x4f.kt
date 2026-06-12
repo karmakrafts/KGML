@@ -86,7 +86,11 @@ data class Matrix4x4f(
          * @param offset The offset in the array.
          * @return The created matrix.
          */
-        fun fromArray(array: FloatArray, offset: Int = 0): Matrix4x4f = Matrix4x4f( // @formatter:off
+        inline fun fromArray( // @formatter:off
+            array: FloatArray,
+            offset: Int = 0,
+            properties: MatrixProperties = MatrixProperties.NONE
+        ): Matrix4x4f = Matrix4x4f(
             array[offset],
             array[offset + 1],
             array[offset + 2],
@@ -102,7 +106,36 @@ data class Matrix4x4f(
             array[offset + 12],
             array[offset + 13],
             array[offset + 14],
-            array[offset + 15]
+            array[offset + 15],
+            properties
+        ) // @formatter:on
+
+        inline fun fromRows( // @formatter:off
+            row0: Vector4f,
+            row1: Vector4f,
+            row2: Vector4f,
+            row3: Vector4f,
+            properties: MatrixProperties = MatrixProperties.NONE
+        ): Matrix4x4f = Matrix4x4f(
+            row0.x, row0.y, row0.z, row0.w,
+            row1.x, row1.y, row1.z, row1.w,
+            row2.x, row2.y, row2.z, row2.w,
+            row3.x, row3.y, row3.z, row3.w,
+            properties
+        ) // @formatter:on
+
+        inline fun fromColumns( // @formatter:off
+            column0: Vector4f,
+            column1: Vector4f,
+            column2: Vector4f,
+            column3: Vector4f,
+            properties: MatrixProperties = MatrixProperties.NONE
+        ): Matrix4x4f = Matrix4x4f(
+            column0.x, column1.x, column2.x, column3.x,
+            column0.y, column1.y, column2.y, column3.y,
+            column0.z, column1.z, column2.z, column3.z,
+            column0.w, column1.w, column2.w, column3.w,
+            properties
         ) // @formatter:on
     }
 
@@ -129,6 +162,16 @@ data class Matrix4x4f(
         value, value, value, value
     ) // @formatter:on
 
+    inline val row0: Vector4f get() = Vector4f(m00, m01, m02, m03)
+    inline val row1: Vector4f get() = Vector4f(m10, m11, m12, m13)
+    inline val row2: Vector4f get() = Vector4f(m20, m21, m22, m23)
+    inline val row3: Vector4f get() = Vector4f(m30, m31, m32, m33)
+
+    inline val column0: Vector4f get() = Vector4f(m00, m10, m20, m30)
+    inline val column1: Vector4f get() = Vector4f(m01, m11, m21, m31)
+    inline val column2: Vector4f get() = Vector4f(m02, m12, m22, m32)
+    inline val column3: Vector4f get() = Vector4f(m03, m13, m23, m33)
+
     /**
      * The type of the matrix.
      */
@@ -139,7 +182,7 @@ data class Matrix4x4f(
      *
      * @return The transposed matrix.
      */
-    fun transpose(): Matrix4x4f = Matrix4x4f( // @formatter:off
+    inline fun transpose(): Matrix4x4f = Matrix4x4f( // @formatter:off
         m00, m10, m20, m30,
         m01, m11, m21, m31,
         m02, m12, m22, m32,

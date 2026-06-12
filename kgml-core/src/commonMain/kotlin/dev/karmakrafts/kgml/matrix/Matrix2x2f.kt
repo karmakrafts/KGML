@@ -66,11 +66,36 @@ data class Matrix2x2f( // @formatter:off
          * @param offset The offset in the array.
          * @return The created matrix.
          */
-        fun fromArray(array: FloatArray, offset: Int = 0): Matrix2x2f = Matrix2x2f( // @formatter:off
+        inline fun fromArray( // @formatter:off
+            array: FloatArray,
+            offset: Int = 0,
+            properties: MatrixProperties = MatrixProperties.NONE
+        ): Matrix2x2f = Matrix2x2f(
             array[offset],
             array[offset + 1],
             array[offset + 2],
-            array[offset + 3]
+            array[offset + 3],
+            properties
+        ) // @formatter:on
+
+        inline fun fromRows( // @formatter:off
+            row0: Vector2f,
+            row1: Vector2f,
+            properties: MatrixProperties = MatrixProperties.NONE
+        ): Matrix2x2f = Matrix2x2f(
+            row0.x, row0.y,
+            row1.x, row1.y,
+            properties
+        ) // @formatter:on
+
+        inline fun fromColumns( // @formatter:off
+            column0: Vector2f,
+            column1: Vector2f,
+            properties: MatrixProperties = MatrixProperties.NONE
+        ): Matrix2x2f = Matrix2x2f(
+            column0.x, column1.x,
+            column0.y, column1.y,
+            properties
         ) // @formatter:on
     }
 
@@ -93,6 +118,12 @@ data class Matrix2x2f( // @formatter:off
         value, value
     ) // @formatter:on
 
+    inline val row0: Vector2f get() = Vector2f(m00, m01)
+    inline val row1: Vector2f get() = Vector2f(m10, m11)
+
+    inline val column0: Vector2f get() = Vector2f(m00, m10)
+    inline val column1: Vector2f get() = Vector2f(m01, m11)
+
     /**
      * The type of the matrix.
      */
@@ -101,7 +132,7 @@ data class Matrix2x2f( // @formatter:off
     /**
      * Extends this 2x2 matrix to a 3x3 matrix.
      */
-    fun extend(): Matrix3x3f = Matrix3x3f( // @formatter:off
+    inline fun extend(): Matrix3x3f = Matrix3x3f( // @formatter:off
         m00, m01, 0F,
         m10, m11, 0F,
         0F,  0F,  1F,
@@ -113,7 +144,7 @@ data class Matrix2x2f( // @formatter:off
      *
      * @return The transposed matrix.
      */
-    fun transpose(): Matrix2x2f = Matrix2x2f( // @formatter:off
+    inline fun transpose(): Matrix2x2f = Matrix2x2f( // @formatter:off
         m00, m10,
         m01, m11,
         properties
