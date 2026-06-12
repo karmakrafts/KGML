@@ -19,6 +19,7 @@
 package dev.karmakrafts.kgml.transform
 
 import dev.karmakrafts.kgml.matrix.Matrix3x3f
+import dev.karmakrafts.kgml.matrix.MatrixProperties
 import dev.karmakrafts.kgml.util.TO_RAD
 import kotlin.math.cos
 import kotlin.math.sin
@@ -35,7 +36,8 @@ fun Matrix3x3f.Companion.rotationZRad(rad: Float): Matrix3x3f {
     return Matrix3x3f( // @formatter:off
         c, -s, 0F,
         s, c, 0F,
-        0F, 0F, 1F
+        0F, 0F, 1F,
+        MatrixProperties.AFFINE
     ) // @formatter:on
 }
 
@@ -59,7 +61,8 @@ fun Matrix3x3f.Companion.rotationXRad(rad: Float): Matrix3x3f {
     return Matrix3x3f( // @formatter:off
         1F, 0F, 0F,
         0F, c, -s,
-        0F, s, c
+        0F, s, c,
+        MatrixProperties.AFFINE
     ) // @formatter:on
 }
 
@@ -83,7 +86,8 @@ fun Matrix3x3f.Companion.rotationYRad(rad: Float): Matrix3x3f {
     return Matrix3x3f( // @formatter:off
         c, 0F, s,
         0F, 1F, 0F,
-        -s, 0F, c
+        -s, 0F, c,
+        MatrixProperties.AFFINE
     ) // @formatter:on
 }
 
@@ -145,7 +149,8 @@ inline operator fun Matrix3x3f.times(quat: Quaternion): Matrix3x3f = this * quat
 fun Matrix3x3f.Companion.translation(x: Float, y: Float): Matrix3x3f = Matrix3x3f( // @formatter:off
     1F, 0F, x,
     0F, 1F, y,
-    0F, 0F, 1F
+    0F, 0F, 1F,
+    MatrixProperties.AFFINE or MatrixProperties.TRANSLATION
 ) // @formatter:on
 
 /**
@@ -158,5 +163,6 @@ fun Matrix3x3f.Companion.translation(x: Float, y: Float): Matrix3x3f = Matrix3x3
 fun Matrix3x3f.Companion.scale(x: Float, y: Float): Matrix3x3f = Matrix3x3f( // @formatter:off
     x,  0F, 0F,
     0F, y,  0F,
-    0F, 0F, 1F
+    0F, 0F, 1F,
+    MatrixProperties.AFFINE
 ) // @formatter:on

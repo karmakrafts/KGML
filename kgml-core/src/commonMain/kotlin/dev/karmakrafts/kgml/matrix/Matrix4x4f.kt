@@ -61,7 +61,8 @@ data class Matrix4x4f(
     @JvmField val m30: Float,
     @JvmField val m31: Float,
     @JvmField val m32: Float,
-    @JvmField val m33: Float
+    @JvmField val m33: Float,
+    override val properties: MatrixProperties = MatrixProperties.NONE
 ) : MatrixNxNf {
     /**
      * The type of [Matrix4x4f].
@@ -112,7 +113,8 @@ data class Matrix4x4f(
         1F, 0F, 0F, 0F,
         0F, 1F, 0F, 0F,
         0F, 0F, 1F, 0F,
-        0F, 0F, 0F, 1F
+        0F, 0F, 0F, 1F,
+        MatrixProperties.IDENTITY
     ) // @formatter:on
 
     /**
@@ -141,7 +143,8 @@ data class Matrix4x4f(
         m00, m10, m20, m30,
         m01, m11, m21, m31,
         m02, m12, m22, m32,
-        m03, m13, m23, m33
+        m03, m13, m23, m33,
+        properties
     ) // @formatter:on
 
     /**
@@ -167,7 +170,8 @@ data class Matrix4x4f(
             fma(m30, other.m00, fma(m31, other.m10, fma(m32, other.m20, m33 * other.m30))),
             fma(m30, other.m01, fma(m31, other.m11, fma(m32, other.m21, m33 * other.m31))),
             fma(m30, other.m02, fma(m31, other.m12, fma(m32, other.m22, m33 * other.m32))),
-            fma(m30, other.m03, fma(m31, other.m13, fma(m32, other.m23, m33 * other.m33)))
+            fma(m30, other.m03, fma(m31, other.m13, fma(m32, other.m23, m33 * other.m33))),
+            properties or other.properties
         )
     }
 

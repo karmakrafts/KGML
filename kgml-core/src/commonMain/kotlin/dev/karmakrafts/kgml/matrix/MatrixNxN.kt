@@ -28,6 +28,12 @@ sealed interface MatrixNxN {
     val type: MatrixType
 
     /**
+     * The specific properties of this matrix.
+     * May be used to optimize expensive operations.
+     */
+    val properties: MatrixProperties
+
+    /**
      * Multiplies this matrix with another matrix.
      *
      * @param other The matrix to multiply with.

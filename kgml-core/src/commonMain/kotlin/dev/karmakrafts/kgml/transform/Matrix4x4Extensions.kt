@@ -20,6 +20,7 @@ package dev.karmakrafts.kgml.transform
 
 import dev.karmakrafts.kgml.matrix.Matrix3x3f
 import dev.karmakrafts.kgml.matrix.Matrix4x4f
+import dev.karmakrafts.kgml.matrix.MatrixProperties
 import dev.karmakrafts.kgml.util.TO_RAD
 
 /**
@@ -122,7 +123,8 @@ fun Matrix4x4f.Companion.translation( // @formatter:off
     1F, 0F, 0F, x,
     0F, 1F, 0F, y,
     0F, 0F, 1F, z,
-    0F, 0F, 0F, 1F
+    0F, 0F, 0F, 1F,
+    MatrixProperties.AFFINE or MatrixProperties.TRANSLATION
 ) // @formatter:on
 
 /**
@@ -141,7 +143,8 @@ fun Matrix4x4f.Companion.scale( // @formatter:off
     scaleX, 0F,     0F,     0F,
     0F,     scaleY, 0F,     0F,
     0F,     0F,     scaleZ, 0F,
-    0F,     0F,     0F,     1F
+    0F,     0F,     0F,     1F,
+    MatrixProperties.AFFINE
 ) // @formatter:on
 
 /**
@@ -166,5 +169,6 @@ fun Matrix4x4f.Companion.skew( // @formatter:off
     1F, xy, xz, 0F,
     yx, 1F, yz, 0F,
     zx, zy, 1F, 0F,
-    0F, 0F, 0F, 1F
+    0F, 0F, 0F, 1F,
+    MatrixProperties.AFFINE
 ) // @formatter:on

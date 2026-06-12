@@ -18,6 +18,7 @@ package dev.karmakrafts.kgml.transform
 
 import dev.karmakrafts.kgml.matrix.Matrix3x3f
 import dev.karmakrafts.kgml.matrix.Matrix4x4f
+import dev.karmakrafts.kgml.matrix.MatrixProperties
 import dev.karmakrafts.kgml.util.TO_DEG
 import dev.karmakrafts.kgml.util.TO_RAD
 import dev.karmakrafts.kgml.util.fma
@@ -249,7 +250,8 @@ value class Quaternion(@PublishedApi internal val value: Vector4f) : Transform<M
             2F * (yz - xw),
             2F * (xz - yw),
             2F * (yz + xw),
-            1F - 2F * (xx + yy)
+            1F - 2F * (xx + yy),
+            MatrixProperties.AFFINE
         )
     }
 
@@ -284,7 +286,8 @@ value class Quaternion(@PublishedApi internal val value: Vector4f) : Transform<M
             0F,
             0F,
             0F,
-            1F
+            1F,
+            MatrixProperties.AFFINE
         )
     }
 

@@ -37,7 +37,8 @@ data class Matrix2x2f( // @formatter:off
     @JvmField val m00: Float,
     @JvmField val m01: Float,
     @JvmField val m10: Float,
-    @JvmField val m11: Float
+    @JvmField val m11: Float,
+    override val properties: MatrixProperties = MatrixProperties.NONE
 ) : MatrixNxNf { // @formatter:on
     /**
      * The type of [Matrix2x2f].
@@ -78,7 +79,8 @@ data class Matrix2x2f( // @formatter:off
      */
     constructor() : this( // @formatter:off
         1F, 0F,
-        0F, 1F
+        0F, 1F,
+        MatrixProperties.IDENTITY
     ) // @formatter:on
 
     /**
@@ -102,7 +104,8 @@ data class Matrix2x2f( // @formatter:off
     fun extend(): Matrix3x3f = Matrix3x3f( // @formatter:off
         m00, m01, 0F,
         m10, m11, 0F,
-        0F,  0F,  1F
+        0F,  0F,  1F,
+        properties
     ) // @formatter:on
 
     /**
@@ -112,7 +115,8 @@ data class Matrix2x2f( // @formatter:off
      */
     fun transpose(): Matrix2x2f = Matrix2x2f( // @formatter:off
         m00, m10,
-        m01, m11
+        m01, m11,
+        properties
     ) // @formatter:on
 
     /**
@@ -125,7 +129,8 @@ data class Matrix2x2f( // @formatter:off
         fma(m00, other.m00, m01 * other.m10),
         fma(m00, other.m01, m01 * other.m11),
         fma(m10, other.m00, m11 * other.m10),
-        fma(m10, other.m01, m11 * other.m11)
+        fma(m10, other.m01, m11 * other.m11),
+        properties or other.properties
     )
 
     /**

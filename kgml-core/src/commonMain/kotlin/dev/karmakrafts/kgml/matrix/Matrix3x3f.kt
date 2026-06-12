@@ -47,7 +47,8 @@ data class Matrix3x3f(
     @JvmField val m12: Float,
     @JvmField val m20: Float,
     @JvmField val m21: Float,
-    @JvmField val m22: Float
+    @JvmField val m22: Float,
+    override val properties: MatrixProperties = MatrixProperties.NONE
 ) : MatrixNxNf {
     /**
      * The type of [Matrix3x3f].
@@ -95,7 +96,8 @@ data class Matrix3x3f(
     constructor() : this( // @formatter:off
         1F, 0F, 0F,
         0F, 1F, 0F,
-        0F, 0F, 1F
+        0F, 0F, 1F,
+        MatrixProperties.IDENTITY
     ) // @formatter:on
 
     /**
@@ -123,7 +125,8 @@ data class Matrix3x3f(
         m00, m01, m02, 0F,
         m10, m11, m12, 0F,
         m20, m21, m22, 0F,
-        0F,  0F,  0F,  1F
+        0F,  0F,  0F,  1F,
+        properties
     ) // @formatter:on
 
     /**
@@ -134,7 +137,8 @@ data class Matrix3x3f(
     fun transpose(): Matrix3x3f = Matrix3x3f( // @formatter:off
         m00, m10, m20,
         m01, m11, m21,
-        m02, m12, m22
+        m02, m12, m22,
+        properties
     ) // @formatter:on
 
     /**
@@ -152,7 +156,8 @@ data class Matrix3x3f(
         fma(m10, other.m02, fma(m11, other.m12, m12 * other.m22)),
         fma(m20, other.m00, fma(m21, other.m10, m22 * other.m20)),
         fma(m20, other.m01, fma(m21, other.m11, m22 * other.m21)),
-        fma(m20, other.m02, fma(m21, other.m12, m22 * other.m22))
+        fma(m20, other.m02, fma(m21, other.m12, m22 * other.m22)),
+        properties or other.properties
     )
 
     /**
