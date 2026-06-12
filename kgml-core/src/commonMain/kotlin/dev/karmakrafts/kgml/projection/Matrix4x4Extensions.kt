@@ -73,6 +73,6 @@ fun Matrix4x4f.Companion.perspective( // @formatter:off
         0F, f, 0F, 0F,
         0F, 0F, (far + near) / nmf, (2F * far * near) / nmf,
         0F, 0F, -1F, 0F,
-        MatrixProperties.PERSPECTIVE or MatrixProperties.AFFINE or MatrixProperties.TRANSLATION
+        MatrixProperties.PERSPECTIVE or MatrixProperties.TRANSLATION
     )
 } // @formatter:on
