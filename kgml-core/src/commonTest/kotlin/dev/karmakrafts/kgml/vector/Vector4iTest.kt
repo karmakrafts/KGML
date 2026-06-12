@@ -31,7 +31,7 @@ class Vector4iTest {
 
     @Test
     fun `distance should return distance to another vector`() {
-        assertEquals(13, Vector4i(3, 4, 12, 0) distance Vector4i.zero)
+        assertEquals(13, Vector4i(3, 4, 12, 0) distance Vector4i.ZERO)
     }
 
     @Test
@@ -66,12 +66,12 @@ class Vector4iTest {
 
     @Test
     fun `zero should return vector with all zeros`() {
-        assertEquals(Vector4i.zero, Vector4i(0, 0, 0, 0))
+        assertEquals(Vector4i.ZERO, Vector4i(0, 0, 0, 0))
     }
 
     @Test
     fun `one should return vector with all ones`() {
-        assertEquals(Vector4i.one, Vector4i(1, 1, 1, 1))
+        assertEquals(Vector4i.ONE, Vector4i(1, 1, 1, 1))
     }
 
     @Test

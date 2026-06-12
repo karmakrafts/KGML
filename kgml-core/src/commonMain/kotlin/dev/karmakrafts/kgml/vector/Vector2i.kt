@@ -50,12 +50,17 @@ data class Vector2i( // @formatter:off
         /**
          * A vector with all components set to 0.
          */
-        val zero: Vector2i = Vector2i()
+        val ZERO: Vector2i = Vector2i()
 
         /**
          * A vector with all components set to 1.
          */
-        val one: Vector2i = Vector2i(1)
+        val ONE: Vector2i = Vector2i(1)
+
+        val X_POS: Vector2i = Vector2i(1, 0)
+        val X_NEG: Vector2i = Vector2i(-1, 0)
+        val Y_POS: Vector2i = Vector2i(0, 1)
+        val Y_NEG: Vector2i = Vector2i(0, -1)
 
         /**
          * A lexicographical comparator for [Vector2i].

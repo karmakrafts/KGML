@@ -53,12 +53,21 @@ data class Vector4f( // @formatter:off
         /**
          * A vector with all components set to 0.
          */
-        val zero: Vector4f = Vector4f()
+        val ZERO: Vector4f = Vector4f()
 
         /**
          * A vector with all components set to 1.
          */
-        val one: Vector4f = Vector4f(1F)
+        val ONE: Vector4f = Vector4f(1F)
+
+        val X_POS: Vector4f = Vector4f(1F, 0F, 0F, 0F)
+        val X_NEG: Vector4f = Vector4f(-1F, 0F, 0F, 0F)
+        val Y_POS: Vector4f = Vector4f(0F, 1F, 0F, 0F)
+        val Y_NEG: Vector4f = Vector4f(0F, -1F, 0F, 0F)
+        val Z_POS: Vector4f = Vector4f(0F, 0F, 1F, 0F)
+        val Z_NEG: Vector4f = Vector4f(0F, 0F, -1F, 0F)
+        val W_POS: Vector4f = Vector4f(0F, 0F, 0F, 1F)
+        val W_NEG: Vector4f = Vector4f(0F, 0F, 0F, -1F)
 
         /**
          * A lexicographical comparator for [Vector4f].

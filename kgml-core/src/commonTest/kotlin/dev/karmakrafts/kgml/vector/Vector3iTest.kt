@@ -67,12 +67,12 @@ class Vector3iTest {
 
     @Test
     fun `zero should return vector with all zeros`() {
-        assertEquals(Vector3i.zero, Vector3i(0, 0, 0))
+        assertEquals(Vector3i.ZERO, Vector3i(0, 0, 0))
     }
 
     @Test
     fun `one should return vector with all ones`() {
-        assertEquals(Vector3i.one, Vector3i(1, 1, 1))
+        assertEquals(Vector3i.ONE, Vector3i(1, 1, 1))
     }
 
     @Test

@@ -57,12 +57,12 @@ class Vector4fTest {
 
     @Test
     fun `zero should return vector with all zeros`() {
-        assertEquals(Vector4f.zero, Vector4f(0F, 0F, 0F, 0F))
+        assertEquals(Vector4f.ZERO, Vector4f(0F, 0F, 0F, 0F))
     }
 
     @Test
     fun `one should return vector with all ones`() {
-        assertEquals(Vector4f.one, Vector4f(1F, 1F, 1F, 1F))
+        assertEquals(Vector4f.ONE, Vector4f(1F, 1F, 1F, 1F))
     }
 
     @Test
@@ -211,7 +211,7 @@ class Vector4fTest {
 
     @Test
     fun `distance should return distance to another vector`() {
-        assertFloatEquals(13F, Vector4f(3F, 4F, 12F, 0F) distance Vector4f.zero)
+        assertFloatEquals(13F, Vector4f(3F, 4F, 12F, 0F) distance Vector4f.ZERO)
     }
 
     @Test

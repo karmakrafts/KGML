@@ -51,12 +51,17 @@ data class Vector2f( // @formatter:off
         /**
          * A vector with all components set to 0.
          */
-        val zero: Vector2f = Vector2f()
+        val ZERO: Vector2f = Vector2f()
 
         /**
          * A vector with all components set to 1.
          */
-        val one: Vector2f = Vector2f(1F)
+        val ONE: Vector2f = Vector2f(1F)
+
+        val X_POS: Vector2f = Vector2f(1F, 0F)
+        val X_NEG: Vector2f = Vector2f(-1F, 0F)
+        val Y_POS: Vector2f = Vector2f(0F, 1F)
+        val Y_NEG: Vector2f = Vector2f(0F, -1F)
 
         /**
          * A lexicographical comparator for [Vector2f].

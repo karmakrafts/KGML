@@ -63,23 +63,7 @@ class Matrix4x4fTest {
         val matrix = Matrix4x4f.fromArray(array, 1, MatrixProperties.AFFINE)
         assertEquals(
             Matrix4x4f(
-                1F,
-                2F,
-                3F,
-                4F,
-                5F,
-                6F,
-                7F,
-                8F,
-                9F,
-                10F,
-                11F,
-                12F,
-                13F,
-                14F,
-                15F,
-                16F,
-                MatrixProperties.AFFINE
+                1F, 2F, 3F, 4F, 5F, 6F, 7F, 8F, 9F, 10F, 11F, 12F, 13F, 14F, 15F, 16F, MatrixProperties.AFFINE
             ), matrix
         )
         assertEquals(MatrixProperties.AFFINE, matrix.properties)
@@ -94,23 +78,7 @@ class Matrix4x4fTest {
         val matrix = Matrix4x4f.fromRows(row0, row1, row2, row3, MatrixProperties.AFFINE)
         assertEquals(
             Matrix4x4f(
-                1F,
-                2F,
-                3F,
-                4F,
-                5F,
-                6F,
-                7F,
-                8F,
-                9F,
-                10F,
-                11F,
-                12F,
-                13F,
-                14F,
-                15F,
-                16F,
-                MatrixProperties.AFFINE
+                1F, 2F, 3F, 4F, 5F, 6F, 7F, 8F, 9F, 10F, 11F, 12F, 13F, 14F, 15F, 16F, MatrixProperties.AFFINE
             ), matrix
         )
     }
@@ -124,23 +92,7 @@ class Matrix4x4fTest {
         val matrix = Matrix4x4f.fromColumns(column0, column1, column2, column3, MatrixProperties.AFFINE)
         assertEquals(
             Matrix4x4f(
-                1F,
-                2F,
-                3F,
-                4F,
-                5F,
-                6F,
-                7F,
-                8F,
-                9F,
-                10F,
-                11F,
-                12F,
-                13F,
-                14F,
-                15F,
-                16F,
-                MatrixProperties.AFFINE
+                1F, 2F, 3F, 4F, 5F, 6F, 7F, 8F, 9F, 10F, 11F, 12F, 13F, 14F, 15F, 16F, MatrixProperties.AFFINE
             ), matrix
         )
     }
@@ -221,23 +173,7 @@ class Matrix4x4fTest {
         // [0 0 0 1] [0 0 0 1]   [0 0 0 1]   [0 0 0 1]
         assertEquals(
             Matrix4x4f(
-                1F,
-                2F,
-                3F,
-                24F,
-                5F,
-                6F,
-                7F,
-                64F,
-                9F,
-                10F,
-                11F,
-                104F,
-                0F,
-                0F,
-                0F,
-                1F,
-                MatrixProperties.AFFINE
+                1F, 2F, 3F, 24F, 5F, 6F, 7F, 64F, 9F, 10F, 11F, 104F, 0F, 0F, 0F, 1F, MatrixProperties.AFFINE
             ), result
         )
     }

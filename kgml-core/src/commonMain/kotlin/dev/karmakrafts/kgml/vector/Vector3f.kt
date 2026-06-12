@@ -54,12 +54,19 @@ data class Vector3f( // @formatter:off
         /**
          * A vector with all components set to 0.
          */
-        val zero: Vector3f = Vector3f()
+        val ZERO: Vector3f = Vector3f()
 
         /**
          * A vector with all components set to 1.
          */
-        val one: Vector3f = Vector3f(1F)
+        val ONE: Vector3f = Vector3f(1F)
+
+        val X_POS: Vector3f = Vector3f(1F, 0F, 0F)
+        val X_NEG: Vector3f = Vector3f(-1F, 0F, 0F)
+        val Y_POS: Vector3f = Vector3f(0F, 1F, 0F)
+        val Y_NEG: Vector3f = Vector3f(0F, -1F, 0F)
+        val Z_POS: Vector3f = Vector3f(0F, 0F, 1F)
+        val Z_NEG: Vector3f = Vector3f(0F, 0F, -1F)
 
         /**
          * A lexicographical comparator for [Vector3f].

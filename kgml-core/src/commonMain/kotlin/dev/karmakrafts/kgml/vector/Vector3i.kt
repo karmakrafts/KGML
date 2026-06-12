@@ -53,12 +53,19 @@ data class Vector3i( // @formatter:off
         /**
          * A vector with all components set to 0.
          */
-        val zero: Vector3i = Vector3i()
+        val ZERO: Vector3i = Vector3i()
 
         /**
          * A vector with all components set to 1.
          */
-        val one: Vector3i = Vector3i(1)
+        val ONE: Vector3i = Vector3i(1)
+
+        val X_POS: Vector3i = Vector3i(1, 0, 0)
+        val X_NEG: Vector3i = Vector3i(-1, 0, 0)
+        val Y_POS: Vector3i = Vector3i(0, 1, 0)
+        val Y_NEG: Vector3i = Vector3i(0, -1, 0)
+        val Z_POS: Vector3i = Vector3i(0, 0, 1)
+        val Z_NEG: Vector3i = Vector3i(0, 0, -1)
 
         /**
          * A lexicographical comparator for [Vector3i].
