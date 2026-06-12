@@ -229,6 +229,20 @@ class Vector2fTest {
     }
 
     @Test
+    fun `angleRad should return angle in radians`() {
+        val v1 = Vector2f(1F, 0F)
+        val v2 = Vector2f(0F, 1F)
+        assertFloatEquals(1.5707964F, v1 angleRad v2)
+    }
+
+    @Test
+    fun `angle should return angle in degrees`() {
+        val v1 = Vector2f(1F, 0F)
+        val v2 = Vector2f(0F, 1F)
+        assertFloatEquals(90F, v1 angle v2)
+    }
+
+    @Test
     fun `toVector2i should convert to Vector2i`() {
         val vector = Vector2f(3F, 4F)
         assertEquals(Vector2i(3, 4), vector.toVector2i())

@@ -229,6 +229,38 @@ class Vector3fTest {
     }
 
     @Test
+    fun `angleRad should return angle in radians`() {
+        val v1 = Vector3f(1F, 0F, 0F)
+        val v2 = Vector3f(0F, 1F, 0F)
+        assertFloatEquals(1.5707964F, v1 angleRad v2)
+    }
+
+    @Test
+    fun `angle should return angle in degrees`() {
+        val v1 = Vector3f(1F, 0F, 0F)
+        val v2 = Vector3f(0F, 1F, 0F)
+        assertFloatEquals(90F, v1 angle v2)
+    }
+
+    @Test
+    fun `signedAngleRad should return signed angle in radians`() {
+        val v1 = Vector3f(1F, 0F, 0F)
+        val v2 = Vector3f(0F, 1F, 0F)
+        val axis = Vector3f(0F, 0F, 1F)
+        assertFloatEquals(1.5707964F, v1.signedAngleRad(v2, axis))
+        assertFloatEquals(-1.5707964F, v1.signedAngleRad(v2, Vector3f(0F, 0F, -1F)))
+    }
+
+    @Test
+    fun `signedAngle should return signed angle in degrees`() {
+        val v1 = Vector3f(1F, 0F, 0F)
+        val v2 = Vector3f(0F, 1F, 0F)
+        val axis = Vector3f(0F, 0F, 1F)
+        assertFloatEquals(90F, v1.signedAngle(v2, axis))
+        assertFloatEquals(-90F, v1.signedAngle(v2, Vector3f(0F, 0F, -1F)))
+    }
+
+    @Test
     fun `toVector3i should convert to Vector3i`() {
         val vector = Vector3f(2F, 3F, 6F)
         assertEquals(Vector3i(2, 3, 6), vector.toVector3i())
