@@ -208,6 +208,14 @@ data class Matrix2x2f( // @formatter:off
         m10, m11
     ) // @formatter:on
 
+    override fun toString(): String {
+        var result = "Matrix2x2f[\n"
+        result += "\t$m00, $m01\n"
+        result += "\t$m10, $m11\n"
+        result += ']'
+        return result
+    }
+
     override fun equals(other: Any?): Boolean = when(other) { // @formatter:off
         is Matrix2x2f -> m00 == other.m00 &&
             m01 == other.m01 &&

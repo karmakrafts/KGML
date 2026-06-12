@@ -247,6 +247,15 @@ data class Matrix3x3f(
         m20, m21, m22
     ) // @formatter:on
 
+    override fun toString(): String {
+        var result = "Matrix3x3f[\n"
+        result += "\t$m00, $m01, $m02\n"
+        result += "\t$m10, $m11, $m12\n"
+        result += "\t$m20, $m21, $m22\n"
+        result += ']'
+        return result
+    }
+
     override fun equals(other: Any?): Boolean = when(other) { // @formatter:off
         is Matrix3x3f -> m00 == other.m00 &&
             m01 == other.m01 &&
