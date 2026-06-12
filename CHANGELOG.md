@@ -10,6 +10,10 @@
 - `columnN` column accessors for all matrix types
 - `fromRows` factory function for all matrix types
 - `fromColumns` factory function for all matrix types
+- `angleRad` and `angle` functions for all 2-dimensional vector types
+- `angleRad` and `angle` functions for all 3-dimensional vector types
+- `signedAngleRad` and `signedAngle` functions for all 3-dimensional vector types
+- Axis constants for all vector types
 
 ### Changed
 
