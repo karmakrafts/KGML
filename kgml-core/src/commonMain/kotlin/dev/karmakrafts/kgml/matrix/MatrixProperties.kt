@@ -28,11 +28,13 @@ value class MatrixProperties @PublishedApi internal constructor(
         val IDENTITY: MatrixProperties = MatrixProperties(0x1U)
         val AFFINE: MatrixProperties = MatrixProperties(0x2U)
         val TRANSLATION: MatrixProperties = MatrixProperties(0x4U)
+        val PERSPECTIVE: MatrixProperties = MatrixProperties(0x8U)
     }
 
     inline val isIdentity: Boolean get() = IDENTITY in this
     inline val isAffine: Boolean get() = AFFINE in this
     inline val isTranslation: Boolean get() = TRANSLATION in this
+    inline val isPerspective: Boolean get() = PERSPECTIVE in this
 
     inline infix fun or(other: MatrixProperties): MatrixProperties = MatrixProperties(value or other.value)
     inline infix fun and(other: MatrixProperties): MatrixProperties = MatrixProperties(value and other.value)
