@@ -5,7 +5,11 @@
 - Missing `distanceSq` and `distance` functions in `Vector2i`
 - Missing `distanceSq` and `distance` functions in `Vector3i`
 - Missing `distanceSq` and `distance` functions in `Vector4i`
-- `MatrixProperties` to tag matrices as translations, affine and identity
+- `MatrixProperties` to tag matrices as translations, affine, perspective and identity
+- `rowN` row accessors for all matrix types
+- `columnN` column accessors for all matrix types
+- `fromRows` factory function for all matrix types
+- `fromColumns` factory function for all matrix types
 
 ### Changed
 
