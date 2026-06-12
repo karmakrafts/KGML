@@ -1,5 +1,7 @@
 ## [Unreleased]
 
+## [1.1.0]
+
 ### Added
 
 - Missing `distanceSq` and `distance` functions in `Vector2i`
