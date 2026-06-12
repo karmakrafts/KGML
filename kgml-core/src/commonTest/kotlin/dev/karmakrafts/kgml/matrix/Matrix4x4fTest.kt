@@ -61,7 +61,27 @@ class Matrix4x4fTest {
     fun `fromArray should create matrix from array at offset with properties`() {
         val array = FloatArray(17) { it.toFloat() }
         val matrix = Matrix4x4f.fromArray(array, 1, MatrixProperties.AFFINE)
-        assertEquals(Matrix4x4f(1F, 2F, 3F, 4F, 5F, 6F, 7F, 8F, 9F, 10F, 11F, 12F, 13F, 14F, 15F, 16F, MatrixProperties.AFFINE), matrix)
+        assertEquals(
+            Matrix4x4f(
+                1F,
+                2F,
+                3F,
+                4F,
+                5F,
+                6F,
+                7F,
+                8F,
+                9F,
+                10F,
+                11F,
+                12F,
+                13F,
+                14F,
+                15F,
+                16F,
+                MatrixProperties.AFFINE
+            ), matrix
+        )
         assertEquals(MatrixProperties.AFFINE, matrix.properties)
     }
 
@@ -72,7 +92,27 @@ class Matrix4x4fTest {
         val row2 = Vector4f(9F, 10F, 11F, 12F)
         val row3 = Vector4f(13F, 14F, 15F, 16F)
         val matrix = Matrix4x4f.fromRows(row0, row1, row2, row3, MatrixProperties.AFFINE)
-        assertEquals(Matrix4x4f(1F, 2F, 3F, 4F, 5F, 6F, 7F, 8F, 9F, 10F, 11F, 12F, 13F, 14F, 15F, 16F, MatrixProperties.AFFINE), matrix)
+        assertEquals(
+            Matrix4x4f(
+                1F,
+                2F,
+                3F,
+                4F,
+                5F,
+                6F,
+                7F,
+                8F,
+                9F,
+                10F,
+                11F,
+                12F,
+                13F,
+                14F,
+                15F,
+                16F,
+                MatrixProperties.AFFINE
+            ), matrix
+        )
     }
 
     @Test
@@ -82,7 +122,27 @@ class Matrix4x4fTest {
         val column2 = Vector4f(3F, 7F, 11F, 15F)
         val column3 = Vector4f(4F, 8F, 12F, 16F)
         val matrix = Matrix4x4f.fromColumns(column0, column1, column2, column3, MatrixProperties.AFFINE)
-        assertEquals(Matrix4x4f(1F, 2F, 3F, 4F, 5F, 6F, 7F, 8F, 9F, 10F, 11F, 12F, 13F, 14F, 15F, 16F, MatrixProperties.AFFINE), matrix)
+        assertEquals(
+            Matrix4x4f(
+                1F,
+                2F,
+                3F,
+                4F,
+                5F,
+                6F,
+                7F,
+                8F,
+                9F,
+                10F,
+                11F,
+                12F,
+                13F,
+                14F,
+                15F,
+                16F,
+                MatrixProperties.AFFINE
+            ), matrix
+        )
     }
 
     @Test
@@ -132,17 +192,25 @@ class Matrix4x4fTest {
     @Test
     fun `times operator with affine matrices should use affine multiplication`() {
         val m1 = Matrix4x4f(
-            1F, 2F, 3F, 4F,
-            5F, 6F, 7F, 8F,
-            9F, 10F, 11F, 12F,
-            0F, 0F, 0F, 1F,
-            MatrixProperties.AFFINE
+            1F, 2F, 3F, 4F, 5F, 6F, 7F, 8F, 9F, 10F, 11F, 12F, 0F, 0F, 0F, 1F, MatrixProperties.AFFINE
         )
         val m2 = Matrix4x4f(
-            1F, 0F, 0F, 2F,
-            0F, 1F, 0F, 3F,
-            0F, 0F, 1F, 4F,
-            0F, 0F, 0F, 1F,
+            1F,
+            0F,
+            0F,
+            2F,
+            0F,
+            1F,
+            0F,
+            3F,
+            0F,
+            0F,
+            1F,
+            4F,
+            0F,
+            0F,
+            0F,
+            1F,
             MatrixProperties.AFFINE or MatrixProperties.TRANSLATION
         )
         val result = m1 * m2
@@ -151,7 +219,27 @@ class Matrix4x4fTest {
         // [5 6 7 8] [0 1 0 3] = [5 6 7 (5*2 + 6*3 + 7*4 + 8)] = [5 6 7 64]
         // [9 10 11 12] [0 0 1 4]   [9 10 11 (9*2 + 10*3 + 11*4 + 12)]   [9 10 11 104]
         // [0 0 0 1] [0 0 0 1]   [0 0 0 1]   [0 0 0 1]
-        assertEquals(Matrix4x4f(1F, 2F, 3F, 24F, 5F, 6F, 7F, 64F, 9F, 10F, 11F, 104F, 0F, 0F, 0F, 1F, MatrixProperties.AFFINE), result)
+        assertEquals(
+            Matrix4x4f(
+                1F,
+                2F,
+                3F,
+                24F,
+                5F,
+                6F,
+                7F,
+                64F,
+                9F,
+                10F,
+                11F,
+                104F,
+                0F,
+                0F,
+                0F,
+                1F,
+                MatrixProperties.AFFINE
+            ), result
+        )
     }
 
     @Test
@@ -212,7 +300,27 @@ class Matrix4x4fTest {
         val t = Matrix4x4f.translation(10F, 20F, 30F)
         val s = Matrix4x4f.scale(2F, 3F, 4F)
         val result = t * s
-        assertEquals(Matrix4x4f(2F, 0F, 0F, 10F, 0F, 3F, 0F, 20F, 0F, 0F, 4F, 30F, 0F, 0F, 0F, 1F, MatrixProperties.AFFINE or MatrixProperties.TRANSLATION), result)
+        assertEquals(
+            Matrix4x4f(
+                2F,
+                0F,
+                0F,
+                10F,
+                0F,
+                3F,
+                0F,
+                20F,
+                0F,
+                0F,
+                4F,
+                30F,
+                0F,
+                0F,
+                0F,
+                1F,
+                MatrixProperties.AFFINE or MatrixProperties.TRANSLATION
+            ), result
+        )
     }
 
     @Test

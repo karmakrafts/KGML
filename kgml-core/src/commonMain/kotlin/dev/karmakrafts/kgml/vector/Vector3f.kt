@@ -17,9 +17,11 @@
 package dev.karmakrafts.kgml.vector
 
 import dev.karmakrafts.kgml.matrix.Matrix3x3f
+import dev.karmakrafts.kgml.util.TO_DEG
 import dev.karmakrafts.kgml.util.fma
 import kotlin.jvm.JvmField
 import kotlin.jvm.JvmRecord
+import kotlin.math.atan2
 import kotlin.math.max
 import kotlin.math.min
 import kotlin.math.sqrt
@@ -272,6 +274,23 @@ data class Vector3f( // @formatter:off
      * @return The distance.
      */
     inline infix fun distance(other: Vector3f): Float = sqrt(distanceSq(other))
+
+    infix fun angleRad(other: Vector3f): Float {
+        val cross = this cross other
+        val dot = this dot other
+        return atan2(cross.length(), dot)
+    }
+
+    inline infix fun angle(other: Vector3f): Float = (angleRad(other) * TO_DEG).toFloat()
+
+    fun signedAngleRad(other: Vector3f, axis: Vector3f): Float {
+        val cross = this cross other
+        val y = axis dot cross
+        val x = this dot other
+        return atan2(y, x)
+    }
+
+    inline fun signedAngle(other: Vector3f, axis: Vector3f): Float = (signedAngleRad(other, axis) * TO_DEG).toFloat()
 
     /**
      * Calculates the squared length of this vector.

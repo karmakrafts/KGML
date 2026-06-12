@@ -16,9 +16,11 @@
 
 package dev.karmakrafts.kgml.vector
 
+import dev.karmakrafts.kgml.util.TO_DEG
 import dev.karmakrafts.kgml.util.fma
 import kotlin.jvm.JvmField
 import kotlin.jvm.JvmRecord
+import kotlin.math.atan2
 import kotlin.math.max
 import kotlin.math.min
 import kotlin.math.sqrt
@@ -215,6 +217,10 @@ data class Vector2i( // @formatter:off
      * @return The distance.
      */
     inline infix fun distance(other: Vector2i): Int = sqrt(distanceSq(other).toFloat()).toInt()
+
+    infix fun angleRad(other: Vector2i): Int = atan2((this cross other).toFloat(), (this dot other).toFloat()).toInt()
+
+    inline infix fun angle(other: Vector2i): Int = (angleRad(other) * TO_DEG).toInt()
 
     /**
      * Returns the minimum of this vector and [other] based on their length.
