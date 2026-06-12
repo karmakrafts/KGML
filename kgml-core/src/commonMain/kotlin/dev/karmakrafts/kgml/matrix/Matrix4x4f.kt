@@ -153,24 +153,94 @@ data class Matrix4x4f(
      * @param other The matrix to multiply with.
      * @return The result of the multiplication.
      */
-    operator fun times(other: Matrix4x4f): Matrix4x4f {
+    operator fun times(other: Matrix4x4f): Matrix4x4f = when {
+        other.properties.isTranslation -> multiplyAffineTranslationR(other)
+        other.properties.isAffine -> multiplyAffineR(other)
+        properties.isIdentity -> other
+        other.properties.isIdentity -> this
+        else -> multiplyGeneric(other)
+    }
+
+    private fun multiplyAffineTranslationR(other: Matrix4x4f): Matrix4x4f {
+        val ( // @formatter:off
+            o00, o01, o02, o03,
+            o10, o11, o12, o13,
+            o20, o21, o22, o23,
+            _,   _,   _,   _
+        ) = other // @formatter:on
         return Matrix4x4f(
-            fma(m00, other.m00, fma(m01, other.m10, fma(m02, other.m20, m03 * other.m30))),
-            fma(m00, other.m01, fma(m01, other.m11, fma(m02, other.m21, m03 * other.m31))),
-            fma(m00, other.m02, fma(m01, other.m12, fma(m02, other.m22, m03 * other.m32))),
-            fma(m00, other.m03, fma(m01, other.m13, fma(m02, other.m23, m03 * other.m33))),
-            fma(m10, other.m00, fma(m11, other.m10, fma(m12, other.m20, m13 * other.m30))),
-            fma(m10, other.m01, fma(m11, other.m11, fma(m12, other.m21, m13 * other.m31))),
-            fma(m10, other.m02, fma(m11, other.m12, fma(m12, other.m22, m13 * other.m32))),
-            fma(m10, other.m03, fma(m11, other.m13, fma(m12, other.m23, m13 * other.m33))),
-            fma(m20, other.m00, fma(m21, other.m10, fma(m22, other.m20, m23 * other.m30))),
-            fma(m20, other.m01, fma(m21, other.m11, fma(m22, other.m21, m23 * other.m31))),
-            fma(m20, other.m02, fma(m21, other.m12, fma(m22, other.m22, m23 * other.m32))),
-            fma(m20, other.m03, fma(m21, other.m13, fma(m22, other.m23, m23 * other.m33))),
-            fma(m30, other.m00, fma(m31, other.m10, fma(m32, other.m20, m33 * other.m30))),
-            fma(m30, other.m01, fma(m31, other.m11, fma(m32, other.m21, m33 * other.m31))),
-            fma(m30, other.m02, fma(m31, other.m12, fma(m32, other.m22, m33 * other.m32))),
-            fma(m30, other.m03, fma(m31, other.m13, fma(m32, other.m23, m33 * other.m33))),
+            fma(m00, o00, fma(m01, o10, m02 * o20)),
+            fma(m00, o01, fma(m01, o11, m02 * o21)),
+            fma(m00, o02, fma(m01, o12, m02 * o22)),
+            fma(m00, o03, fma(m01, o13, fma(m02, o23, m03))),
+            fma(m10, o00, fma(m11, o10, m12 * o20)),
+            fma(m10, o01, fma(m11, o11, m12 * o21)),
+            fma(m10, o02, fma(m11, o12, m12 * o22)),
+            fma(m10, o03, fma(m11, o13, fma(m12, o23, m13))),
+            fma(m20, o00, fma(m21, o10, m22 * o20)),
+            fma(m20, o01, fma(m21, o11, m22 * o21)),
+            fma(m20, o02, fma(m21, o12, m22 * o22)),
+            fma(m20, o03, fma(m21, o13, fma(m22, o23, m23))),
+            m30,
+            m31,
+            m32,
+            m33,
+            properties or other.properties
+        )
+    }
+
+    private fun multiplyAffineR(other: Matrix4x4f): Matrix4x4f {
+        val ( // @formatter:off
+            o00, o01, o02, _,
+            o10, o11, o12, _,
+            o20, o21, o22, _,
+            _,   _,   _,   _
+        ) = other // @formatter:on
+        return Matrix4x4f(
+            fma(m00, o00, fma(m01, o10, m02 * o20)),
+            fma(m00, o01, fma(m01, o11, m02 * o21)),
+            fma(m00, o02, fma(m01, o12, m02 * o22)),
+            other.m03,
+            fma(m10, o00, fma(m11, o10, m12 * o20)),
+            fma(m10, o01, fma(m11, o11, m12 * o21)),
+            fma(m10, o02, fma(m11, o12, m12 * o22)),
+            other.m13,
+            fma(m20, o00, fma(m21, o10, m22 * o20)),
+            fma(m20, o01, fma(m21, o11, m22 * o21)),
+            fma(m20, o02, fma(m21, o12, m22 * o22)),
+            m23,
+            m30,
+            m31,
+            m32,
+            m33,
+            properties or other.properties
+        )
+    }
+
+    private fun multiplyGeneric(other: Matrix4x4f): Matrix4x4f {
+        val ( // @formatter:off
+            o00, o01, o02, o03,
+            o10, o11, o12, o13,
+            o20, o21, o22, o23,
+            o30, o31, o32, o33
+        ) = other // @formatter:on
+        return Matrix4x4f(
+            fma(m00, o00, fma(m01, o10, fma(m02, o20, m03 * o30))),
+            fma(m00, o01, fma(m01, o11, fma(m02, o21, m03 * o31))),
+            fma(m00, o02, fma(m01, o12, fma(m02, o22, m03 * o32))),
+            fma(m00, o03, fma(m01, o13, fma(m02, o23, m03 * o33))),
+            fma(m10, o00, fma(m11, o10, fma(m12, o20, m13 * o30))),
+            fma(m10, o01, fma(m11, o11, fma(m12, o21, m13 * o31))),
+            fma(m10, o02, fma(m11, o12, fma(m12, o22, m13 * o32))),
+            fma(m10, o03, fma(m11, o13, fma(m12, o23, m13 * o33))),
+            fma(m20, o00, fma(m21, o10, fma(m22, o20, m23 * o30))),
+            fma(m20, o01, fma(m21, o11, fma(m22, o21, m23 * o31))),
+            fma(m20, o02, fma(m21, o12, fma(m22, o22, m23 * o32))),
+            fma(m20, o03, fma(m21, o13, fma(m22, o23, m23 * o33))),
+            fma(m30, o00, fma(m31, o10, fma(m32, o20, m33 * o30))),
+            fma(m30, o01, fma(m31, o11, fma(m32, o21, m33 * o31))),
+            fma(m30, o02, fma(m31, o12, fma(m32, o22, m33 * o32))),
+            fma(m30, o03, fma(m31, o13, fma(m32, o23, m33 * o33))),
             properties or other.properties
         )
     }
@@ -181,12 +251,15 @@ data class Matrix4x4f(
      * @param other The vector to multiply with.
      * @return The result of the multiplication.
      */
-    operator fun times(other: Vector4f): Vector4f = Vector4f(
-        fma(m00, other.x, fma(m01, other.y, fma(m02, other.z, m03 * other.w))),
-        fma(m10, other.x, fma(m11, other.y, fma(m12, other.z, m13 * other.w))),
-        fma(m20, other.x, fma(m21, other.y, fma(m22, other.z, m23 * other.w))),
-        fma(m30, other.x, fma(m31, other.y, fma(m32, other.z, m33 * other.w)))
-    )
+    operator fun times(other: Vector4f): Vector4f {
+        val (ox, oy, oz, ow) = other
+        return Vector4f(
+            fma(m00, ox, fma(m01, oy, fma(m02, oz, m03 * ow))),
+            fma(m10, ox, fma(m11, oy, fma(m12, oz, m13 * ow))),
+            fma(m20, ox, fma(m21, oy, fma(m22, oz, m23 * ow))),
+            fma(m30, ox, fma(m31, oy, fma(m32, oz, m33 * ow)))
+        )
+    }
 
     /**
      * Multiplies this matrix with another matrix.
@@ -275,4 +348,54 @@ data class Matrix4x4f(
         m20, m21, m22, m23,
         m30, m31, m32, m33
     ) // @formatter:on
+
+    override fun toString(): String {
+        var result = "Matrix4x4f[\n"
+        result += "\t$m00, $m01, $m02, $m03\n"
+        result += "\t$m10, $m11, $m12, $m13\n"
+        result += "\t$m20, $m21, $m22, $m23\n"
+        result += "\t$m30, $m31, $m32, $m33\n"
+        result += ']'
+        return result
+    }
+
+    override fun equals(other: Any?): Boolean = when(other) { // @formatter:off
+        is Matrix4x4f -> m00 == other.m00 &&
+            m01 == other.m01 &&
+            m02 == other.m02 &&
+            m03 == other.m03 &&
+            m10 == other.m10 &&
+            m11 == other.m11 &&
+            m12 == other.m12 &&
+            m13 == other.m13 &&
+            m20 == other.m20 &&
+            m21 == other.m21 &&
+            m22 == other.m22 &&
+            m23 == other.m23 &&
+            m30 == other.m30 &&
+            m31 == other.m31 &&
+            m32 == other.m32 &&
+            m33 == other.m33
+        else -> false
+    } // @formatter:on
+
+    override fun hashCode(): Int {
+        var result = m00.hashCode()
+        result = 31 * result + m01.hashCode()
+        result = 31 * result + m02.hashCode()
+        result = 31 * result + m03.hashCode()
+        result = 31 * result + m10.hashCode()
+        result = 31 * result + m11.hashCode()
+        result = 31 * result + m12.hashCode()
+        result = 31 * result + m13.hashCode()
+        result = 31 * result + m20.hashCode()
+        result = 31 * result + m21.hashCode()
+        result = 31 * result + m22.hashCode()
+        result = 31 * result + m23.hashCode()
+        result = 31 * result + m30.hashCode()
+        result = 31 * result + m31.hashCode()
+        result = 31 * result + m32.hashCode()
+        result = 31 * result + m33.hashCode()
+        return result
+    }
 }

@@ -207,4 +207,20 @@ data class Matrix2x2f( // @formatter:off
         m00, m01,
         m10, m11
     ) // @formatter:on
+
+    override fun equals(other: Any?): Boolean = when(other) { // @formatter:off
+        is Matrix2x2f -> m00 == other.m00 &&
+            m01 == other.m01 &&
+            m10 == other.m10 &&
+            m11 == other.m11
+        else -> false
+    } // @formatter:on
+
+    override fun hashCode(): Int {
+        var result = m00.hashCode()
+        result = 31 * result + m01.hashCode()
+        result = 31 * result + m10.hashCode()
+        result = 31 * result + m11.hashCode()
+        return result
+    }
 }

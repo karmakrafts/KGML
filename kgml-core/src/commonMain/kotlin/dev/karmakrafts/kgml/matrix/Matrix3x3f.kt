@@ -246,4 +246,30 @@ data class Matrix3x3f(
         m10, m11, m12,
         m20, m21, m22
     ) // @formatter:on
+
+    override fun equals(other: Any?): Boolean = when(other) { // @formatter:off
+        is Matrix3x3f -> m00 == other.m00 &&
+            m01 == other.m01 &&
+            m02 == other.m02 &&
+            m10 == other.m10 &&
+            m11 == other.m11 &&
+            m12 == other.m12 &&
+            m20 == other.m20 &&
+            m21 == other.m21 &&
+            m22 == other.m22
+        else -> false
+    } // @formatter:on
+
+    override fun hashCode(): Int {
+        var result = m00.hashCode()
+        result = 31 * result + m01.hashCode()
+        result = 31 * result + m02.hashCode()
+        result = 31 * result + m10.hashCode()
+        result = 31 * result + m11.hashCode()
+        result = 31 * result + m12.hashCode()
+        result = 31 * result + m20.hashCode()
+        result = 31 * result + m21.hashCode()
+        result = 31 * result + m22.hashCode()
+        return result
+    }
 }
