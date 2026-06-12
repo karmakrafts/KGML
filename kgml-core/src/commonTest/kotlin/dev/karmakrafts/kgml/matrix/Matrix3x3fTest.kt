@@ -68,6 +68,48 @@ class Matrix3x3fTest {
     }
 
     @Test
+    fun `fromArray should create matrix from array at offset with properties`() {
+        val array = FloatArray(10) { it.toFloat() }
+        val matrix = Matrix3x3f.fromArray(array, 1, MatrixProperties.AFFINE)
+        assertEquals(Matrix3x3f(1F, 2F, 3F, 4F, 5F, 6F, 7F, 8F, 9F, MatrixProperties.AFFINE), matrix)
+        assertEquals(MatrixProperties.AFFINE, matrix.properties)
+    }
+
+    @Test
+    fun `fromRows should create matrix from vectors`() {
+        val row0 = Vector3f(1F, 2F, 3F)
+        val row1 = Vector3f(4F, 5F, 6F)
+        val row2 = Vector3f(7F, 8F, 9F)
+        val matrix = Matrix3x3f.fromRows(row0, row1, row2, MatrixProperties.AFFINE)
+        assertEquals(Matrix3x3f(1F, 2F, 3F, 4F, 5F, 6F, 7F, 8F, 9F, MatrixProperties.AFFINE), matrix)
+    }
+
+    @Test
+    fun `fromColumns should create matrix from vectors`() {
+        val column0 = Vector3f(1F, 4F, 7F)
+        val column1 = Vector3f(2F, 5F, 8F)
+        val column2 = Vector3f(3F, 6F, 9F)
+        val matrix = Matrix3x3f.fromColumns(column0, column1, column2, MatrixProperties.AFFINE)
+        assertEquals(Matrix3x3f(1F, 2F, 3F, 4F, 5F, 6F, 7F, 8F, 9F, MatrixProperties.AFFINE), matrix)
+    }
+
+    @Test
+    fun `row accessors should return correct vectors`() {
+        val matrix = Matrix3x3f(1F, 2F, 3F, 4F, 5F, 6F, 7F, 8F, 9F)
+        assertEquals(Vector3f(1F, 2F, 3F), matrix.row0)
+        assertEquals(Vector3f(4F, 5F, 6F), matrix.row1)
+        assertEquals(Vector3f(7F, 8F, 9F), matrix.row2)
+    }
+
+    @Test
+    fun `column accessors should return correct vectors`() {
+        val matrix = Matrix3x3f(1F, 2F, 3F, 4F, 5F, 6F, 7F, 8F, 9F)
+        assertEquals(Vector3f(1F, 4F, 7F), matrix.column0)
+        assertEquals(Vector3f(2F, 5F, 8F), matrix.column1)
+        assertEquals(Vector3f(3F, 6F, 9F), matrix.column2)
+    }
+
+    @Test
     fun `type should return Matrix3x3f`() {
         assertEquals(Matrix3x3f, Matrix3x3f().type)
     }

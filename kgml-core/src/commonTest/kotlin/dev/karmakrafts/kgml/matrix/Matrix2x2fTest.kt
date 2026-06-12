@@ -67,6 +67,44 @@ class Matrix2x2fTest {
     }
 
     @Test
+    fun `fromArray should create matrix from array at offset with properties`() {
+        val array = floatArrayOf(0F, 1F, 2F, 3F, 4F, 5F)
+        val matrix = Matrix2x2f.fromArray(array, 1, MatrixProperties.AFFINE)
+        assertEquals(Matrix2x2f(1F, 2F, 3F, 4F, MatrixProperties.AFFINE), matrix)
+        assertEquals(MatrixProperties.AFFINE, matrix.properties)
+    }
+
+    @Test
+    fun `fromRows should create matrix from vectors`() {
+        val row0 = Vector2f(1F, 2F)
+        val row1 = Vector2f(3F, 4F)
+        val matrix = Matrix2x2f.fromRows(row0, row1, MatrixProperties.AFFINE)
+        assertEquals(Matrix2x2f(1F, 2F, 3F, 4F, MatrixProperties.AFFINE), matrix)
+    }
+
+    @Test
+    fun `fromColumns should create matrix from vectors`() {
+        val column0 = Vector2f(1F, 3F)
+        val column1 = Vector2f(2F, 4F)
+        val matrix = Matrix2x2f.fromColumns(column0, column1, MatrixProperties.AFFINE)
+        assertEquals(Matrix2x2f(1F, 2F, 3F, 4F, MatrixProperties.AFFINE), matrix)
+    }
+
+    @Test
+    fun `row accessors should return correct vectors`() {
+        val matrix = Matrix2x2f(1F, 2F, 3F, 4F)
+        assertEquals(Vector2f(1F, 2F), matrix.row0)
+        assertEquals(Vector2f(3F, 4F), matrix.row1)
+    }
+
+    @Test
+    fun `column accessors should return correct vectors`() {
+        val matrix = Matrix2x2f(1F, 2F, 3F, 4F)
+        assertEquals(Vector2f(1F, 3F), matrix.column0)
+        assertEquals(Vector2f(2F, 4F), matrix.column1)
+    }
+
+    @Test
     fun `type should return Matrix2x2f`() {
         assertEquals(Matrix2x2f, Matrix2x2f().type)
     }

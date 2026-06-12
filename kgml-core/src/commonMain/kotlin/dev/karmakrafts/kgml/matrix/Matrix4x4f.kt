@@ -264,11 +264,10 @@ data class Matrix4x4f(
      * @return The result of the multiplication.
      */
     operator fun times(other: Matrix4x4f): Matrix4x4f = when {
-        other.properties.isPerspective -> multiplyGeneric(other) // Perspective is expensive!
-        other.properties.isTranslation -> multiplyAffineTranslationR(other)
-        other.properties.isAffine -> multiplyAffineR(other)
         properties.isIdentity -> other
         other.properties.isIdentity -> this
+        properties.isAffine && other.properties.isTranslation -> multiplyAffineTranslationR(other)
+        properties.isAffine && other.properties.isAffine -> multiplyAffineR(other)
         else -> multiplyGeneric(other)
     }
 
@@ -292,10 +291,10 @@ data class Matrix4x4f(
             fma(m20, o01, fma(m21, o11, m22 * o21)),
             fma(m20, o02, fma(m21, o12, m22 * o22)),
             fma(m20, o03, fma(m21, o13, fma(m22, o23, m23))),
-            m30,
-            m31,
-            m32,
-            m33,
+            0F,
+            0F,
+            0F,
+            1F,
             properties or other.properties
         )
     }
@@ -311,19 +310,19 @@ data class Matrix4x4f(
             fma(m00, o00, fma(m01, o10, m02 * o20)),
             fma(m00, o01, fma(m01, o11, m02 * o21)),
             fma(m00, o02, fma(m01, o12, m02 * o22)),
-            other.m03,
+            m03,
             fma(m10, o00, fma(m11, o10, m12 * o20)),
             fma(m10, o01, fma(m11, o11, m12 * o21)),
             fma(m10, o02, fma(m11, o12, m12 * o22)),
-            other.m13,
+            m13,
             fma(m20, o00, fma(m21, o10, m22 * o20)),
             fma(m20, o01, fma(m21, o11, m22 * o21)),
             fma(m20, o02, fma(m21, o12, m22 * o22)),
             m23,
-            m30,
-            m31,
-            m32,
-            m33,
+            0F,
+            0F,
+            0F,
+            1F,
             properties or other.properties
         )
     }
