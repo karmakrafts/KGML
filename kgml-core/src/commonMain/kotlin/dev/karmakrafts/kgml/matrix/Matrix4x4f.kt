@@ -263,12 +263,20 @@ data class Matrix4x4f(
      * @param other The matrix to multiply with.
      * @return The result of the multiplication.
      */
-    operator fun times(other: Matrix4x4f): Matrix4x4f = when {
-        properties.isIdentity -> other
-        other.properties.isIdentity -> this
-        properties.isAffine && other.properties.isTranslation -> multiplyAffineTranslationR(other)
-        properties.isAffine && other.properties.isAffine -> multiplyAffineR(other)
-        else -> multiplyGeneric(other)
+    operator fun times(other: Matrix4x4f): Matrix4x4f {
+        val otherProps = other.properties
+        return when {
+            properties.isIdentity -> other
+            otherProps.isIdentity -> this
+
+            properties.isAffine -> when {
+                otherProps.isTranslation -> multiplyAffineTranslationR(other)
+                otherProps.isAffine -> multiplyAffineR(other)
+                else -> multiplyGeneric(other)
+            }
+
+            else -> multiplyGeneric(other)
+        }
     }
 
     private fun multiplyAffineTranslationR(other: Matrix4x4f): Matrix4x4f {
