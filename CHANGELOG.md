@@ -1,5 +1,17 @@
 ## [Unreleased]
 
+### Added
+
+- WASM WASI support
+
+### Changed
+
+- Updated to Karma Conventions 1.18.0
+
+### Removed
+
+- Redundant link to `kotlinx.io` in generated Dokka output
+
 ## [1.1.0]
 
 ### Added

@@ -4,11 +4,11 @@ javaCompile = "25"
 javaTarget = "17"
 
 androidGradle = "9.2.1" # https://developer.android.com/reference/tools/gradle-api
-kgml = "1.1.0"
+kgml = "1.2.0"
 kotlin = "2.4.0" # https://github.com/JetBrains/kotlin/releases
 kotlinBrowser = "2026.6.3" # https://github.com/JetBrains/kotlin-wrappers/releases
 dokka = "2.2.0" # https://github.com/Kotlin/dokka/releases
-karmaConventions = "1.17.1" # https://github.com/karmakrafts/karma-conventions/tags
+karmaConventions = "1.18.0" # https://github.com/karmakrafts/karma-conventions/tags
 gradleNexus = "2.0.0" # https://github.com/gradle-nexus/publish-plugin/releases
 
 # kompress-benchmarks

@@ -8,6 +8,13 @@
 [![](https://img.shields.io/badge/2.4.0-blue?logo=kotlin&label=kotlin)](https://kotlinlang.org/)
 [![](https://img.shields.io/badge/documentation-black?logo=kotlin)](https://docs.karmakrafts.dev/kgml-core)
 
+![](https://img.shields.io/badge/-JVM-blue?logo=kotlin&labelColor=black)
+![](https://img.shields.io/badge/-Android-green?logo=kotlin&labelColor=black)
+![](https://img.shields.io/badge/-Native-lightgray?logo=kotlin&labelColor=black)
+![](https://img.shields.io/badge/-JS-yellow?logo=kotlin&labelColor=black)
+![](https://img.shields.io/badge/-WASM/JS-orange?logo=kotlin&labelColor=black)
+![](https://img.shields.io/badge/-WASM/WASI-purple?logo=kotlin&labelColor=black)
+
 The Kotlin Graphics Maths Library for Kotlin Multiplatform.  
 A GLM/JOML inspired library with a touch of idiomatic Kotlin.
 
