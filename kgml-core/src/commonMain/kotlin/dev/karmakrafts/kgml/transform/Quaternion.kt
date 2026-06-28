@@ -55,9 +55,11 @@ value class Quaternion(@PublishedApi internal val value: Vector4f) : Transform<M
          * @param angleZ The angle around the Z axis in radians.
          * @return A new [Quaternion].
          */
-        fun fromAnglesRad(
-            angleX: Float, angleY: Float, angleZ: Float
-        ): Quaternion {
+        fun fromAnglesRad( // @formatter:off
+            angleX: Float = 0F,
+            angleY: Float = 0F,
+            angleZ: Float = 0F
+        ): Quaternion { // @formatter:on
             val hx = angleX * 0.5F
             val hy = angleY * 0.5F
             val hz = angleZ * 0.5F
@@ -84,9 +86,9 @@ value class Quaternion(@PublishedApi internal val value: Vector4f) : Transform<M
          * @return A new [Quaternion].
          */
         inline fun fromAngles( // @formatter:off
-            angleX: Float,
-            angleY: Float,
-            angleZ: Float
+            angleX: Float = 0F,
+            angleY: Float = 0F,
+            angleZ: Float = 0F
         ): Quaternion = fromAnglesRad(
             (angleX * TO_RAD).toFloat(),
             (angleY * TO_RAD).toFloat(),
@@ -221,9 +223,12 @@ value class Quaternion(@PublishedApi internal val value: Vector4f) : Transform<M
         val sTheta = sin(theta)
         val w0 = sin((1F - factor) * theta) / sTheta
         val w1 = sin(factor * theta) / sTheta
-        return Quaternion(
-            fma(x, w0, rhs.x * w1), fma(y, w0, rhs.y * w1), fma(z, w0, rhs.z * w1), fma(w, w0, rhs.w * w1)
-        )
+        return Quaternion( // @formatter:off
+            fma(x, w0, rhs.x * w1),
+            fma(y, w0, rhs.y * w1),
+            fma(z, w0, rhs.z * w1),
+            fma(w, w0, rhs.w * w1)
+        ) // @formatter:on
     }
 
     /**

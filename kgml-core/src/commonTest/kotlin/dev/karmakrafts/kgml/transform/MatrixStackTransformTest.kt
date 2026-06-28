@@ -44,7 +44,7 @@ class MatrixStackTransformTest {
     fun `MatrixStack rotate should work`() {
         val stack = createStack()
         stack.rotate(90f, 0f, 0f)
-        assertMatrix4x4Equals(Matrix4x4f.rotationX(90f), stack.current())
+        assertMatrix4x4Equals(Matrix4x4f.rotation(angleX = 90f), stack.current())
     }
 
     @Test
@@ -52,7 +52,7 @@ class MatrixStackTransformTest {
         val stack = createStack()
         val rad = (PI / 2).toFloat()
         stack.rotateRad(0f, rad, 0f)
-        assertMatrix4x4Equals(Matrix4x4f.rotationYRad(rad), stack.current())
+        assertMatrix4x4Equals(Matrix4x4f.rotationRad(angleY = rad), stack.current())
     }
 
     @Test
@@ -60,7 +60,7 @@ class MatrixStackTransformTest {
         val stack = createStack()
         val q = Quaternion.fromAngles(0f, 0f, 90f)
         stack.rotate(q)
-        assertMatrix4x4Equals(Matrix4x4f.rotationZ(90f), stack.current())
+        assertMatrix4x4Equals(Matrix4x4f.rotation(angleZ = 90f), stack.current())
     }
 
     @Test
@@ -96,7 +96,7 @@ class MatrixStackTransformTest {
     fun `MatrixStack 3x3 rotation should work`() {
         val stack = MatrixStack(identityProvider = Matrix3x3f::identity).apply { push() }
         stack.rotate(90f, 0f, 0f)
-        assertMatrix3x3Equals(Matrix3x3f.rotationX(90f), stack.current())
+        assertMatrix3x3Equals(Matrix3x3f.rotation(angleX = 90f), stack.current())
     }
 
     @Test
@@ -104,7 +104,7 @@ class MatrixStackTransformTest {
         val stack = MatrixStack(identityProvider = Matrix3x3f::identity).apply { push() }
         val rad = (PI / 2).toFloat()
         stack.rotateRad(0f, rad, 0f)
-        assertMatrix3x3Equals(Matrix3x3f.rotationYRad(rad), stack.current())
+        assertMatrix3x3Equals(Matrix3x3f.rotationRad(angleY = rad), stack.current())
     }
 
     @Test

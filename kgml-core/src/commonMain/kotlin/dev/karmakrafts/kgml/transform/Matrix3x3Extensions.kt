@@ -21,8 +21,6 @@ package dev.karmakrafts.kgml.transform
 import dev.karmakrafts.kgml.matrix.Matrix3x3f
 import dev.karmakrafts.kgml.matrix.MatrixProperties
 import dev.karmakrafts.kgml.util.TO_RAD
-import kotlin.math.cos
-import kotlin.math.sin
 
 /**
  * Creates a rotation matrix around the Z axis from the given angle in radians.
@@ -30,16 +28,11 @@ import kotlin.math.sin
  * @param rad The angle in radians.
  * @return A new rotation [Matrix3x3f].
  */
-fun Matrix3x3f.Companion.rotationZRad(rad: Float): Matrix3x3f {
-    val c = cos(rad)
-    val s = sin(rad)
-    return Matrix3x3f( // @formatter:off
-        c, -s, 0F,
-        s, c, 0F,
-        0F, 0F, 1F,
-        MatrixProperties.AFFINE
-    ) // @formatter:on
-}
+@Deprecated(
+    message = "This function is deprecated and will be removed in KGML 1.3.0",
+    replaceWith = ReplaceWith("rotationRad(angleZ = rad)")
+)
+fun Matrix3x3f.Companion.rotationZRad(rad: Float): Matrix3x3f = rotationRad(angleZ = rad)
 
 /**
  * Creates a rotation matrix around the Z axis from the given angle in degrees.
@@ -47,7 +40,11 @@ fun Matrix3x3f.Companion.rotationZRad(rad: Float): Matrix3x3f {
  * @param deg The angle in degrees.
  * @return A new rotation [Matrix3x3f].
  */
-inline fun Matrix3x3f.Companion.rotationZ(deg: Float): Matrix3x3f = rotationZRad((deg * TO_RAD).toFloat())
+@Deprecated(
+    message = "This function is deprecated and will be removed in KGML 1.3.0",
+    replaceWith = ReplaceWith("rotation(angleZ = deg)")
+)
+inline fun Matrix3x3f.Companion.rotationZ(deg: Float): Matrix3x3f = rotation(angleZ = deg)
 
 /**
  * Creates a rotation matrix around the X axis from the given angle in radians.
@@ -55,16 +52,11 @@ inline fun Matrix3x3f.Companion.rotationZ(deg: Float): Matrix3x3f = rotationZRad
  * @param rad The angle in radians.
  * @return A new rotation [Matrix3x3f].
  */
-fun Matrix3x3f.Companion.rotationXRad(rad: Float): Matrix3x3f {
-    val c = cos(rad)
-    val s = sin(rad)
-    return Matrix3x3f( // @formatter:off
-        1F, 0F, 0F,
-        0F, c, -s,
-        0F, s, c,
-        MatrixProperties.AFFINE
-    ) // @formatter:on
-}
+@Deprecated(
+    message = "This function is deprecated and will be removed in KGML 1.3.0",
+    replaceWith = ReplaceWith("rotationRad(angleX = rad)")
+)
+fun Matrix3x3f.Companion.rotationXRad(rad: Float): Matrix3x3f = rotationRad(angleX = rad)
 
 /**
  * Creates a rotation matrix around the X axis from the given angle in degrees.
@@ -72,7 +64,11 @@ fun Matrix3x3f.Companion.rotationXRad(rad: Float): Matrix3x3f {
  * @param deg The angle in degrees.
  * @return A new rotation [Matrix3x3f].
  */
-inline fun Matrix3x3f.Companion.rotationX(deg: Float): Matrix3x3f = rotationXRad((deg * TO_RAD).toFloat())
+@Deprecated(
+    message = "This function is deprecated and will be removed in KGML 1.3.0",
+    replaceWith = ReplaceWith("rotation(angleX = deg)")
+)
+inline fun Matrix3x3f.Companion.rotationX(deg: Float): Matrix3x3f = rotation(angleX = deg)
 
 /**
  * Creates a rotation matrix around the Y axis from the given angle in radians.
@@ -80,16 +76,11 @@ inline fun Matrix3x3f.Companion.rotationX(deg: Float): Matrix3x3f = rotationXRad
  * @param rad The angle in radians.
  * @return A new rotation [Matrix3x3f].
  */
-fun Matrix3x3f.Companion.rotationYRad(rad: Float): Matrix3x3f {
-    val c = cos(rad)
-    val s = sin(rad)
-    return Matrix3x3f( // @formatter:off
-        c, 0F, s,
-        0F, 1F, 0F,
-        -s, 0F, c,
-        MatrixProperties.AFFINE
-    ) // @formatter:on
-}
+@Deprecated(
+    message = "This function is deprecated and will be removed in KGML 1.3.0",
+    replaceWith = ReplaceWith("rotationRad(angleY = rad)")
+)
+fun Matrix3x3f.Companion.rotationYRad(rad: Float): Matrix3x3f = rotationRad(angleY = rad)
 
 /**
  * Creates a rotation matrix around the Y axis from the given angle in degrees.
@@ -97,7 +88,11 @@ fun Matrix3x3f.Companion.rotationYRad(rad: Float): Matrix3x3f {
  * @param deg The angle in degrees.
  * @return A new rotation [Matrix3x3f].
  */
-inline fun Matrix3x3f.Companion.rotationY(deg: Float): Matrix3x3f = rotationYRad((deg * TO_RAD).toFloat())
+@Deprecated(
+    message = "This function is deprecated and will be removed in KGML 1.3.0",
+    replaceWith = ReplaceWith("rotation(angleY = deg)")
+)
+inline fun Matrix3x3f.Companion.rotationY(deg: Float): Matrix3x3f = rotation(angleY = deg)
 
 /**
  * Creates a rotation matrix from the given Euler angles in radians.
@@ -108,10 +103,14 @@ inline fun Matrix3x3f.Companion.rotationY(deg: Float): Matrix3x3f = rotationYRad
  * @return A new rotation [Matrix3x3f].
  */
 fun Matrix3x3f.Companion.rotationRad( // @formatter:off
-    angleX: Float,
-    angleY: Float,
-    angleZ: Float
-): Matrix3x3f = rotationXRad(angleX) * rotationYRad(angleY) * rotationZRad(angleZ) // @formatter:on
+    angleX: Float = 0F,
+    angleY: Float = 0F,
+    angleZ: Float = 0F
+): Matrix3x3f = ( // @formatter:off
+    Quaternion.fromAnglesRad(angleX, 0F, 0F) *
+    Quaternion.fromAnglesRad(0F, angleY, 0F) *
+    Quaternion.fromAnglesRad(0F, 0F, angleZ)
+).toRotationMatrix3x3() // @formatter:on
 
 /**
  * Creates a rotation matrix from the given Euler angles in degrees.
@@ -122,9 +121,9 @@ fun Matrix3x3f.Companion.rotationRad( // @formatter:off
  * @return A new rotation [Matrix3x3f].
  */
 inline fun Matrix3x3f.Companion.rotation( // @formatter:off
-    angleX: Float,
-    angleY: Float,
-    angleZ: Float
+    angleX: Float = 0F,
+    angleY: Float = 0F,
+    angleZ: Float = 0F
 ): Matrix3x3f = rotationRad(
     (angleX * TO_RAD).toFloat(),
     (angleY * TO_RAD).toFloat(),

@@ -1,5 +1,23 @@
 ## [Unreleased]
 
+### Fixed
+
+- Possible high precision loss in `Matrix3x3f.rotationRad` and `Matrix3x3f.rotation`
+- Possible high precision loss in `Matrix4x4f.rotationRad` and `Matrix4x4f.rotation`
+
+### Added
+
+- Default parameters for `Quaternion.fromAnglesRad`
+- Default parameters for `Quaternion.fromAngles`
+
+### Changed
+
+- Updated to Karma Conventions 1.18.1
+- Updated to Gradle 9.6.0
+- Migrated to NMCP based Maven Central publishing
+- Deprecated `Matrix3x3f.rotationX(Rad)`, `Matrix3x3f.rotationY(Rad)` and `Matrix3x3f.rotationZ(Rad)`
+- Deprecated `Matrix4x4f.rotationX(Rad)`, `Matrix4x4f.rotationY(Rad)` and `Matrix4x4f.rotationZ(Rad)`
+
 ## [1.2.0]
 
 ### Added

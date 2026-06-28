@@ -4,12 +4,11 @@ javaCompile = "25"
 javaTarget = "17"
 
 androidGradle = "9.2.1" # https://developer.android.com/reference/tools/gradle-api
-kgml = "1.2.0"
+kgml = "1.2.1"
 kotlin = "2.4.0" # https://github.com/JetBrains/kotlin/releases
-kotlinBrowser = "2026.6.3" # https://github.com/JetBrains/kotlin-wrappers/releases
+kotlinBrowser = "2026.6.9" # https://github.com/JetBrains/kotlin-wrappers/releases
 dokka = "2.2.0" # https://github.com/Kotlin/dokka/releases
-karmaConventions = "1.18.0" # https://github.com/karmakrafts/karma-conventions/tags
-gradleNexus = "2.0.0" # https://github.com/gradle-nexus/publish-plugin/releases
+karmaConventions = "1.18.1" # https://github.com/karmakrafts/karma-conventions/tags
 
 # kompress-benchmarks
 
@@ -35,7 +34,6 @@ android-library = { id = "com.android.kotlin.multiplatform.library", version.ref
 kotlin-multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
 dokka = { id = "org.jetbrains.dokka", version.ref = "dokka" }
 karmaConventions = { id = "dev.karmakrafts.conventions.karma-conventions", version.ref = "karmaConventions" }
-gradleNexus = { id = "io.github.gradle-nexus.publish-plugin", version.ref = "gradleNexus" }
 
 # kompress-benchmarks
 

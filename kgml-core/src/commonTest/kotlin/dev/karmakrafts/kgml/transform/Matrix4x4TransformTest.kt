@@ -27,21 +27,23 @@ class Matrix4x4TransformTest {
     fun `Matrix4x4 rotation should work`() {
         val rad = (PI / 2).toFloat()
 
-        assertMatrix4x4Equals(Matrix3x3f.rotationXRad(rad).extend(), Matrix4x4f.rotationXRad(rad))
-        assertMatrix4x4Equals(Matrix3x3f.rotationX(90f).extend(), Matrix4x4f.rotationX(90f))
+        assertMatrix4x4Equals(Matrix3x3f.rotationRad(angleX = rad).extend(), Matrix4x4f.rotationRad(angleX = rad))
+        assertMatrix4x4Equals(Matrix3x3f.rotation(angleX = 90f).extend(), Matrix4x4f.rotation(angleX = 90f))
 
-        assertMatrix4x4Equals(Matrix3x3f.rotationYRad(rad).extend(), Matrix4x4f.rotationYRad(rad))
-        assertMatrix4x4Equals(Matrix3x3f.rotationY(90f).extend(), Matrix4x4f.rotationY(90f))
+        assertMatrix4x4Equals(Matrix3x3f.rotationRad(angleY = rad).extend(), Matrix4x4f.rotationRad(angleY = rad))
+        assertMatrix4x4Equals(Matrix3x3f.rotation(angleY = 90f).extend(), Matrix4x4f.rotation(angleY = 90f))
 
-        assertMatrix4x4Equals(Matrix3x3f.rotationZRad(rad).extend(), Matrix4x4f.rotationZRad(rad))
-        assertMatrix4x4Equals(Matrix3x3f.rotationZ(90f).extend(), Matrix4x4f.rotationZ(90f))
+        assertMatrix4x4Equals(Matrix3x3f.rotationRad(angleZ = rad).extend(), Matrix4x4f.rotationRad(angleZ = rad))
+        assertMatrix4x4Equals(Matrix3x3f.rotation(angleZ = 90f).extend(), Matrix4x4f.rotation(angleZ = 90f))
 
         val mXYZRad = Matrix4x4f.rotationRad(rad, rad, rad)
-        val expectedRad = Matrix4x4f.rotationXRad(rad) * Matrix4x4f.rotationYRad(rad) * Matrix4x4f.rotationZRad(rad)
+        val expectedRad =
+            Matrix4x4f.rotationRad(angleX = rad) * Matrix4x4f.rotationRad(angleY = rad) * Matrix4x4f.rotationRad(angleZ = rad)
         assertMatrix4x4Equals(expectedRad, mXYZRad)
 
         val mXYZ = Matrix4x4f.rotation(90f, 90f, 90f)
-        val expected = Matrix4x4f.rotationX(90f) * Matrix4x4f.rotationY(90f) * Matrix4x4f.rotationZ(90f)
+        val expected =
+            Matrix4x4f.rotation(angleX = 90f) * Matrix4x4f.rotation(angleY = 90f) * Matrix4x4f.rotation(angleZ = 90f)
         assertMatrix4x4Equals(expected, mXYZ)
     }
 
@@ -82,7 +84,7 @@ class Matrix4x4TransformTest {
     fun `Matrix4x4 rotation from quaternion should work`() {
         val q = Quaternion.fromAngles(0f, 90f, 0f)
         val m = Matrix4x4f.identity * q
-        assertMatrix4x4Equals(Matrix4x4f.rotationY(90f), m)
+        assertMatrix4x4Equals(Matrix4x4f.rotation(angleY = 90f), m)
     }
 
     private fun assertMatrix4x4Equals(expected: Matrix4x4f, actual: Matrix4x4f) {

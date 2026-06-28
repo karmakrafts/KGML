@@ -21,7 +21,6 @@ import kotlin.test.assertEquals
 import kotlin.test.assertNull
 
 class MatrixStackTest {
-
     @Test
     fun `push and current should work`() {
         val stack = MatrixStack(identityProvider = { Matrix2x2f.identity.copy() })

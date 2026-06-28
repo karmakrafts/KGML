@@ -16,7 +16,7 @@
 
 package dev.karmakrafts.kgml.matrix
 
-import dev.karmakrafts.kgml.transform.rotationXRad
+import dev.karmakrafts.kgml.transform.rotationRad
 import dev.karmakrafts.kgml.transform.scale
 import dev.karmakrafts.kgml.transform.skew
 import dev.karmakrafts.kgml.transform.translation
@@ -209,7 +209,7 @@ class Matrix4x4fTest {
 
     @Test
     fun `rotationXRad should return rotation matrix around X`() {
-        val matrix = Matrix4x4f.rotationXRad(PI.toFloat() / 2F)
+        val matrix = Matrix4x4f.rotationRad(angleX = PI.toFloat() / 2F)
         assertMatrixEquals(Matrix4x4f(1F, 0F, 0F, 0F, 0F, 0F, -1F, 0F, 0F, 1F, 0F, 0F, 0F, 0F, 0F, 1F), matrix)
     }
 

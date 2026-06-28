@@ -16,9 +16,7 @@
 
 package dev.karmakrafts.kgml.matrix
 
-import dev.karmakrafts.kgml.transform.rotationXRad
-import dev.karmakrafts.kgml.transform.rotationYRad
-import dev.karmakrafts.kgml.transform.rotationZRad
+import dev.karmakrafts.kgml.transform.rotationRad
 import dev.karmakrafts.kgml.transform.translation
 import dev.karmakrafts.kgml.vector.Vector3f
 import kotlin.math.PI
@@ -194,7 +192,7 @@ class Matrix3x3fTest {
     @Test
     fun `rotationZRad should return rotation matrix around Z`() {
         val angle = PI.toFloat() / 2F
-        val matrix = Matrix3x3f.rotationZRad(angle)
+        val matrix = Matrix3x3f.rotationRad(angleZ = angle)
         // [0 -1 0]
         // [1  0 0]
         // [0  0 1]
@@ -204,7 +202,7 @@ class Matrix3x3fTest {
     @Test
     fun `rotationXRad should return rotation matrix around X`() {
         val angle = PI.toFloat() / 2F
-        val matrix = Matrix3x3f.rotationXRad(angle)
+        val matrix = Matrix3x3f.rotationRad(angleX = angle)
         // [1 0  0]
         // [0 0 -1]
         // [0 1  0]
@@ -214,7 +212,7 @@ class Matrix3x3fTest {
     @Test
     fun `rotationYRad should return rotation matrix around Y`() {
         val angle = PI.toFloat() / 2F
-        val matrix = Matrix3x3f.rotationYRad(angle)
+        val matrix = Matrix3x3f.rotationRad(angleY = angle)
         // [ 0 0 1]
         // [ 0 1 0]
         // [-1 0 0]
