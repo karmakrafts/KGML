@@ -1,5 +1,7 @@
 ## [Unreleased]
 
+## [1.2.1]
+
 ### Fixed
 
 - Possible high precision loss in `Matrix3x3f.rotationRad` and `Matrix3x3f.rotation`
