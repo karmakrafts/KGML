@@ -11,7 +11,7 @@
 ![](https://img.shields.io/badge/-JVM-blue?logo=kotlin&labelColor=black)
 ![](https://img.shields.io/badge/-Android-green?logo=kotlin&labelColor=black)
 ![](https://img.shields.io/badge/-Native-lightgray?logo=kotlin&labelColor=black)
-![](https://img.shields.io/badge/-JS-yellow?logo=kotlin&labelColor=black)
+![](https://img.shields.io/badge/-JS-gold?logo=kotlin&labelColor=black)
 ![](https://img.shields.io/badge/-WASM/JS-orange?logo=kotlin&labelColor=black)
 ![](https://img.shields.io/badge/-WASM/WASI-purple?logo=kotlin&labelColor=black)
 
@@ -29,6 +29,7 @@ A GLM/JOML inspired library with a touch of idiomatic Kotlin.
 - Quaternions
 - Composition based transformation API
 - Hardware acceleration on JVM and native using FMA
+- [kotlinx.io](https://github.com/Kotlin/kotlinx-io) read- and write-extensions for all KGML types via `kgml-io`
 
 ### How to use it
 
