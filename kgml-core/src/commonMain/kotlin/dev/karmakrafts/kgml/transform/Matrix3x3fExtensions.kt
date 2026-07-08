@@ -20,79 +20,7 @@ package dev.karmakrafts.kgml.transform
 
 import dev.karmakrafts.kgml.matrix.Matrix3x3f
 import dev.karmakrafts.kgml.matrix.MatrixProperties
-import dev.karmakrafts.kgml.util.TO_RAD
-
-/**
- * Creates a rotation matrix around the Z axis from the given angle in radians.
- *
- * @param rad The angle in radians.
- * @return A new rotation [Matrix3x3f].
- */
-@Deprecated(
-    message = "This function is deprecated and will be removed in KGML 1.3.0",
-    replaceWith = ReplaceWith("rotationRad(angleZ = rad)")
-)
-fun Matrix3x3f.Companion.rotationZRad(rad: Float): Matrix3x3f = rotationRad(angleZ = rad)
-
-/**
- * Creates a rotation matrix around the Z axis from the given angle in degrees.
- *
- * @param deg The angle in degrees.
- * @return A new rotation [Matrix3x3f].
- */
-@Deprecated(
-    message = "This function is deprecated and will be removed in KGML 1.3.0",
-    replaceWith = ReplaceWith("rotation(angleZ = deg)")
-)
-inline fun Matrix3x3f.Companion.rotationZ(deg: Float): Matrix3x3f = rotation(angleZ = deg)
-
-/**
- * Creates a rotation matrix around the X axis from the given angle in radians.
- *
- * @param rad The angle in radians.
- * @return A new rotation [Matrix3x3f].
- */
-@Deprecated(
-    message = "This function is deprecated and will be removed in KGML 1.3.0",
-    replaceWith = ReplaceWith("rotationRad(angleX = rad)")
-)
-fun Matrix3x3f.Companion.rotationXRad(rad: Float): Matrix3x3f = rotationRad(angleX = rad)
-
-/**
- * Creates a rotation matrix around the X axis from the given angle in degrees.
- *
- * @param deg The angle in degrees.
- * @return A new rotation [Matrix3x3f].
- */
-@Deprecated(
-    message = "This function is deprecated and will be removed in KGML 1.3.0",
-    replaceWith = ReplaceWith("rotation(angleX = deg)")
-)
-inline fun Matrix3x3f.Companion.rotationX(deg: Float): Matrix3x3f = rotation(angleX = deg)
-
-/**
- * Creates a rotation matrix around the Y axis from the given angle in radians.
- *
- * @param rad The angle in radians.
- * @return A new rotation [Matrix3x3f].
- */
-@Deprecated(
-    message = "This function is deprecated and will be removed in KGML 1.3.0",
-    replaceWith = ReplaceWith("rotationRad(angleY = rad)")
-)
-fun Matrix3x3f.Companion.rotationYRad(rad: Float): Matrix3x3f = rotationRad(angleY = rad)
-
-/**
- * Creates a rotation matrix around the Y axis from the given angle in degrees.
- *
- * @param deg The angle in degrees.
- * @return A new rotation [Matrix3x3f].
- */
-@Deprecated(
-    message = "This function is deprecated and will be removed in KGML 1.3.0",
-    replaceWith = ReplaceWith("rotation(angleY = deg)")
-)
-inline fun Matrix3x3f.Companion.rotationY(deg: Float): Matrix3x3f = rotation(angleY = deg)
+import dev.karmakrafts.kgml.util.toRadians
 
 /**
  * Creates a rotation matrix from the given Euler angles in radians.
@@ -128,9 +56,9 @@ inline fun Matrix3x3f.Companion.rotation( // @formatter:off
     angleY: Float = 0F,
     angleZ: Float = 0F
 ): Matrix3x3f = rotationRad(
-    (angleX * TO_RAD).toFloat(),
-    (angleY * TO_RAD).toFloat(),
-    (angleZ * TO_RAD).toFloat()
+    toRadians(angleX),
+    toRadians(angleY),
+    toRadians(angleZ)
 ) // @formatter:on
 
 /**

@@ -16,160 +16,147 @@
 
 package dev.karmakrafts.kgml.vector
 
-import dev.karmakrafts.kgml.matrix.Matrix4x4f
+import dev.karmakrafts.kgml.matrix.Matrix3x3d
 import dev.karmakrafts.kgml.util.fma
+import dev.karmakrafts.kgml.util.toDegrees
 import kotlin.jvm.JvmField
 import kotlin.jvm.JvmRecord
+import kotlin.math.atan2
 import kotlin.math.max
 import kotlin.math.min
 import kotlin.math.sqrt
 import kotlin.reflect.KClass
 
 /**
- * A 4-dimensional float vector.
+ * A 3-dimensional double vector.
  *
  * @param x The X component.
  * @param y The Y component.
  * @param z The Z component.
- * @param w The W component.
  */
 @Suppress("NOTHING_TO_INLINE")
 @JvmRecord
-data class Vector4f( // @formatter:off
-    @JvmField val x: Float,
-    @JvmField val y: Float,
-    @JvmField val z: Float,
-    @JvmField val w: Float
-) : VectorNf, Comparable<Vector4f> { // @formatter:on
+data class Vector3d( // @formatter:off
+    @JvmField val x: Double,
+    @JvmField val y: Double,
+    @JvmField val z: Double
+) : VectorNd, Comparable<Vector3d> { // @formatter:on
     /**
-     * The type of [Vector4f].
+     * The type of [Vector3d].
      */
     companion object : VectorType {
         /**
          * The type of the components in the vector.
          */
-        override val componentType: KClass<*> = Float::class
+        override val componentType: KClass<*> = Double::class
 
         /**
          * The size of a single component in bytes.
          */
-        override val componentSize: Int = Float.SIZE_BYTES
+        override val componentSize: Int = Double.SIZE_BYTES
 
         /**
          * The number of dimensions in the vector.
          */
-        override val dimensions: Int = 4
+        override val dimensions: Int = 3
 
         /**
          * The components of the vector.
          */
-        override val components: Array<VectorComponent> = VectorComponent.entries.toTypedArray()
+        override val components: Array<VectorComponent> =
+            arrayOf(VectorComponent.X, VectorComponent.Y, VectorComponent.Z)
 
         /**
          * A vector with all components set to 0.
          */
-        val ZERO: Vector4f = Vector4f()
+        val ZERO: Vector3d = Vector3d()
 
         /**
          * A vector with all components set to 1.
          */
-        val ONE: Vector4f = Vector4f(1F)
+        val ONE: Vector3d = Vector3d(1.0)
 
         /**
          * A vector with the X component set to 1 and all other components set to 0.
          */
-        val X_POS: Vector4f = Vector4f(1F, 0F, 0F, 0F)
+        val X_POS: Vector3d = Vector3d(1.0, 0.0, 0.0)
 
         /**
          * A vector with the X component set to -1 and all other components set to 0.
          */
-        val X_NEG: Vector4f = Vector4f(-1F, 0F, 0F, 0F)
+        val X_NEG: Vector3d = Vector3d(-1.0, 0.0, 0.0)
 
         /**
          * A vector with the Y component set to 1 and all other components set to 0.
          */
-        val Y_POS: Vector4f = Vector4f(0F, 1F, 0F, 0F)
+        val Y_POS: Vector3d = Vector3d(0.0, 1.0, 0.0)
 
         /**
          * A vector with the Y component set to -1 and all other components set to 0.
          */
-        val Y_NEG: Vector4f = Vector4f(0F, -1F, 0F, 0F)
+        val Y_NEG: Vector3d = Vector3d(0.0, -1.0, 0.0)
 
         /**
          * A vector with the Z component set to 1 and all other components set to 0.
          */
-        val Z_POS: Vector4f = Vector4f(0F, 0F, 1F, 0F)
+        val Z_POS: Vector3d = Vector3d(0.0, 0.0, 1.0)
 
         /**
          * A vector with the Z component set to -1 and all other components set to 0.
          */
-        val Z_NEG: Vector4f = Vector4f(0F, 0F, -1F, 0F)
+        val Z_NEG: Vector3d = Vector3d(0.0, 0.0, -1.0)
 
         /**
-         * A vector with the W component set to 1 and all other components set to 0.
+         * A lexicographical comparator for [Vector3d].
          */
-        val W_POS: Vector4f = Vector4f(0F, 0F, 0F, 1F)
-
-        /**
-         * A vector with the W component set to -1 and all other components set to 0.
-         */
-        val W_NEG: Vector4f = Vector4f(0F, 0F, 0F, -1F)
-
-        /**
-         * A lexicographical comparator for [Vector4f].
-         */
-        val lexComparator: Comparator<Vector4f> = { a, b ->
-            val (ax, ay, az, aw) = a
-            val (bx, by, bz, bw) = b
+        val lexComparator: Comparator<Vector3d> = { a, b ->
+            val (ax, ay, az) = a
+            val (bx, by, bz) = b
             if (ax != bx) ax.compareTo(bx)
             else {
                 if (ay != by) ay.compareTo(by)
-                else {
-                    if (az != bz) az.compareTo(bz)
-                    else aw.compareTo(bw)
-                }
+                else az.compareTo(bz)
             }
         }
 
         /**
-         * Creates a [Vector4f] from the given [array].
+         * Creates a [Vector3d] from the given [array].
          *
          * @param array The array to read from.
          * @param offset The offset in the [array].
-         * @return The created [Vector4f].
+         * @return The created [Vector3d].
          */
-        inline fun fromArray(array: FloatArray, offset: Int = 0): Vector4f = Vector4f( // @formatter:off
+        inline fun fromArray(array: DoubleArray, offset: Int = 0): Vector3d = Vector3d( // @formatter:off
             array[offset],
             array[offset + 1],
-            array[offset + 2],
-            array[offset + 3]
+            array[offset + 2]
         ) // @formatter:on
     }
 
     /**
-     * Creates a [Vector4f] with all components set to [xyzw].
+     * Creates a [Vector3d] with all components set to [xyz].
      *
-     * @param xyzw The value to set all components to.
+     * @param xyz The value to set all components to.
      */
-    constructor(xyzw: Float) : this(xyzw, xyzw, xyzw, xyzw)
+    constructor(xyz: Double) : this(xyz, xyz, xyz)
 
     /**
-     * Creates a [Vector4f] with all components set to 0.
+     * Creates a [Vector3d] with all components set to 0.
      */
-    constructor() : this(0F)
+    constructor() : this(0.0)
 
     /**
-     * The type of [Vector4f].
+     * The type of [Vector3d].
      */
-    override val type: VectorType get() = Vector4f
+    override val type: VectorType get() = Vector3d
 
     /**
-     * Adds [xyzw] to all components of this vector.
+     * Adds [xyz] to all components of this vector.
      *
-     * @param xyzw The value to add.
+     * @param xyz The value to add.
      * @return The result of the addition.
      */
-    inline operator fun plus(xyzw: Float): Vector4f = Vector4f(x + xyzw, y + xyzw, z + xyzw, w + xyzw)
+    inline operator fun plus(xyz: Double): Vector3d = Vector3d(x + xyz, y + xyz, z + xyz)
 
     /**
      * Adds [other] to this vector.
@@ -177,15 +164,15 @@ data class Vector4f( // @formatter:off
      * @param other The vector to add.
      * @return The result of the addition.
      */
-    inline operator fun plus(other: Vector4f): Vector4f = Vector4f(x + other.x, y + other.y, z + other.z, w + other.w)
+    inline operator fun plus(other: Vector3d): Vector3d = Vector3d(x + other.x, y + other.y, z + other.z)
 
     /**
-     * Subtracts [xyzw] from all components of this vector.
+     * Subtracts [xyz] from all components of this vector.
      *
-     * @param xyzw The value to subtract.
+     * @param xyz The value to subtract.
      * @return The result of the subtraction.
      */
-    inline operator fun minus(xyzw: Float): Vector4f = Vector4f(x - xyzw, y - xyzw, z - xyzw, w - xyzw)
+    inline operator fun minus(xyz: Double): Vector3d = Vector3d(x - xyz, y - xyz, z - xyz)
 
     /**
      * Subtracts [other] from this vector.
@@ -193,15 +180,15 @@ data class Vector4f( // @formatter:off
      * @param other The vector to subtract.
      * @return The result of the subtraction.
      */
-    inline operator fun minus(other: Vector4f): Vector4f = Vector4f(x - other.x, y - other.y, z - other.z, w - other.w)
+    inline operator fun minus(other: Vector3d): Vector3d = Vector3d(x - other.x, y - other.y, z - other.z)
 
     /**
-     * Multiplies all components of this vector by [xyzw].
+     * Multiplies all components of this vector by [xyz].
      *
-     * @param xyzw The value to multiply by.
+     * @param xyz The value to multiply by.
      * @return The result of the multiplication.
      */
-    inline operator fun times(xyzw: Float): Vector4f = Vector4f(x * xyzw, y * xyzw, z * xyzw, w * xyzw)
+    inline operator fun times(xyz: Double): Vector3d = Vector3d(x * xyz, y * xyz, z * xyz)
 
     /**
      * Multiplies this vector by [other].
@@ -209,15 +196,15 @@ data class Vector4f( // @formatter:off
      * @param other The vector to multiply by.
      * @return The result of the multiplication.
      */
-    inline operator fun times(other: Vector4f): Vector4f = Vector4f(x * other.x, y * other.y, z * other.z, w * other.w)
+    inline operator fun times(other: Vector3d): Vector3d = Vector3d(x * other.x, y * other.y, z * other.z)
 
     /**
-     * Divides all components of this vector by [xyzw].
+     * Divides all components of this vector by [xyz].
      *
-     * @param xyzw The value to divide by.
+     * @param xyz The value to divide by.
      * @return The result of the division.
      */
-    inline operator fun div(xyzw: Float): Vector4f = Vector4f(x / xyzw, y / xyzw, z / xyzw, w / xyzw)
+    inline operator fun div(xyz: Double): Vector3d = Vector3d(x / xyz, y / xyz, z / xyz)
 
     /**
      * Divides this vector by [other].
@@ -225,15 +212,15 @@ data class Vector4f( // @formatter:off
      * @param other The vector to divide by.
      * @return The result of the division.
      */
-    inline operator fun div(other: Vector4f): Vector4f = Vector4f(x / other.x, y / other.y, z / other.z, w / other.w)
+    inline operator fun div(other: Vector3d): Vector3d = Vector3d(x / other.x, y / other.y, z / other.z)
 
     /**
-     * Calculates the remainder of all components of this vector divided by [xyzw].
+     * Calculates the remainder of all components of this vector divided by [xyz].
      *
-     * @param xyzw The value to divide by.
+     * @param xyz The value to divide by.
      * @return The result of the remainder operation.
      */
-    inline operator fun rem(xyzw: Float): Vector4f = Vector4f(x % xyzw, y % xyzw, z % xyzw, w % xyzw)
+    inline operator fun rem(xyz: Double): Vector3d = Vector3d(x % xyz, y % xyz, z % xyz)
 
     /**
      * Calculates the remainder of this vector divided by [other].
@@ -241,7 +228,7 @@ data class Vector4f( // @formatter:off
      * @param other The vector to divide by.
      * @return The result of the remainder operation.
      */
-    inline operator fun rem(other: Vector4f): Vector4f = Vector4f(x % other.x, y % other.y, z % other.z, w % other.w)
+    inline operator fun rem(other: Vector3d): Vector3d = Vector3d(x % other.x, y % other.y, z % other.z)
 
     /**
      * Calculates the fused multiply-add of this vector, [b] and [c].
@@ -250,11 +237,10 @@ data class Vector4f( // @formatter:off
      * @param c The addend.
      * @return The result of the fused multiply-add.
      */
-    fun fma(b: Vector4f, c: Vector4f): Vector4f = Vector4f( // @formatter:off
+    fun fma(b: Vector3d, c: Vector3d): Vector3d = Vector3d( // @formatter:off
         fma(x, b.x, c.x),
         fma(y, b.y, c.y),
-        fma(z, b.z, c.z),
-        fma(w, b.w, c.w)
+        fma(z, b.z, c.z)
     ) // @formatter:on
 
     /**
@@ -264,11 +250,10 @@ data class Vector4f( // @formatter:off
      * @param factor The interpolation factor.
      * @return The interpolated vector.
      */
-    fun lerp(other: Vector4f, factor: Float): Vector4f = Vector4f( // @formatter:off
+    fun lerp(other: Vector3d, factor: Double): Vector3d = Vector3d( // @formatter:off
         fma(other.x - x, factor, x),
         fma(other.y - y, factor, y),
-        fma(other.z - z, factor, z),
-        fma(other.w - w, factor, w)
+        fma(other.z - z, factor, z)
     ) // @formatter:on
 
     /**
@@ -277,7 +262,7 @@ data class Vector4f( // @formatter:off
      * @param other The other vector.
      * @return The minimum vector.
      */
-    infix fun min(other: Vector4f): Vector4f = when {
+    infix fun min(other: Vector3d): Vector3d = when {
         this > other -> other
         else -> this
     }
@@ -288,11 +273,10 @@ data class Vector4f( // @formatter:off
      * @param other The other vector.
      * @return The vector containing the minimum components.
      */
-    infix fun minComponents(other: Vector4f): Vector4f = Vector4f( // @formatter:off
+    infix fun minComponents(other: Vector3d): Vector3d = Vector3d( // @formatter:off
         min(x, other.x),
         min(y, other.y),
-        min(z, other.z),
-        min(w, other.w)
+        min(z, other.z)
     ) // @formatter:on
 
     /**
@@ -301,7 +285,7 @@ data class Vector4f( // @formatter:off
      * @param other The other vector.
      * @return The maximum vector.
      */
-    infix fun max(other: Vector4f): Vector4f = when {
+    infix fun max(other: Vector3d): Vector3d = when {
         this < other -> other
         else -> this
     }
@@ -312,11 +296,10 @@ data class Vector4f( // @formatter:off
      * @param other The other vector.
      * @return The vector containing the maximum components.
      */
-    infix fun maxComponents(other: Vector4f): Vector4f = Vector4f( // @formatter:off
+    infix fun maxComponents(other: Vector3d): Vector3d = Vector3d( // @formatter:off
         max(x, other.x),
         max(y, other.y),
-        max(z, other.z),
-        max(w, other.w)
+        max(z, other.z)
     ) // @formatter:on
 
     /**
@@ -325,12 +308,11 @@ data class Vector4f( // @formatter:off
      * @param other The other vector.
      * @return The squared distance.
      */
-    infix fun distanceSq(other: Vector4f): Float {
+    infix fun distanceSq(other: Vector3d): Double {
         val dx = other.x - x
         val dy = other.y - y
         val dz = other.z - z
-        val dw = other.w - w
-        return fma(dx, dx, fma(dy, dy, fma(dz, dz, dw * dw)))
+        return fma(dx, dx, fma(dy, dy, dz * dz))
     }
 
     /**
@@ -339,28 +321,71 @@ data class Vector4f( // @formatter:off
      * @param other The other vector.
      * @return The distance.
      */
-    inline infix fun distance(other: Vector4f): Float = sqrt(distanceSq(other))
+    inline infix fun distance(other: Vector3d): Double = sqrt(distanceSq(other))
+
+    /**
+     * Calculates the angle in radians between this vector and [other].
+     *
+     * @param other The other vector.
+     * @return The angle in radians.
+     */
+    infix fun angleRad(other: Vector3d): Double {
+        val cross = this cross other
+        val dot = this dot other
+        return atan2(cross.length(), dot)
+    }
+
+    /**
+     * Calculates the angle in degrees between this vector and [other].
+     *
+     * @param other The other vector.
+     * @return The angle in degrees.
+     */
+    inline infix fun angle(other: Vector3d): Double = toDegrees(angleRad(other))
+
+    /**
+     * Calculates the signed angle in radians between this vector and [other] around the given [axis].
+     *
+     * @param other The other vector.
+     * @param axis The axis to calculate the angle around.
+     * @return The signed angle in radians.
+     */
+    fun signedAngleRad(other: Vector3d, axis: Vector3d): Double {
+        val cross = this cross other
+        val y = axis dot cross
+        val x = this dot other
+        return atan2(y, x)
+    }
+
+    /**
+     * Calculates the signed angle in degrees between this vector and [other] around the given [axis].
+     *
+     * @param other The other vector.
+     * @param axis The axis to calculate the angle around.
+     * @return The signed angle in degrees.
+     */
+    inline fun signedAngle(other: Vector3d, axis: Vector3d): Double = toDegrees(signedAngleRad(other, axis))
 
     /**
      * Calculates the squared length of this vector.
      *
      * @return The squared length.
      */
-    fun lengthSq(): Float = fma(x, x, fma(y, y, fma(z, z, w * w)))
+    fun lengthSq(): Double = fma(x, x, fma(y, y, z * z))
 
     /**
      * Calculates the length of this vector.
      *
      * @return The length.
      */
-    inline fun length(): Float = sqrt(lengthSq())
+    inline fun length(): Double = sqrt(lengthSq())
 
     /**
      * Returns a normalized version of this vector.
      *
      * @return The normalized vector.
      */
-    inline fun normalized(): Vector4f = this / length()
+    inline fun normalized(): Vector3d = this / length()
 
     /**
      * Calculates the dot product of this vector and [other].
@@ -368,21 +393,33 @@ data class Vector4f( // @formatter:off
      * @param other The other vector.
      * @return The dot product.
      */
-    infix fun dot(other: Vector4f): Float = fma(x, other.x, fma(y, other.y, fma(z, other.z, w * other.w)))
+    infix fun dot(other: Vector3d): Double = fma(x, other.x, fma(y, other.y, z * other.z))
 
     /**
-     * Converts this vector to a [Vector4i].
+     * Calculates the cross product of this vector and [other].
+     *
+     * @param other The other vector.
+     * @return The cross product.
+     */
+    infix fun cross(other: Vector3d): Vector3d = Vector3d( // @formatter:off
+        y * other.z - z * other.y,
+        z * other.x - x * other.z,
+        x * other.y - y * other.x
+    ) // @formatter:on
+
+    /**
+     * Converts this vector to a [Vector3i].
      *
      * @return The converted vector.
      */
-    inline fun toVector4i(): Vector4i = Vector4i(x.toInt(), y.toInt(), z.toInt(), w.toInt())
+    inline fun toVector3i(): Vector3i = Vector3i(x.toInt(), y.toInt(), z.toInt())
 
     /**
-     * Converts this vector to a [Vector4d].
+     * Converts this vector to a [Vector3f].
      *
      * @return The converted vector.
      */
-    inline fun toVector4d(): Vector4d = Vector4d(x.toDouble(), y.toDouble(), z.toDouble(), w.toDouble())
+    inline fun toVector3f(): Vector3f = Vector3f(x.toFloat(), y.toFloat(), z.toFloat())
 
     /**
      * Compares this vector to [other] based on their length.
@@ -390,7 +427,7 @@ data class Vector4f( // @formatter:off
      * @param other The other vector.
      * @return The result of the comparison.
      */
-    override operator fun compareTo(other: Vector4f): Int {
+    override operator fun compareTo(other: Vector3d): Int {
         return length().compareTo(other.length())
     }
 
@@ -400,47 +437,27 @@ data class Vector4f( // @formatter:off
      * @param other The matrix to multiply by.
      * @return The result of the multiplication.
      */
-    operator fun times(other: Matrix4x4f): Vector4f = Vector4f(
-        fma(other.m00, x, fma(other.m01, y, fma(other.m02, z, other.m03 * w))),
-        fma(other.m10, x, fma(other.m11, y, fma(other.m12, z, other.m13 * w))),
-        fma(other.m20, x, fma(other.m21, y, fma(other.m22, z, other.m23 * w))),
-        fma(other.m30, x, fma(other.m31, y, fma(other.m32, z, other.m33 * w)))
+    operator fun times(other: Matrix3x3d): Vector3d = Vector3d(
+        fma(other.m00, x, fma(other.m01, y, other.m02 * z)),
+        fma(other.m10, x, fma(other.m11, y, other.m12 * z)),
+        fma(other.m20, x, fma(other.m21, y, other.m22 * z))
     )
 
-    /**
-     * Gets the component at the given [index].
-     *
-     * @param index The index of the component.
-     * @return The value of the component.
-     * @throws IllegalArgumentException If the index is invalid.
-     */
-    override operator fun get(index: Int): Float = when (index) {
+    override operator fun get(index: Int): Double = when (index) {
         0 -> x
         1 -> y
         2 -> z
-        3 -> w
-        else -> throw IllegalArgumentException("Invalid vector component $index for Vector4f")
+        else -> throw IllegalArgumentException("Invalid vector component $index for Vector3f")
     }
 
-    /**
-     * Gets the component for the given [component].
-     *
-     * @param component The component to get.
-     * @return The value of the component.
-     */
-    override operator fun get(component: VectorComponent): Float = when (component) {
+    override operator fun get(component: VectorComponent): Double = when (component) {
         VectorComponent.X -> x
         VectorComponent.Y -> y
         VectorComponent.Z -> z
-        VectorComponent.W -> w
+        else -> throw IllegalArgumentException("Invalid vector component $component for Vector3f")
     }
 
-    /**
-     * Returns the components of this vector as a [FloatArray].
-     *
-     * @return The components of this vector.
-     */
-    override fun toFloatArray(): FloatArray = floatArrayOf(x, y, z, w)
+    override fun toDoubleArray(): DoubleArray = doubleArrayOf(x, y, z)
 
     /**
      * Swizzles the components of this vector.
@@ -448,32 +465,16 @@ data class Vector4f( // @formatter:off
      * @param x The component to use for the new X.
      * @param y The component to use for the new Y.
      * @param z The component to use for the new Z.
-     * @param w The component to use for the new W.
      * @return The swizzled vector.
      */
     inline fun swizzle( // @formatter:off
         x: VectorComponent,
         y: VectorComponent,
-        z: VectorComponent,
-        w: VectorComponent
-    ): Vector4f = Vector4f(this[x], this[y], this[z], this[w]) // @formatter:on
-
-    /**
-     * Swizzles the components of this vector into a [Vector3f].
-     *
-     * @param x The component to use for the new X.
-     * @param y The component to use for the new Y.
-     * @param z The component to use for the new Z.
-     * @return The swizzled vector.
-     */
-    inline fun swizzle3( // @formatter:off
-        x: VectorComponent,
-        y: VectorComponent,
         z: VectorComponent
-    ): Vector3f = Vector3f(this[x], this[y], this[z]) // @formatter:on
+    ): Vector3d = Vector3d(this[x], this[y], this[z]) // @formatter:on
 
     /**
-     * Swizzles the components of this vector into a [Vector2f].
+     * Swizzles the components of this vector into a [Vector2d].
      *
      * @param x The component to use for the new X.
      * @param y The component to use for the new Y.
@@ -482,5 +483,5 @@ data class Vector4f( // @formatter:off
     inline fun swizzle2( // @formatter:off
         x: VectorComponent,
         y: VectorComponent
-    ): Vector2f = Vector2f(this[x], this[y]) // @formatter:on
+    ): Vector2d = Vector2d(this[x], this[y]) // @formatter:on
 }

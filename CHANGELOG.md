@@ -2,10 +2,13 @@
 
 ### Added
 
+- 64-bit IEEE-754 vectors and matrices
 - Positional destructuring operators for `Quaternion`
 - Benchmarks for `Quaternion`
 - More granular tags for `MatrixProperties`
 - `kgml-io` module for `kotlinx.io` extensions to read and write KGML types
+- Dedicated `toRadians` functions for `Float` and `Double`
+- Dedicated `toDegrees` functions for `Float` and `Double`
 
 ### Changed
 
@@ -15,6 +18,13 @@
 - Performance improvements for all types of matrix multiplications
 - Performance improvements for `Quaternion` multiplications
 - Extended benchmarks and tests for all matrix types
+
+### Removed
+
+- `rotationX`, `rotationY` and `rotationZ` extensions for `Matrix3x3f`
+- `rotationX`, `rotationY` and `rotationZ` extensions for `Matrix4x4f`
+- `TO_DEG` constant
+- `TO_RAD` constant
 
 ## [1.2.1]
 

@@ -377,6 +377,13 @@ data class Vector4i( // @formatter:off
     inline fun toVector4f(): Vector4f = Vector4f(x.toFloat(), y.toFloat(), z.toFloat(), w.toFloat())
 
     /**
+     * Converts this vector to a [Vector4d].
+     *
+     * @return The converted vector.
+     */
+    inline fun toVector4d(): Vector4d = Vector4d(x.toDouble(), y.toDouble(), z.toDouble(), w.toDouble())
+
+    /**
      * Compares this vector to [other] based on their length.
      *
      * @param other The other vector.

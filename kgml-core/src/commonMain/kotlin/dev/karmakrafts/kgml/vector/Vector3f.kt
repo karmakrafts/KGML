@@ -17,8 +17,8 @@
 package dev.karmakrafts.kgml.vector
 
 import dev.karmakrafts.kgml.matrix.Matrix3x3f
-import dev.karmakrafts.kgml.util.TO_DEG
 import dev.karmakrafts.kgml.util.fma
+import dev.karmakrafts.kgml.util.toDegrees
 import kotlin.jvm.JvmField
 import kotlin.jvm.JvmRecord
 import kotlin.math.atan2
@@ -341,7 +341,7 @@ data class Vector3f( // @formatter:off
      * @param other The other vector.
      * @return The angle in degrees.
      */
-    inline infix fun angle(other: Vector3f): Float = (angleRad(other) * TO_DEG).toFloat()
+    inline infix fun angle(other: Vector3f): Float = toDegrees(angleRad(other))
 
     /**
      * Calculates the signed angle in radians between this vector and [other] around the given [axis].
@@ -364,7 +364,7 @@ data class Vector3f( // @formatter:off
      * @param axis The axis to calculate the angle around.
      * @return The signed angle in degrees.
      */
-    inline fun signedAngle(other: Vector3f, axis: Vector3f): Float = (signedAngleRad(other, axis) * TO_DEG).toFloat()
+    inline fun signedAngle(other: Vector3f, axis: Vector3f): Float = toDegrees(signedAngleRad(other, axis))
 
     /**
      * Calculates the squared length of this vector.
@@ -413,6 +413,13 @@ data class Vector3f( // @formatter:off
      * @return The converted vector.
      */
     inline fun toVector3i(): Vector3i = Vector3i(x.toInt(), y.toInt(), z.toInt())
+
+    /**
+     * Converts this vector to a [Vector3d].
+     *
+     * @return The converted vector.
+     */
+    inline fun toVector3d(): Vector3d = Vector3d(x.toDouble(), y.toDouble(), z.toDouble())
 
     /**
      * Compares this vector to [other] based on their length.

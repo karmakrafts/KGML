@@ -17,7 +17,7 @@
 package dev.karmakrafts.kgml.transform
 
 import dev.karmakrafts.kgml.matrix.Matrix3x3f
-import dev.karmakrafts.kgml.util.TO_RAD
+import dev.karmakrafts.kgml.util.toRadians
 import dev.karmakrafts.kgml.vector.Vector3f
 import kotlin.jvm.JvmInline
 
@@ -36,9 +36,9 @@ value class Rotation3f(val rotation: Vector3f) : Transform<Matrix3x3f> {
          * @return A new [Rotation3f].
          */
         fun fromDegrees(rotation: Vector3f): Rotation3f = Rotation3f( // @formatter:off
-            (rotation.x * TO_RAD).toFloat(),
-            (rotation.y * TO_RAD).toFloat(),
-            (rotation.z * TO_RAD).toFloat()
+            toRadians(rotation.x),
+            toRadians(rotation.y),
+            toRadians(rotation.z)
         ) // @formatter:on
     }
 

@@ -20,7 +20,7 @@ package dev.karmakrafts.kgml.transform
 
 import dev.karmakrafts.kgml.matrix.Matrix4x4f
 import dev.karmakrafts.kgml.matrix.MatrixProperties
-import dev.karmakrafts.kgml.util.TO_RAD
+import dev.karmakrafts.kgml.util.toRadians
 
 /**
  * Multiplies this matrix by the given quaternion.
@@ -29,78 +29,6 @@ import dev.karmakrafts.kgml.util.TO_RAD
  * @return The result of the multiplication.
  */
 inline operator fun Matrix4x4f.times(quat: Quaternion): Matrix4x4f = this * quat.toRotationMatrix4x4()
-
-/**
- * Creates a rotation matrix around the X axis from the given angle in radians.
- *
- * @param rad The angle in radians.
- * @return A new rotation [Matrix4x4f].
- */
-@Deprecated(
-    message = "This function is deprecated and will be removed in KGML 1.3.0",
-    replaceWith = ReplaceWith("rotationRad(angleX = rad)")
-)
-inline fun Matrix4x4f.Companion.rotationXRad(rad: Float): Matrix4x4f = rotationRad(angleX = rad)
-
-/**
- * Creates a rotation matrix around the X axis from the given angle in degrees.
- *
- * @param deg The angle in degrees.
- * @return A new rotation [Matrix4x4f].
- */
-@Deprecated(
-    message = "This function is deprecated and will be removed in KGML 1.3.0",
-    replaceWith = ReplaceWith("rotation(angleX = deg)")
-)
-inline fun Matrix4x4f.Companion.rotationX(deg: Float): Matrix4x4f = rotation(angleX = deg)
-
-/**
- * Creates a rotation matrix around the Y axis from the given angle in radians.
- *
- * @param rad The angle in radians.
- * @return A new rotation [Matrix4x4f].
- */
-@Deprecated(
-    message = "This function is deprecated and will be removed in KGML 1.3.0",
-    replaceWith = ReplaceWith("rotationRad(angleY = rad)")
-)
-inline fun Matrix4x4f.Companion.rotationYRad(rad: Float): Matrix4x4f = rotationRad(angleY = rad)
-
-/**
- * Creates a rotation matrix around the Y axis from the given angle in degrees.
- *
- * @param deg The angle in degrees.
- * @return A new rotation [Matrix4x4f].
- */
-@Deprecated(
-    message = "This function is deprecated and will be removed in KGML 1.3.0",
-    replaceWith = ReplaceWith("rotation(angleY = deg)")
-)
-inline fun Matrix4x4f.Companion.rotationY(deg: Float): Matrix4x4f = rotation(angleY = deg)
-
-/**
- * Creates a rotation matrix around the Z axis from the given angle in radians.
- *
- * @param rad The angle in radians.
- * @return A new rotation [Matrix4x4f].
- */
-@Deprecated(
-    message = "This function is deprecated and will be removed in KGML 1.3.0",
-    replaceWith = ReplaceWith("rotationRad(angleZ = rad)")
-)
-inline fun Matrix4x4f.Companion.rotationZRad(rad: Float): Matrix4x4f = rotationRad(angleZ = rad)
-
-/**
- * Creates a rotation matrix around the Z axis from the given angle in degrees.
- *
- * @param deg The angle in degrees.
- * @return A new rotation [Matrix4x4f].
- */
-@Deprecated(
-    message = "This function is deprecated and will be removed in KGML 1.3.0",
-    replaceWith = ReplaceWith("rotation(angleZ = deg)")
-)
-inline fun Matrix4x4f.Companion.rotationZ(deg: Float): Matrix4x4f = rotation(angleZ = deg)
 
 /**
  * Creates a rotation matrix from the given Euler angles in radians.
@@ -133,9 +61,9 @@ fun Matrix4x4f.Companion.rotation( // @formatter:off
     angleY: Float = 0F,
     angleZ: Float = 0F
 ): Matrix4x4f = rotationRad(
-    angleX = (angleX * TO_RAD).toFloat(),
-    angleY = (angleY * TO_RAD).toFloat(),
-    angleZ = (angleZ * TO_RAD).toFloat()
+    angleX = toRadians(angleX),
+    angleY = toRadians(angleY),
+    angleZ = toRadians(angleZ)
 ) // @formatter:on
 
 /**

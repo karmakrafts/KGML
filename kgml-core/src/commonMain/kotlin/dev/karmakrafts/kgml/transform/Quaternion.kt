@@ -19,9 +19,9 @@ package dev.karmakrafts.kgml.transform
 import dev.karmakrafts.kgml.matrix.Matrix3x3f
 import dev.karmakrafts.kgml.matrix.Matrix4x4f
 import dev.karmakrafts.kgml.matrix.MatrixProperties
-import dev.karmakrafts.kgml.util.TO_DEG
-import dev.karmakrafts.kgml.util.TO_RAD
 import dev.karmakrafts.kgml.util.fma
+import dev.karmakrafts.kgml.util.toDegrees
+import dev.karmakrafts.kgml.util.toRadians
 import dev.karmakrafts.kgml.vector.Vector4f
 import kotlin.jvm.JvmInline
 import kotlin.math.PI
@@ -91,9 +91,9 @@ value class Quaternion(@PublishedApi internal val value: Vector4f) : Transform<M
             angleY: Float = 0F,
             angleZ: Float = 0F
         ): Quaternion = fromAnglesRad(
-            (angleX * TO_RAD).toFloat(),
-            (angleY * TO_RAD).toFloat(),
-            (angleZ * TO_RAD).toFloat()
+            toRadians(angleX),
+            toRadians(angleY),
+            toRadians(angleZ)
         ) // @formatter:on
     }
 
@@ -144,7 +144,7 @@ value class Quaternion(@PublishedApi internal val value: Vector4f) : Transform<M
      *
      * @return The rotation around the X axis in degrees.
      */
-    inline fun getAngleX(): Float = (getAngleXRad() * TO_DEG).toFloat()
+    inline fun getAngleX(): Float = toDegrees(getAngleXRad())
 
     /**
      * Returns the rotation around the Y axis in radians.
@@ -162,7 +162,7 @@ value class Quaternion(@PublishedApi internal val value: Vector4f) : Transform<M
      *
      * @return The rotation around the Y axis in degrees.
      */
-    inline fun getAngleY(): Float = (getAngleYRad() * TO_DEG).toFloat()
+    inline fun getAngleY(): Float = toDegrees(getAngleYRad())
 
     /**
      * Returns the rotation around the Z axis in radians.
@@ -176,7 +176,7 @@ value class Quaternion(@PublishedApi internal val value: Vector4f) : Transform<M
      *
      * @return The rotation around the Z axis in degrees.
      */
-    inline fun getAngleZ(): Float = (getAngleZRad() * TO_DEG).toFloat()
+    inline fun getAngleZ(): Float = toDegrees(getAngleZRad())
 
     /**
      * Multiplies this quaternion by the given quaternion.

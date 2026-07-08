@@ -17,6 +17,7 @@
 package dev.karmakrafts.kgml.matrix
 
 import dev.karmakrafts.kgml.util.fma
+import dev.karmakrafts.kgml.vector.Vector2d
 import dev.karmakrafts.kgml.vector.Vector2f
 import dev.karmakrafts.kgml.vector.VectorN
 import kotlin.jvm.JvmField
@@ -24,7 +25,7 @@ import kotlin.jvm.JvmRecord
 import kotlin.reflect.KClass
 
 /**
- * A 2x2 float matrix.
+ * A 2x2 double matrix.
  *
  * @property m00 Row 0, Column 0
  * @property m01 Row 0, Column 1
@@ -34,19 +35,19 @@ import kotlin.reflect.KClass
  */
 @Suppress("NOTHING_TO_INLINE")
 @JvmRecord
-data class Matrix2x2f( // @formatter:off
-    @JvmField val m00: Float,
-    @JvmField val m01: Float,
-    @JvmField val m10: Float,
-    @JvmField val m11: Float,
+data class Matrix2x2d( // @formatter:off
+    @JvmField val m00: Double,
+    @JvmField val m01: Double,
+    @JvmField val m10: Double,
+    @JvmField val m11: Double,
     override val properties: MatrixProperties = MatrixProperties.NONE
-) : MatrixNxNf { // @formatter:on
+) : MatrixNxNd { // @formatter:on
     /**
-     * The type of [Matrix2x2f].
+     * The type of [Matrix2x2d].
      */
     companion object : MatrixType {
-        override val componentType: KClass<*> = Float::class
-        override val componentSize: Int = Float.SIZE_BYTES
+        override val componentType: KClass<*> = Double::class
+        override val componentSize: Int = Double.SIZE_BYTES
         override val rows: Int = 2
         override val columns: Int = 2
 
@@ -56,22 +57,22 @@ data class Matrix2x2f( // @formatter:off
         ) // @formatter:on
 
         /**
-         * The identity matrix for [Matrix2x2f].
+         * The identity matrix for [Matrix2x2d].
          */
-        val identity: Matrix2x2f = Matrix2x2f()
+        val identity: Matrix2x2d = Matrix2x2d()
 
         /**
-         * Creates a [Matrix2x2f] from the given float array.
+         * Creates a [Matrix2x2d] from the given double array.
          *
          * @param array The array to read from.
          * @param offset The offset in the array.
          * @return The created matrix.
          */
         inline fun fromArray( // @formatter:off
-            array: FloatArray,
+            array: DoubleArray,
             offset: Int = 0,
             properties: MatrixProperties = MatrixProperties.NONE
-        ): Matrix2x2f = Matrix2x2f(
+        ): Matrix2x2d = Matrix2x2d(
             array[offset],
             array[offset + 1],
             array[offset + 2],
@@ -80,7 +81,7 @@ data class Matrix2x2f( // @formatter:off
         ) // @formatter:on
 
         /**
-         * Creates a [Matrix2x2f] from the given rows.
+         * Creates a [Matrix2x2d] from the given rows.
          *
          * @param row0 The first row.
          * @param row1 The second row.
@@ -88,17 +89,17 @@ data class Matrix2x2f( // @formatter:off
          * @return The created matrix.
          */
         inline fun fromRows( // @formatter:off
-            row0: Vector2f,
-            row1: Vector2f,
+            row0: Vector2d,
+            row1: Vector2d,
             properties: MatrixProperties = MatrixProperties.NONE
-        ): Matrix2x2f = Matrix2x2f(
+        ): Matrix2x2d = Matrix2x2d(
             row0.x, row0.y,
             row1.x, row1.y,
             properties
         ) // @formatter:on
 
         /**
-         * Creates a [Matrix2x2f] from the given columns.
+         * Creates a [Matrix2x2d] from the given columns.
          *
          * @param column0 The first column.
          * @param column1 The second column.
@@ -106,10 +107,10 @@ data class Matrix2x2f( // @formatter:off
          * @return The created matrix.
          */
         inline fun fromColumns( // @formatter:off
-            column0: Vector2f,
-            column1: Vector2f,
+            column0: Vector2d,
+            column1: Vector2d,
             properties: MatrixProperties = MatrixProperties.NONE
-        ): Matrix2x2f = Matrix2x2f(
+        ): Matrix2x2d = Matrix2x2d(
             column0.x, column1.x,
             column0.y, column1.y,
             properties
@@ -120,8 +121,8 @@ data class Matrix2x2f( // @formatter:off
      * Creates an identity matrix.
      */
     constructor() : this( // @formatter:off
-        1F, 0F,
-        0F, 1F,
+        1.0, 0.0,
+        0.0, 1.0,
         MatrixProperties.IDENTITY
     ) // @formatter:on
 
@@ -130,7 +131,7 @@ data class Matrix2x2f( // @formatter:off
      *
      * @param value The value to set all components to.
      */
-    constructor(value: Float) : this( // @formatter:off
+    constructor(value: Double) : this( // @formatter:off
         value, value,
         value, value
     ) // @formatter:on
@@ -140,42 +141,42 @@ data class Matrix2x2f( // @formatter:off
      *
      * @return The first row.
      */
-    inline val row0: Vector2f get() = Vector2f(m00, m01)
+    inline val row0: Vector2d get() = Vector2d(m00, m01)
 
     /**
      * The second row of the matrix.
      *
      * @return The second row.
      */
-    inline val row1: Vector2f get() = Vector2f(m10, m11)
+    inline val row1: Vector2d get() = Vector2d(m10, m11)
 
     /**
      * The first column of the matrix.
      *
      * @return The first column.
      */
-    inline val column0: Vector2f get() = Vector2f(m00, m10)
+    inline val column0: Vector2d get() = Vector2d(m00, m10)
 
     /**
      * The second column of the matrix.
      *
      * @return The second column.
      */
-    inline val column1: Vector2f get() = Vector2f(m01, m11)
+    inline val column1: Vector2d get() = Vector2d(m01, m11)
 
     /**
      * The type of the matrix.
      */
-    override val type: MatrixType get() = Matrix2x2f
+    override val type: MatrixType get() = Matrix2x2d
 
     /**
-     * Converts this matrix to a [Matrix2x2d].
+     * Converts this matrix to a [Matrix2x2f].
      *
      * @return The converted matrix.
      */
-    inline fun toMatrix2x2d(): Matrix2x2d = Matrix2x2d( // @formatter:off
-        m00.toDouble(), m01.toDouble(),
-        m10.toDouble(), m11.toDouble()
+    inline fun toMatrix2x2f(): Matrix2x2f = Matrix2x2f( // @formatter:off
+        m00.toFloat(), m01.toFloat(),
+        m10.toFloat(), m11.toFloat()
     ) // @formatter:on
 
     /**
@@ -183,10 +184,10 @@ data class Matrix2x2f( // @formatter:off
      *
      * @return The extended 3x3 matrix.
      */
-    inline fun extend(): Matrix3x3f = Matrix3x3f( // @formatter:off
-        m00, m01, 0F,
-        m10, m11, 0F,
-        0F,  0F,  1F,
+    inline fun extend(): Matrix3x3d = Matrix3x3d( // @formatter:off
+        m00, m01, 0.0,
+        m10, m11, 0.0,
+        0.0, 0.0, 1.0,
         properties
     ) // @formatter:on
 
@@ -195,7 +196,7 @@ data class Matrix2x2f( // @formatter:off
      *
      * @return The transposed matrix.
      */
-    inline fun transpose(): Matrix2x2f = Matrix2x2f( // @formatter:off
+    inline fun transpose(): Matrix2x2d = Matrix2x2d( // @formatter:off
         m00, m10,
         m01, m11,
         properties
@@ -207,7 +208,7 @@ data class Matrix2x2f( // @formatter:off
      * @param other The matrix to multiply with.
      * @return The result of the multiplication.
      */
-    operator fun times(other: Matrix2x2f): Matrix2x2f {
+    operator fun times(other: Matrix2x2d): Matrix2x2d {
         val otherProps = other.properties
         return when {
             properties.isIdentity -> other
@@ -236,8 +237,8 @@ data class Matrix2x2f( // @formatter:off
         return multiplyLinearProperties(otherProperties) or MatrixProperties.ROTATION
     }
 
-    private fun multiplyDiagonalL(other: Matrix2x2f): Matrix2x2f {
-        return Matrix2x2f(
+    private fun multiplyDiagonalL(other: Matrix2x2d): Matrix2x2d {
+        return Matrix2x2d(
             m00 * other.m00,
             m00 * other.m01,
             m11 * other.m10,
@@ -246,14 +247,14 @@ data class Matrix2x2f( // @formatter:off
         )
     }
 
-    private fun multiplyDiagonalDiagonal(other: Matrix2x2f): Matrix2x2f {
-        return Matrix2x2f(
-            m00 * other.m00, 0F, 0F, m11 * other.m11, multiplyDiagonalProperties(other.properties)
+    private fun multiplyDiagonalDiagonal(other: Matrix2x2d): Matrix2x2d {
+        return Matrix2x2d(
+            m00 * other.m00, 0.0, 0.0, m11 * other.m11, multiplyDiagonalProperties(other.properties)
         )
     }
 
-    private fun multiplyDiagonalR(other: Matrix2x2f): Matrix2x2f {
-        return Matrix2x2f(
+    private fun multiplyDiagonalR(other: Matrix2x2d): Matrix2x2d {
+        return Matrix2x2d(
             m00 * other.m00,
             m01 * other.m11,
             m10 * other.m00,
@@ -262,20 +263,20 @@ data class Matrix2x2f( // @formatter:off
         )
     }
 
-    private fun multiplyRotation(other: Matrix2x2f): Matrix2x2f {
+    private fun multiplyRotation(other: Matrix2x2d): Matrix2x2d {
         val cos = fma(m00, other.m00, m01 * other.m10)
         val sin = fma(m10, other.m00, m00 * other.m10)
-        return Matrix2x2f(
+        return Matrix2x2d(
             cos, -sin, sin, cos, multiplyRotationProperties(other.properties)
         )
     }
 
-    private fun multiplyGeneric(other: Matrix2x2f): Matrix2x2f {
+    private fun multiplyGeneric(other: Matrix2x2d): Matrix2x2d {
         val ( // @formatter:off
             o00, o01,
             o10, o11
         ) = other // @formatter:on
-        return Matrix2x2f(
+        return Matrix2x2d(
             fma(m00, o00, m01 * o10),
             fma(m00, o01, m01 * o11),
             fma(m10, o00, m11 * o10),
@@ -290,7 +291,7 @@ data class Matrix2x2f( // @formatter:off
      * @param other The vector to multiply with.
      * @return The result of the multiplication.
      */
-    operator fun times(other: Vector2f): Vector2f = Vector2f( // @formatter:off
+    operator fun times(other: Vector2d): Vector2d = Vector2d( // @formatter:off
         fma(m00, other.x, m01 * other.y),
         fma(m10, other.x, m11 * other.y)
     ) // @formatter:on
@@ -300,10 +301,10 @@ data class Matrix2x2f( // @formatter:off
      *
      * @param other The matrix to multiply with.
      * @return The result of the multiplication.
-     * @throws IllegalArgumentException If the other matrix is not a [Matrix2x2f].
+     * @throws IllegalArgumentException If the other matrix is not a [Matrix2x2d].
      */
     override fun times(other: MatrixNxN): MatrixNxN = when (other) {
-        is Matrix2x2f -> this * other
+        is Matrix2x2d -> this * other
         else -> throw IllegalArgumentException("Unsupported matrix type for multiplication")
     }
 
@@ -319,14 +320,7 @@ data class Matrix2x2f( // @formatter:off
         else -> throw IllegalArgumentException("Unsupported vector type for multiplication")
     }
 
-    /**
-     * Gets the component at the given index.
-     *
-     * @param index The index of the component.
-     * @return The component at the given index.
-     * @throws IllegalArgumentException If the index is out of bounds.
-     */
-    override operator fun get(index: Int): Float = when (index) {
+    override operator fun get(index: Int): Double = when (index) {
         0 -> m00
         1 -> m01
         2 -> m10
@@ -334,14 +328,7 @@ data class Matrix2x2f( // @formatter:off
         else -> throw IllegalArgumentException("Invalid matrix component $index for Matrix2x2f")
     }
 
-    /**
-     * Gets the component for the given [MatrixComponent].
-     *
-     * @param component The component to get.
-     * @return The component for the given [MatrixComponent].
-     * @throws IllegalArgumentException If the component is not valid for this matrix.
-     */
-    override operator fun get(component: MatrixComponent): Float = when (component) {
+    override operator fun get(component: MatrixComponent): Double = when (component) {
         MatrixComponent.M00 -> m00
         MatrixComponent.M01 -> m01
         MatrixComponent.M10 -> m10
@@ -349,18 +336,13 @@ data class Matrix2x2f( // @formatter:off
         else -> throw IllegalArgumentException("Invalid matrix component $component for Matrix2x2f")
     }
 
-    /**
-     * Converts this matrix to a float array.
-     *
-     * @return The matrix as a float array.
-     */
-    override fun toFloatArray(): FloatArray = floatArrayOf( // @formatter:off
+    override fun toDoubleArray(): DoubleArray = doubleArrayOf( // @formatter:off
         m00, m01,
         m10, m11
     ) // @formatter:on
 
     override fun toString(): String {
-        var result = "Matrix2x2f[\n"
+        var result = "Matrix2x2d[\n"
         result += "\t$m00, $m01\n"
         result += "\t$m10, $m11\n"
         result += ']'
@@ -368,7 +350,7 @@ data class Matrix2x2f( // @formatter:off
     }
 
     override fun equals(other: Any?): Boolean = when(other) { // @formatter:off
-        is Matrix2x2f -> m00 == other.m00 &&
+        is Matrix2x2d -> m00 == other.m00 &&
             m01 == other.m01 &&
             m10 == other.m10 &&
             m11 == other.m11

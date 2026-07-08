@@ -18,7 +18,7 @@ package dev.karmakrafts.kgml.transform
 
 import dev.karmakrafts.kgml.matrix.Matrix2x2f
 import dev.karmakrafts.kgml.matrix.MatrixProperties
-import dev.karmakrafts.kgml.util.TO_RAD
+import dev.karmakrafts.kgml.util.toRadians
 import kotlin.math.cos
 import kotlin.math.sin
 
@@ -41,7 +41,7 @@ fun Matrix2x2f.Companion.rotationRad(rad: Float): Matrix2x2f {
  * @return A new rotation [Matrix2x2f].
  */
 @Suppress("NOTHING_TO_INLINE")
-inline fun Matrix2x2f.Companion.rotation(deg: Float): Matrix2x2f = rotationRad((deg * TO_RAD).toFloat())
+inline fun Matrix2x2f.Companion.rotation(deg: Float): Matrix2x2f = rotationRad(toRadians(deg))
 
 /**
  * Creates a scale matrix from the given X and Y scale factors.

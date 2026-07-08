@@ -17,6 +17,7 @@
 package dev.karmakrafts.kgml.matrix
 
 import dev.karmakrafts.kgml.util.fma
+import dev.karmakrafts.kgml.vector.Vector3d
 import dev.karmakrafts.kgml.vector.Vector3f
 import dev.karmakrafts.kgml.vector.VectorN
 import kotlin.jvm.JvmField
@@ -24,7 +25,7 @@ import kotlin.jvm.JvmRecord
 import kotlin.reflect.KClass
 
 /**
- * A 3x3 float matrix.
+ * A 3x3 double matrix.
  *
  * @property m00 Row 0, Column 0
  * @property m01 Row 0, Column 1
@@ -39,24 +40,24 @@ import kotlin.reflect.KClass
  */
 @Suppress("NOTHING_TO_INLINE")
 @JvmRecord
-data class Matrix3x3f(
-    @JvmField val m00: Float,
-    @JvmField val m01: Float,
-    @JvmField val m02: Float,
-    @JvmField val m10: Float,
-    @JvmField val m11: Float,
-    @JvmField val m12: Float,
-    @JvmField val m20: Float,
-    @JvmField val m21: Float,
-    @JvmField val m22: Float,
+data class Matrix3x3d(
+    @JvmField val m00: Double,
+    @JvmField val m01: Double,
+    @JvmField val m02: Double,
+    @JvmField val m10: Double,
+    @JvmField val m11: Double,
+    @JvmField val m12: Double,
+    @JvmField val m20: Double,
+    @JvmField val m21: Double,
+    @JvmField val m22: Double,
     override val properties: MatrixProperties = MatrixProperties.NONE
-) : MatrixNxNf {
+) : MatrixNxNd {
     /**
-     * The type of [Matrix3x3f].
+     * The type of [Matrix3x3d].
      */
     companion object : MatrixType {
-        override val componentType: KClass<*> = Float::class
-        override val componentSize: Int = Float.SIZE_BYTES
+        override val componentType: KClass<*> = Double::class
+        override val componentSize: Int = Double.SIZE_BYTES
         override val rows: Int = 3
         override val columns: Int = 3
 
@@ -67,22 +68,22 @@ data class Matrix3x3f(
         ) // @formatter:on
 
         /**
-         * The identity matrix for [Matrix3x3f].
+         * The identity matrix for [Matrix3x3d].
          */
-        val identity: Matrix3x3f = Matrix3x3f()
+        val identity: Matrix3x3d = Matrix3x3d()
 
         /**
-         * Creates a [Matrix3x3f] from the given float array.
+         * Creates a [Matrix3x3d] from the given double array.
          *
          * @param array The array to read from.
          * @param offset The offset in the array.
          * @return The created matrix.
          */
         inline fun fromArray( // @formatter:off
-            array: FloatArray,
+            array: DoubleArray,
             offset: Int = 0,
             properties: MatrixProperties = MatrixProperties.NONE
-        ): Matrix3x3f = Matrix3x3f(
+        ): Matrix3x3d = Matrix3x3d(
             array[offset],
             array[offset + 1],
             array[offset + 2],
@@ -96,7 +97,7 @@ data class Matrix3x3f(
         ) // @formatter:on
 
         /**
-         * Creates a [Matrix3x3f] from the given rows.
+         * Creates a [Matrix3x3d] from the given rows.
          *
          * @param row0 The first row.
          * @param row1 The second row.
@@ -105,11 +106,11 @@ data class Matrix3x3f(
          * @return The created matrix.
          */
         inline fun fromRows( // @formatter:off
-            row0: Vector3f,
-            row1: Vector3f,
-            row2: Vector3f,
+            row0: Vector3d,
+            row1: Vector3d,
+            row2: Vector3d,
             properties: MatrixProperties = MatrixProperties.NONE
-        ): Matrix3x3f = Matrix3x3f(
+        ): Matrix3x3d = Matrix3x3d(
             row0.x, row0.y, row0.z,
             row1.x, row1.y, row1.z,
             row2.x, row2.y, row2.z,
@@ -117,7 +118,7 @@ data class Matrix3x3f(
         ) // @formatter:on
 
         /**
-         * Creates a [Matrix3x3f] from the given columns.
+         * Creates a [Matrix3x3d] from the given columns.
          *
          * @param column0 The first column.
          * @param column1 The second column.
@@ -126,11 +127,11 @@ data class Matrix3x3f(
          * @return The created matrix.
          */
         inline fun fromColumns( // @formatter:off
-            column0: Vector3f,
-            column1: Vector3f,
-            column2: Vector3f,
+            column0: Vector3d,
+            column1: Vector3d,
+            column2: Vector3d,
             properties: MatrixProperties = MatrixProperties.NONE
-        ): Matrix3x3f = Matrix3x3f(
+        ): Matrix3x3d = Matrix3x3d(
             column0.x, column1.x, column2.x,
             column0.y, column1.y, column2.y,
             column0.z, column1.z, column2.z,
@@ -142,9 +143,9 @@ data class Matrix3x3f(
      * Creates an identity matrix.
      */
     constructor() : this( // @formatter:off
-        1F, 0F, 0F,
-        0F, 1F, 0F,
-        0F, 0F, 1F,
+        1.0, 0.0, 0.0,
+        0.0, 1.0, 0.0,
+        0.0, 0.0, 1.0,
         MatrixProperties.IDENTITY
     ) // @formatter:on
 
@@ -153,7 +154,7 @@ data class Matrix3x3f(
      *
      * @param value The value to set all components to.
      */
-    constructor(value: Float) : this( // @formatter:off
+    constructor(value: Double) : this( // @formatter:off
         value, value, value,
         value, value, value,
         value, value, value
@@ -164,57 +165,57 @@ data class Matrix3x3f(
      *
      * @return The first row.
      */
-    inline val row0: Vector3f get() = Vector3f(m00, m01, m02)
+    inline val row0: Vector3d get() = Vector3d(m00, m01, m02)
 
     /**
      * The second row of the matrix.
      *
      * @return The second row.
      */
-    inline val row1: Vector3f get() = Vector3f(m10, m11, m12)
+    inline val row1: Vector3d get() = Vector3d(m10, m11, m12)
 
     /**
      * The third row of the matrix.
      *
      * @return The third row.
      */
-    inline val row2: Vector3f get() = Vector3f(m20, m21, m22)
+    inline val row2: Vector3d get() = Vector3d(m20, m21, m22)
 
     /**
      * The first column of the matrix.
      *
      * @return The first column.
      */
-    inline val column0: Vector3f get() = Vector3f(m00, m10, m20)
+    inline val column0: Vector3d get() = Vector3d(m00, m10, m20)
 
     /**
      * The second column of the matrix.
      *
      * @return The second column.
      */
-    inline val column1: Vector3f get() = Vector3f(m01, m11, m21)
+    inline val column1: Vector3d get() = Vector3d(m01, m11, m21)
 
     /**
      * The third column of the matrix.
      *
      * @return The third column.
      */
-    inline val column2: Vector3f get() = Vector3f(m02, m12, m22)
+    inline val column2: Vector3d get() = Vector3d(m02, m12, m22)
 
     /**
      * The type of the matrix.
      */
-    override val type: MatrixType get() = Matrix3x3f
+    override val type: MatrixType get() = Matrix3x3d
 
     /**
-     * Converts this matrix to a [Matrix3x3d].
+     * Converts this matrix to a [Matrix3x3f].
      *
      * @return The converted matrix.
      */
-    inline fun toMatrix3x3d(): Matrix3x3d = Matrix3x3d( // @formatter:off
-        m00.toDouble(), m01.toDouble(), m02.toDouble(),
-        m10.toDouble(), m11.toDouble(), m12.toDouble(),
-        m20.toDouble(), m21.toDouble(), m22.toDouble()
+    inline fun toMatrix3x3f(): Matrix3x3f = Matrix3x3f( // @formatter:off
+        m00.toFloat(), m01.toFloat(), m02.toFloat(),
+        m10.toFloat(), m11.toFloat(), m12.toFloat(),
+        m20.toFloat(), m21.toFloat(), m22.toFloat()
     ) // @formatter:on
 
     /**
@@ -222,11 +223,11 @@ data class Matrix3x3f(
      *
      * @return The extended 4x4 matrix.
      */
-    inline fun extend(): Matrix4x4f = Matrix4x4f( // @formatter:off
-        m00, m01, m02, 0F,
-        m10, m11, m12, 0F,
-        m20, m21, m22, 0F,
-        0F,  0F,  0F,  1F,
+    inline fun extend(): Matrix4x4d = Matrix4x4d( // @formatter:off
+        m00, m01, m02, 0.0,
+        m10, m11, m12, 0.0,
+        m20, m21, m22, 0.0,
+        0.0, 0.0, 0.0, 1.0,
         properties
     ) // @formatter:on
 
@@ -235,7 +236,7 @@ data class Matrix3x3f(
      *
      * @return The transposed matrix.
      */
-    inline fun transpose(): Matrix3x3f = Matrix3x3f( // @formatter:off
+    inline fun transpose(): Matrix3x3d = Matrix3x3d( // @formatter:off
         m00, m10, m20,
         m01, m11, m21,
         m02, m12, m22,
@@ -248,7 +249,7 @@ data class Matrix3x3f(
      * @param other The matrix to multiply with.
      * @return The result of the multiplication.
      */
-    operator fun times(other: Matrix3x3f): Matrix3x3f {
+    operator fun times(other: Matrix3x3d): Matrix3x3d {
         val otherProps = other.properties
         return when {
             properties.isIdentity -> other
@@ -277,17 +278,17 @@ data class Matrix3x3f(
         return result
     }
 
-    private fun multiplyAffineTranslationR(other: Matrix3x3f): Matrix3x3f {
-        return Matrix3x3f(
+    private fun multiplyAffineTranslationR(other: Matrix3x3d): Matrix3x3d {
+        return Matrix3x3d(
             m00,
             m01,
             fma(m00, other.m02, fma(m01, other.m12, m02)),
             m10,
             m11,
             fma(m10, other.m02, fma(m11, other.m12, m12)),
-            0F,
-            0F,
-            1F,
+            0.0,
+            0.0,
+            1.0,
             if (properties.isTranslation) {
                 MatrixProperties.AFFINE or MatrixProperties.HOMOGENEOUS or MatrixProperties.TRANSLATION
             }
@@ -295,17 +296,17 @@ data class Matrix3x3f(
         )
     }
 
-    private fun multiplyAffineLinearR(other: Matrix3x3f): Matrix3x3f {
-        return Matrix3x3f(
+    private fun multiplyAffineLinearR(other: Matrix3x3d): Matrix3x3d {
+        return Matrix3x3d(
             fma(m00, other.m00, m01 * other.m10),
             fma(m00, other.m01, m01 * other.m11),
             m02,
             fma(m10, other.m00, m11 * other.m10),
             fma(m10, other.m01, m11 * other.m11),
             m12,
-            0F,
-            0F,
-            1F,
+            0.0,
+            0.0,
+            1.0,
             if (properties.isLinear) {
                 MatrixProperties.AFFINE or MatrixProperties.HOMOGENEOUS or MatrixProperties.LINEAR
             }
@@ -313,23 +314,23 @@ data class Matrix3x3f(
         )
     }
 
-    private fun multiplyAffineR(other: Matrix3x3f): Matrix3x3f {
-        return Matrix3x3f(
+    private fun multiplyAffineR(other: Matrix3x3d): Matrix3x3d {
+        return Matrix3x3d(
             fma(m00, other.m00, m01 * other.m10),
             fma(m00, other.m01, m01 * other.m11),
             fma(m00, other.m02, fma(m01, other.m12, m02)),
             fma(m10, other.m00, m11 * other.m10),
             fma(m10, other.m01, m11 * other.m11),
             fma(m10, other.m02, fma(m11, other.m12, m12)),
-            0F,
-            0F,
-            1F,
+            0.0,
+            0.0,
+            1.0,
             multiplyAffineProperties(other.properties)
         )
     }
 
-    private fun multiplyAffineL(other: Matrix3x3f): Matrix3x3f {
-        return Matrix3x3f(
+    private fun multiplyAffineL(other: Matrix3x3d): Matrix3x3d {
+        return Matrix3x3d(
             fma(m00, other.m00, fma(m01, other.m10, m02 * other.m20)),
             fma(m00, other.m01, fma(m01, other.m11, m02 * other.m21)),
             fma(m00, other.m02, fma(m01, other.m12, m02 * other.m22)),
@@ -343,8 +344,8 @@ data class Matrix3x3f(
         )
     }
 
-    private fun multiplyGenericAffineLinearR(other: Matrix3x3f): Matrix3x3f {
-        return Matrix3x3f(
+    private fun multiplyGenericAffineLinearR(other: Matrix3x3d): Matrix3x3d {
+        return Matrix3x3d(
             fma(m00, other.m00, m01 * other.m10),
             fma(m00, other.m01, m01 * other.m11),
             m02,
@@ -358,8 +359,8 @@ data class Matrix3x3f(
         )
     }
 
-    private fun multiplyGenericAffineR(other: Matrix3x3f): Matrix3x3f {
-        return Matrix3x3f(
+    private fun multiplyGenericAffineR(other: Matrix3x3d): Matrix3x3d {
+        return Matrix3x3d(
             fma(m00, other.m00, m01 * other.m10),
             fma(m00, other.m01, m01 * other.m11),
             fma(m00, other.m02, fma(m01, other.m12, m02)),
@@ -373,8 +374,8 @@ data class Matrix3x3f(
         )
     }
 
-    private fun multiplyGeneric(other: Matrix3x3f): Matrix3x3f {
-        return Matrix3x3f(
+    private fun multiplyGeneric(other: Matrix3x3d): Matrix3x3d {
+        return Matrix3x3d(
             fma(m00, other.m00, fma(m01, other.m10, m02 * other.m20)),
             fma(m00, other.m01, fma(m01, other.m11, m02 * other.m21)),
             fma(m00, other.m02, fma(m01, other.m12, m02 * other.m22)),
@@ -394,7 +395,7 @@ data class Matrix3x3f(
      * @param other The vector to multiply with.
      * @return The result of the multiplication.
      */
-    operator fun times(other: Vector3f): Vector3f = Vector3f(
+    operator fun times(other: Vector3d): Vector3d = Vector3d(
         fma(m00, other.x, fma(m01, other.y, m02 * other.z)),
         fma(m10, other.x, fma(m11, other.y, m12 * other.z)),
         fma(m20, other.x, fma(m21, other.y, m22 * other.z))
@@ -405,10 +406,10 @@ data class Matrix3x3f(
      *
      * @param other The matrix to multiply with.
      * @return The result of the multiplication.
-     * @throws IllegalArgumentException If the other matrix is not a [Matrix3x3f].
+     * @throws IllegalArgumentException If the other matrix is not a [Matrix3x3d].
      */
     override fun times(other: MatrixNxN): MatrixNxN = when (other) {
-        is Matrix3x3f -> this * other
+        is Matrix3x3d -> this * other
         else -> throw IllegalArgumentException("Unsupported matrix type for multiplication")
     }
 
@@ -424,14 +425,7 @@ data class Matrix3x3f(
         else -> throw IllegalArgumentException("Unsupported vector type for multiplication")
     }
 
-    /**
-     * Gets the component at the given index.
-     *
-     * @param index The index of the component.
-     * @return The component at the given index.
-     * @throws IllegalArgumentException If the index is out of bounds.
-     */
-    override operator fun get(index: Int): Float = when (index) {
+    override operator fun get(index: Int): Double = when (index) {
         0 -> m00
         1 -> m01
         2 -> m02
@@ -444,14 +438,7 @@ data class Matrix3x3f(
         else -> throw IllegalArgumentException("Invalid matrix component $index for Matrix3x3f")
     }
 
-    /**
-     * Gets the component for the given [MatrixComponent].
-     *
-     * @param component The component to get.
-     * @return The component for the given [MatrixComponent].
-     * @throws IllegalArgumentException If the component is not valid for this matrix.
-     */
-    override operator fun get(component: MatrixComponent): Float = when (component) {
+    override operator fun get(component: MatrixComponent): Double = when (component) {
         MatrixComponent.M00 -> m00
         MatrixComponent.M01 -> m01
         MatrixComponent.M02 -> m02
@@ -464,12 +451,7 @@ data class Matrix3x3f(
         else -> throw IllegalArgumentException("Invalid matrix component $component for Matrix3x3f")
     }
 
-    /**
-     * Converts this matrix to a float array.
-     *
-     * @return The matrix as a float array.
-     */
-    override fun toFloatArray(): FloatArray = floatArrayOf( // @formatter:off
+    override fun toDoubleArray(): DoubleArray = doubleArrayOf( // @formatter:off
         m00, m01, m02,
         m10, m11, m12,
         m20, m21, m22
@@ -485,7 +467,7 @@ data class Matrix3x3f(
     }
 
     override fun equals(other: Any?): Boolean = when(other) { // @formatter:off
-        is Matrix3x3f -> m00 == other.m00 &&
+        is Matrix3x3d -> m00 == other.m00 &&
             m01 == other.m01 &&
             m02 == other.m02 &&
             m10 == other.m10 &&

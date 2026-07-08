@@ -17,6 +17,7 @@
 package dev.karmakrafts.kgml.matrix
 
 import dev.karmakrafts.kgml.util.fma
+import dev.karmakrafts.kgml.vector.Vector4d
 import dev.karmakrafts.kgml.vector.Vector4f
 import dev.karmakrafts.kgml.vector.VectorN
 import kotlin.jvm.JvmField
@@ -24,7 +25,7 @@ import kotlin.jvm.JvmRecord
 import kotlin.reflect.KClass
 
 /**
- * A 4x4 float matrix.
+ * A 4x4 double matrix.
  *
  * @property m00 Row 0, Column 0
  * @property m01 Row 0, Column 1
@@ -46,52 +47,52 @@ import kotlin.reflect.KClass
  */
 @Suppress("NOTHING_TO_INLINE")
 @JvmRecord
-data class Matrix4x4f(
-    @JvmField val m00: Float,
-    @JvmField val m01: Float,
-    @JvmField val m02: Float,
-    @JvmField val m03: Float,
-    @JvmField val m10: Float,
-    @JvmField val m11: Float,
-    @JvmField val m12: Float,
-    @JvmField val m13: Float,
-    @JvmField val m20: Float,
-    @JvmField val m21: Float,
-    @JvmField val m22: Float,
-    @JvmField val m23: Float,
-    @JvmField val m30: Float,
-    @JvmField val m31: Float,
-    @JvmField val m32: Float,
-    @JvmField val m33: Float,
+data class Matrix4x4d(
+    @JvmField val m00: Double,
+    @JvmField val m01: Double,
+    @JvmField val m02: Double,
+    @JvmField val m03: Double,
+    @JvmField val m10: Double,
+    @JvmField val m11: Double,
+    @JvmField val m12: Double,
+    @JvmField val m13: Double,
+    @JvmField val m20: Double,
+    @JvmField val m21: Double,
+    @JvmField val m22: Double,
+    @JvmField val m23: Double,
+    @JvmField val m30: Double,
+    @JvmField val m31: Double,
+    @JvmField val m32: Double,
+    @JvmField val m33: Double,
     override val properties: MatrixProperties = MatrixProperties.NONE
-) : MatrixNxNf {
+) : MatrixNxNd {
     /**
-     * The type of [Matrix4x4f].
+     * The type of [Matrix4x4d].
      */
     companion object : MatrixType {
-        override val componentType: KClass<*> = Float::class
-        override val componentSize: Int = Float.SIZE_BYTES
+        override val componentType: KClass<*> = Double::class
+        override val componentSize: Int = Double.SIZE_BYTES
         override val rows: Int = 4
         override val columns: Int = 4
         override val components: Array<MatrixComponent> = MatrixComponent.entries.toTypedArray()
 
         /**
-         * The identity matrix for [Matrix4x4f].
+         * The identity matrix for [Matrix4x4d].
          */
-        val identity: Matrix4x4f = Matrix4x4f()
+        val identity: Matrix4x4d = Matrix4x4d()
 
         /**
-         * Creates a [Matrix4x4f] from the given float array.
+         * Creates a [Matrix4x4d] from the given double array.
          *
          * @param array The array to read from.
          * @param offset The offset in the array.
          * @return The created matrix.
          */
         inline fun fromArray( // @formatter:off
-            array: FloatArray,
+            array: DoubleArray,
             offset: Int = 0,
             properties: MatrixProperties = MatrixProperties.NONE
-        ): Matrix4x4f = Matrix4x4f(
+        ): Matrix4x4d = Matrix4x4d(
             array[offset],
             array[offset + 1],
             array[offset + 2],
@@ -112,7 +113,7 @@ data class Matrix4x4f(
         ) // @formatter:on
 
         /**
-         * Creates a [Matrix4x4f] from the given rows.
+         * Creates a [Matrix4x4d] from the given rows.
          *
          * @param row0 The first row.
          * @param row1 The second row.
@@ -122,12 +123,12 @@ data class Matrix4x4f(
          * @return The created matrix.
          */
         inline fun fromRows( // @formatter:off
-            row0: Vector4f,
-            row1: Vector4f,
-            row2: Vector4f,
-            row3: Vector4f,
+            row0: Vector4d,
+            row1: Vector4d,
+            row2: Vector4d,
+            row3: Vector4d,
             properties: MatrixProperties = MatrixProperties.NONE
-        ): Matrix4x4f = Matrix4x4f(
+        ): Matrix4x4d = Matrix4x4d(
             row0.x, row0.y, row0.z, row0.w,
             row1.x, row1.y, row1.z, row1.w,
             row2.x, row2.y, row2.z, row2.w,
@@ -136,7 +137,7 @@ data class Matrix4x4f(
         ) // @formatter:on
 
         /**
-         * Creates a [Matrix4x4f] from the given columns.
+         * Creates a [Matrix4x4d] from the given columns.
          *
          * @param column0 The first column.
          * @param column1 The second column.
@@ -146,12 +147,12 @@ data class Matrix4x4f(
          * @return The created matrix.
          */
         inline fun fromColumns( // @formatter:off
-            column0: Vector4f,
-            column1: Vector4f,
-            column2: Vector4f,
-            column3: Vector4f,
+            column0: Vector4d,
+            column1: Vector4d,
+            column2: Vector4d,
+            column3: Vector4d,
             properties: MatrixProperties = MatrixProperties.NONE
-        ): Matrix4x4f = Matrix4x4f(
+        ): Matrix4x4d = Matrix4x4d(
             column0.x, column1.x, column2.x, column3.x,
             column0.y, column1.y, column2.y, column3.y,
             column0.z, column1.z, column2.z, column3.z,
@@ -164,10 +165,10 @@ data class Matrix4x4f(
      * Creates an identity matrix.
      */
     constructor() : this( // @formatter:off
-        1F, 0F, 0F, 0F,
-        0F, 1F, 0F, 0F,
-        0F, 0F, 1F, 0F,
-        0F, 0F, 0F, 1F,
+        1.0, 0.0, 0.0, 0.0,
+        0.0, 1.0, 0.0, 0.0,
+        0.0, 0.0, 1.0, 0.0,
+        0.0, 0.0, 0.0, 1.0,
         MatrixProperties.IDENTITY
     ) // @formatter:on
 
@@ -176,7 +177,7 @@ data class Matrix4x4f(
      *
      * @param value The value to set all components to.
      */
-    constructor(value: Float) : this( // @formatter:off
+    constructor(value: Double) : this( // @formatter:off
         value, value, value, value,
         value, value, value, value,
         value, value, value, value,
@@ -188,72 +189,72 @@ data class Matrix4x4f(
      *
      * @return The first row.
      */
-    inline val row0: Vector4f get() = Vector4f(m00, m01, m02, m03)
+    inline val row0: Vector4d get() = Vector4d(m00, m01, m02, m03)
 
     /**
      * The second row of the matrix.
      *
      * @return The second row.
      */
-    inline val row1: Vector4f get() = Vector4f(m10, m11, m12, m13)
+    inline val row1: Vector4d get() = Vector4d(m10, m11, m12, m13)
 
     /**
      * The third row of the matrix.
      *
      * @return The third row.
      */
-    inline val row2: Vector4f get() = Vector4f(m20, m21, m22, m23)
+    inline val row2: Vector4d get() = Vector4d(m20, m21, m22, m23)
 
     /**
      * The fourth row of the matrix.
      *
      * @return The fourth row.
      */
-    inline val row3: Vector4f get() = Vector4f(m30, m31, m32, m33)
+    inline val row3: Vector4d get() = Vector4d(m30, m31, m32, m33)
 
     /**
      * The first column of the matrix.
      *
      * @return The first column.
      */
-    inline val column0: Vector4f get() = Vector4f(m00, m10, m20, m30)
+    inline val column0: Vector4d get() = Vector4d(m00, m10, m20, m30)
 
     /**
      * The second column of the matrix.
      *
      * @return The second column.
      */
-    inline val column1: Vector4f get() = Vector4f(m01, m11, m21, m31)
+    inline val column1: Vector4d get() = Vector4d(m01, m11, m21, m31)
 
     /**
      * The third column of the matrix.
      *
      * @return The third column.
      */
-    inline val column2: Vector4f get() = Vector4f(m02, m12, m22, m32)
+    inline val column2: Vector4d get() = Vector4d(m02, m12, m22, m32)
 
     /**
      * The fourth column of the matrix.
      *
      * @return The fourth column.
      */
-    inline val column3: Vector4f get() = Vector4f(m03, m13, m23, m33)
+    inline val column3: Vector4d get() = Vector4d(m03, m13, m23, m33)
 
     /**
      * The type of the matrix.
      */
-    override val type: MatrixType get() = Matrix4x4f
+    override val type: MatrixType get() = Matrix4x4d
 
     /**
-     * Converts this matrix to a [Matrix4x4d].
+     * Converts this matrix to a [Matrix4x4f].
      *
      * @return The converted matrix.
      */
-    inline fun toMatrix4x4d(): Matrix4x4d = Matrix4x4d( // @formatter:off
-        m00.toDouble(), m01.toDouble(), m02.toDouble(), m03.toDouble(),
-        m10.toDouble(), m11.toDouble(), m12.toDouble(), m13.toDouble(),
-        m20.toDouble(), m21.toDouble(), m22.toDouble(), m23.toDouble(),
-        m30.toDouble(), m31.toDouble(), m32.toDouble(), m33.toDouble(),
+    inline fun toMatrix4x4f(): Matrix4x4f = Matrix4x4f( // @formatter:off
+        m00.toFloat(), m01.toFloat(), m02.toFloat(), m03.toFloat(),
+        m10.toFloat(), m11.toFloat(), m12.toFloat(), m13.toFloat(),
+        m20.toFloat(), m21.toFloat(), m22.toFloat(), m23.toFloat(),
+        m30.toFloat(), m31.toFloat(), m32.toFloat(), m33.toFloat(),
     ) // @formatter:on
 
     /**
@@ -261,7 +262,7 @@ data class Matrix4x4f(
      *
      * @return The transposed matrix.
      */
-    inline fun transpose(): Matrix4x4f = Matrix4x4f( // @formatter:off
+    inline fun transpose(): Matrix4x4d = Matrix4x4d( // @formatter:off
         m00, m10, m20, m30,
         m01, m11, m21, m31,
         m02, m12, m22, m32,
@@ -275,7 +276,7 @@ data class Matrix4x4f(
      * @param other The matrix to multiply with.
      * @return The result of the multiplication.
      */
-    operator fun times(other: Matrix4x4f): Matrix4x4f {
+    operator fun times(other: Matrix4x4d): Matrix4x4d {
         val otherProps = other.properties
         return when {
             properties.isIdentity -> other
@@ -301,8 +302,8 @@ data class Matrix4x4f(
         return result
     }
 
-    private fun multiplyAffineTranslationR(other: Matrix4x4f): Matrix4x4f {
-        return Matrix4x4f(
+    private fun multiplyAffineTranslationR(other: Matrix4x4d): Matrix4x4d {
+        return Matrix4x4d(
             m00,
             m01,
             m02,
@@ -315,16 +316,16 @@ data class Matrix4x4f(
             m21,
             m22,
             fma(m20, other.m03, fma(m21, other.m13, fma(m22, other.m23, m23))),
-            0F,
-            0F,
-            0F,
-            1F,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
             if (properties.isTranslation) MatrixProperties.AFFINE or MatrixProperties.TRANSLATION else MatrixProperties.AFFINE
         )
     }
 
-    private fun multiplyAffineLinearR(other: Matrix4x4f): Matrix4x4f {
-        return Matrix4x4f(
+    private fun multiplyAffineLinearR(other: Matrix4x4d): Matrix4x4d {
+        return Matrix4x4d(
             fma(m00, other.m00, fma(m01, other.m10, m02 * other.m20)),
             fma(m00, other.m01, fma(m01, other.m11, m02 * other.m21)),
             fma(m00, other.m02, fma(m01, other.m12, m02 * other.m22)),
@@ -337,16 +338,16 @@ data class Matrix4x4f(
             fma(m20, other.m01, fma(m21, other.m11, m22 * other.m21)),
             fma(m20, other.m02, fma(m21, other.m12, m22 * other.m22)),
             m23,
-            0F,
-            0F,
-            0F,
-            1F,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
             if (properties.isLinear) MatrixProperties.AFFINE or MatrixProperties.LINEAR else MatrixProperties.AFFINE
         )
     }
 
-    private fun multiplyAffineR(other: Matrix4x4f): Matrix4x4f {
-        return Matrix4x4f(
+    private fun multiplyAffineR(other: Matrix4x4d): Matrix4x4d {
+        return Matrix4x4d(
             fma(m00, other.m00, fma(m01, other.m10, m02 * other.m20)),
             fma(m00, other.m01, fma(m01, other.m11, m02 * other.m21)),
             fma(m00, other.m02, fma(m01, other.m12, m02 * other.m22)),
@@ -359,16 +360,16 @@ data class Matrix4x4f(
             fma(m20, other.m01, fma(m21, other.m11, m22 * other.m21)),
             fma(m20, other.m02, fma(m21, other.m12, m22 * other.m22)),
             fma(m20, other.m03, fma(m21, other.m13, fma(m22, other.m23, m23))),
-            0F,
-            0F,
-            0F,
-            1F,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
             multiplyAffineProperties(other.properties)
         )
     }
 
-    private fun multiplyAffineL(other: Matrix4x4f): Matrix4x4f {
-        return Matrix4x4f(
+    private fun multiplyAffineL(other: Matrix4x4d): Matrix4x4d {
+        return Matrix4x4d(
             fma(m00, other.m00, fma(m01, other.m10, fma(m02, other.m20, m03 * other.m30))),
             fma(m00, other.m01, fma(m01, other.m11, fma(m02, other.m21, m03 * other.m31))),
             fma(m00, other.m02, fma(m01, other.m12, fma(m02, other.m22, m03 * other.m32))),
@@ -389,8 +390,8 @@ data class Matrix4x4f(
         )
     }
 
-    private fun multiplyGenericAffineLinearR(other: Matrix4x4f): Matrix4x4f {
-        return Matrix4x4f(
+    private fun multiplyGenericAffineLinearR(other: Matrix4x4d): Matrix4x4d {
+        return Matrix4x4d(
             fma(m00, other.m00, fma(m01, other.m10, m02 * other.m20)),
             fma(m00, other.m01, fma(m01, other.m11, m02 * other.m21)),
             fma(m00, other.m02, fma(m01, other.m12, m02 * other.m22)),
@@ -411,8 +412,8 @@ data class Matrix4x4f(
         )
     }
 
-    private fun multiplyGenericAffineR(other: Matrix4x4f): Matrix4x4f {
-        return Matrix4x4f(
+    private fun multiplyGenericAffineR(other: Matrix4x4d): Matrix4x4d {
+        return Matrix4x4d(
             fma(m00, other.m00, fma(m01, other.m10, m02 * other.m20)),
             fma(m00, other.m01, fma(m01, other.m11, m02 * other.m21)),
             fma(m00, other.m02, fma(m01, other.m12, m02 * other.m22)),
@@ -433,8 +434,8 @@ data class Matrix4x4f(
         )
     }
 
-    private fun multiplyGeneric(other: Matrix4x4f): Matrix4x4f {
-        return Matrix4x4f(
+    private fun multiplyGeneric(other: Matrix4x4d): Matrix4x4d {
+        return Matrix4x4d(
             fma(m00, other.m00, fma(m01, other.m10, fma(m02, other.m20, m03 * other.m30))),
             fma(m00, other.m01, fma(m01, other.m11, fma(m02, other.m21, m03 * other.m31))),
             fma(m00, other.m02, fma(m01, other.m12, fma(m02, other.m22, m03 * other.m32))),
@@ -461,9 +462,9 @@ data class Matrix4x4f(
      * @param other The vector to multiply with.
      * @return The result of the multiplication.
      */
-    operator fun times(other: Vector4f): Vector4f {
+    operator fun times(other: Vector4d): Vector4d {
         val (ox, oy, oz, ow) = other
-        return Vector4f(
+        return Vector4d(
             fma(m00, ox, fma(m01, oy, fma(m02, oz, m03 * ow))),
             fma(m10, ox, fma(m11, oy, fma(m12, oz, m13 * ow))),
             fma(m20, ox, fma(m21, oy, fma(m22, oz, m23 * ow))),
@@ -476,10 +477,10 @@ data class Matrix4x4f(
      *
      * @param other The matrix to multiply with.
      * @return The result of the multiplication.
-     * @throws IllegalArgumentException If the other matrix is not a [Matrix4x4f].
+     * @throws IllegalArgumentException If the other matrix is not a [Matrix4x4d].
      */
     override fun times(other: MatrixNxN): MatrixNxN = when (other) {
-        is Matrix4x4f -> this * other
+        is Matrix4x4d -> this * other
         else -> throw IllegalArgumentException("Unsupported matrix type for multiplication")
     }
 
@@ -495,14 +496,7 @@ data class Matrix4x4f(
         else -> throw IllegalArgumentException("Unsupported vector type for multiplication")
     }
 
-    /**
-     * Gets the component at the given index.
-     *
-     * @param index The index of the component.
-     * @return The component at the given index.
-     * @throws IllegalArgumentException If the index is out of bounds.
-     */
-    override operator fun get(index: Int): Float = when (index) {
+    override operator fun get(index: Int): Double = when (index) {
         0 -> m00
         1 -> m01
         2 -> m02
@@ -522,13 +516,7 @@ data class Matrix4x4f(
         else -> throw IllegalArgumentException("Invalid matrix component $index for Matrix4x4f")
     }
 
-    /**
-     * Gets the component for the given [MatrixComponent].
-     *
-     * @param component The component to get.
-     * @return The component for the given [MatrixComponent].
-     */
-    override operator fun get(component: MatrixComponent): Float = when (component) {
+    override operator fun get(component: MatrixComponent): Double = when (component) {
         MatrixComponent.M00 -> m00
         MatrixComponent.M01 -> m01
         MatrixComponent.M02 -> m02
@@ -547,12 +535,7 @@ data class Matrix4x4f(
         MatrixComponent.M33 -> m33
     }
 
-    /**
-     * Converts this matrix to a float array.
-     *
-     * @return The matrix as a float array.
-     */
-    override fun toFloatArray(): FloatArray = floatArrayOf( // @formatter:off
+    override fun toDoubleArray(): DoubleArray = doubleArrayOf( // @formatter:off
         m00, m01, m02, m03,
         m10, m11, m12, m13,
         m20, m21, m22, m23,
@@ -570,7 +553,7 @@ data class Matrix4x4f(
     }
 
     override fun equals(other: Any?): Boolean = when(other) { // @formatter:off
-        is Matrix4x4f -> m00 == other.m00 &&
+        is Matrix4x4d -> m00 == other.m00 &&
             m01 == other.m01 &&
             m02 == other.m02 &&
             m03 == other.m03 &&

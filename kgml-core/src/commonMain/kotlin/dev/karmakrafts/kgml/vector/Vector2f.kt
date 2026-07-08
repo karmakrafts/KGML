@@ -17,8 +17,8 @@
 package dev.karmakrafts.kgml.vector
 
 import dev.karmakrafts.kgml.matrix.Matrix2x2f
-import dev.karmakrafts.kgml.util.TO_DEG
 import dev.karmakrafts.kgml.util.fma
+import dev.karmakrafts.kgml.util.toDegrees
 import kotlin.jvm.JvmField
 import kotlin.jvm.JvmRecord
 import kotlin.math.atan2
@@ -315,7 +315,7 @@ data class Vector2f( // @formatter:off
      * @param other The other vector.
      * @return The angle in degrees.
      */
-    inline infix fun angle(other: Vector2f): Float = (angleRad(other) * TO_DEG).toFloat()
+    inline infix fun angle(other: Vector2f): Float = toDegrees(angleRad(other))
 
     /**
      * Calculates the squared length of this vector.
@@ -362,6 +362,13 @@ data class Vector2f( // @formatter:off
     inline fun toVector2i(): Vector2i = Vector2i(x.toInt(), y.toInt())
 
     /**
+     * Converts this vector to a [Vector2d].
+     *
+     * @return The converted vector.
+     */
+    inline fun toVector2d(): Vector2d = Vector2d(x.toDouble(), y.toDouble())
+
+    /**
      * Compares this vector to [other] based on their length.
      *
      * @param other The other vector.
@@ -382,37 +389,18 @@ data class Vector2f( // @formatter:off
         fma(other.m10, x, other.m11 * y)
     ) // @formatter:on
 
-    /**
-     * Gets the component at the given [index].
-     *
-     * @param index The index of the component.
-     * @return The value of the component.
-     * @throws IllegalArgumentException If the index is invalid.
-     */
     override operator fun get(index: Int): Float = when (index) {
         0 -> x
         1 -> y
         else -> throw IllegalArgumentException("Invalid vector component $index for Vector2f")
     }
 
-    /**
-     * Gets the component for the given [component].
-     *
-     * @param component The component to get.
-     * @return The value of the component.
-     * @throws IllegalArgumentException If the component is invalid.
-     */
     override operator fun get(component: VectorComponent): Float = when (component) {
         VectorComponent.X -> x
         VectorComponent.Y -> y
         else -> throw IllegalArgumentException("Invalid vector component $component for Vector2f")
     }
 
-    /**
-     * Returns the components of this vector as a [FloatArray].
-     *
-     * @return The components of this vector.
-     */
     override fun toFloatArray(): FloatArray = floatArrayOf(x, y)
 
     /**
