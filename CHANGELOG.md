@@ -3,6 +3,7 @@
 ### Added
 
 - Positional destructuring operators for `Quaternion`
+- Benchmarks for `Quaternion`
 - More granular tags for `MatrixProperties`
 - `kgml-io` module for `kotlinx.io` extensions to read and write KGML types
 
@@ -13,6 +14,7 @@
 - Updated to Kotlin Wrappers 2026.7.1
 - Performance improvements for all types of matrix multiplications
 - Performance improvements for `Quaternion` multiplications
+- Extended benchmarks and tests for all matrix types
 
 ## [1.2.1]
 
