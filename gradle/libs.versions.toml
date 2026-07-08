@@ -4,11 +4,16 @@ javaCompile = "25"
 javaTarget = "17"
 
 androidGradle = "9.2.1" # https://developer.android.com/reference/tools/gradle-api
-kgml = "1.2.1"
+kgml = "1.3.0"
 kotlin = "2.4.0" # https://github.com/JetBrains/kotlin/releases
-kotlinBrowser = "2026.6.9" # https://github.com/JetBrains/kotlin-wrappers/releases
+kotlinBrowser = "2026.7.1" # https://github.com/JetBrains/kotlin-wrappers/releases
 dokka = "2.2.0" # https://github.com/Kotlin/dokka/releases
-karmaConventions = "1.18.1" # https://github.com/karmakrafts/karma-conventions/tags
+karmaConventions = "1.18.3" # https://github.com/karmakrafts/karma-conventions/tags
+
+# kompress-io
+
+kotlinxIo = "0.9.1" # https://github.com/Kotlin/kotlinx-io/releases
+karbide = "1.10.6" # https://github.com/karmakrafts/Karbide/releases
 
 # kompress-benchmarks
 
@@ -21,6 +26,12 @@ joml = "1.10.9" # https://github.com/JOML-CI/JOML/releases
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
 kotlin-test-junit = { module = "org.jetbrains.kotlin:kotlin-test-junit", version.ref = "kotlin" }
 kotlin-wrappers-browser = { module = "org.jetbrains.kotlin-wrappers:kotlin-browser", version.ref = "kotlinBrowser" }
+
+# kompress-io
+
+kotlinx-io-core = { module = "org.jetbrains.kotlinx:kotlinx-io-core", version.ref = "kotlinxIo" }
+kotlinx-io-bytestring = { module = "org.jetbrains.kotlinx:kotlinx-io-bytestring", version.ref = "kotlinxIo" }
+karbide-core = { module = "dev.karmakrafts.karbide:karbide-core", version.ref = "karbide" }
 
 # kompress-benchmarks
 
