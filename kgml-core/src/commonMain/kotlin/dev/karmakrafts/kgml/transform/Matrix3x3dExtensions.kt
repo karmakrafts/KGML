@@ -19,7 +19,6 @@
 package dev.karmakrafts.kgml.transform
 
 import dev.karmakrafts.kgml.matrix.Matrix3x3d
-import dev.karmakrafts.kgml.matrix.Matrix3x3d.Companion
 import dev.karmakrafts.kgml.matrix.MatrixProperties
 import dev.karmakrafts.kgml.util.toRadians
 
@@ -31,7 +30,7 @@ import dev.karmakrafts.kgml.util.toRadians
  * @param angleZ The angle around the Z axis in radians.
  * @return A new rotation [Matrix3x3d].
  */
-fun Companion.rotationRad( // @formatter:off
+fun Matrix3x3d.Companion.rotationRad( // @formatter:off
     angleX: Double = 0.0,
     angleY: Double = 0.0,
     angleZ: Double = 0.0
@@ -52,7 +51,7 @@ fun Companion.rotationRad( // @formatter:off
  * @param angleZ The angle around the Z axis in degrees.
  * @return A new rotation [Matrix3x3d].
  */
-inline fun Companion.rotation( // @formatter:off
+inline fun Matrix3x3d.Companion.rotation( // @formatter:off
     angleX: Double = 0.0,
     angleY: Double = 0.0,
     angleZ: Double = 0.0
@@ -77,7 +76,7 @@ inline operator fun Matrix3x3d.times(quat: Quaternion4d): Matrix3x3d = this * qu
  * @param y The translation on the Y axis.
  * @return A new translation [Matrix3x3d].
  */
-fun Companion.translation(x: Double, y: Double): Matrix3x3d = Matrix3x3d( // @formatter:off
+fun Matrix3x3d.Companion.translation(x: Double, y: Double): Matrix3x3d = Matrix3x3d( // @formatter:off
     1.0, 0.0, x,
     0.0, 1.0, y,
     0.0, 0.0, 1.0,
@@ -91,7 +90,7 @@ fun Companion.translation(x: Double, y: Double): Matrix3x3d = Matrix3x3d( // @fo
  * @param y The scale factor on the Y axis.
  * @return A new scale [Matrix3x3d].
  */
-fun Companion.scale(x: Double, y: Double): Matrix3x3d = Matrix3x3d( // @formatter:off
+fun Matrix3x3d.Companion.scale(x: Double, y: Double): Matrix3x3d = Matrix3x3d( // @formatter:off
     x,   0.0, 0.0,
     0.0, y,   0.0,
     0.0, 0.0, 1.0,

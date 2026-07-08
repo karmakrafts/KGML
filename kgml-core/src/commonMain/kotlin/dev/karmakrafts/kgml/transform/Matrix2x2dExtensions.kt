@@ -17,7 +17,6 @@
 package dev.karmakrafts.kgml.transform
 
 import dev.karmakrafts.kgml.matrix.Matrix2x2d
-import dev.karmakrafts.kgml.matrix.Matrix2x2d.Companion
 import dev.karmakrafts.kgml.matrix.MatrixProperties
 import dev.karmakrafts.kgml.util.toRadians
 import kotlin.math.cos
@@ -29,7 +28,7 @@ import kotlin.math.sin
  * @param rad The angle in radians.
  * @return A new rotation [Matrix2x2d].
  */
-fun Companion.rotationRad(rad: Double): Matrix2x2d {
+fun Matrix2x2d.Companion.rotationRad(rad: Double): Matrix2x2d {
     val c = cos(rad)
     val s = sin(rad)
     return Matrix2x2d(c, -s, s, c, MatrixProperties.AFFINE or MatrixProperties.LINEAR or MatrixProperties.ROTATION)
@@ -42,7 +41,7 @@ fun Companion.rotationRad(rad: Double): Matrix2x2d {
  * @return A new rotation [Matrix2x2d].
  */
 @Suppress("NOTHING_TO_INLINE")
-inline fun Companion.rotation(deg: Double): Matrix2x2d = rotationRad(toRadians(deg))
+inline fun Matrix2x2d.Companion.rotation(deg: Double): Matrix2x2d = rotationRad(toRadians(deg))
 
 /**
  * Creates a scale matrix from the given X and Y scale factors.
@@ -51,7 +50,7 @@ inline fun Companion.rotation(deg: Double): Matrix2x2d = rotationRad(toRadians(d
  * @param scaleY The scale factor on the Y axis.
  * @return A new scale [Matrix2x2d].
  */
-fun Companion.scale(scaleX: Double, scaleY: Double): Matrix2x2d = Matrix2x2d( // @formatter:off
+fun Matrix2x2d.Companion.scale(scaleX: Double, scaleY: Double): Matrix2x2d = Matrix2x2d( // @formatter:off
     scaleX, 0.0,
     0.0, scaleY,
     MatrixProperties.AFFINE or MatrixProperties.LINEAR or MatrixProperties.DIAGONAL
@@ -64,4 +63,4 @@ fun Companion.scale(scaleX: Double, scaleY: Double): Matrix2x2d = Matrix2x2d( //
  * @return A new scale [Matrix2x2d].
  */
 @Suppress("NOTHING_TO_INLINE")
-inline fun Companion.scale(scale: Double): Matrix2x2d = scale(scale, scale)
+inline fun Matrix2x2d.Companion.scale(scale: Double): Matrix2x2d = scale(scale, scale)

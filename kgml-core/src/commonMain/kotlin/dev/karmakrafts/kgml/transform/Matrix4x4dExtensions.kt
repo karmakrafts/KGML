@@ -19,8 +19,6 @@
 package dev.karmakrafts.kgml.transform
 
 import dev.karmakrafts.kgml.matrix.Matrix4x4d
-import dev.karmakrafts.kgml.matrix.Matrix4x4f
-import dev.karmakrafts.kgml.matrix.Matrix4x4f.Companion
 import dev.karmakrafts.kgml.matrix.MatrixProperties
 import dev.karmakrafts.kgml.util.toRadians
 
@@ -38,9 +36,9 @@ inline operator fun Matrix4x4d.times(quat: Quaternion4d): Matrix4x4d = this * qu
  * @param angleX The angle around the X axis in radians.
  * @param angleY The angle around the Y axis in radians.
  * @param angleZ The angle around the Z axis in radians.
- * @return A new rotation [Matrix4x4f].
+ * @return A new rotation [Matrix4x4d].
  */
-fun Companion.rotationRad( // @formatter:off
+fun Matrix4x4d.Companion.rotationRad( // @formatter:off
     angleX: Double = 0.0,
     angleY: Double = 0.0,
     angleZ: Double = 0.0
@@ -56,9 +54,9 @@ fun Companion.rotationRad( // @formatter:off
  * @param angleX The angle around the X axis in degrees.
  * @param angleY The angle around the Y axis in degrees.
  * @param angleZ The angle around the Z axis in degrees.
- * @return A new rotation [Matrix4x4f].
+ * @return A new rotation [Matrix4x4d].
  */
-fun Companion.rotation( // @formatter:off
+fun Matrix4x4d.Companion.rotation( // @formatter:off
     angleX: Double = 0.0,
     angleY: Double = 0.0,
     angleZ: Double = 0.0
@@ -74,9 +72,9 @@ fun Companion.rotation( // @formatter:off
  * @param x The translation on the X axis.
  * @param y The translation on the Y axis.
  * @param z The translation on the Z axis.
- * @return A new translation [Matrix4x4f].
+ * @return A new translation [Matrix4x4d].
  */
-fun Companion.translation( // @formatter:off
+fun Matrix4x4d.Companion.translation( // @formatter:off
     x: Double = 0.0,
     y: Double = 0.0,
     z: Double = 0.0
@@ -94,9 +92,9 @@ fun Companion.translation( // @formatter:off
  * @param scaleX The scale factor on the X axis.
  * @param scaleY The scale factor on the Y axis.
  * @param scaleZ The scale factor on the Z axis.
- * @return A new scale [Matrix4x4f].
+ * @return A new scale [Matrix4x4d].
  */
-fun Companion.scale( // @formatter:off
+fun Matrix4x4d.Companion.scale( // @formatter:off
     scaleX: Double = 1.0,
     scaleY: Double = 1.0,
     scaleZ: Double = 1.0
@@ -117,9 +115,9 @@ fun Companion.scale( // @formatter:off
  * @param yz The skew factor of the Y axis towards the Z axis.
  * @param zx The skew factor of the Z axis towards the X axis.
  * @param zy The skew factor of the Z axis towards the Y axis.
- * @return A new skew [Matrix4x4f].
+ * @return A new skew [Matrix4x4d].
  */
-fun Companion.skew( // @formatter:off
+fun Matrix4x4d.Companion.skew( // @formatter:off
     xy: Double = 0.0,
     xz: Double = 0.0,
     yx: Double = 0.0,
