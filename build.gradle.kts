@@ -48,7 +48,7 @@ version = GitLabCI.getDefaultVersion(libs.versions.kgml)
 
     publishing {
         apache2License()
-        setRepository("github.com", "karmakrafts/Kompress")
+        setRepository("github.com", "karmakrafts/KGML")
         with(GitLabCI) { karmaKraftsDefaults() }
     }
 

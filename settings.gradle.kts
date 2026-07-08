@@ -55,4 +55,5 @@ nmcpSettings {
 
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 include("kgml-core")
+include("kgml-io")
 include("kgml-benchmarks")
