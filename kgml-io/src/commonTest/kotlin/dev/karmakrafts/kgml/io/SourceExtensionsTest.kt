@@ -20,8 +20,11 @@ import dev.karmakrafts.kgml.matrix.Matrix2x2f
 import dev.karmakrafts.kgml.matrix.Matrix3x3f
 import dev.karmakrafts.kgml.matrix.Matrix4x4f
 import dev.karmakrafts.kgml.vector.Vector2f
+import dev.karmakrafts.kgml.vector.Vector2i
 import dev.karmakrafts.kgml.vector.Vector3f
+import dev.karmakrafts.kgml.vector.Vector3i
 import dev.karmakrafts.kgml.vector.Vector4f
+import dev.karmakrafts.kgml.vector.Vector4i
 import kotlinx.io.Buffer
 import kotlinx.io.Source
 import kotlin.test.Test
@@ -57,6 +60,36 @@ class SourceExtensionsTest {
     fun `readVector4fLe should read little endian vector`() = assertReads(
         bytesOf(1F, -2F, 3.5F, -4.25F, littleEndian = true), Vector4f(1F, -2F, 3.5F, -4.25F)
     ) { readVector4fLe() }
+
+    @Test
+    fun `readVector2i should read big endian vector`() = assertReads(
+        bytesOf(1, -2), Vector2i(1, -2)
+    ) { readVector2i() }
+
+    @Test
+    fun `readVector2iLe should read little endian vector`() = assertReads(
+        bytesOf(1, -2, littleEndian = true), Vector2i(1, -2)
+    ) { readVector2iLe() }
+
+    @Test
+    fun `readVector3i should read big endian vector`() = assertReads(
+        bytesOf(1, -2, 3), Vector3i(1, -2, 3)
+    ) { readVector3i() }
+
+    @Test
+    fun `readVector3iLe should read little endian vector`() = assertReads(
+        bytesOf(1, -2, 3, littleEndian = true), Vector3i(1, -2, 3)
+    ) { readVector3iLe() }
+
+    @Test
+    fun `readVector4i should read big endian vector`() = assertReads(
+        bytesOf(1, -2, 3, -4), Vector4i(1, -2, 3, -4)
+    ) { readVector4i() }
+
+    @Test
+    fun `readVector4iLe should read little endian vector`() = assertReads(
+        bytesOf(1, -2, 3, -4, littleEndian = true), Vector4i(1, -2, 3, -4)
+    ) { readVector4iLe() }
 
     @Test
     fun `readMatrix2x2f should read big endian matrix`() = assertReads(
@@ -111,6 +144,26 @@ class SourceExtensionsTest {
                 bytes[index++] = (bits ushr 16).toByte()
                 bytes[index++] = (bits ushr 8).toByte()
                 bytes[index++] = bits.toByte()
+            }
+        }
+        return bytes
+    }
+
+    private fun bytesOf(vararg values: Int, littleEndian: Boolean = false): ByteArray {
+        val bytes = ByteArray(values.size * Int.SIZE_BYTES)
+        var index = 0
+        for (value in values) {
+            if (littleEndian) {
+                bytes[index++] = value.toByte()
+                bytes[index++] = (value ushr 8).toByte()
+                bytes[index++] = (value ushr 16).toByte()
+                bytes[index++] = (value ushr 24).toByte()
+            }
+            else {
+                bytes[index++] = (value ushr 24).toByte()
+                bytes[index++] = (value ushr 16).toByte()
+                bytes[index++] = (value ushr 8).toByte()
+                bytes[index++] = value.toByte()
             }
         }
         return bytes

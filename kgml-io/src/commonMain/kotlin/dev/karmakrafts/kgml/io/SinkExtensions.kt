@@ -17,14 +17,20 @@
 package dev.karmakrafts.kgml.io
 
 import dev.karmakrafts.karbide.writeFloatLeFast
+import dev.karmakrafts.karbide.writeIntLeFast
 import dev.karmakrafts.kgml.matrix.Matrix2x2f
 import dev.karmakrafts.kgml.matrix.Matrix3x3f
 import dev.karmakrafts.kgml.matrix.Matrix4x4f
 import dev.karmakrafts.kgml.vector.Vector2f
+import dev.karmakrafts.kgml.vector.Vector2i
 import dev.karmakrafts.kgml.vector.Vector3f
+import dev.karmakrafts.kgml.vector.Vector3i
 import dev.karmakrafts.kgml.vector.Vector4f
+import dev.karmakrafts.kgml.vector.Vector4i
 import kotlinx.io.Sink
 import kotlinx.io.writeFloat
+
+// Float vectors
 
 fun Sink.writeVector2f(vector: Vector2f) {
     writeFloat(vector.x)
@@ -61,6 +67,46 @@ fun Sink.writeVector4fLe(vector: Vector4f) {
     writeFloatLeFast(vector.z)
     writeFloatLeFast(vector.w)
 }
+
+// Int vectors
+
+fun Sink.writeVector2i(vector: Vector2i) {
+    writeInt(vector.x)
+    writeInt(vector.y)
+}
+
+fun Sink.writeVector2iLe(vector: Vector2i) {
+    writeIntLeFast(vector.x)
+    writeIntLeFast(vector.y)
+}
+
+fun Sink.writeVector3i(vector: Vector3i) {
+    writeInt(vector.x)
+    writeInt(vector.y)
+    writeInt(vector.z)
+}
+
+fun Sink.writeVector3iLe(vector: Vector3i) {
+    writeIntLeFast(vector.x)
+    writeIntLeFast(vector.y)
+    writeIntLeFast(vector.z)
+}
+
+fun Sink.writeVector4i(vector: Vector4i) {
+    writeInt(vector.x)
+    writeInt(vector.y)
+    writeInt(vector.z)
+    writeInt(vector.w)
+}
+
+fun Sink.writeVector4iLe(vector: Vector4i) {
+    writeIntLeFast(vector.x)
+    writeIntLeFast(vector.y)
+    writeIntLeFast(vector.z)
+    writeIntLeFast(vector.w)
+}
+
+// Float matrices
 
 fun Sink.writeMatrix2x2f(matrix: Matrix2x2f) {
     writeFloat(matrix.m00)
