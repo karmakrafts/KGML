@@ -54,7 +54,7 @@ fun MatrixStack<Matrix4x4f>.rotate( // @formatter:off
  *
  * @param quat The quaternion to rotate by.
  */
-fun MatrixStack<Matrix4x4f>.rotate(quat: Quaternion) {
+fun MatrixStack<Matrix4x4f>.rotate(quat: Quaternion4f) {
     swap(current() * quat)
 }
 

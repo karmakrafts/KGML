@@ -18,7 +18,9 @@
 
 package dev.karmakrafts.kgml.transform
 
+import dev.karmakrafts.kgml.matrix.Matrix4x4d
 import dev.karmakrafts.kgml.matrix.Matrix4x4f
+import dev.karmakrafts.kgml.matrix.Matrix4x4f.Companion
 import dev.karmakrafts.kgml.matrix.MatrixProperties
 import dev.karmakrafts.kgml.util.toRadians
 
@@ -28,7 +30,7 @@ import dev.karmakrafts.kgml.util.toRadians
  * @param quat The quaternion to multiply by.
  * @return The result of the multiplication.
  */
-inline operator fun Matrix4x4f.times(quat: Quaternion4f): Matrix4x4f = this * quat.toRotationMatrix4x4f()
+inline operator fun Matrix4x4d.times(quat: Quaternion4d): Matrix4x4d = this * quat.toRotationMatrix4x4d()
 
 /**
  * Creates a rotation matrix from the given Euler angles in radians.
@@ -38,15 +40,15 @@ inline operator fun Matrix4x4f.times(quat: Quaternion4f): Matrix4x4f = this * qu
  * @param angleZ The angle around the Z axis in radians.
  * @return A new rotation [Matrix4x4f].
  */
-fun Matrix4x4f.Companion.rotationRad( // @formatter:off
-    angleX: Float = 0F,
-    angleY: Float = 0F,
-    angleZ: Float = 0F
-): Matrix4x4f = ( // @formatter:off
-    Quaternion4f.fromAnglesRad(angleX, 0F, 0F) *
-    Quaternion4f.fromAnglesRad(0F, angleY, 0F) *
-    Quaternion4f.fromAnglesRad(0F, 0F, angleZ)
-).toRotationMatrix4x4f() // @formatter:on
+fun Companion.rotationRad( // @formatter:off
+    angleX: Double = 0.0,
+    angleY: Double = 0.0,
+    angleZ: Double = 0.0
+): Matrix4x4d = ( // @formatter:off
+    Quaternion4d.fromAnglesRad(angleX, 0.0, 0.0) *
+    Quaternion4d.fromAnglesRad(0.0, angleY, 0.0) *
+    Quaternion4d.fromAnglesRad(0.0, 0.0, angleZ)
+).toRotationMatrix4x4d() // @formatter:on
 
 /**
  * Creates a rotation matrix from the given Euler angles in degrees.
@@ -56,11 +58,11 @@ fun Matrix4x4f.Companion.rotationRad( // @formatter:off
  * @param angleZ The angle around the Z axis in degrees.
  * @return A new rotation [Matrix4x4f].
  */
-fun Matrix4x4f.Companion.rotation( // @formatter:off
-    angleX: Float = 0F,
-    angleY: Float = 0F,
-    angleZ: Float = 0F
-): Matrix4x4f = rotationRad(
+fun Companion.rotation( // @formatter:off
+    angleX: Double = 0.0,
+    angleY: Double = 0.0,
+    angleZ: Double = 0.0
+): Matrix4x4d = rotationRad(
     angleX = toRadians(angleX),
     angleY = toRadians(angleY),
     angleZ = toRadians(angleZ)
@@ -74,15 +76,15 @@ fun Matrix4x4f.Companion.rotation( // @formatter:off
  * @param z The translation on the Z axis.
  * @return A new translation [Matrix4x4f].
  */
-fun Matrix4x4f.Companion.translation( // @formatter:off
-    x: Float = 0F,
-    y: Float = 0F,
-    z: Float = 0F
-): Matrix4x4f = Matrix4x4f(
-    1F, 0F, 0F, x,
-    0F, 1F, 0F, y,
-    0F, 0F, 1F, z,
-    0F, 0F, 0F, 1F,
+fun Companion.translation( // @formatter:off
+    x: Double = 0.0,
+    y: Double = 0.0,
+    z: Double = 0.0
+): Matrix4x4d = Matrix4x4d(
+    1.0, 0.0, 0.0, x,
+    0.0, 1.0, 0.0, y,
+    0.0, 0.0, 1.0, z,
+    0.0, 0.0, 0.0, 1.0,
     MatrixProperties.AFFINE or MatrixProperties.TRANSLATION
 ) // @formatter:on
 
@@ -94,15 +96,15 @@ fun Matrix4x4f.Companion.translation( // @formatter:off
  * @param scaleZ The scale factor on the Z axis.
  * @return A new scale [Matrix4x4f].
  */
-fun Matrix4x4f.Companion.scale( // @formatter:off
-    scaleX: Float = 1F,
-    scaleY: Float = 1F,
-    scaleZ: Float = 1F
-): Matrix4x4f = Matrix4x4f(
-    scaleX, 0F,     0F,     0F,
-    0F,     scaleY, 0F,     0F,
-    0F,     0F,     scaleZ, 0F,
-    0F,     0F,     0F,     1F,
+fun Companion.scale( // @formatter:off
+    scaleX: Double = 1.0,
+    scaleY: Double = 1.0,
+    scaleZ: Double = 1.0
+): Matrix4x4d = Matrix4x4d(
+    scaleX, 0.0,    0.0,    0.0,
+    0.0,    scaleY, 0.0,    0.0,
+    0.0,    0.0,    scaleZ, 0.0,
+    0.0,    0.0,    0.0,    1.0,
     MatrixProperties.AFFINE or MatrixProperties.LINEAR
 ) // @formatter:on
 
@@ -117,17 +119,17 @@ fun Matrix4x4f.Companion.scale( // @formatter:off
  * @param zy The skew factor of the Z axis towards the Y axis.
  * @return A new skew [Matrix4x4f].
  */
-fun Matrix4x4f.Companion.skew( // @formatter:off
-    xy: Float = 0F,
-    xz: Float = 0F,
-    yx: Float = 0F,
-    yz: Float = 0F,
-    zx: Float = 0F,
-    zy: Float = 0F
-): Matrix4x4f = Matrix4x4f(
-    1F, xy, xz, 0F,
-    yx, 1F, yz, 0F,
-    zx, zy, 1F, 0F,
-    0F, 0F, 0F, 1F,
+fun Companion.skew( // @formatter:off
+    xy: Double = 0.0,
+    xz: Double = 0.0,
+    yx: Double = 0.0,
+    yz: Double = 0.0,
+    zx: Double = 0.0,
+    zy: Double = 0.0
+): Matrix4x4d = Matrix4x4d(
+    1.0, xy,  xz,  0.0,
+    yx,  1.0, yz,  0.0,
+    zx,  zy,  1.0, 0.0,
+    0.0, 0.0, 0.0, 1.0,
     MatrixProperties.AFFINE or MatrixProperties.LINEAR
 ) // @formatter:on

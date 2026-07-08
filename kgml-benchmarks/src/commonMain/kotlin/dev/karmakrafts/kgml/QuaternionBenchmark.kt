@@ -16,7 +16,7 @@
 
 package dev.karmakrafts.kgml
 
-import dev.karmakrafts.kgml.transform.Quaternion
+import dev.karmakrafts.kgml.transform.Quaternion4f
 import kotlinx.benchmark.Benchmark
 import kotlinx.benchmark.Scope
 import kotlinx.benchmark.State
@@ -24,50 +24,50 @@ import kotlin.jvm.JvmName
 
 @State(Scope.Benchmark)
 open class QuaternionBenchmark {
-    val identity = Quaternion.identity
-    val left = Quaternion.fromAngles(30F, 45F, 60F)
-    val right = Quaternion.fromAngles(15F, 25F, 35F)
-    val closeRight = Quaternion.fromAngles(30.01F, 45.01F, 60.01F)
+    val identity = Quaternion4f.identity
+    val left = Quaternion4f.fromAngles(30F, 45F, 60F)
+    val right = Quaternion4f.fromAngles(15F, 25F, 35F)
+    val closeRight = Quaternion4f.fromAngles(30.01F, 45.01F, 60.01F)
 
     @JvmName("fromAngles")
     @Benchmark
-    fun fromAngles(): Quaternion {
-        return Quaternion.fromAngles(30F, 45F, 60F)
+    fun fromAngles(): Quaternion4f {
+        return Quaternion4f.fromAngles(30F, 45F, 60F)
     }
 
     @JvmName("fromAnglesRad")
     @Benchmark
-    fun fromAnglesRad(): Quaternion {
-        return Quaternion.fromAnglesRad(0.5235988F, 0.7853982F, 1.0471976F)
+    fun fromAnglesRad(): Quaternion4f {
+        return Quaternion4f.fromAnglesRad(0.5235988F, 0.7853982F, 1.0471976F)
     }
 
     @JvmName("multiply")
     @Benchmark
-    fun multiply(): Quaternion {
+    fun multiply(): Quaternion4f {
         return left * right
     }
 
     @JvmName("multiplyIdentity")
     @Benchmark
-    fun multiplyIdentity(): Quaternion {
+    fun multiplyIdentity(): Quaternion4f {
         return left * identity
     }
 
     @JvmName("multiplyScalar")
     @Benchmark
-    fun multiplyScalar(): Quaternion {
+    fun multiplyScalar(): Quaternion4f {
         return left * 0.5F
     }
 
     @JvmName("slerp")
     @Benchmark
-    fun slerp(): Quaternion {
+    fun slerp(): Quaternion4f {
         return left.slerp(right, 0.35F)
     }
 
     @JvmName("slerpClose")
     @Benchmark
-    fun slerpClose(): Quaternion {
+    fun slerpClose(): Quaternion4f {
         return left.slerp(closeRight, 0.35F)
     }
 
@@ -79,9 +79,9 @@ open class QuaternionBenchmark {
 
     @JvmName("toRotationMatrix3x3")
     @Benchmark
-    fun toRotationMatrix3x3() = left.toRotationMatrix3x3()
+    fun toRotationMatrix3x3() = left.toRotationMatrix3x3f()
 
     @JvmName("toRotationMatrix4x4")
     @Benchmark
-    fun toRotationMatrix4x4() = left.toRotationMatrix4x4()
+    fun toRotationMatrix4x4() = left.toRotationMatrix4x4f()
 }

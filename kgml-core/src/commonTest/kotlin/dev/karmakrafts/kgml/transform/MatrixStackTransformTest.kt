@@ -58,7 +58,7 @@ class MatrixStackTransformTest {
     @Test
     fun `MatrixStack rotate quaternion should work`() {
         val stack = createStack()
-        val q = Quaternion.fromAngles(0f, 0f, 90f)
+        val q = Quaternion4f.fromAngles(0f, 0f, 90f)
         stack.rotate(q)
         assertMatrix4x4Equals(Matrix4x4f.rotation(angleZ = 90f), stack.current())
     }

@@ -84,7 +84,7 @@ class Matrix3x3TransformTest {
 
     @Test
     fun `Matrix3x3 rotation from quaternion should work`() {
-        val q = Quaternion.fromAngles(90f, 0f, 0f)
+        val q = Quaternion4f.fromAngles(90f, 0f, 0f)
         val m = Matrix3x3f.identity * q
         assertMatrix3x3Equals(Matrix3x3f.rotation(angleX = 90f), m)
     }

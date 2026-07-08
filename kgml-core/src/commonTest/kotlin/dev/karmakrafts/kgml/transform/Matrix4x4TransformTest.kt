@@ -82,7 +82,7 @@ class Matrix4x4TransformTest {
 
     @Test
     fun `Matrix4x4 rotation from quaternion should work`() {
-        val q = Quaternion.fromAngles(0f, 90f, 0f)
+        val q = Quaternion4f.fromAngles(0f, 90f, 0f)
         val m = Matrix4x4f.identity * q
         assertMatrix4x4Equals(Matrix4x4f.rotation(angleY = 90f), m)
     }
