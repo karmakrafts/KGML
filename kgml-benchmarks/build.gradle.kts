@@ -86,27 +86,27 @@ benchmark {
             defaultConfig()
         }
         register("matrix") {
-            include("dev.karmakrafts.kgml.*Matrix*")
+            include("dev.karmakrafts.kgml.*Matrix.*Benchmark")
             defaultConfig()
         }
         register("matrix4x4f") {
-            include("dev.karmakrafts.kgml.*Matrix4x4f*")
+            include("dev.karmakrafts.kgml.*Matrix4x4f.*Benchmark")
             defaultConfig()
         }
         register("matrix3x3f") {
-            include("dev.karmakrafts.kgml.*Matrix3x3f*")
+            include("dev.karmakrafts.kgml.*Matrix3x3f.*Benchmark")
             defaultConfig()
         }
         register("matrix2x2f") {
-            include("dev.karmakrafts.kgml.*Matrix2x2f*")
+            include("dev.karmakrafts.kgml.*Matrix2x2f.*Benchmark")
             defaultConfig()
         }
         register("vector") {
-            include("dev.karmakrafts.kgml.*Vector*")
+            include("dev.karmakrafts.kgml.*Vector.*Benchmark")
             defaultConfig()
         }
         register("quaternion") {
-            include("dev.karmakrafts.kgml.*Quaternion*")
+            include("dev.karmakrafts.kgml.*Quaternion.*Benchmark")
             defaultConfig()
         }
     }
