@@ -10,12 +10,12 @@ kotlinBrowser = "2026.7.1" # https://github.com/JetBrains/kotlin-wrappers/releas
 dokka = "2.2.0" # https://github.com/Kotlin/dokka/releases
 karmaConventions = "1.18.3" # https://github.com/karmakrafts/karma-conventions/tags
 
-# kompress-io
+# kgml-io
 
 kotlinxIo = "0.9.1" # https://github.com/Kotlin/kotlinx-io/releases
 karbide = "1.10.6" # https://github.com/karmakrafts/Karbide/releases
 
-# kompress-benchmarks
+# kgml-benchmarks
 
 kotlinxBenchmark = "0.4.17" # https://github.com/Kotlin/kotlinx-benchmark/releases
 jmh = "1.37" # https://github.com/openjdk/jmh/tags
@@ -27,13 +27,13 @@ kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotl
 kotlin-test-junit = { module = "org.jetbrains.kotlin:kotlin-test-junit", version.ref = "kotlin" }
 kotlin-wrappers-browser = { module = "org.jetbrains.kotlin-wrappers:kotlin-browser", version.ref = "kotlinBrowser" }
 
-# kompress-io
+# kgml-io
 
 kotlinx-io-core = { module = "org.jetbrains.kotlinx:kotlinx-io-core", version.ref = "kotlinxIo" }
 kotlinx-io-bytestring = { module = "org.jetbrains.kotlinx:kotlinx-io-bytestring", version.ref = "kotlinxIo" }
 karbide-core = { module = "dev.karmakrafts.karbide:karbide-core", version.ref = "karbide" }
 
-# kompress-benchmarks
+# kgml-benchmarks
 
 kotlinx-benchmark-runtime = { module = "org.jetbrains.kotlinx:kotlinx-benchmark-runtime", version.ref = "kotlinxBenchmark" }
 jmh-core = { module = "org.openjdk.jmh:jmh-core", version.ref = "jmh" }
@@ -46,6 +46,6 @@ kotlin-multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref 
 dokka = { id = "org.jetbrains.dokka", version.ref = "dokka" }
 karmaConventions = { id = "dev.karmakrafts.conventions.karma-conventions", version.ref = "karmaConventions" }
 
-# kompress-benchmarks
+# kgml-benchmarks
 
 kotlinx-benchmark = { id = "org.jetbrains.kotlinx.benchmark", version.ref = "kotlinxBenchmark" }
