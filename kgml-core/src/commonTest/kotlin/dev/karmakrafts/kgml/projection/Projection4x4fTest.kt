@@ -21,7 +21,7 @@ import kotlin.math.PI
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
-class ProjectionTest {
+class Projection4x4fTest {
     @Test
     fun `orthographic should return orthographic projection matrix`() {
         val matrix = Matrix4x4f.orthographic(-1F, 1F, -1F, 1F, 1F, 10F)

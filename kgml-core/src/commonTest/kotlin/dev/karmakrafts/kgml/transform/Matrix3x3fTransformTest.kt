@@ -21,7 +21,7 @@ import kotlin.math.PI
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
-class Matrix3x3TransformTest {
+class Matrix3x3fTransformTest {
     @Test
     fun `Matrix3x3 rotation should work`() {
         val rad = (PI / 2).toFloat()

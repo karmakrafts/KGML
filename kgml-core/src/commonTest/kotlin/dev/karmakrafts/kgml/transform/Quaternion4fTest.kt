@@ -20,7 +20,7 @@ import dev.karmakrafts.kgml.vector.Vector4f
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
-class QuaternionTest {
+class Quaternion4fTest {
     @Test
     fun `constructor should initialize components`() {
         val q = Quaternion4f(1F, 2F, 3F, 4F)

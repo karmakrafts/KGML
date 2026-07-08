@@ -159,8 +159,7 @@ class Matrix3x3fTest {
 
         assertEquals(Matrix3x3f.translation(7F, 10F), result)
         assertEquals(
-            MatrixProperties.AFFINE or MatrixProperties.HOMOGENEOUS or MatrixProperties.TRANSLATION,
-            result.properties
+            MatrixProperties.AFFINE or MatrixProperties.HOMOGENEOUS or MatrixProperties.TRANSLATION, result.properties
         )
     }
 
@@ -187,8 +186,7 @@ class Matrix3x3fTest {
 
         assertMatrixEquals(Matrix3x3f(0F, -2F, 0F, 3F, 0F, 0F, 0F, 0F, 1F), result)
         assertEquals(
-            MatrixProperties.AFFINE or MatrixProperties.HOMOGENEOUS or MatrixProperties.LINEAR,
-            result.properties
+            MatrixProperties.AFFINE or MatrixProperties.HOMOGENEOUS or MatrixProperties.LINEAR, result.properties
         )
     }
 

@@ -22,7 +22,7 @@ import kotlin.math.PI
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
-class Matrix4x4TransformTest {
+class Matrix4x4fTransformTest {
     @Test
     fun `Matrix4x4 rotation should work`() {
         val rad = (PI / 2).toFloat()
