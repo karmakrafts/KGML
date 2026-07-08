@@ -46,7 +46,6 @@ configureDokka {
     withKotlin()
     withKotlinxIo()
     dependsOn(projects.kgmlCore)
-    dependsOn("https://docs.karmakrafts.dev/karbide-core")
 }
 
 kotlin {
