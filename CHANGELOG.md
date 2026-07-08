@@ -2,21 +2,25 @@
 
 ### Added
 
-- 64-bit IEEE-754 vectors and matrices
-- Positional destructuring operators for `Quaternion`
-- Benchmarks for `Quaternion`
-- More granular tags for `MatrixProperties`
+- Positional destructuring operators for `Quaternion4f`
+- Benchmarks for `Quaternion4f`
+- **More granular tags for `MatrixProperties`**
 - `kgml-io` module for `kotlinx.io` extensions to read and write KGML types
-- Dedicated `toRadians` functions for `Float` and `Double`
-- Dedicated `toDegrees` functions for `Float` and `Double`
+- **Dedicated `toRadians` functions for `Float` and `Double`**
+- **Dedicated `toDegrees` functions for `Float` and `Double`**
+- 64-bit IEEE-754 vector types `Vector2d`, `Vector3d` and `Vector4d`
+- 64-bit IEEE-754 matrix types `Matrix2x2d`, `Matrix3x3d` and `Matrix4x4d`
+- 64-bit IEEE-754 transform types `Quaternion4d`, `Rotation3d`, `Scale2d`, `Scale3d`, `Translation2d` and `Translation3d`
 
 ### Changed
 
 - Updated to Gradle 9.6.1
 - Updated to Karma Conventions 1.18.3
 - Updated to Kotlin Wrappers 2026.7.1
+- Updated to NMCP 1.6.1
+- **Renamed `Quaternion` to `Quaternion4f`**
 - Performance improvements for all types of matrix multiplications
-- Performance improvements for `Quaternion` multiplications
+- Performance improvements for `Quaternion4f` multiplications
 - Extended benchmarks and tests for all matrix types
 
 ### Removed

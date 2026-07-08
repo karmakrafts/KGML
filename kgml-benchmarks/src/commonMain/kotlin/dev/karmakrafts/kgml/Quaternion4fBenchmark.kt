@@ -23,7 +23,7 @@ import kotlinx.benchmark.State
 import kotlin.jvm.JvmName
 
 @State(Scope.Benchmark)
-open class QuaternionBenchmark {
+open class Quaternion4fBenchmark {
     val identity = Quaternion4f.identity
     val left = Quaternion4f.fromAngles(30F, 45F, 60F)
     val right = Quaternion4f.fromAngles(15F, 25F, 35F)
