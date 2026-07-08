@@ -74,3 +74,32 @@ internal fun bytesOf(vararg values: Int, littleEndian: Boolean = false): ByteArr
     }
     return bytes
 }
+
+internal fun bytesOf(vararg values: Double, littleEndian: Boolean = false): ByteArray {
+    val bytes = ByteArray(values.size * Double.SIZE_BYTES)
+    var index = 0
+    for (value in values) {
+        val bits = value.toBits()
+        if (littleEndian) {
+            bytes[index++] = bits.toByte()
+            bytes[index++] = (bits ushr 8).toByte()
+            bytes[index++] = (bits ushr 16).toByte()
+            bytes[index++] = (bits ushr 24).toByte()
+            bytes[index++] = (bits ushr 32).toByte()
+            bytes[index++] = (bits ushr 40).toByte()
+            bytes[index++] = (bits ushr 48).toByte()
+            bytes[index++] = (bits ushr 56).toByte()
+        }
+        else {
+            bytes[index++] = (bits ushr 56).toByte()
+            bytes[index++] = (bits ushr 48).toByte()
+            bytes[index++] = (bits ushr 40).toByte()
+            bytes[index++] = (bits ushr 32).toByte()
+            bytes[index++] = (bits ushr 24).toByte()
+            bytes[index++] = (bits ushr 16).toByte()
+            bytes[index++] = (bits ushr 8).toByte()
+            bytes[index++] = bits.toByte()
+        }
+    }
+    return bytes
+}
