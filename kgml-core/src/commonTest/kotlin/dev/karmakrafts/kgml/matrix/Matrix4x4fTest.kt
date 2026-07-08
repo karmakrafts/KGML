@@ -179,6 +179,50 @@ class Matrix4x4fTest {
     }
 
     @Test
+    fun `times operator with affine matrices should transform right translation column`() {
+        val m1 = Matrix4x4f(
+            1F, 2F, 3F, 4F, 5F, 6F, 7F, 8F, 9F, 10F, 11F, 12F, 0F, 0F, 0F, 1F, MatrixProperties.AFFINE
+        )
+        val m2 = Matrix4x4f(
+            2F, 0F, 0F, 3F, 0F, 3F, 0F, 4F, 0F, 0F, 4F, 5F, 0F, 0F, 0F, 1F, MatrixProperties.AFFINE
+        )
+        assertEquals(
+            Matrix4x4f(
+                2F, 6F, 12F, 30F, 10F, 18F, 28F, 82F, 18F, 30F, 44F, 134F, 0F, 0F, 0F, 1F, MatrixProperties.AFFINE
+            ), m1 * m2
+        )
+    }
+
+    @Test
+    fun `times operator with perspective and affine matrices should match generic multiplication`() {
+        val perspective = Matrix4x4f(
+            1.5F,
+            0F,
+            0F,
+            0F,
+            0F,
+            2.5F,
+            0F,
+            0F,
+            0F,
+            0F,
+            -1.2F,
+            -0.2F,
+            0F,
+            0F,
+            -1F,
+            0F,
+            MatrixProperties.PERSPECTIVE or MatrixProperties.TRANSLATION
+        )
+        val affine = Matrix4x4f(
+            1F, 0F, 0F, 2F, 0F, 0.5F, -0.75F, 3F, 0F, 0.75F, 0.5F, 4F, 0F, 0F, 0F, 1F, MatrixProperties.AFFINE
+        )
+        val genericPerspective = perspective.copy(properties = MatrixProperties.NONE)
+        val genericAffine = affine.copy(properties = MatrixProperties.NONE)
+        assertMatrixEquals(genericPerspective * genericAffine, perspective * affine)
+    }
+
+    @Test
     fun `times operator with vector should multiply matrix by vector`() {
         val matrix = Matrix4x4f(
             1F, 2F, 3F, 4F, 5F, 6F, 7F, 8F, 9F, 10F, 11F, 12F, 13F, 14F, 15F, 16F

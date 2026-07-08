@@ -93,6 +93,27 @@ class QuaternionTest {
     }
 
     @Test
+    fun `slerp should use shortest path for negated quaternion`() {
+        val q1 = Quaternion.fromAngles(0F, 0F, 0F)
+        val q2 = Quaternion.fromAngles(90F, 0F, 0F)
+        val q2Negated = Quaternion(-q2.x, -q2.y, -q2.z, -q2.w)
+
+        assertQuaternionEquals(Quaternion.fromAngles(45F, 0F, 0F), q1.slerp(q2Negated, 0.5F))
+    }
+
+    @Test
+    fun `slerp should normalize close quaternion interpolation`() {
+        val q1 = Quaternion.fromAngles(30F, 45F, 60F)
+        val q2 = Quaternion.fromAngles(30.01F, 45.01F, 60.01F)
+        val result = q1.slerp(q2, 0.5F)
+        val lengthSq = result.x * result.x + result.y * result.y + result.z * result.z + result.w * result.w
+
+        assertEquals(1F, lengthSq, 1E-5F)
+        assertQuaternionEquals(q1, q1.slerp(q2, 0F))
+        assertQuaternionEquals(q2, q1.slerp(q2, 1F))
+    }
+
+    @Test
     fun `toRotationMatrix should return correct matrix`() {
         val q = Quaternion.fromAngles(90F, 0F, 0F)
         val m3 = q.toRotationMatrix3x3()

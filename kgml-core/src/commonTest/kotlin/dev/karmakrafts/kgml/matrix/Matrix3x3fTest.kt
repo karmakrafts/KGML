@@ -17,6 +17,7 @@
 package dev.karmakrafts.kgml.matrix
 
 import dev.karmakrafts.kgml.transform.rotationRad
+import dev.karmakrafts.kgml.transform.scale
 import dev.karmakrafts.kgml.transform.translation
 import dev.karmakrafts.kgml.vector.Vector3f
 import kotlin.math.PI
@@ -150,6 +151,48 @@ class Matrix3x3fTest {
     }
 
     @Test
+    fun `times operator with affine translations should preserve translation property`() {
+        val left = Matrix3x3f.translation(2F, 3F)
+        val right = Matrix3x3f.translation(5F, 7F)
+
+        val result = left * right
+
+        assertEquals(Matrix3x3f.translation(7F, 10F), result)
+        assertEquals(
+            MatrixProperties.AFFINE or MatrixProperties.HOMOGENEOUS or MatrixProperties.TRANSLATION,
+            result.properties
+        )
+    }
+
+    @Test
+    fun `times operator with affine translation and linear matrices should match generic multiplication`() {
+        val translation = Matrix3x3f.translation(2F, 3F)
+        val scale = Matrix3x3f.scale(4F, 5F)
+
+        val translationScale = translation * scale
+        assertMatrixEquals(Matrix3x3f(4F, 0F, 2F, 0F, 5F, 3F, 0F, 0F, 1F), translationScale)
+        assertEquals(MatrixProperties.AFFINE or MatrixProperties.HOMOGENEOUS, translationScale.properties)
+
+        val scaleTranslation = scale * translation
+        assertMatrixEquals(Matrix3x3f(4F, 0F, 8F, 0F, 5F, 15F, 0F, 0F, 1F), scaleTranslation)
+        assertEquals(MatrixProperties.AFFINE or MatrixProperties.HOMOGENEOUS, scaleTranslation.properties)
+    }
+
+    @Test
+    fun `times operator with linear matrices should preserve linear property`() {
+        val left = Matrix3x3f.scale(2F, 3F)
+        val right = Matrix3x3f.rotationRad(angleZ = PI.toFloat() / 2F)
+
+        val result = left * right
+
+        assertMatrixEquals(Matrix3x3f(0F, -2F, 0F, 3F, 0F, 0F, 0F, 0F, 1F), result)
+        assertEquals(
+            MatrixProperties.AFFINE or MatrixProperties.HOMOGENEOUS or MatrixProperties.LINEAR,
+            result.properties
+        )
+    }
+
+    @Test
     fun `times operator with vector should multiply matrix by vector`() {
         val matrix = Matrix3x3f(1F, 2F, 3F, 4F, 5F, 6F, 7F, 8F, 9F)
         val vector = Vector3f(10F, 11F, 12F)
@@ -223,6 +266,25 @@ class Matrix3x3fTest {
     fun `translation should return translation matrix`() {
         val matrix = Matrix3x3f.translation(2F, 3F)
         assertEquals(Matrix3x3f(1F, 0F, 2F, 0F, 1F, 3F, 0F, 0F, 1F), matrix)
+    }
+
+    @Test
+    fun `scale should return linear matrix`() {
+        val matrix = Matrix3x3f.scale(2F, 3F)
+        assertEquals(
+            Matrix3x3f(
+                2F,
+                0F,
+                0F,
+                0F,
+                3F,
+                0F,
+                0F,
+                0F,
+                1F,
+                MatrixProperties.AFFINE or MatrixProperties.HOMOGENEOUS or MatrixProperties.LINEAR
+            ), matrix
+        )
     }
 
     @Test

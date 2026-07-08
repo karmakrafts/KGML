@@ -237,28 +237,142 @@ data class Matrix3x3f(
      * @param other The matrix to multiply with.
      * @return The result of the multiplication.
      */
-    operator fun times(other: Matrix3x3f): Matrix3x3f = when {
-        properties.isIdentity -> other
-        other.properties.isIdentity -> this
-        else -> multiplyGeneric(other)
+    operator fun times(other: Matrix3x3f): Matrix3x3f {
+        val otherProps = other.properties
+        return when {
+            properties.isIdentity -> other
+            otherProps.isIdentity -> this
+
+            properties.isAffine && properties.isHomogeneous -> when {
+                otherProps.isAffine && otherProps.isHomogeneous && otherProps.isTranslation -> multiplyAffineTranslationR(
+                    other
+                )
+
+                otherProps.isAffine && otherProps.isHomogeneous && otherProps.isLinear -> multiplyAffineLinearR(other)
+                otherProps.isAffine && otherProps.isHomogeneous -> multiplyAffineR(other)
+                else -> multiplyAffineL(other)
+            }
+
+            otherProps.isAffine && otherProps.isHomogeneous && otherProps.isLinear -> multiplyGenericAffineLinearR(other)
+            otherProps.isAffine && otherProps.isHomogeneous -> multiplyGenericAffineR(other)
+            else -> multiplyGeneric(other)
+        }
+    }
+
+    private inline fun multiplyAffineProperties(otherProperties: MatrixProperties): MatrixProperties {
+        var result = MatrixProperties.AFFINE or MatrixProperties.HOMOGENEOUS
+        if (properties.isLinear && otherProperties.isLinear) result = result or MatrixProperties.LINEAR
+        if (properties.isTranslation && otherProperties.isTranslation) result = result or MatrixProperties.TRANSLATION
+        return result
+    }
+
+    private fun multiplyAffineTranslationR(other: Matrix3x3f): Matrix3x3f {
+        return Matrix3x3f(
+            m00,
+            m01,
+            fma(m00, other.m02, fma(m01, other.m12, m02)),
+            m10,
+            m11,
+            fma(m10, other.m02, fma(m11, other.m12, m12)),
+            0F,
+            0F,
+            1F,
+            if (properties.isTranslation) {
+                MatrixProperties.AFFINE or MatrixProperties.HOMOGENEOUS or MatrixProperties.TRANSLATION
+            }
+            else MatrixProperties.AFFINE or MatrixProperties.HOMOGENEOUS
+        )
+    }
+
+    private fun multiplyAffineLinearR(other: Matrix3x3f): Matrix3x3f {
+        return Matrix3x3f(
+            fma(m00, other.m00, m01 * other.m10),
+            fma(m00, other.m01, m01 * other.m11),
+            m02,
+            fma(m10, other.m00, m11 * other.m10),
+            fma(m10, other.m01, m11 * other.m11),
+            m12,
+            0F,
+            0F,
+            1F,
+            if (properties.isLinear) {
+                MatrixProperties.AFFINE or MatrixProperties.HOMOGENEOUS or MatrixProperties.LINEAR
+            }
+            else MatrixProperties.AFFINE or MatrixProperties.HOMOGENEOUS
+        )
+    }
+
+    private fun multiplyAffineR(other: Matrix3x3f): Matrix3x3f {
+        return Matrix3x3f(
+            fma(m00, other.m00, m01 * other.m10),
+            fma(m00, other.m01, m01 * other.m11),
+            fma(m00, other.m02, fma(m01, other.m12, m02)),
+            fma(m10, other.m00, m11 * other.m10),
+            fma(m10, other.m01, m11 * other.m11),
+            fma(m10, other.m02, fma(m11, other.m12, m12)),
+            0F,
+            0F,
+            1F,
+            multiplyAffineProperties(other.properties)
+        )
+    }
+
+    private fun multiplyAffineL(other: Matrix3x3f): Matrix3x3f {
+        return Matrix3x3f(
+            fma(m00, other.m00, fma(m01, other.m10, m02 * other.m20)),
+            fma(m00, other.m01, fma(m01, other.m11, m02 * other.m21)),
+            fma(m00, other.m02, fma(m01, other.m12, m02 * other.m22)),
+            fma(m10, other.m00, fma(m11, other.m10, m12 * other.m20)),
+            fma(m10, other.m01, fma(m11, other.m11, m12 * other.m21)),
+            fma(m10, other.m02, fma(m11, other.m12, m12 * other.m22)),
+            other.m20,
+            other.m21,
+            other.m22,
+            other.properties
+        )
+    }
+
+    private fun multiplyGenericAffineLinearR(other: Matrix3x3f): Matrix3x3f {
+        return Matrix3x3f(
+            fma(m00, other.m00, m01 * other.m10),
+            fma(m00, other.m01, m01 * other.m11),
+            m02,
+            fma(m10, other.m00, m11 * other.m10),
+            fma(m10, other.m01, m11 * other.m11),
+            m12,
+            fma(m20, other.m00, m21 * other.m10),
+            fma(m20, other.m01, m21 * other.m11),
+            m22,
+            properties
+        )
+    }
+
+    private fun multiplyGenericAffineR(other: Matrix3x3f): Matrix3x3f {
+        return Matrix3x3f(
+            fma(m00, other.m00, m01 * other.m10),
+            fma(m00, other.m01, m01 * other.m11),
+            fma(m00, other.m02, fma(m01, other.m12, m02)),
+            fma(m10, other.m00, m11 * other.m10),
+            fma(m10, other.m01, m11 * other.m11),
+            fma(m10, other.m02, fma(m11, other.m12, m12)),
+            fma(m20, other.m00, m21 * other.m10),
+            fma(m20, other.m01, m21 * other.m11),
+            fma(m20, other.m02, fma(m21, other.m12, m22)),
+            properties
+        )
     }
 
     private fun multiplyGeneric(other: Matrix3x3f): Matrix3x3f {
-        val ( // @formatter:off
-            o00, o01, o02,
-            o10, o11, o12,
-            o20, o21, o22
-        ) = other // @formatter:on
         return Matrix3x3f(
-            fma(m00, o00, fma(m01, o10, m02 * o20)),
-            fma(m00, o01, fma(m01, o11, m02 * o21)),
-            fma(m00, o02, fma(m01, o12, m02 * o22)),
-            fma(m10, o00, fma(m11, o10, m12 * o20)),
-            fma(m10, o01, fma(m11, o11, m12 * o21)),
-            fma(m10, o02, fma(m11, o12, m12 * o22)),
-            fma(m20, o00, fma(m21, o10, m22 * o20)),
-            fma(m20, o01, fma(m21, o11, m22 * o21)),
-            fma(m20, o02, fma(m21, o12, m22 * o22)),
+            fma(m00, other.m00, fma(m01, other.m10, m02 * other.m20)),
+            fma(m00, other.m01, fma(m01, other.m11, m02 * other.m21)),
+            fma(m00, other.m02, fma(m01, other.m12, m02 * other.m22)),
+            fma(m10, other.m00, fma(m11, other.m10, m12 * other.m20)),
+            fma(m10, other.m01, fma(m11, other.m11, m12 * other.m21)),
+            fma(m10, other.m02, fma(m11, other.m12, m12 * other.m22)),
+            fma(m20, other.m00, fma(m21, other.m10, m22 * other.m20)),
+            fma(m20, other.m01, fma(m21, other.m11, m22 * other.m21)),
+            fma(m20, other.m02, fma(m21, other.m12, m22 * other.m22)),
             properties or other.properties
         )
     }

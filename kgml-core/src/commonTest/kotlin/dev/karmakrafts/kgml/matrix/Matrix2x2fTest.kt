@@ -25,7 +25,9 @@ import kotlin.test.Test
 import kotlin.test.assertContentEquals
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
+import kotlin.test.assertFalse
 import kotlin.test.assertSame
+import kotlin.test.assertTrue
 
 class Matrix2x2fTest {
     @Test
@@ -146,6 +148,35 @@ class Matrix2x2fTest {
     }
 
     @Test
+    fun `times operator with diagonal matrices should multiply scales`() {
+        val result = Matrix2x2f.scale(2F, 3F) * Matrix2x2f.scale(5F, 7F)
+        assertEquals(Matrix2x2f(10F, 0F, 0F, 21F), result)
+        assertTrue(result.properties.isAffine)
+        assertTrue(result.properties.isLinear)
+        assertTrue(result.properties.isDiagonal)
+    }
+
+    @Test
+    fun `times operator with diagonal operand should preserve linear result only`() {
+        val generic = Matrix2x2f(1F, 2F, 3F, 4F, MatrixProperties.AFFINE or MatrixProperties.LINEAR)
+        val result = generic * Matrix2x2f.scale(5F, 7F)
+        assertEquals(Matrix2x2f(5F, 14F, 15F, 28F), result)
+        assertTrue(result.properties.isAffine)
+        assertTrue(result.properties.isLinear)
+        assertFalse(result.properties.isDiagonal)
+        assertFalse(result.properties.isRotation)
+    }
+
+    @Test
+    fun `times operator with rotation matrices should preserve rotation`() {
+        val result = Matrix2x2f.rotation(30F) * Matrix2x2f.rotation(60F)
+        assertMatrixEquals(Matrix2x2f.rotation(90F), result)
+        assertTrue(result.properties.isAffine)
+        assertTrue(result.properties.isLinear)
+        assertTrue(result.properties.isRotation)
+    }
+
+    @Test
     fun `times operator with vector should multiply matrix by vector`() {
         val matrix = Matrix2x2f(1F, 2F, 3F, 4F)
         val vector = Vector2f(5F, 6F)
@@ -188,6 +219,7 @@ class Matrix2x2fTest {
         // [0 -1]
         // [1  0]
         assertMatrixEquals(Matrix2x2f(0F, -1F, 1F, 0F), matrix)
+        assertTrue(matrix.properties.isRotation)
     }
 
     @Test
@@ -200,6 +232,7 @@ class Matrix2x2fTest {
     fun `scale with x and y should return scale matrix`() {
         val matrix = Matrix2x2f.scale(2F, 3F)
         assertEquals(Matrix2x2f(2F, 0F, 0F, 3F), matrix)
+        assertTrue(matrix.properties.isDiagonal)
     }
 
     @Test

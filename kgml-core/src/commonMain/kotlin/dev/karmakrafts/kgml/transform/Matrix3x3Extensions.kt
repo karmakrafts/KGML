@@ -106,11 +106,14 @@ fun Matrix3x3f.Companion.rotationRad( // @formatter:off
     angleX: Float = 0F,
     angleY: Float = 0F,
     angleZ: Float = 0F
-): Matrix3x3f = ( // @formatter:off
-    Quaternion.fromAnglesRad(angleX, 0F, 0F) *
-    Quaternion.fromAnglesRad(0F, angleY, 0F) *
-    Quaternion.fromAnglesRad(0F, 0F, angleZ)
-).toRotationMatrix3x3() // @formatter:on
+): Matrix3x3f { // @formatter:on
+    val result = ( // @formatter:off
+        Quaternion.fromAnglesRad(angleX, 0F, 0F) *
+        Quaternion.fromAnglesRad(0F, angleY, 0F) *
+        Quaternion.fromAnglesRad(0F, 0F, angleZ)
+    ).toRotationMatrix3x3() // @formatter:on
+    return if (angleX == 0F && angleY == 0F) result.copy(properties = result.properties or MatrixProperties.HOMOGENEOUS) else result
+}
 
 /**
  * Creates a rotation matrix from the given Euler angles in degrees.
@@ -149,7 +152,7 @@ fun Matrix3x3f.Companion.translation(x: Float, y: Float): Matrix3x3f = Matrix3x3
     1F, 0F, x,
     0F, 1F, y,
     0F, 0F, 1F,
-    MatrixProperties.AFFINE or MatrixProperties.TRANSLATION
+    MatrixProperties.AFFINE or MatrixProperties.HOMOGENEOUS or MatrixProperties.TRANSLATION
 ) // @formatter:on
 
 /**
@@ -163,5 +166,5 @@ fun Matrix3x3f.Companion.scale(x: Float, y: Float): Matrix3x3f = Matrix3x3f( // 
     x,  0F, 0F,
     0F, y,  0F,
     0F, 0F, 1F,
-    MatrixProperties.AFFINE
+    MatrixProperties.AFFINE or MatrixProperties.HOMOGENEOUS or MatrixProperties.LINEAR
 ) // @formatter:on

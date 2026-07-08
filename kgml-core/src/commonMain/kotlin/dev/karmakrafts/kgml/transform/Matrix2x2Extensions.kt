@@ -31,7 +31,7 @@ import kotlin.math.sin
 fun Matrix2x2f.Companion.rotationRad(rad: Float): Matrix2x2f {
     val c = cos(rad)
     val s = sin(rad)
-    return Matrix2x2f(c, -s, s, c, MatrixProperties.AFFINE)
+    return Matrix2x2f(c, -s, s, c, MatrixProperties.AFFINE or MatrixProperties.LINEAR or MatrixProperties.ROTATION)
 }
 
 /**
@@ -53,7 +53,7 @@ inline fun Matrix2x2f.Companion.rotation(deg: Float): Matrix2x2f = rotationRad((
 fun Matrix2x2f.Companion.scale(scaleX: Float, scaleY: Float): Matrix2x2f = Matrix2x2f( // @formatter:off
     scaleX, 0F,
     0F, scaleY,
-    MatrixProperties.AFFINE
+    MatrixProperties.AFFINE or MatrixProperties.LINEAR or MatrixProperties.DIAGONAL
 ) // @formatter:on
 
 /**

@@ -56,6 +56,26 @@ value class MatrixProperties @PublishedApi internal constructor(
          * The matrix is a perspective matrix.
          */
         val PERSPECTIVE: MatrixProperties = MatrixProperties(0x8U)
+
+        /**
+         * The matrix is a linear matrix.
+         */
+        val LINEAR: MatrixProperties = MatrixProperties(0x10U)
+
+        /**
+         * The matrix is a homogeneous matrix.
+         */
+        val HOMOGENEOUS: MatrixProperties = MatrixProperties(0x20U)
+
+        /**
+         * The matrix is a diagonal matrix.
+         */
+        val DIAGONAL: MatrixProperties = MatrixProperties(0x40U)
+
+        /**
+         * The matrix is a rotation matrix.
+         */
+        val ROTATION: MatrixProperties = MatrixProperties(0x80U)
     }
 
     /**
@@ -77,6 +97,26 @@ value class MatrixProperties @PublishedApi internal constructor(
      * Whether the matrix is a perspective matrix.
      */
     inline val isPerspective: Boolean get() = PERSPECTIVE in this
+
+    /**
+     * Whether the matrix is a linear matrix.
+     */
+    inline val isLinear: Boolean get() = LINEAR in this
+
+    /**
+     * Whether the matrix is a homogeneous matrix.
+     */
+    inline val isHomogeneous: Boolean get() = HOMOGENEOUS in this
+
+    /**
+     * Whether the matrix is a diagonal matrix.
+     */
+    inline val isDiagonal: Boolean get() = DIAGONAL in this
+
+    /**
+     * Whether the matrix is a rotation matrix.
+     */
+    inline val isRotation: Boolean get() = ROTATION in this
 
     /**
      * Combines these properties with another set of properties.

@@ -175,7 +175,7 @@ fun Matrix4x4f.Companion.scale( // @formatter:off
     0F,     scaleY, 0F,     0F,
     0F,     0F,     scaleZ, 0F,
     0F,     0F,     0F,     1F,
-    MatrixProperties.AFFINE
+    MatrixProperties.AFFINE or MatrixProperties.LINEAR
 ) // @formatter:on
 
 /**
@@ -201,5 +201,5 @@ fun Matrix4x4f.Companion.skew( // @formatter:off
     yx, 1F, yz, 0F,
     zx, zy, 1F, 0F,
     0F, 0F, 0F, 1F,
-    MatrixProperties.AFFINE
+    MatrixProperties.AFFINE or MatrixProperties.LINEAR
 ) // @formatter:on

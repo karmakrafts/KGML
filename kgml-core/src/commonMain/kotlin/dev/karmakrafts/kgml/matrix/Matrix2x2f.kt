@@ -197,10 +197,67 @@ data class Matrix2x2f( // @formatter:off
      * @param other The matrix to multiply with.
      * @return The result of the multiplication.
      */
-    operator fun times(other: Matrix2x2f): Matrix2x2f = when {
-        properties.isIdentity -> other
-        other.properties.isIdentity -> this
-        else -> multiplyGeneric(other)
+    operator fun times(other: Matrix2x2f): Matrix2x2f {
+        val otherProps = other.properties
+        return when {
+            properties.isIdentity -> other
+            otherProps.isIdentity -> this
+
+            properties.isDiagonal && otherProps.isDiagonal -> multiplyDiagonalDiagonal(other)
+            properties.isDiagonal -> multiplyDiagonalL(other)
+            otherProps.isDiagonal -> multiplyDiagonalR(other)
+            properties.isRotation && otherProps.isRotation -> multiplyRotation(other)
+            else -> multiplyGeneric(other)
+        }
+    }
+
+    private inline fun multiplyLinearProperties(otherProperties: MatrixProperties): MatrixProperties {
+        var result = MatrixProperties.NONE
+        if (properties.isAffine && otherProperties.isAffine) result = result or MatrixProperties.AFFINE
+        if (properties.isLinear && otherProperties.isLinear) result = result or MatrixProperties.LINEAR
+        return result
+    }
+
+    private inline fun multiplyDiagonalProperties(otherProperties: MatrixProperties): MatrixProperties {
+        return multiplyLinearProperties(otherProperties) or MatrixProperties.DIAGONAL
+    }
+
+    private inline fun multiplyRotationProperties(otherProperties: MatrixProperties): MatrixProperties {
+        return multiplyLinearProperties(otherProperties) or MatrixProperties.ROTATION
+    }
+
+    private fun multiplyDiagonalL(other: Matrix2x2f): Matrix2x2f {
+        return Matrix2x2f(
+            m00 * other.m00,
+            m00 * other.m01,
+            m11 * other.m10,
+            m11 * other.m11,
+            multiplyLinearProperties(other.properties)
+        )
+    }
+
+    private fun multiplyDiagonalDiagonal(other: Matrix2x2f): Matrix2x2f {
+        return Matrix2x2f(
+            m00 * other.m00, 0F, 0F, m11 * other.m11, multiplyDiagonalProperties(other.properties)
+        )
+    }
+
+    private fun multiplyDiagonalR(other: Matrix2x2f): Matrix2x2f {
+        return Matrix2x2f(
+            m00 * other.m00,
+            m01 * other.m11,
+            m10 * other.m00,
+            m11 * other.m11,
+            multiplyLinearProperties(other.properties)
+        )
+    }
+
+    private fun multiplyRotation(other: Matrix2x2f): Matrix2x2f {
+        val cos = fma(m00, other.m00, m01 * other.m10)
+        val sin = fma(m10, other.m00, m00 * other.m10)
+        return Matrix2x2f(
+            cos, -sin, sin, cos, multiplyRotationProperties(other.properties)
+        )
     }
 
     private fun multiplyGeneric(other: Matrix2x2f): Matrix2x2f {
@@ -213,7 +270,7 @@ data class Matrix2x2f( // @formatter:off
             fma(m00, o01, m01 * o11),
             fma(m10, o00, m11 * o10),
             fma(m10, o01, m11 * o11),
-            properties or other.properties
+            multiplyLinearProperties(other.properties)
         )
     }
 

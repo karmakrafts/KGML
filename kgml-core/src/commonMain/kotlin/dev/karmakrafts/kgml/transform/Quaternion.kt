@@ -31,6 +31,7 @@ import kotlin.math.asin
 import kotlin.math.atan2
 import kotlin.math.cos
 import kotlin.math.sin
+import kotlin.math.sqrt
 import kotlin.math.withSign
 
 /**
@@ -183,12 +184,22 @@ value class Quaternion(@PublishedApi internal val value: Vector4f) : Transform<M
      * @param other The quaternion to multiply by.
      * @return The result of the multiplication.
      */
-    operator fun times(other: Quaternion): Quaternion = Quaternion(
-        fma(w, other.x, fma(x, other.w, y * other.z)) - z * other.y,
-        fma(w, other.y, fma(y, other.w, z * other.x)) - x * other.z,
-        fma(w, other.z, fma(z, other.w, x * other.y)) - y * other.x,
-        w * other.w - x * other.x - y * other.y - z * other.z
-    )
+    operator fun times(other: Quaternion): Quaternion {
+        val ax = x
+        val ay = y
+        val az = z
+        val aw = w
+        val bx = other.x
+        val by = other.y
+        val bz = other.z
+        val bw = other.w
+        return Quaternion(
+            fma(aw, bx, fma(ax, bw, ay * bz)) - az * by,
+            fma(aw, by, fma(ay, bw, az * bx)) - ax * bz,
+            fma(aw, bz, fma(az, bw, ax * by)) - ay * bx,
+            aw * bw - ax * bx - ay * by - az * bz
+        )
+    }
 
     /**
      * Multiplies this quaternion by the given scalar.
@@ -206,17 +217,32 @@ value class Quaternion(@PublishedApi internal val value: Vector4f) : Transform<M
      * @return The interpolated quaternion.
      */
     fun slerp(other: Quaternion, factor: Float): Quaternion {
-        var rhs = other.value
-        var dot = value dot rhs
+        val ax = x
+        val ay = y
+        val az = z
+        val aw = w
+        var bx = other.x
+        var by = other.y
+        var bz = other.z
+        var bw = other.w
+        var dot = fma(ax, bx, fma(ay, by, fma(az, bz, aw * bw)))
         // Ensure we take the shortest path
         if (dot < 0F) {
-            rhs = rhs * -1F
+            bx = -bx
+            by = -by
+            bz = -bz
+            bw = -bw
             dot = -dot
         }
         // If the quaternions are very close already, we use regular lerping
         if (dot > 0.9995F) {
-            val result = value.fma(Vector4f(1F - factor), rhs * factor)
-            return Quaternion(result.normalized())
+            val invFactor = 1F - factor
+            val rx = fma(ax, invFactor, bx * factor)
+            val ry = fma(ay, invFactor, by * factor)
+            val rz = fma(az, invFactor, bz * factor)
+            val rw = fma(aw, invFactor, bw * factor)
+            val invLength = 1F / sqrt(fma(rx, rx, fma(ry, ry, fma(rz, rz, rw * rw))))
+            return Quaternion(rx * invLength, ry * invLength, rz * invLength, rw * invLength)
         }
         // Otherwise we use spherical lerping
         val theta = acos(dot)
@@ -224,10 +250,10 @@ value class Quaternion(@PublishedApi internal val value: Vector4f) : Transform<M
         val w0 = sin((1F - factor) * theta) / sTheta
         val w1 = sin(factor * theta) / sTheta
         return Quaternion( // @formatter:off
-            fma(x, w0, rhs.x * w1),
-            fma(y, w0, rhs.y * w1),
-            fma(z, w0, rhs.z * w1),
-            fma(w, w0, rhs.w * w1)
+            fma(ax, w0, bx * w1),
+            fma(ay, w0, by * w1),
+            fma(az, w0, bz * w1),
+            fma(aw, w0, bw * w1)
         ) // @formatter:on
     }
 
@@ -237,15 +263,19 @@ value class Quaternion(@PublishedApi internal val value: Vector4f) : Transform<M
      * @return A new [Matrix3x3f] representing the rotation.
      */
     fun toRotationMatrix3x3(): Matrix3x3f {
-        val xx = x * x
-        val xy = x * y
-        val yy = y * y
-        val xz = x * z
-        val yz = y * z
-        val xw = x * w
-        val zz = z * z
-        val zw = z * w
-        val yw = y * w
+        val qx = x
+        val qy = y
+        val qz = z
+        val qw = w
+        val xx = qx * qx
+        val xy = qx * qy
+        val yy = qy * qy
+        val xz = qx * qz
+        val yz = qy * qz
+        val xw = qx * qw
+        val zz = qz * qz
+        val zw = qz * qw
+        val yw = qy * qw
         return Matrix3x3f(
             1F - 2F * (yy + zz),
             2F * (xy - zw),
@@ -256,7 +286,7 @@ value class Quaternion(@PublishedApi internal val value: Vector4f) : Transform<M
             2F * (xz - yw),
             2F * (yz + xw),
             1F - 2F * (xx + yy),
-            MatrixProperties.AFFINE
+            MatrixProperties.AFFINE or MatrixProperties.LINEAR
         )
     }
 
@@ -266,15 +296,19 @@ value class Quaternion(@PublishedApi internal val value: Vector4f) : Transform<M
      * @return A new [Matrix4x4f] representing the rotation.
      */
     fun toRotationMatrix4x4(): Matrix4x4f {
-        val xx = x * x
-        val xy = x * y
-        val yy = y * y
-        val xz = x * z
-        val yz = y * z
-        val xw = x * w
-        val zz = z * z
-        val zw = z * w
-        val yw = y * w
+        val qx = x
+        val qy = y
+        val qz = z
+        val qw = w
+        val xx = qx * qx
+        val xy = qx * qy
+        val yy = qy * qy
+        val xz = qx * qz
+        val yz = qy * qz
+        val xw = qx * qw
+        val zz = qz * qz
+        val zw = qz * qw
+        val yw = qy * qw
         return Matrix4x4f(
             1F - 2F * (yy + zz),
             2F * (xy - zw),
@@ -292,7 +326,7 @@ value class Quaternion(@PublishedApi internal val value: Vector4f) : Transform<M
             0F,
             0F,
             1F,
-            MatrixProperties.AFFINE
+            MatrixProperties.AFFINE or MatrixProperties.LINEAR
         )
     }
 
@@ -328,4 +362,12 @@ value class Quaternion(@PublishedApi internal val value: Vector4f) : Transform<M
      * @return The transformed matrix.
      */
     override operator fun invoke(matrix: Matrix4x4f): Matrix4x4f = matrix * this
+
+    inline operator fun component1(): Float = value.x
+
+    inline operator fun component2(): Float = value.y
+
+    inline operator fun component3(): Float = value.z
+
+    inline operator fun component4(): Float = value.w
 }

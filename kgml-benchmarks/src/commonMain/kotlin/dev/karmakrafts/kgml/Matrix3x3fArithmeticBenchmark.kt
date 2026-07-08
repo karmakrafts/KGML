@@ -16,8 +16,7 @@
 
 package dev.karmakrafts.kgml
 
-import dev.karmakrafts.kgml.matrix.Matrix4x4f
-import dev.karmakrafts.kgml.projection.perspective
+import dev.karmakrafts.kgml.matrix.Matrix3x3f
 import dev.karmakrafts.kgml.transform.rotation
 import dev.karmakrafts.kgml.transform.scale
 import dev.karmakrafts.kgml.transform.translation
@@ -27,126 +26,97 @@ import kotlinx.benchmark.State
 import kotlin.jvm.JvmName
 
 @State(Scope.Benchmark)
-open class Matrix4x4fArithmeticBenchmark {
-    val genericLeft = Matrix4x4f(
-        1.25F, 2.5F, 3.75F, 4.25F, 5.5F, 6.75F, 7.25F, 8.5F, 9.75F, 10.25F, 11.5F, 12.75F, 13.25F, 14.5F, 15.75F, 16.25F
-    )
-    val genericRight = Matrix4x4f(
-        16.25F, 15.75F, 14.5F, 13.25F, 12.75F, 11.5F, 10.25F, 9.75F, 8.5F, 7.25F, 6.75F, 5.5F, 4.25F, 3.75F, 2.5F, 1.25F
-    )
-    val genericScale = Matrix4x4f(
-        4F, 0F, 0F, 0F, 0F, 5F, 0F, 0F, 0F, 0F, 6F, 0F, 0F, 0F, 0F, 1F
-    )
-    val genericScaleRight = Matrix4x4f(
-        7F, 0F, 0F, 0F, 0F, 8F, 0F, 0F, 0F, 0F, 9F, 0F, 0F, 0F, 0F, 1F
-    )
-    val translation = Matrix4x4f.translation(2F, 3F, 4F)
-    val translationRight = Matrix4x4f.translation(5F, 7F, 11F)
-    val scale = Matrix4x4f.scale(4F, 5F, 6F)
-    val scaleRight = Matrix4x4f.scale(7F, 8F, 9F)
-    val rotation = Matrix4x4f.rotation(angleZ = 45F)
-    val rotationRight = Matrix4x4f.rotation(angleZ = 30F)
-    val genericRotation = Matrix4x4f(
+open class Matrix3x3fArithmeticBenchmark {
+    val genericLeft = Matrix3x3f(1.25F, 2.5F, 3.75F, 4.25F, 5.5F, 6.75F, 7.25F, 8.5F, 9.75F)
+    val genericRight = Matrix3x3f(9.75F, 8.5F, 7.25F, 6.75F, 5.5F, 4.25F, 3.75F, 2.5F, 1.25F)
+    val genericScale = Matrix3x3f(4F, 0F, 0F, 0F, 5F, 0F, 0F, 0F, 1F)
+    val genericScaleRight = Matrix3x3f(6F, 0F, 0F, 0F, 7F, 0F, 0F, 0F, 1F)
+    val translation = Matrix3x3f.translation(2F, 3F)
+    val translationRight = Matrix3x3f.translation(5F, 7F)
+    val scale = Matrix3x3f.scale(4F, 5F)
+    val scaleRight = Matrix3x3f.scale(6F, 7F)
+    val rotation = Matrix3x3f.rotation(angleZ = 45F)
+    val rotationRight = Matrix3x3f.rotation(angleZ = 30F)
+    val genericRotation = Matrix3x3f(
         rotation.m00,
         rotation.m01,
         rotation.m02,
-        rotation.m03,
         rotation.m10,
         rotation.m11,
         rotation.m12,
-        rotation.m13,
         rotation.m20,
         rotation.m21,
-        rotation.m22,
-        rotation.m23,
-        rotation.m30,
-        rotation.m31,
-        rotation.m32,
-        rotation.m33
+        rotation.m22
     )
-    val genericRotationRight = Matrix4x4f(
+    val genericRotationRight = Matrix3x3f(
         rotationRight.m00,
         rotationRight.m01,
         rotationRight.m02,
-        rotationRight.m03,
         rotationRight.m10,
         rotationRight.m11,
         rotationRight.m12,
-        rotationRight.m13,
         rotationRight.m20,
         rotationRight.m21,
-        rotationRight.m22,
-        rotationRight.m23,
-        rotationRight.m30,
-        rotationRight.m31,
-        rotationRight.m32,
-        rotationRight.m33
+        rotationRight.m22
     )
-    val perspective = Matrix4x4f.perspective(70F, 1920F / 1080F, 0.1F, 100F)
 
     @JvmName("generic")
     @Benchmark
-    fun generic(): Matrix4x4f {
+    fun generic(): Matrix3x3f {
         return genericLeft * genericRight
     }
 
     @JvmName("genericDiagonalDiagonal")
     @Benchmark
-    fun genericDiagonalDiagonal(): Matrix4x4f {
+    fun genericDiagonalDiagonal(): Matrix3x3f {
         return genericScale * genericScaleRight
     }
 
     @JvmName("genericRotationRotation")
     @Benchmark
-    fun genericRotationRotation(): Matrix4x4f {
+    fun genericRotationRotation(): Matrix3x3f {
         return genericRotation * genericRotationRight
     }
 
     @JvmName("linearDiagonal")
     @Benchmark
-    fun linearDiagonal(): Matrix4x4f {
+    fun linearDiagonal(): Matrix3x3f {
         return rotation * scale
     }
 
     @JvmName("diagonalLinear")
     @Benchmark
-    fun diagonalLinear(): Matrix4x4f {
+    fun diagonalLinear(): Matrix3x3f {
         return scale * rotation
     }
 
     @JvmName("diagonalDiagonal")
     @Benchmark
-    fun diagonalDiagonal(): Matrix4x4f {
+    fun diagonalDiagonal(): Matrix3x3f {
         return scale * scaleRight
     }
 
     @JvmName("rotationRotation")
     @Benchmark
-    fun rotationRotation(): Matrix4x4f {
+    fun rotationRotation(): Matrix3x3f {
         return rotation * rotationRight
     }
 
     @JvmName("affineLinear")
     @Benchmark
-    fun affineLinear(): Matrix4x4f {
+    fun affineLinear(): Matrix3x3f {
         return translation * scale
     }
 
     @JvmName("linearTranslation")
     @Benchmark
-    fun linearTranslation(): Matrix4x4f {
+    fun linearTranslation(): Matrix3x3f {
         return scale * translation
     }
 
     @JvmName("translationTranslation")
     @Benchmark
-    fun translationTranslation(): Matrix4x4f {
+    fun translationTranslation(): Matrix3x3f {
         return translation * translationRight
-    }
-
-    @JvmName("perspectiveLinear")
-    @Benchmark
-    fun perspectiveLinear(): Matrix4x4f {
-        return perspective * rotation
     }
 }

@@ -270,95 +270,175 @@ data class Matrix4x4f(
             otherProps.isIdentity -> this
 
             properties.isAffine -> when {
-                otherProps.isTranslation -> multiplyAffineTranslationR(other)
+                otherProps.isAffine && otherProps.isTranslation -> multiplyAffineTranslationR(other)
+                otherProps.isAffine && otherProps.isLinear -> multiplyAffineLinearR(other)
                 otherProps.isAffine -> multiplyAffineR(other)
-                else -> multiplyGeneric(other)
+                else -> multiplyAffineL(other)
             }
 
+            otherProps.isAffine && otherProps.isLinear -> multiplyGenericAffineLinearR(other)
+            otherProps.isAffine -> multiplyGenericAffineR(other)
             else -> multiplyGeneric(other)
         }
     }
 
+    private inline fun multiplyAffineProperties(otherProperties: MatrixProperties): MatrixProperties {
+        var result = MatrixProperties.AFFINE
+        if (properties.isLinear && otherProperties.isLinear) result = result or MatrixProperties.LINEAR
+        if (properties.isTranslation && otherProperties.isTranslation) result = result or MatrixProperties.TRANSLATION
+        return result
+    }
+
     private fun multiplyAffineTranslationR(other: Matrix4x4f): Matrix4x4f {
-        val ( // @formatter:off
-            o00, o01, o02, o03,
-            o10, o11, o12, o13,
-            o20, o21, o22, o23,
-            _,   _,   _,   _
-        ) = other // @formatter:on
         return Matrix4x4f(
-            fma(m00, o00, fma(m01, o10, m02 * o20)),
-            fma(m00, o01, fma(m01, o11, m02 * o21)),
-            fma(m00, o02, fma(m01, o12, m02 * o22)),
-            fma(m00, o03, fma(m01, o13, fma(m02, o23, m03))),
-            fma(m10, o00, fma(m11, o10, m12 * o20)),
-            fma(m10, o01, fma(m11, o11, m12 * o21)),
-            fma(m10, o02, fma(m11, o12, m12 * o22)),
-            fma(m10, o03, fma(m11, o13, fma(m12, o23, m13))),
-            fma(m20, o00, fma(m21, o10, m22 * o20)),
-            fma(m20, o01, fma(m21, o11, m22 * o21)),
-            fma(m20, o02, fma(m21, o12, m22 * o22)),
-            fma(m20, o03, fma(m21, o13, fma(m22, o23, m23))),
+            m00,
+            m01,
+            m02,
+            fma(m00, other.m03, fma(m01, other.m13, fma(m02, other.m23, m03))),
+            m10,
+            m11,
+            m12,
+            fma(m10, other.m03, fma(m11, other.m13, fma(m12, other.m23, m13))),
+            m20,
+            m21,
+            m22,
+            fma(m20, other.m03, fma(m21, other.m13, fma(m22, other.m23, m23))),
             0F,
             0F,
             0F,
             1F,
-            properties or other.properties
+            if (properties.isTranslation) MatrixProperties.AFFINE or MatrixProperties.TRANSLATION else MatrixProperties.AFFINE
         )
     }
 
-    private fun multiplyAffineR(other: Matrix4x4f): Matrix4x4f {
-        val ( // @formatter:off
-            o00, o01, o02, _,
-            o10, o11, o12, _,
-            o20, o21, o22, _,
-            _,   _,   _,   _
-        ) = other // @formatter:on
+    private fun multiplyAffineLinearR(other: Matrix4x4f): Matrix4x4f {
         return Matrix4x4f(
-            fma(m00, o00, fma(m01, o10, m02 * o20)),
-            fma(m00, o01, fma(m01, o11, m02 * o21)),
-            fma(m00, o02, fma(m01, o12, m02 * o22)),
+            fma(m00, other.m00, fma(m01, other.m10, m02 * other.m20)),
+            fma(m00, other.m01, fma(m01, other.m11, m02 * other.m21)),
+            fma(m00, other.m02, fma(m01, other.m12, m02 * other.m22)),
             m03,
-            fma(m10, o00, fma(m11, o10, m12 * o20)),
-            fma(m10, o01, fma(m11, o11, m12 * o21)),
-            fma(m10, o02, fma(m11, o12, m12 * o22)),
+            fma(m10, other.m00, fma(m11, other.m10, m12 * other.m20)),
+            fma(m10, other.m01, fma(m11, other.m11, m12 * other.m21)),
+            fma(m10, other.m02, fma(m11, other.m12, m12 * other.m22)),
             m13,
-            fma(m20, o00, fma(m21, o10, m22 * o20)),
-            fma(m20, o01, fma(m21, o11, m22 * o21)),
-            fma(m20, o02, fma(m21, o12, m22 * o22)),
+            fma(m20, other.m00, fma(m21, other.m10, m22 * other.m20)),
+            fma(m20, other.m01, fma(m21, other.m11, m22 * other.m21)),
+            fma(m20, other.m02, fma(m21, other.m12, m22 * other.m22)),
             m23,
             0F,
             0F,
             0F,
             1F,
-            properties or other.properties
+            if (properties.isLinear) MatrixProperties.AFFINE or MatrixProperties.LINEAR else MatrixProperties.AFFINE
+        )
+    }
+
+    private fun multiplyAffineR(other: Matrix4x4f): Matrix4x4f {
+        return Matrix4x4f(
+            fma(m00, other.m00, fma(m01, other.m10, m02 * other.m20)),
+            fma(m00, other.m01, fma(m01, other.m11, m02 * other.m21)),
+            fma(m00, other.m02, fma(m01, other.m12, m02 * other.m22)),
+            fma(m00, other.m03, fma(m01, other.m13, fma(m02, other.m23, m03))),
+            fma(m10, other.m00, fma(m11, other.m10, m12 * other.m20)),
+            fma(m10, other.m01, fma(m11, other.m11, m12 * other.m21)),
+            fma(m10, other.m02, fma(m11, other.m12, m12 * other.m22)),
+            fma(m10, other.m03, fma(m11, other.m13, fma(m12, other.m23, m13))),
+            fma(m20, other.m00, fma(m21, other.m10, m22 * other.m20)),
+            fma(m20, other.m01, fma(m21, other.m11, m22 * other.m21)),
+            fma(m20, other.m02, fma(m21, other.m12, m22 * other.m22)),
+            fma(m20, other.m03, fma(m21, other.m13, fma(m22, other.m23, m23))),
+            0F,
+            0F,
+            0F,
+            1F,
+            multiplyAffineProperties(other.properties)
+        )
+    }
+
+    private fun multiplyAffineL(other: Matrix4x4f): Matrix4x4f {
+        return Matrix4x4f(
+            fma(m00, other.m00, fma(m01, other.m10, fma(m02, other.m20, m03 * other.m30))),
+            fma(m00, other.m01, fma(m01, other.m11, fma(m02, other.m21, m03 * other.m31))),
+            fma(m00, other.m02, fma(m01, other.m12, fma(m02, other.m22, m03 * other.m32))),
+            fma(m00, other.m03, fma(m01, other.m13, fma(m02, other.m23, m03 * other.m33))),
+            fma(m10, other.m00, fma(m11, other.m10, fma(m12, other.m20, m13 * other.m30))),
+            fma(m10, other.m01, fma(m11, other.m11, fma(m12, other.m21, m13 * other.m31))),
+            fma(m10, other.m02, fma(m11, other.m12, fma(m12, other.m22, m13 * other.m32))),
+            fma(m10, other.m03, fma(m11, other.m13, fma(m12, other.m23, m13 * other.m33))),
+            fma(m20, other.m00, fma(m21, other.m10, fma(m22, other.m20, m23 * other.m30))),
+            fma(m20, other.m01, fma(m21, other.m11, fma(m22, other.m21, m23 * other.m31))),
+            fma(m20, other.m02, fma(m21, other.m12, fma(m22, other.m22, m23 * other.m32))),
+            fma(m20, other.m03, fma(m21, other.m13, fma(m22, other.m23, m23 * other.m33))),
+            other.m30,
+            other.m31,
+            other.m32,
+            other.m33,
+            other.properties
+        )
+    }
+
+    private fun multiplyGenericAffineLinearR(other: Matrix4x4f): Matrix4x4f {
+        return Matrix4x4f(
+            fma(m00, other.m00, fma(m01, other.m10, m02 * other.m20)),
+            fma(m00, other.m01, fma(m01, other.m11, m02 * other.m21)),
+            fma(m00, other.m02, fma(m01, other.m12, m02 * other.m22)),
+            m03,
+            fma(m10, other.m00, fma(m11, other.m10, m12 * other.m20)),
+            fma(m10, other.m01, fma(m11, other.m11, m12 * other.m21)),
+            fma(m10, other.m02, fma(m11, other.m12, m12 * other.m22)),
+            m13,
+            fma(m20, other.m00, fma(m21, other.m10, m22 * other.m20)),
+            fma(m20, other.m01, fma(m21, other.m11, m22 * other.m21)),
+            fma(m20, other.m02, fma(m21, other.m12, m22 * other.m22)),
+            m23,
+            fma(m30, other.m00, fma(m31, other.m10, m32 * other.m20)),
+            fma(m30, other.m01, fma(m31, other.m11, m32 * other.m21)),
+            fma(m30, other.m02, fma(m31, other.m12, m32 * other.m22)),
+            m33,
+            properties
+        )
+    }
+
+    private fun multiplyGenericAffineR(other: Matrix4x4f): Matrix4x4f {
+        return Matrix4x4f(
+            fma(m00, other.m00, fma(m01, other.m10, m02 * other.m20)),
+            fma(m00, other.m01, fma(m01, other.m11, m02 * other.m21)),
+            fma(m00, other.m02, fma(m01, other.m12, m02 * other.m22)),
+            fma(m00, other.m03, fma(m01, other.m13, fma(m02, other.m23, m03))),
+            fma(m10, other.m00, fma(m11, other.m10, m12 * other.m20)),
+            fma(m10, other.m01, fma(m11, other.m11, m12 * other.m21)),
+            fma(m10, other.m02, fma(m11, other.m12, m12 * other.m22)),
+            fma(m10, other.m03, fma(m11, other.m13, fma(m12, other.m23, m13))),
+            fma(m20, other.m00, fma(m21, other.m10, m22 * other.m20)),
+            fma(m20, other.m01, fma(m21, other.m11, m22 * other.m21)),
+            fma(m20, other.m02, fma(m21, other.m12, m22 * other.m22)),
+            fma(m20, other.m03, fma(m21, other.m13, fma(m22, other.m23, m23))),
+            fma(m30, other.m00, fma(m31, other.m10, m32 * other.m20)),
+            fma(m30, other.m01, fma(m31, other.m11, m32 * other.m21)),
+            fma(m30, other.m02, fma(m31, other.m12, m32 * other.m22)),
+            fma(m30, other.m03, fma(m31, other.m13, fma(m32, other.m23, m33))),
+            properties
         )
     }
 
     private fun multiplyGeneric(other: Matrix4x4f): Matrix4x4f {
-        val ( // @formatter:off
-            o00, o01, o02, o03,
-            o10, o11, o12, o13,
-            o20, o21, o22, o23,
-            o30, o31, o32, o33
-        ) = other // @formatter:on
         return Matrix4x4f(
-            fma(m00, o00, fma(m01, o10, fma(m02, o20, m03 * o30))),
-            fma(m00, o01, fma(m01, o11, fma(m02, o21, m03 * o31))),
-            fma(m00, o02, fma(m01, o12, fma(m02, o22, m03 * o32))),
-            fma(m00, o03, fma(m01, o13, fma(m02, o23, m03 * o33))),
-            fma(m10, o00, fma(m11, o10, fma(m12, o20, m13 * o30))),
-            fma(m10, o01, fma(m11, o11, fma(m12, o21, m13 * o31))),
-            fma(m10, o02, fma(m11, o12, fma(m12, o22, m13 * o32))),
-            fma(m10, o03, fma(m11, o13, fma(m12, o23, m13 * o33))),
-            fma(m20, o00, fma(m21, o10, fma(m22, o20, m23 * o30))),
-            fma(m20, o01, fma(m21, o11, fma(m22, o21, m23 * o31))),
-            fma(m20, o02, fma(m21, o12, fma(m22, o22, m23 * o32))),
-            fma(m20, o03, fma(m21, o13, fma(m22, o23, m23 * o33))),
-            fma(m30, o00, fma(m31, o10, fma(m32, o20, m33 * o30))),
-            fma(m30, o01, fma(m31, o11, fma(m32, o21, m33 * o31))),
-            fma(m30, o02, fma(m31, o12, fma(m32, o22, m33 * o32))),
-            fma(m30, o03, fma(m31, o13, fma(m32, o23, m33 * o33))),
+            fma(m00, other.m00, fma(m01, other.m10, fma(m02, other.m20, m03 * other.m30))),
+            fma(m00, other.m01, fma(m01, other.m11, fma(m02, other.m21, m03 * other.m31))),
+            fma(m00, other.m02, fma(m01, other.m12, fma(m02, other.m22, m03 * other.m32))),
+            fma(m00, other.m03, fma(m01, other.m13, fma(m02, other.m23, m03 * other.m33))),
+            fma(m10, other.m00, fma(m11, other.m10, fma(m12, other.m20, m13 * other.m30))),
+            fma(m10, other.m01, fma(m11, other.m11, fma(m12, other.m21, m13 * other.m31))),
+            fma(m10, other.m02, fma(m11, other.m12, fma(m12, other.m22, m13 * other.m32))),
+            fma(m10, other.m03, fma(m11, other.m13, fma(m12, other.m23, m13 * other.m33))),
+            fma(m20, other.m00, fma(m21, other.m10, fma(m22, other.m20, m23 * other.m30))),
+            fma(m20, other.m01, fma(m21, other.m11, fma(m22, other.m21, m23 * other.m31))),
+            fma(m20, other.m02, fma(m21, other.m12, fma(m22, other.m22, m23 * other.m32))),
+            fma(m20, other.m03, fma(m21, other.m13, fma(m22, other.m23, m23 * other.m33))),
+            fma(m30, other.m00, fma(m31, other.m10, fma(m32, other.m20, m33 * other.m30))),
+            fma(m30, other.m01, fma(m31, other.m11, fma(m32, other.m21, m33 * other.m31))),
+            fma(m30, other.m02, fma(m31, other.m12, fma(m32, other.m22, m33 * other.m32))),
+            fma(m30, other.m03, fma(m31, other.m13, fma(m32, other.m23, m33 * other.m33))),
             properties or other.properties
         )
     }

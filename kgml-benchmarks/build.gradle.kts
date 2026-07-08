@@ -23,6 +23,7 @@ import dev.karmakrafts.conventions.kotlin.withJvm
 import dev.karmakrafts.conventions.kotlin.withNative
 import dev.karmakrafts.conventions.kotlin.withNodeJs
 import dev.karmakrafts.conventions.kotlin.withWeb
+import kotlinx.benchmark.gradle.BenchmarkConfiguration
 import kotlinx.benchmark.gradle.benchmark
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.plugin.mpp.NativeBuildType
@@ -75,25 +76,38 @@ benchmark {
         register("wasmJs")
     }
     configurations {
-        named("main") {
-            warmups = 15
+        fun BenchmarkConfiguration.defaultConfig() {
+            warmups = 10
             iterations = 10
             iterationTime = 1
             iterationTimeUnit = "s"
+        }
+        named("main") {
+            defaultConfig()
         }
         register("matrix") {
             include("dev.karmakrafts.kgml.*Matrix*")
-            warmups = 15
-            iterations = 10
-            iterationTime = 1
-            iterationTimeUnit = "s"
+            defaultConfig()
+        }
+        register("matrix4x4f") {
+            include("dev.karmakrafts.kgml.*Matrix4x4f*")
+            defaultConfig()
+        }
+        register("matrix3x3f") {
+            include("dev.karmakrafts.kgml.*Matrix3x3f*")
+            defaultConfig()
+        }
+        register("matrix2x2f") {
+            include("dev.karmakrafts.kgml.*Matrix2x2f*")
+            defaultConfig()
         }
         register("vector") {
             include("dev.karmakrafts.kgml.*Vector*")
-            warmups = 15
-            iterations = 10
-            iterationTime = 1
-            iterationTimeUnit = "s"
+            defaultConfig()
+        }
+        register("quaternion") {
+            include("dev.karmakrafts.kgml.*Quaternion*")
+            defaultConfig()
         }
     }
 }
