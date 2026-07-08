@@ -1,5 +1,19 @@
 ## [Unreleased]
 
+### Added
+
+- Positional destructuring operators for `Quaternion`
+- More granular tags for `MatrixProperties`
+- `kgml-io` module for `kotlinx.io` extensions to read and write KGML types
+
+### Changed
+
+- Updated to Gradle 9.6.1
+- Updated to Karma Conventions 1.18.3
+- Updated to Kotlin Wrappers 2026.7.1
+- Performance improvements for all types of matrix multiplications
+- Performance improvements for `Quaternion` multiplications
+
 ## [1.2.1]
 
 ### Fixed
