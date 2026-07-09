@@ -1,5 +1,7 @@
 ## [Unreleased]
 
+## [1.3.0]
+
 ### Added
 
 - Positional destructuring operators for `Quaternion4f`
