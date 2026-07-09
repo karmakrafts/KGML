@@ -21,8 +21,10 @@ A GLM/JOML inspired library with a touch of idiomatic Kotlin.
 ### Features
 
 - 2, 3 and 4-dimensional float vector types
+- 2, 3 and 4-dimensional double vector types
 - 3, 4 and 4-dimensional integer vector types
 - 2x2, 3x3 and 4x4 float matrices
+- 2x2, 3x3 and 4x4 double matrices
 - Matrix-vector-multiplication
 - Orthographic and perspective projection
 - Matrix stacks
