@@ -5,7 +5,7 @@
 )](https://git.karmakrafts.dev/kk/kgml/-/packages)
 [![](https://img.shields.io/maven-metadata/v?metadataUrl=https%3A%2F%2Fcentral.sonatype.com%2Frepository%2Fmaven-snapshots%2Fdev%2Fkarmakrafts%2Fkgml%2Fkgml-core%2Fmaven-metadata.xml
 )](https://git.karmakrafts.dev/kk/kgml/-/packages)
-[![](https://img.shields.io/badge/2.4.0-blue?logo=kotlin&label=kotlin)](https://kotlinlang.org/)
+[![](https://img.shields.io/badge/2.4.10-blue?logo=kotlin&label=kotlin)](https://kotlinlang.org/)
 [![](https://img.shields.io/badge/documentation-black?logo=kotlin)](https://docs.karmakrafts.dev/kgml-core)
 
 ![](https://img.shields.io/badge/-JVM-blue?logo=kotlin&labelColor=black)
