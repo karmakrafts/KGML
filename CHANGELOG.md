@@ -1,5 +1,9 @@
 ## [Unreleased]
 
+### Changed
+
+- Downgraded to Kotlin Wrappers 2026.7.1 because of WASM/JS regression
+
 ## [1.4.0]
 
 ### Changed
