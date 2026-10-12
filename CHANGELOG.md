@@ -9,6 +9,7 @@
 - Updated to AGP 9.4.1
 - Updated to kotlinx.benchmark to 0.5.0
 - Updated to Karbide 1.12.0
+- Updated to NMCP 1.6.2
 
 ## [1.4.1]
 

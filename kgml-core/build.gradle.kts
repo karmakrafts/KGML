@@ -83,7 +83,7 @@ kotlin {
             testTask {
                 timeout = Duration.ofMinutes(5)
                 useKarma {
-                    useFirefoxHeadless()
+                    useChromeHeadless()
                     useConfigDirectory(rootProject.projectDir.resolve("karma.config.d"))
                 }
             }
