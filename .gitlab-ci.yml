@@ -8,8 +8,8 @@ workflow:
 
 stages:
   - check_changelog
-  - build
   - security
+  - test
   - publish
   - release
   - update_changelog
@@ -104,18 +104,254 @@ security:
   tags:
     - macos
 
-# ------------------------------ Build
+# ------------------------------ Test
 
-build:
-  stage: build
+test:android:arm64:
+  stage: test
   interruptible: true
   rules:
     - *if-merge-request
     - *if-main
   script:
-    - ./gradlew clean build --stacktrace
+    - ./gradlew clean pixel6Api36AndroidDeviceTest --stacktrace
+  artifacts:
+    when: always
+    reports:
+      junit:
+        - kgml-core/build/outputs/androidTest-results/managedDevice/**/TEST-*.xml
+        - kgml-io/build/outputs/androidTest-results/managedDevice/**/TEST-*.xml
   tags:
     - macos
+    - arm64
+
+test:linux:amd64:
+  stage: test
+  interruptible: true
+  rules:
+    - *if-merge-request
+    - *if-main
+  script:
+    - ./gradlew clean linuxX64Test linuxArm64TestBinaries jvmTest --stacktrace
+  artifacts:
+    name: "kgml-tests-$CI_COMMIT_REF_SLUG"
+    when: always
+    paths:
+      - kgml-core/build/bin/linuxArm64/debugTest/test.kexe
+      - kgml-io/build/bin/linuxArm64/debugTest/test.kexe
+    expire_in: 1 days
+    reports:
+      junit:
+        - kgml-core/build/test-results/**/TEST-*.xml
+        - kgml-io/build/test-results/**/TEST-*.xml
+  tags:
+    - linux
+    - shell
+    - amd64
+
+test:linux:arm64:
+  stage: test
+  interruptible: true
+  needs:
+    - test:linux:amd64
+  dependencies:
+    - test:linux:amd64
+  rules:
+    - *if-merge-request
+    - *if-main
+  script:
+    - chmod +x kgml-core/build/bin/linuxArm64/debugTest/test.kexe
+    - chmod +x kgml-io/build/bin/linuxArm64/debugTest/test.kexe
+    - ./gradlew linuxArm64StandaloneTest jvmTest --stacktrace
+  artifacts:
+    when: always
+    reports:
+      junit:
+        - kgml-core/build/test-results/**/TEST-*.xml
+        - kgml-io/build/test-results/**/TEST-*.xml
+  tags:
+    - linux
+    - docker
+    - arm64
+
+test:macos:arm64:
+  stage: test
+  interruptible: true
+  rules:
+    - *if-merge-request
+    - *if-main
+  script:
+    - ./gradlew clean macosArm64Test jvmTest --stacktrace
+  artifacts:
+    when: always
+    reports:
+      junit:
+        - kgml-core/build/test-results/**/TEST-*.xml
+        - kgml-io/build/test-results/**/TEST-*.xml
+  tags:
+    - macos
+    - arm64
+
+test:ios:arm64:
+  stage: test
+  interruptible: true
+  rules:
+    - *if-merge-request
+    - *if-main
+  script:
+    - ./gradlew clean iosSimulatorArm64Test --stacktrace
+  artifacts:
+    when: always
+    reports:
+      junit:
+        - kgml-core/build/test-results/**/TEST-*.xml
+        - kgml-io/build/test-results/**/TEST-*.xml
+  tags:
+    - macos
+    - arm64
+
+test:tvos:arm64:
+  stage: test
+  interruptible: true
+  rules:
+    - *if-merge-request
+    - *if-main
+  script:
+    - ./gradlew clean tvosSimulatorArm64Test --stacktrace
+  artifacts:
+    when: always
+    reports:
+      junit:
+        - kgml-core/build/test-results/**/TEST-*.xml
+        - kgml-io/build/test-results/**/TEST-*.xml
+  tags:
+    - macos
+    - arm64
+
+test:watchos:arm64:
+  stage: test
+  interruptible: true
+  rules:
+    - *if-merge-request
+    - *if-main
+  script:
+    - ./gradlew clean watchosSimulatorArm64Test --stacktrace
+  artifacts:
+    when: always
+    reports:
+      junit:
+        - kgml-core/build/test-results/**/TEST-*.xml
+        - kgml-io/build/test-results/**/TEST-*.xml
+  tags:
+    - macos
+    - arm64
+
+test:windows:amd64:
+  stage: test
+  interruptible: true
+  rules:
+    - *if-merge-request
+    - *if-main
+  script:
+    - ./gradlew clean mingwX64Test jvmTest --stacktrace
+  artifacts:
+    when: always
+    reports:
+      junit:
+        - kgml-core/build/test-results/**/TEST-*.xml
+        - kgml-io/build/test-results/**/TEST-*.xml
+  tags:
+    - windows
+    - amd64
+
+test:js:browser:
+  stage: test
+  interruptible: true
+  rules:
+    - *if-merge-request
+    - *if-main
+  script:
+    - ./gradlew clean jsBrowserTest --stacktrace
+  artifacts:
+    when: always
+    reports:
+      junit:
+        - kgml-core/build/test-results/**/TEST-*.xml
+        - kgml-io/build/test-results/**/TEST-*.xml
+  tags:
+    - macos
+    - arm64
+
+test:wasm:browser:
+  stage: test
+  interruptible: true
+  rules:
+    - *if-merge-request
+    - *if-main
+  script:
+    - ./gradlew clean wasmJsBrowserTest --stacktrace
+  artifacts:
+    when: always
+    reports:
+      junit:
+        - kgml-core/build/test-results/**/TEST-*.xml
+        - kgml-io/build/test-results/**/TEST-*.xml
+  tags:
+    - macos
+    - arm64
+
+test:js:node:
+  stage: test
+  interruptible: true
+  rules:
+    - *if-merge-request
+    - *if-main
+  script:
+    - ./gradlew clean jsNodeTest --stacktrace
+  artifacts:
+    when: always
+    reports:
+      junit:
+        - kgml-core/build/test-results/**/TEST-*.xml
+        - kgml-io/build/test-results/**/TEST-*.xml
+  tags:
+    - macos
+    - arm64
+
+test:wasm:node:
+  stage: test
+  interruptible: true
+  rules:
+    - *if-merge-request
+    - *if-main
+  script:
+    - ./gradlew clean wasmJsNodeTest --stacktrace
+  artifacts:
+    when: always
+    reports:
+      junit:
+        - kgml-core/build/test-results/**/TEST-*.xml
+        - kgml-io/build/test-results/**/TEST-*.xml
+  tags:
+    - macos
+    - arm64
+
+test:wasi:wasmtime:
+  stage: test
+  interruptible: true
+  rules:
+    - *if-merge-request
+    - *if-main
+  script:
+    - ./gradlew clean wasmWasiWasmtimeTest --stacktrace
+  artifacts:
+    when: always
+    reports:
+      junit:
+        - kgml-core/build/test-results/**/TEST-*.xml
+        - kgml-io/build/test-results/**/TEST-*.xml
+  tags:
+    - macos
+    - arm64
 
 # ------------------------------ Publish
 

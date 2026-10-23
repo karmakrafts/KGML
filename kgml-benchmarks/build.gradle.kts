@@ -44,6 +44,9 @@ kotlin {
     }
     withJvm()
     withWeb {
+        compilerOptions {
+            target = "es2020"
+        }
         withBrowser {
             useEsModules()
         }

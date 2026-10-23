@@ -23,13 +23,18 @@ import dev.karmakrafts.conventions.dokka.withKotlinxIo
 import dev.karmakrafts.conventions.kotlin.defaultCompilerOptions
 import dev.karmakrafts.conventions.kotlin.withAndroidLibrary
 import dev.karmakrafts.conventions.kotlin.withBrowser
+import dev.karmakrafts.conventions.kotlin.withDefaultDeviceTests
+import dev.karmakrafts.conventions.kotlin.withDefaultHostTests
 import dev.karmakrafts.conventions.kotlin.withJvm
+import dev.karmakrafts.conventions.kotlin.withLinuxArm64StandaloneTests
 import dev.karmakrafts.conventions.kotlin.withNative
 import dev.karmakrafts.conventions.kotlin.withNodeJs
 import dev.karmakrafts.conventions.kotlin.withWasmWasi
+import dev.karmakrafts.conventions.kotlin.withWasmtime
 import dev.karmakrafts.conventions.kotlin.withWeb
 import dev.karmakrafts.conventions.setProjectInfo
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
+import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
 import org.jetbrains.kotlin.gradle.plugin.mpp.NativeBuildType
 import org.jetbrains.kotlin.gradle.targets.jvm.tasks.KotlinJvmTest
 import java.time.Duration
@@ -56,12 +61,16 @@ kotlin {
     }
     defaultCompilerOptions()
     withSourcesJar()
-    withAndroidLibrary("$group.io")
+    withAndroidLibrary("$group.io") {
+        withDefaultHostTests()
+        withDefaultDeviceTests()
+    }
     withNative {
         binaries {
             test(listOf(NativeBuildType.RELEASE))
         }
     }
+    withLinuxArm64StandaloneTests()
     withJvm {
         testRuns {
             create("vector") { // Run tests with jdk.incubator.vector API
@@ -74,6 +83,9 @@ kotlin {
         }
     }
     withWeb {
+        compilerOptions {
+            target = "es2020"
+        }
         withBrowser {
             useEsModules()
             testTask {
@@ -94,7 +106,8 @@ kotlin {
         }
     }
     withWasmWasi {
-        withNodeJs()
+        @OptIn(ExperimentalWasmDsl::class) //
+        withWasmtime()
     }
     applyDefaultHierarchyTemplate()
     sourceSets {
