@@ -21,12 +21,12 @@ import kotlin.test.Test
 
 class SinkVector2fExtensionsTest {
     @Test
-    fun `writeVector2f should write big endian vector`() = assertWrites(
+    fun writeVector2fShouldWriteBigEndianVector() = assertWrites(
         bytesOf(1F, -2F)
     ) { writeVector2f(Vector2f(1F, -2F)) }
 
     @Test
-    fun `writeVector2fLe should write little endian vector`() = assertWrites(
+    fun writeVector2fLeShouldWriteLittleEndianVector() = assertWrites(
         bytesOf(1F, -2F, littleEndian = true)
     ) { writeVector2fLe(Vector2f(1F, -2F)) }
 }

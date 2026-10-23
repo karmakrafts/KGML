@@ -21,12 +21,12 @@ import kotlin.test.Test
 
 class SinkMatrix2x2fExtensionsTest {
     @Test
-    fun `writeMatrix2x2f should write big endian matrix`() = assertWrites(
+    fun writeMatrix2x2fShouldWriteBigEndianMatrix() = assertWrites(
         bytesOf(1F, 2F, 3F, 4F)
     ) { writeMatrix2x2f(Matrix2x2f(1F, 2F, 3F, 4F)) }
 
     @Test
-    fun `writeMatrix2x2fLe should write little endian matrix`() = assertWrites(
+    fun writeMatrix2x2fLeShouldWriteLittleEndianMatrix() = assertWrites(
         bytesOf(1F, 2F, 3F, 4F, littleEndian = true)
     ) { writeMatrix2x2fLe(Matrix2x2f(1F, 2F, 3F, 4F)) }
 }

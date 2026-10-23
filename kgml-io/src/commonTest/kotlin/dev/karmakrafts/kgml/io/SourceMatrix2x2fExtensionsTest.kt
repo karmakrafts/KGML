@@ -21,12 +21,12 @@ import kotlin.test.Test
 
 class SourceMatrix2x2fExtensionsTest {
     @Test
-    fun `readMatrix2x2f should read big endian matrix`() = assertReads(
+    fun readMatrix2x2fShouldReadBigEndianMatrix() = assertReads(
         bytesOf(1F, 2F, 3F, 4F), Matrix2x2f(1F, 2F, 3F, 4F)
     ) { readMatrix2x2f() }
 
     @Test
-    fun `readMatrix2x2fLe should read little endian matrix`() = assertReads(
+    fun readMatrix2x2fLeShouldReadLittleEndianMatrix() = assertReads(
         bytesOf(1F, 2F, 3F, 4F, littleEndian = true), Matrix2x2f(1F, 2F, 3F, 4F)
     ) { readMatrix2x2fLe() }
 }

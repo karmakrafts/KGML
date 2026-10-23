@@ -21,13 +21,13 @@ import kotlin.test.Test
 
 class SourceMatrix4x4dExtensionsTest {
     @Test
-    fun `readMatrix4x4d should read big endian matrix`() = assertReads(
+    fun readMatrix4x4dShouldReadBigEndianMatrix() = assertReads(
         bytesOf(1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0, 11.0, 12.0, 13.0, 14.0, 15.0, 16.0),
         Matrix4x4d(1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0, 11.0, 12.0, 13.0, 14.0, 15.0, 16.0)
     ) { readMatrix4x4d() }
 
     @Test
-    fun `readMatrix4x4dLe should read little endian matrix`() = assertReads(
+    fun readMatrix4x4dLeShouldReadLittleEndianMatrix() = assertReads(
         bytesOf(1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0, 11.0, 12.0, 13.0, 14.0, 15.0, 16.0, littleEndian = true),
         Matrix4x4d(1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0, 11.0, 12.0, 13.0, 14.0, 15.0, 16.0)
     ) { readMatrix4x4dLe() }

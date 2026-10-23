@@ -21,12 +21,12 @@ import kotlin.test.Test
 
 class SourceVector3iExtensionsTest {
     @Test
-    fun `readVector3i should read big endian vector`() = assertReads(
+    fun readVector3iShouldReadBigEndianVector() = assertReads(
         bytesOf(1, -2, 3), Vector3i(1, -2, 3)
     ) { readVector3i() }
 
     @Test
-    fun `readVector3iLe should read little endian vector`() = assertReads(
+    fun readVector3iLeShouldReadLittleEndianVector() = assertReads(
         bytesOf(1, -2, 3, littleEndian = true), Vector3i(1, -2, 3)
     ) { readVector3iLe() }
 }
