@@ -24,28 +24,28 @@ import kotlin.test.assertEquals
 
 class MatrixStack4x4dTransformTest {
     @Test
-    fun `MatrixStack translate should work`() {
+    fun matrixStackTranslateShouldWork() {
         val stack = createStack()
         stack.translate(1.0, 2.0, 3.0)
         assertMatrix4x4Equals(Matrix4x4d.translation(1.0, 2.0, 3.0), stack.current())
     }
 
     @Test
-    fun `MatrixStack scale should work`() {
+    fun matrixStackScaleShouldWork() {
         val stack = createStack()
         stack.scale(2.0, 2.0, 2.0)
         assertMatrix4x4Equals(Matrix4x4d.scale(2.0, 2.0, 2.0), stack.current())
     }
 
     @Test
-    fun `MatrixStack rotate should work`() {
+    fun matrixStackRotateShouldWork() {
         val stack = createStack()
         stack.rotate(90.0, 0.0, 0.0)
         assertMatrix4x4Equals(Matrix4x4d.rotation(angleX = 90.0), stack.current())
     }
 
     @Test
-    fun `MatrixStack rotateRad should work`() {
+    fun matrixStackRotateRadShouldWork() {
         val stack = createStack()
         val rad = (PI / 2)
         stack.rotateRad(0.0, rad, 0.0)
@@ -53,7 +53,7 @@ class MatrixStack4x4dTransformTest {
     }
 
     @Test
-    fun `MatrixStack rotate quaternion should work`() {
+    fun matrixStackRotateQuaternionShouldWork() {
         val stack = createStack()
         val q = Quaternion4d.fromAngles(0.0, 0.0, 90.0)
         stack.rotate(q)
@@ -61,7 +61,7 @@ class MatrixStack4x4dTransformTest {
     }
 
     @Test
-    fun `MatrixStack skew should work`() {
+    fun matrixStackSkewShouldWork() {
         val stack = createStack()
         stack.skew(xy = 1.0)
         assertMatrix4x4Equals(Matrix4x4d.skew(xy = 1.0), stack.current())

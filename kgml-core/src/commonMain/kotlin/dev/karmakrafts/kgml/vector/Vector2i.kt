@@ -19,7 +19,6 @@ package dev.karmakrafts.kgml.vector
 import dev.karmakrafts.kgml.util.fma
 import dev.karmakrafts.kgml.util.toDegrees
 import kotlin.jvm.JvmField
-import kotlin.jvm.JvmRecord
 import kotlin.math.atan2
 import kotlin.math.max
 import kotlin.math.min
@@ -33,7 +32,6 @@ import kotlin.reflect.KClass
  * @param y The Y component.
  */
 @Suppress("NOTHING_TO_INLINE")
-@JvmRecord
 data class Vector2i( // @formatter:off
     @JvmField val x: Int,
     @JvmField val y: Int

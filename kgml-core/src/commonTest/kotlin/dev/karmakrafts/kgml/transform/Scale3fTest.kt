@@ -22,7 +22,7 @@ import kotlin.test.assertEquals
 
 class Scale3fTest {
     @Test
-    fun `Scale3f invoke should apply scale`() {
+    fun scale3fInvokeShouldApplyScale() {
         val scale = Scale3f(2f, 3f, 4f)
         val matrix = Matrix4x4f.identity
         val result = scale(matrix)

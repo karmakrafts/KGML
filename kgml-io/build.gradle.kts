@@ -62,6 +62,7 @@ kotlin {
     defaultCompilerOptions()
     withSourcesJar()
     withAndroidLibrary("$group.io") {
+        enableCoreLibraryDesugaring = true
         withDefaultHostTests()
         withDefaultDeviceTests()
     }
@@ -130,6 +131,10 @@ kotlin {
             }
         }
     }
+}
+
+dependencies {
+    coreLibraryDesugaring(libs.android.desugarJdkLibs)
 }
 
 tasks {

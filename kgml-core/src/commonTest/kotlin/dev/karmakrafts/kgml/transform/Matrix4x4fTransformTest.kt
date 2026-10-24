@@ -24,7 +24,7 @@ import kotlin.test.assertEquals
 
 class Matrix4x4fTransformTest {
     @Test
-    fun `Matrix4x4 rotation should work`() {
+    fun matrix4x4RotationShouldWork() {
         val rad = (PI / 2).toFloat()
 
         assertMatrix4x4Equals(Matrix3x3f.rotationRad(angleX = rad).extend(), Matrix4x4f.rotationRad(angleX = rad))
@@ -48,7 +48,7 @@ class Matrix4x4fTransformTest {
     }
 
     @Test
-    fun `Matrix4x4 translation should work`() {
+    fun matrix4x4TranslationShouldWork() {
         val m = Matrix4x4f.translation(1f, 2f, 3f)
         assertEquals(1f, m.m00, 1e-6f)
         assertEquals(1f, m.m03, 1e-6f)
@@ -58,7 +58,7 @@ class Matrix4x4fTransformTest {
     }
 
     @Test
-    fun `Matrix4x4 scale should work`() {
+    fun matrix4x4ScaleShouldWork() {
         val m = Matrix4x4f.scale(2f, 3f, 4f)
         assertEquals(2f, m.m00, 1e-6f)
         assertEquals(3f, m.m11, 1e-6f)
@@ -67,7 +67,7 @@ class Matrix4x4fTransformTest {
     }
 
     @Test
-    fun `Matrix4x4 skew should work`() {
+    fun matrix4x4SkewShouldWork() {
         val m = Matrix4x4f.skew(xy = 1f, xz = 2f, yx = 3f, yz = 4f, zx = 5f, zy = 6f)
         assertEquals(1f, m.m00, 1e-6f)
         assertEquals(1f, m.m01, 1e-6f)
@@ -81,7 +81,7 @@ class Matrix4x4fTransformTest {
     }
 
     @Test
-    fun `Matrix4x4 rotation from quaternion should work`() {
+    fun matrix4x4RotationFromQuaternionShouldWork() {
         val q = Quaternion4f.fromAngles(0f, 90f, 0f)
         val m = Matrix4x4f.identity * q
         assertMatrix4x4Equals(Matrix4x4f.rotation(angleY = 90f), m)

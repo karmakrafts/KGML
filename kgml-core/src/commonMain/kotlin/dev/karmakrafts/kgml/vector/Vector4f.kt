@@ -19,7 +19,6 @@ package dev.karmakrafts.kgml.vector
 import dev.karmakrafts.kgml.matrix.Matrix4x4f
 import dev.karmakrafts.kgml.util.fma
 import kotlin.jvm.JvmField
-import kotlin.jvm.JvmRecord
 import kotlin.math.max
 import kotlin.math.min
 import kotlin.math.sqrt
@@ -34,7 +33,6 @@ import kotlin.reflect.KClass
  * @param w The W component.
  */
 @Suppress("NOTHING_TO_INLINE")
-@JvmRecord
 data class Vector4f( // @formatter:off
     @JvmField val x: Float,
     @JvmField val y: Float,

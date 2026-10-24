@@ -22,7 +22,7 @@ import kotlin.test.assertEquals
 
 class Translation3fTest {
     @Test
-    fun `Translation3f invoke should apply translation`() {
+    fun translation3fInvokeShouldApplyTranslation() {
         val translation = Translation3f(2f, 3f, 4f)
         val matrix = Matrix4x4f.identity
         val result = translation(matrix)

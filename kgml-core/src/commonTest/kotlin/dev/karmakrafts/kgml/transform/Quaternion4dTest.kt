@@ -22,7 +22,7 @@ import kotlin.test.assertEquals
 
 class Quaternion4dTest {
     @Test
-    fun `constructor should initialize components`() {
+    fun constructorShouldInitializeComponents() {
         val q = Quaternion4d(1.0, 2.0, 3.0, 4.0)
         assertEquals(1.0, q.x)
         assertEquals(2.0, q.y)
@@ -31,14 +31,14 @@ class Quaternion4dTest {
     }
 
     @Test
-    fun `asVector4d should return underlying vector`() {
+    fun asVector4dShouldReturnUnderlyingVector() {
         val v = Vector4d(1.0, 2.0, 3.0, 4.0)
         val q = Quaternion4d(v)
         assertEquals(v, q.asVector4d())
     }
 
     @Test
-    fun `copy should return copy with modified components`() {
+    fun copyShouldReturnCopyWithModifiedComponents() {
         val q = Quaternion4d(1.0, 2.0, 3.0, 4.0)
         assertEquals(Quaternion4d(5.0, 2.0, 3.0, 4.0), q.copy(x = 5.0))
         assertEquals(Quaternion4d(1.0, 5.0, 3.0, 4.0), q.copy(y = 5.0))
@@ -47,13 +47,13 @@ class Quaternion4dTest {
     }
 
     @Test
-    fun `fromAnglesRad should create identity quaternion from zero angles`() {
+    fun fromAnglesRadShouldCreateIdentityQuaternionFromZeroAngles() {
         val q = Quaternion4d.fromAnglesRad(0.0, 0.0, 0.0)
         assertQuaternionEquals(Quaternion4d(0.0, 0.0, 0.0, 1.0), q)
     }
 
     @Test
-    fun `times operator should multiply quaternions`() {
+    fun timesOperatorShouldMultiplyQuaternions() {
         val q1 = Quaternion4d(0.0, 0.0, 0.0, 1.0) // Identity
         val q2 = Quaternion4d(1.0, 2.0, 3.0, 4.0)
         assertQuaternionEquals(q2, q1 * q2)
@@ -69,13 +69,13 @@ class Quaternion4dTest {
     }
 
     @Test
-    fun `times operator with scalar should multiply components`() {
+    fun timesOperatorWithScalarShouldMultiplyComponents() {
         val q = Quaternion4d(1.0, 2.0, 3.0, 4.0)
         assertQuaternionEquals(Quaternion4d(2.0, 4.0, 6.0, 8.0), q * 2.0)
     }
 
     @Test
-    fun `getAngle methods should return correct angles`() {
+    fun getAngleMethodsShouldReturnCorrectAngles() {
         val q = Quaternion4d.fromAngles(30.0, 45.0, 60.0)
         assertEquals(30.0, q.getAngleX(), 1E-5)
         assertEquals(45.0, q.getAngleY(), 1E-5)
@@ -83,7 +83,7 @@ class Quaternion4dTest {
     }
 
     @Test
-    fun `slerp should interpolate between quaternions`() {
+    fun slerpShouldInterpolateBetweenQuaternions() {
         val q1 = Quaternion4d.fromAngles(0.0, 0.0, 0.0)
         val q2 = Quaternion4d.fromAngles(90.0, 0.0, 0.0)
 
@@ -93,7 +93,7 @@ class Quaternion4dTest {
     }
 
     @Test
-    fun `slerp should use shortest path for negated quaternion`() {
+    fun slerpShouldUseShortestPathForNegatedQuaternion() {
         val q1 = Quaternion4d.fromAngles(0.0, 0.0, 0.0)
         val q2 = Quaternion4d.fromAngles(90.0, 0.0, 0.0)
         val q2Negated = Quaternion4d(-q2.x, -q2.y, -q2.z, -q2.w)
@@ -102,7 +102,7 @@ class Quaternion4dTest {
     }
 
     @Test
-    fun `slerp should normalize close quaternion interpolation`() {
+    fun slerpShouldNormalizeCloseQuaternionInterpolation() {
         val q1 = Quaternion4d.fromAngles(30.0, 45.0, 60.0)
         val q2 = Quaternion4d.fromAngles(30.01, 45.01, 60.01)
         val result = q1.slerp(q2, 0.5)
@@ -114,7 +114,7 @@ class Quaternion4dTest {
     }
 
     @Test
-    fun `toRotationMatrix should return correct matrix`() {
+    fun toRotationMatrixShouldReturnCorrectMatrix() {
         val q = Quaternion4d.fromAngles(90.0, 0.0, 0.0)
         val m3 = q.toRotationMatrix3x3d()
         // Rotation 90 deg around X:

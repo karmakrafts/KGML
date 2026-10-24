@@ -24,14 +24,14 @@ import kotlin.test.assertEquals
 
 class MatrixStack3x3dTransformTest {
     @Test
-    fun `MatrixStack 3x3 rotation should work`() {
+    fun matrixStack3x3RotationShouldWork() {
         val stack = MatrixStack(identityProvider = Matrix3x3d::identity).apply { push() }
         stack.rotate(90.0, 0.0, 0.0)
         assertMatrix3x3Equals(Matrix3x3d.rotation(angleX = 90.0), stack.current())
     }
 
     @Test
-    fun `MatrixStack 3x3 rotationRad should work`() {
+    fun matrixStack3x3RotationRadShouldWork() {
         val stack = MatrixStack(identityProvider = Matrix3x3d::identity).apply { push() }
         val rad = (PI / 2)
         stack.rotateRad(0.0, rad, 0.0)
@@ -39,14 +39,14 @@ class MatrixStack3x3dTransformTest {
     }
 
     @Test
-    fun `MatrixStack 3x3 scale should work`() {
+    fun matrixStack3x3ScaleShouldWork() {
         val stack = MatrixStack(identityProvider = Matrix3x3d::identity).apply { push() }
         stack.scale(2.0, 3.0)
         assertMatrix3x3Equals(Matrix3x3d.scale(2.0, 3.0), stack.current())
     }
 
     @Test
-    fun `MatrixStack 3x3 translate should work`() {
+    fun matrixStack3x3TranslateShouldWork() {
         val stack = MatrixStack(identityProvider = Matrix3x3d::identity).apply { push() }
         stack.translate(2.0, 3.0)
         assertMatrix3x3Equals(Matrix3x3d.translation(2.0, 3.0), stack.current())

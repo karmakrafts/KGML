@@ -22,7 +22,7 @@ import kotlin.test.assertNull
 
 class MatrixStackTest {
     @Test
-    fun `push and current should work`() {
+    fun pushAndCurrentShouldWork() {
         val stack = MatrixStack(identityProvider = { Matrix2x2f.identity.copy() })
         stack.push()
         assertEquals(Matrix2x2f.identity, stack.current())
@@ -33,7 +33,7 @@ class MatrixStackTest {
     }
 
     @Test
-    fun `swap should replace current matrix`() {
+    fun swapShouldReplaceCurrentMatrix() {
         val stack = MatrixStack(identityProvider = { Matrix2x2f.identity.copy() })
         stack.push()
         val m1 = Matrix2x2f(1F, 2F, 3F, 4F)
@@ -42,7 +42,7 @@ class MatrixStackTest {
     }
 
     @Test
-    fun `pop should remove and return top matrix`() {
+    fun popShouldRemoveAndReturnTopMatrix() {
         val stack = MatrixStack(identityProvider = { Matrix2x2f.identity.copy() })
         stack.push()
         val m1 = Matrix2x2f(1F, 2F, 3F, 4F)
@@ -55,7 +55,7 @@ class MatrixStackTest {
     }
 
     @Test
-    fun `reduce should multiply all matrices`() {
+    fun reduceShouldMultiplyAllMatrices() {
         val stack = MatrixStack(identityProvider = { Matrix2x2f.identity.copy() })
         val m1 = Matrix2x2f(1F, 2F, 3F, 4F)
         val m2 = Matrix2x2f(5F, 6F, 7F, 8F)
@@ -68,7 +68,7 @@ class MatrixStackTest {
     }
 
     @Test
-    fun `reduce with single element should return that element`() {
+    fun reduceWithSingleElementShouldReturnThatElement() {
         val stack = MatrixStack(identityProvider = { Matrix2x2f.identity.copy() })
         val m1 = Matrix2x2f(1F, 2F, 3F, 4F)
         stack.push(m1)

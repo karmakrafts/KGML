@@ -20,7 +20,6 @@ import dev.karmakrafts.kgml.util.fma
 import dev.karmakrafts.kgml.vector.Vector2f
 import dev.karmakrafts.kgml.vector.VectorN
 import kotlin.jvm.JvmField
-import kotlin.jvm.JvmRecord
 import kotlin.reflect.KClass
 
 /**
@@ -33,7 +32,6 @@ import kotlin.reflect.KClass
  * @property properties The properties of the matrix.
  */
 @Suppress("NOTHING_TO_INLINE")
-@JvmRecord
 data class Matrix2x2f( // @formatter:off
     @JvmField val m00: Float,
     @JvmField val m01: Float,

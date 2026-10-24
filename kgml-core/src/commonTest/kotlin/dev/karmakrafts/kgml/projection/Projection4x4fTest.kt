@@ -23,7 +23,7 @@ import kotlin.test.assertEquals
 
 class Projection4x4fTest {
     @Test
-    fun `orthographic should return orthographic projection matrix`() {
+    fun orthographicShouldReturnOrthographicProjectionMatrix() {
         val matrix = Matrix4x4f.orthographic(-1F, 1F, -1F, 1F, 1F, 10F)
         // rml = 2, tmb = 2, fmn = 9
         // 2/2=1, 2/2=1, -2/9
@@ -36,7 +36,7 @@ class Projection4x4fTest {
     }
 
     @Test
-    fun `perspective should return perspective projection matrix`() {
+    fun perspectiveShouldReturnPerspectiveProjectionMatrix() {
         val matrix = Matrix4x4f.perspective(PI.toFloat() / 2F, 1F, 1F, 10F)
         // f = 1/tan(pi/4) = 1
         // nmf = 1-10 = -9
@@ -50,7 +50,7 @@ class Projection4x4fTest {
     }
 
     @Test
-    fun `orthographic with asymmetrical bounds should return correct matrix`() {
+    fun orthographicWithAsymmetricalBoundsShouldReturnCorrectMatrix() {
         val matrix = Matrix4x4f.orthographic(0F, 2F, 0F, 4F, 1F, 5F)
         // rml = 2, tmb = 4, fmn = 4
         // 2/2=1, 2/4=0.5, -2/4=-0.5
@@ -63,7 +63,7 @@ class Projection4x4fTest {
     }
 
     @Test
-    fun `perspective with different aspect ratio should return correct matrix`() {
+    fun perspectiveWithDifferentAspectRatioShouldReturnCorrectMatrix() {
         val matrix = Matrix4x4f.perspective(PI.toFloat() / 2F, 2F, 1F, 11F)
         // f = 1
         // nmf = 1-11 = -10

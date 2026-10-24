@@ -23,7 +23,7 @@ import kotlin.test.assertEquals
 
 class Matrix2x2fTransformTest {
     @Test
-    fun `Matrix2x2 rotation should work`() {
+    fun matrix2x2RotationShouldWork() {
         val rad = (PI / 2).toFloat()
         val m = Matrix2x2f.rotationRad(rad)
         assertEquals(0f, m.m00, 1e-6f)
@@ -39,7 +39,7 @@ class Matrix2x2fTransformTest {
     }
 
     @Test
-    fun `Matrix2x2 scale should work`() {
+    fun matrix2x2ScaleShouldWork() {
         val m = Matrix2x2f.scale(2f, 3f)
         assertEquals(2f, m.m00, 1e-6f)
         assertEquals(0f, m.m01, 1e-6f)

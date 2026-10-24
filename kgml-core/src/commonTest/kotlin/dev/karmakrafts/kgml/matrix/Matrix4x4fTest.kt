@@ -28,13 +28,13 @@ import kotlin.test.assertFailsWith
 
 class Matrix4x4fTest {
     @Test
-    fun `constructor should initialize to identity`() {
+    fun constructorShouldInitializeToIdentity() {
         val matrix = Matrix4x4f()
         assertEquals(Matrix4x4f(1F, 0F, 0F, 0F, 0F, 1F, 0F, 0F, 0F, 0F, 1F, 0F, 0F, 0F, 0F, 1F), matrix)
     }
 
     @Test
-    fun `constructor with value should initialize all components`() {
+    fun constructorWithValueShouldInitializeAllComponents() {
         val matrix = Matrix4x4f(2F)
         for (i in 0 until 16) {
             assertEquals(2F, matrix[i])
@@ -42,7 +42,7 @@ class Matrix4x4fTest {
     }
 
     @Test
-    fun `companion object properties should be correct`() {
+    fun companionObjectPropertiesShouldBeCorrect() {
         assertEquals(Float::class, Matrix4x4f.componentType)
         assertEquals(Float.SIZE_BYTES, Matrix4x4f.componentSize)
         assertEquals(4, Matrix4x4f.rows)
@@ -51,14 +51,14 @@ class Matrix4x4fTest {
     }
 
     @Test
-    fun `fromArray should create matrix from array at offset`() {
+    fun fromArrayShouldCreateMatrixFromArrayAtOffset() {
         val array = FloatArray(17) { it.toFloat() }
         val matrix = Matrix4x4f.fromArray(array, 1)
         assertEquals(Matrix4x4f(1F, 2F, 3F, 4F, 5F, 6F, 7F, 8F, 9F, 10F, 11F, 12F, 13F, 14F, 15F, 16F), matrix)
     }
 
     @Test
-    fun `fromArray should create matrix from array at offset with properties`() {
+    fun fromArrayShouldCreateMatrixFromArrayAtOffsetWithProperties() {
         val array = FloatArray(17) { it.toFloat() }
         val matrix = Matrix4x4f.fromArray(array, 1, MatrixProperties.AFFINE)
         assertEquals(
@@ -70,7 +70,7 @@ class Matrix4x4fTest {
     }
 
     @Test
-    fun `fromRows should create matrix from vectors`() {
+    fun fromRowsShouldCreateMatrixFromVectors() {
         val row0 = Vector4f(1F, 2F, 3F, 4F)
         val row1 = Vector4f(5F, 6F, 7F, 8F)
         val row2 = Vector4f(9F, 10F, 11F, 12F)
@@ -84,7 +84,7 @@ class Matrix4x4fTest {
     }
 
     @Test
-    fun `fromColumns should create matrix from vectors`() {
+    fun fromColumnsShouldCreateMatrixFromVectors() {
         val column0 = Vector4f(1F, 5F, 9F, 13F)
         val column1 = Vector4f(2F, 6F, 10F, 14F)
         val column2 = Vector4f(3F, 7F, 11F, 15F)
@@ -98,7 +98,7 @@ class Matrix4x4fTest {
     }
 
     @Test
-    fun `row accessors should return correct vectors`() {
+    fun rowAccessorsShouldReturnCorrectVectors() {
         val matrix = Matrix4x4f(1F, 2F, 3F, 4F, 5F, 6F, 7F, 8F, 9F, 10F, 11F, 12F, 13F, 14F, 15F, 16F)
         assertEquals(Vector4f(1F, 2F, 3F, 4F), matrix.row0)
         assertEquals(Vector4f(5F, 6F, 7F, 8F), matrix.row1)
@@ -107,7 +107,7 @@ class Matrix4x4fTest {
     }
 
     @Test
-    fun `column accessors should return correct vectors`() {
+    fun columnAccessorsShouldReturnCorrectVectors() {
         val matrix = Matrix4x4f(1F, 2F, 3F, 4F, 5F, 6F, 7F, 8F, 9F, 10F, 11F, 12F, 13F, 14F, 15F, 16F)
         assertEquals(Vector4f(1F, 5F, 9F, 13F), matrix.column0)
         assertEquals(Vector4f(2F, 6F, 10F, 14F), matrix.column1)
@@ -116,12 +116,12 @@ class Matrix4x4fTest {
     }
 
     @Test
-    fun `type should return Matrix4x4f`() {
+    fun typeShouldReturnMatrix4x4f() {
         assertEquals(Matrix4x4f, Matrix4x4f().type)
     }
 
     @Test
-    fun `transpose should return transposed matrix`() {
+    fun transposeShouldReturnTransposedMatrix() {
         val matrix = Matrix4x4f(
             1F, 2F, 3F, 4F, 5F, 6F, 7F, 8F, 9F, 10F, 11F, 12F, 13F, 14F, 15F, 16F
         )
@@ -132,7 +132,7 @@ class Matrix4x4fTest {
     }
 
     @Test
-    fun `times operator with matrix should multiply matrices`() {
+    fun timesOperatorWithMatrixShouldMultiplyMatrices() {
         val m1 = Matrix4x4f(
             1F, 2F, 3F, 4F, 5F, 6F, 7F, 8F, 9F, 10F, 11F, 12F, 13F, 14F, 15F, 16F
         )
@@ -142,7 +142,7 @@ class Matrix4x4fTest {
     }
 
     @Test
-    fun `times operator with affine matrices should use affine multiplication`() {
+    fun timesOperatorWithAffineMatricesShouldUseAffineMultiplication() {
         val m1 = Matrix4x4f(
             1F, 2F, 3F, 4F, 5F, 6F, 7F, 8F, 9F, 10F, 11F, 12F, 0F, 0F, 0F, 1F, MatrixProperties.AFFINE
         )
@@ -179,7 +179,7 @@ class Matrix4x4fTest {
     }
 
     @Test
-    fun `times operator with affine matrices should transform right translation column`() {
+    fun timesOperatorWithAffineMatricesShouldTransformRightTranslationColumn() {
         val m1 = Matrix4x4f(
             1F, 2F, 3F, 4F, 5F, 6F, 7F, 8F, 9F, 10F, 11F, 12F, 0F, 0F, 0F, 1F, MatrixProperties.AFFINE
         )
@@ -194,7 +194,7 @@ class Matrix4x4fTest {
     }
 
     @Test
-    fun `times operator with perspective and affine matrices should match generic multiplication`() {
+    fun timesOperatorWithPerspectiveAndAffineMatricesShouldMatchGenericMultiplication() {
         val perspective = Matrix4x4f(
             1.5F,
             0F,
@@ -223,7 +223,7 @@ class Matrix4x4fTest {
     }
 
     @Test
-    fun `times operator with vector should multiply matrix by vector`() {
+    fun timesOperatorWithVectorShouldMultiplyMatrixByVector() {
         val matrix = Matrix4x4f(
             1F, 2F, 3F, 4F, 5F, 6F, 7F, 8F, 9F, 10F, 11F, 12F, 13F, 14F, 15F, 16F
         )
@@ -236,7 +236,7 @@ class Matrix4x4fTest {
     }
 
     @Test
-    fun `get should return component by index`() {
+    fun getShouldReturnComponentByIndex() {
         val matrix = Matrix4x4f(1F, 2F, 3F, 4F, 5F, 6F, 7F, 8F, 9F, 10F, 11F, 12F, 13F, 14F, 15F, 16F)
         for (i in 0 until 16) {
             assertEquals((i + 1).toFloat(), matrix[i])
@@ -245,38 +245,38 @@ class Matrix4x4fTest {
     }
 
     @Test
-    fun `get should return component by MatrixComponent`() {
+    fun getShouldReturnComponentByMatrixComponent() {
         val matrix = Matrix4x4f(1F, 2F, 3F, 4F, 5F, 6F, 7F, 8F, 9F, 10F, 11F, 12F, 13F, 14F, 15F, 16F)
         assertEquals(1F, matrix[MatrixComponent.M00])
         assertEquals(16F, matrix[MatrixComponent.M33])
     }
 
     @Test
-    fun `rotationXRad should return rotation matrix around X`() {
+    fun rotationXRadShouldReturnRotationMatrixAroundX() {
         val matrix = Matrix4x4f.rotationRad(angleX = PI.toFloat() / 2F)
         assertMatrixEquals(Matrix4x4f(1F, 0F, 0F, 0F, 0F, 0F, -1F, 0F, 0F, 1F, 0F, 0F, 0F, 0F, 0F, 1F), matrix)
     }
 
     @Test
-    fun `translation should return translation matrix`() {
+    fun translationShouldReturnTranslationMatrix() {
         val matrix = Matrix4x4f.translation(2F, 3F, 4F)
         assertEquals(Matrix4x4f(1F, 0F, 0F, 2F, 0F, 1F, 0F, 3F, 0F, 0F, 1F, 4F, 0F, 0F, 0F, 1F), matrix)
     }
 
     @Test
-    fun `scale should return scale matrix`() {
+    fun scaleShouldReturnScaleMatrix() {
         val matrix = Matrix4x4f.scale(2F, 3F, 4F)
         assertEquals(Matrix4x4f(2F, 0F, 0F, 0F, 0F, 3F, 0F, 0F, 0F, 0F, 4F, 0F, 0F, 0F, 0F, 1F), matrix)
     }
 
     @Test
-    fun `skew should return skew matrix`() {
+    fun skewShouldReturnSkewMatrix() {
         val matrix = Matrix4x4f.skew(xy = 1F)
         assertEquals(Matrix4x4f(1F, 1F, 0F, 0F, 0F, 1F, 0F, 0F, 0F, 0F, 1F, 0F, 0F, 0F, 0F, 1F), matrix)
     }
 
     @Test
-    fun `translation times scale should preserve translation`() {
+    fun translationTimesScaleShouldPreserveTranslation() {
         val t = Matrix4x4f.translation(10F, 20F, 30F)
         val s = Matrix4x4f.scale(2F, 3F, 4F)
         val result = t * s
@@ -304,14 +304,14 @@ class Matrix4x4fTest {
     }
 
     @Test
-    fun `times operator with incompatible matrix should throw exception`() {
+    fun timesOperatorWithIncompatibleMatrixShouldThrowException() {
         val m1 = Matrix4x4f()
         val m2 = Matrix2x2f()
         assertFailsWith<IllegalArgumentException> { m1.times(m2) }
     }
 
     @Test
-    fun `times operator with incompatible vector should throw exception`() {
+    fun timesOperatorWithIncompatibleVectorShouldThrowException() {
         val matrix = Matrix4x4f()
         val vector = dev.karmakrafts.kgml.vector.Vector2f()
         assertFailsWith<IllegalArgumentException> { matrix.times(vector) }

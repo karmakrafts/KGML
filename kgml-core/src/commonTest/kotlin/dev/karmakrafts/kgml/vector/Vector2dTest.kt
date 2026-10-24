@@ -25,137 +25,137 @@ import kotlin.test.assertTrue
 
 class Vector2dTest {
     @Test
-    fun `constructor should initialize components to zero`() {
+    fun constructorShouldInitializeComponentsToZero() {
         assertEquals(Vector2d(0.0, 0.0), Vector2d())
     }
 
     @Test
-    fun `constructor should initialize all components to given value`() {
+    fun constructorShouldInitializeAllComponentsToGivenValue() {
         assertEquals(Vector2d(2.0, 2.0), Vector2d(2.0))
     }
 
     @Test
-    fun `componentType should return Double`() {
+    fun componentTypeShouldReturnDouble() {
         assertEquals(Double::class, Vector2d.componentType)
     }
 
     @Test
-    fun `componentSize should return size of Double in bytes`() {
+    fun componentSizeShouldReturnSizeOfDoubleInBytes() {
         assertEquals(Double.SIZE_BYTES, Vector2d.componentSize)
     }
 
     @Test
-    fun `dimensions should return 2`() {
+    fun dimensionsShouldReturn2() {
         assertEquals(2, Vector2d.dimensions)
     }
 
     @Test
-    fun `components should return X and Y`() {
+    fun componentsShouldReturnXAndY() {
         assertContentEquals(arrayOf(VectorComponent.X, VectorComponent.Y), Vector2d.components)
     }
 
     @Test
-    fun `zero should return vector with all zeros`() {
+    fun zeroShouldReturnVectorWithAllZeros() {
         assertEquals(Vector2d.ZERO, Vector2d(0.0, 0.0))
     }
 
     @Test
-    fun `one should return vector with all ones`() {
+    fun oneShouldReturnVectorWithAllOnes() {
         assertEquals(Vector2d.ONE, Vector2d(1.0, 1.0))
     }
 
     @Test
-    fun `fromArray should create vector from array at offset`() {
+    fun fromArrayShouldCreateVectorFromArrayAtOffset() {
         assertEquals(Vector2d(2.0, 3.0), Vector2d.fromArray(doubleArrayOf(0.0, 2.0, 3.0), 1))
     }
 
     @Test
-    fun `type should return Vector2d`() {
+    fun typeShouldReturnVector2d() {
         val vector = Vector2d(3.0, 4.0)
         assertEquals(Vector2d, vector.type)
     }
 
     @Test
-    fun `plus operator with scalar should add value to all components`() {
+    fun plusOperatorWithScalarShouldAddValueToAllComponents() {
         val vector = Vector2d(3.0, 4.0)
         assertEquals(Vector2d(5.0, 6.0), vector + 2.0)
     }
 
     @Test
-    fun `plus operator with vector should add components`() {
+    fun plusOperatorWithVectorShouldAddComponents() {
         val vector = Vector2d(3.0, 4.0)
         val other = Vector2d(5.0, 6.0)
         assertEquals(Vector2d(8.0, 10.0), vector + other)
     }
 
     @Test
-    fun `minus operator with scalar should subtract value from all components`() {
+    fun minusOperatorWithScalarShouldSubtractValueFromAllComponents() {
         val vector = Vector2d(3.0, 4.0)
         assertEquals(Vector2d(1.0, 2.0), vector - 2.0)
     }
 
     @Test
-    fun `minus operator with vector should subtract components`() {
+    fun minusOperatorWithVectorShouldSubtractComponents() {
         val vector = Vector2d(3.0, 4.0)
         val other = Vector2d(5.0, 6.0)
         assertEquals(Vector2d(-2.0, -2.0), vector - other)
     }
 
     @Test
-    fun `times operator with scalar should multiply all components`() {
+    fun timesOperatorWithScalarShouldMultiplyAllComponents() {
         val vector = Vector2d(3.0, 4.0)
         assertEquals(Vector2d(6.0, 8.0), vector * 2.0)
     }
 
     @Test
-    fun `times operator with vector should multiply components`() {
+    fun timesOperatorWithVectorShouldMultiplyComponents() {
         val vector = Vector2d(3.0, 4.0)
         val other = Vector2d(5.0, 6.0)
         assertEquals(Vector2d(15.0, 24.0), vector * other)
     }
 
     @Test
-    fun `div operator with scalar should divide all components`() {
+    fun divOperatorWithScalarShouldDivideAllComponents() {
         val vector = Vector2d(3.0, 4.0)
         assertEquals(Vector2d(1.5, 2.0), vector / 2.0)
     }
 
     @Test
-    fun `div operator with vector should divide components`() {
+    fun divOperatorWithVectorShouldDivideComponents() {
         val vector = Vector2d(3.0, 4.0)
         val other = Vector2d(5.0, 6.0)
         assertEquals(Vector2d(0.6, 2.0 / 3.0), vector / other)
     }
 
     @Test
-    fun `rem operator with scalar should calculate remainder of all components`() {
+    fun remOperatorWithScalarShouldCalculateRemainderOfAllComponents() {
         val vector = Vector2d(3.0, 4.0)
         assertEquals(Vector2d(1.0, 0.0), vector % 2.0)
     }
 
     @Test
-    fun `rem operator with vector should calculate remainder of components`() {
+    fun remOperatorWithVectorShouldCalculateRemainderOfComponents() {
         val vector = Vector2d(3.0, 4.0)
         val other = Vector2d(5.0, 6.0)
         assertEquals(Vector2d(3.0, 4.0), vector % other)
     }
 
     @Test
-    fun `fma should calculate fused multiply add`() {
+    fun fmaShouldCalculateFusedMultiplyAdd() {
         val vector = Vector2d(3.0, 4.0)
         val other = Vector2d(5.0, 6.0)
         assertEquals(Vector2d(17.0, 26.0), vector.fma(other, Vector2d(2.0, 2.0)))
     }
 
     @Test
-    fun `lerp should linearly interpolate between vectors`() {
+    fun lerpShouldLinearlyInterpolateBetweenVectors() {
         val vector = Vector2d(3.0, 4.0)
         val other = Vector2d(5.0, 6.0)
         assertEquals(Vector2d(4.0, 5.0), vector.lerp(other, 0.5))
     }
 
     @Test
-    fun `min should return the smaller vector`() {
+    fun minShouldReturnTheSmallerVector() {
         val v1 = Vector2d(1.0, 2.0)
         val v2 = Vector2d(3.0, 4.0)
         assertEquals(v1, v1 min v2)
@@ -163,14 +163,14 @@ class Vector2dTest {
     }
 
     @Test
-    fun `minComponents should return the component-wise minimum`() {
+    fun minComponentsShouldReturnTheComponentWiseMinimum() {
         val v1 = Vector2d(1.0, 4.0)
         val v2 = Vector2d(3.0, 2.0)
         assertEquals(Vector2d(1.0, 2.0), v1 minComponents v2)
     }
 
     @Test
-    fun `max should return the larger vector`() {
+    fun maxShouldReturnTheLargerVector() {
         val v1 = Vector2d(1.0, 2.0)
         val v2 = Vector2d(3.0, 4.0)
         assertEquals(v2, v1 max v2)
@@ -178,110 +178,110 @@ class Vector2dTest {
     }
 
     @Test
-    fun `maxComponents should return the component-wise maximum`() {
+    fun maxComponentsShouldReturnTheComponentWiseMaximum() {
         val v1 = Vector2d(1.0, 4.0)
         val v2 = Vector2d(3.0, 2.0)
         assertEquals(Vector2d(3.0, 4.0), v1 maxComponents v2)
     }
 
     @Test
-    fun `lengthSq should return squared length of vector`() {
+    fun lengthSqShouldReturnSquaredLengthOfVector() {
         val vector = Vector2d(3.0, 4.0)
         assertEquals(25.0, vector.lengthSq())
     }
 
     @Test
-    fun `length should return length of vector`() {
+    fun lengthShouldReturnLengthOfVector() {
         val vector = Vector2d(3.0, 4.0)
         assertFloatEquals(5.0, vector.length())
     }
 
     @Test
-    fun `normalized should return normalized vector`() {
+    fun normalizedShouldReturnNormalizedVector() {
         val vector = Vector2d(3.0, 4.0)
         assertVectorEquals(Vector2d(0.6, 0.8), vector.normalized())
     }
 
     @Test
-    fun `distanceSq should return squared distance to another vector`() {
+    fun distanceSqShouldReturnSquaredDistanceToAnotherVector() {
         val vector = Vector2d(3.0, 4.0)
         assertEquals(8.0, vector distanceSq Vector2d(1.0, 2.0))
     }
 
     @Test
-    fun `distance should return distance to another vector`() {
+    fun distanceShouldReturnDistanceToAnotherVector() {
         val vector = Vector2d(3.0, 4.0)
         assertFloatEquals(5.0, vector distance Vector2d(0.0, 0.0))
     }
 
     @Test
-    fun `dot should return dot product`() {
+    fun dotShouldReturnDotProduct() {
         val vector = Vector2d(3.0, 4.0)
         val other = Vector2d(5.0, 6.0)
         assertEquals(39.0, vector dot other)
     }
 
     @Test
-    fun `cross should return cross product`() {
+    fun crossShouldReturnCrossProduct() {
         val vector = Vector2d(3.0, 4.0)
         val other = Vector2d(5.0, 6.0)
         assertEquals(-2.0, vector cross other)
     }
 
     @Test
-    fun `angleRad should return angle in radians`() {
+    fun angleRadShouldReturnAngleInRadians() {
         val v1 = Vector2d(1.0, 0.0)
         val v2 = Vector2d(0.0, 1.0)
         assertFloatEquals(1.5707964, v1 angleRad v2)
     }
 
     @Test
-    fun `angle should return angle in degrees`() {
+    fun angleShouldReturnAngleInDegrees() {
         val v1 = Vector2d(1.0, 0.0)
         val v2 = Vector2d(0.0, 1.0)
         assertFloatEquals(90.0, v1 angle v2)
     }
 
     @Test
-    fun `toVector2i should convert to Vector2i`() {
+    fun toVector2iShouldConvertToVector2i() {
         val vector = Vector2d(3.0, 4.0)
         assertEquals(Vector2i(3, 4), vector.toVector2i())
     }
 
     @Test
-    fun `times operator with matrix should multiply vector by matrix`() {
+    fun timesOperatorWithMatrixShouldMultiplyVectorByMatrix() {
         val vector = Vector2d(3.0, 4.0)
         assertEquals(Vector2d(11.0, 25.0), vector * Matrix2x2d(1.0, 2.0, 3.0, 4.0))
     }
 
     @Test
-    fun `get should return component by index`() {
+    fun getShouldReturnComponentByIndex() {
         val vector = Vector2d(3.0, 4.0)
         assertEquals(3.0, vector[0])
         assertFailsWith<IllegalArgumentException> { vector[2] }
     }
 
     @Test
-    fun `get should return component by VectorComponent`() {
+    fun getShouldReturnComponentByVectorComponent() {
         val vector = Vector2d(3.0, 4.0)
         assertEquals(4.0, vector[VectorComponent.Y])
         assertFailsWith<IllegalArgumentException> { vector[VectorComponent.Z] }
     }
 
     @Test
-    fun `toDoubleArray should return components as float array`() {
+    fun toDoubleArrayShouldReturnComponentsAsFloatArray() {
         val vector = Vector2d(3.0, 4.0)
         assertContentEquals(doubleArrayOf(3.0, 4.0), vector.toDoubleArray())
     }
 
     @Test
-    fun `swizzle should return swizzled vector`() {
+    fun swizzleShouldReturnSwizzledVector() {
         val vector = Vector2d(3.0, 4.0)
         assertEquals(Vector2d(4.0, 3.0), vector.swizzle(VectorComponent.Y, VectorComponent.X))
     }
 
     @Test
-    fun `compareTo should return magnitude comparison`() {
+    fun compareToShouldReturnMagnitudeComparison() {
         val v1 = Vector2d(1.0, 2.0)
         val v2 = Vector2d(1.0, 2.0)
         val v3 = Vector2d(2.0, 1.0)

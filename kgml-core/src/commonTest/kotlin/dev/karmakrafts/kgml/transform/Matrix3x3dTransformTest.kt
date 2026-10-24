@@ -23,7 +23,7 @@ import kotlin.test.assertEquals
 
 class Matrix3x3dTransformTest {
     @Test
-    fun `Matrix3x3 rotation should work`() {
+    fun matrix3x3RotationShouldWork() {
         val rad = (PI / 2)
 
         // Z-axis rotation
@@ -69,7 +69,7 @@ class Matrix3x3dTransformTest {
     }
 
     @Test
-    fun `Matrix3x3 translation should work`() {
+    fun matrix3x3TranslationShouldWork() {
         val m = Matrix3x3d.translation(2.0, 3.0)
         assertEquals(1.0, m.m00, 1e-6)
         assertEquals(0.0, m.m01, 1e-6)
@@ -83,7 +83,7 @@ class Matrix3x3dTransformTest {
     }
 
     @Test
-    fun `Matrix3x3 rotation from quaternion should work`() {
+    fun matrix3x3RotationFromQuaternionShouldWork() {
         val q = Quaternion4d.fromAngles(90.0, 0.0, 0.0)
         val m = Matrix3x3d.identity * q
         assertMatrix3x3Equals(Matrix3x3d.rotation(angleX = 90.0), m)

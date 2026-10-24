@@ -20,7 +20,6 @@ import dev.karmakrafts.kgml.matrix.Matrix3x3d
 import dev.karmakrafts.kgml.util.fma
 import dev.karmakrafts.kgml.util.toDegrees
 import kotlin.jvm.JvmField
-import kotlin.jvm.JvmRecord
 import kotlin.math.atan2
 import kotlin.math.max
 import kotlin.math.min
@@ -35,7 +34,6 @@ import kotlin.reflect.KClass
  * @param z The Z component.
  */
 @Suppress("NOTHING_TO_INLINE")
-@JvmRecord
 data class Vector3d( // @formatter:off
     @JvmField val x: Double,
     @JvmField val y: Double,

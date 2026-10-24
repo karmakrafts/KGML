@@ -34,6 +34,7 @@ import dev.karmakrafts.conventions.kotlin.withWeb
 import dev.karmakrafts.conventions.setProjectInfo
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.plugin.mpp.NativeBuildType
 import org.jetbrains.kotlin.gradle.targets.jvm.tasks.KotlinJvmTest
 import java.time.Duration
@@ -59,6 +60,7 @@ kotlin {
     defaultCompilerOptions()
     withSourcesJar()
     withAndroidLibrary("$group.core") {
+        enableCoreLibraryDesugaring = true
         withDefaultHostTests()
         withDefaultDeviceTests()
     }
@@ -143,6 +145,10 @@ kotlin {
             }
         }
     }
+}
+
+dependencies {
+    coreLibraryDesugaring(libs.android.desugarJdkLibs)
 }
 
 tasks {

@@ -24,149 +24,149 @@ import kotlin.test.assertTrue
 
 class Vector2iTest {
     @Test
-    fun `distanceSq should return squared distance to another vector`() {
+    fun distanceSqShouldReturnSquaredDistanceToAnotherVector() {
         val vector = Vector2i(3, 4)
         assertEquals(8, vector distanceSq Vector2i(1, 2))
     }
 
     @Test
-    fun `distance should return distance to another vector`() {
+    fun distanceShouldReturnDistanceToAnotherVector() {
         val vector = Vector2i(3, 4)
         assertEquals(5, vector distance Vector2i(0, 0))
     }
 
     @Test
-    fun `constructor should initialize components to zero`() {
+    fun constructorShouldInitializeComponentsToZero() {
         assertEquals(Vector2i(0, 0), Vector2i())
     }
 
     @Test
-    fun `constructor should initialize all components to given value`() {
+    fun constructorShouldInitializeAllComponentsToGivenValue() {
         assertEquals(Vector2i(2, 2), Vector2i(2))
     }
 
     @Test
-    fun `componentType should return Int`() {
+    fun componentTypeShouldReturnInt() {
         assertEquals(Int::class, Vector2i.componentType)
     }
 
     @Test
-    fun `componentSize should return size of Int in bytes`() {
+    fun componentSizeShouldReturnSizeOfIntInBytes() {
         assertEquals(Int.SIZE_BYTES, Vector2i.componentSize)
     }
 
     @Test
-    fun `dimensions should return 2`() {
+    fun dimensionsShouldReturn2() {
         assertEquals(2, Vector2i.dimensions)
     }
 
     @Test
-    fun `components should return X and Y`() {
+    fun componentsShouldReturnXAndY() {
         assertContentEquals(arrayOf(VectorComponent.X, VectorComponent.Y), Vector2i.components)
     }
 
     @Test
-    fun `zero should return vector with all zeros`() {
+    fun zeroShouldReturnVectorWithAllZeros() {
         assertEquals(Vector2i.ZERO, Vector2i(0, 0))
     }
 
     @Test
-    fun `one should return vector with all ones`() {
+    fun oneShouldReturnVectorWithAllOnes() {
         assertEquals(Vector2i.ONE, Vector2i(1, 1))
     }
 
     @Test
-    fun `fromArray should create vector from array at offset`() {
+    fun fromArrayShouldCreateVectorFromArrayAtOffset() {
         assertEquals(Vector2i(2, 3), Vector2i.fromArray(intArrayOf(0, 2, 3), 1))
     }
 
     @Test
-    fun `type should return Vector2i`() {
+    fun typeShouldReturnVector2i() {
         val vector = Vector2i(3, 4)
         assertEquals(Vector2i, vector.type)
     }
 
     @Test
-    fun `plus operator with scalar should add value to all components`() {
+    fun plusOperatorWithScalarShouldAddValueToAllComponents() {
         val vector = Vector2i(3, 4)
         assertEquals(Vector2i(5, 6), vector + 2)
     }
 
     @Test
-    fun `plus operator with vector should add components`() {
+    fun plusOperatorWithVectorShouldAddComponents() {
         val vector = Vector2i(3, 4)
         val other = Vector2i(5, 6)
         assertEquals(Vector2i(8, 10), vector + other)
     }
 
     @Test
-    fun `minus operator with scalar should subtract value from all components`() {
+    fun minusOperatorWithScalarShouldSubtractValueFromAllComponents() {
         val vector = Vector2i(3, 4)
         assertEquals(Vector2i(1, 2), vector - 2)
     }
 
     @Test
-    fun `minus operator with vector should subtract components`() {
+    fun minusOperatorWithVectorShouldSubtractComponents() {
         val vector = Vector2i(3, 4)
         val other = Vector2i(5, 6)
         assertEquals(Vector2i(-2, -2), vector - other)
     }
 
     @Test
-    fun `times operator with scalar should multiply all components`() {
+    fun timesOperatorWithScalarShouldMultiplyAllComponents() {
         val vector = Vector2i(3, 4)
         assertEquals(Vector2i(6, 8), vector * 2)
     }
 
     @Test
-    fun `times operator with vector should multiply components`() {
+    fun timesOperatorWithVectorShouldMultiplyComponents() {
         val vector = Vector2i(3, 4)
         val other = Vector2i(5, 6)
         assertEquals(Vector2i(15, 24), vector * other)
     }
 
     @Test
-    fun `div operator with scalar should divide all components`() {
+    fun divOperatorWithScalarShouldDivideAllComponents() {
         val vector = Vector2i(3, 4)
         assertEquals(Vector2i(1, 2), vector / 2)
     }
 
     @Test
-    fun `div operator with vector should divide components`() {
+    fun divOperatorWithVectorShouldDivideComponents() {
         val vector = Vector2i(3, 4)
         val other = Vector2i(5, 6)
         assertEquals(Vector2i(0, 0), vector / other)
     }
 
     @Test
-    fun `rem operator with scalar should calculate remainder of all components`() {
+    fun remOperatorWithScalarShouldCalculateRemainderOfAllComponents() {
         val vector = Vector2i(3, 4)
         assertEquals(Vector2i(1, 0), vector % 2)
     }
 
     @Test
-    fun `rem operator with vector should calculate remainder of components`() {
+    fun remOperatorWithVectorShouldCalculateRemainderOfComponents() {
         val vector = Vector2i(3, 4)
         val other = Vector2i(5, 6)
         assertEquals(Vector2i(3, 4), vector % other)
     }
 
     @Test
-    fun `fma should calculate fused multiply add`() {
+    fun fmaShouldCalculateFusedMultiplyAdd() {
         val vector = Vector2i(3, 4)
         val other = Vector2i(5, 6)
         assertEquals(Vector2i(17, 26), vector.fma(other, Vector2i(2, 2)))
     }
 
     @Test
-    fun `lerp should linearly interpolate between vectors`() {
+    fun lerpShouldLinearlyInterpolateBetweenVectors() {
         val vector = Vector2i(3, 4)
         val other = Vector2i(5, 6)
         assertEquals(Vector2i(4, 5), vector.lerp(other, 0.5F))
     }
 
     @Test
-    fun `min should return the smaller vector`() {
+    fun minShouldReturnTheSmallerVector() {
         val v1 = Vector2i(1, 2)
         val v2 = Vector2i(3, 4)
         assertEquals(v1, v1 min v2)
@@ -174,14 +174,14 @@ class Vector2iTest {
     }
 
     @Test
-    fun `minComponents should return the component-wise minimum`() {
+    fun minComponentsShouldReturnTheComponentWiseMinimum() {
         val v1 = Vector2i(1, 4)
         val v2 = Vector2i(3, 2)
         assertEquals(Vector2i(1, 2), v1 minComponents v2)
     }
 
     @Test
-    fun `max should return the larger vector`() {
+    fun maxShouldReturnTheLargerVector() {
         val v1 = Vector2i(1, 2)
         val v2 = Vector2i(3, 4)
         assertEquals(v2, v1 max v2)
@@ -189,92 +189,92 @@ class Vector2iTest {
     }
 
     @Test
-    fun `maxComponents should return the component-wise maximum`() {
+    fun maxComponentsShouldReturnTheComponentWiseMaximum() {
         val v1 = Vector2i(1, 4)
         val v2 = Vector2i(3, 2)
         assertEquals(Vector2i(3, 4), v1 maxComponents v2)
     }
 
     @Test
-    fun `lengthSq should return squared length of vector`() {
+    fun lengthSqShouldReturnSquaredLengthOfVector() {
         val vector = Vector2i(3, 4)
         assertEquals(25, vector.lengthSq())
     }
 
     @Test
-    fun `length should return length of vector`() {
+    fun lengthShouldReturnLengthOfVector() {
         val vector = Vector2i(3, 4)
         assertEquals(5, vector.length())
     }
 
     @Test
-    fun `normalized should return normalized vector`() {
+    fun normalizedShouldReturnNormalizedVector() {
         val vector = Vector2i(3, 4)
         assertEquals(Vector2i(0, 0), vector.normalized())
     }
 
     @Test
-    fun `dot should return dot product`() {
+    fun dotShouldReturnDotProduct() {
         val vector = Vector2i(3, 4)
         val other = Vector2i(5, 6)
         assertEquals(39, vector dot other)
     }
 
     @Test
-    fun `cross should return cross product`() {
+    fun crossShouldReturnCrossProduct() {
         val vector = Vector2i(3, 4)
         val other = Vector2i(5, 6)
         assertEquals(-2, vector cross other)
     }
 
     @Test
-    fun `angleRad should return angle in radians`() {
+    fun angleRadShouldReturnAngleInRadians() {
         val v1 = Vector2i(1, 0)
         val v2 = Vector2i(0, 1)
         assertEquals(1, v1 angleRad v2)
     }
 
     @Test
-    fun `angle should return angle in degrees`() {
+    fun angleShouldReturnAngleInDegrees() {
         val v1 = Vector2i(1, 0)
         val v2 = Vector2i(0, 1)
         assertEquals(57, v1 angle v2)
     }
 
     @Test
-    fun `toVector2f should convert to Vector2f`() {
+    fun toVector2fShouldConvertToVector2f() {
         val vector = Vector2i(3, 4)
         assertEquals(Vector2f(3F, 4F), vector.toVector2f())
     }
 
     @Test
-    fun `get should return component by index`() {
+    fun getShouldReturnComponentByIndex() {
         val vector = Vector2i(3, 4)
         assertEquals(3, vector[0])
         assertFailsWith<IllegalArgumentException> { vector[2] }
     }
 
     @Test
-    fun `get should return component by VectorComponent`() {
+    fun getShouldReturnComponentByVectorComponent() {
         val vector = Vector2i(3, 4)
         assertEquals(4, vector[VectorComponent.Y])
         assertFailsWith<IllegalArgumentException> { vector[VectorComponent.Z] }
     }
 
     @Test
-    fun `toIntArray should return components as int array`() {
+    fun toIntArrayShouldReturnComponentsAsIntArray() {
         val vector = Vector2i(3, 4)
         assertContentEquals(intArrayOf(3, 4), vector.toIntArray())
     }
 
     @Test
-    fun `swizzle should return swizzled vector`() {
+    fun swizzleShouldReturnSwizzledVector() {
         val vector = Vector2i(3, 4)
         assertEquals(Vector2i(4, 3), vector.swizzle(VectorComponent.Y, VectorComponent.X))
     }
 
     @Test
-    fun `compareTo should return magnitude comparison`() {
+    fun compareToShouldReturnMagnitudeComparison() {
         val v1 = Vector2i(1, 2)
         val v2 = Vector2i(1, 2)
         val v3 = Vector2i(2, 1)

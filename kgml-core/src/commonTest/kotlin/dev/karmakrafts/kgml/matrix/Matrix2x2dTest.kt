@@ -31,7 +31,7 @@ import kotlin.test.assertTrue
 
 class Matrix2x2dTest {
     @Test
-    fun `constructor should initialize to identity`() {
+    fun constructorShouldInitializeToIdentity() {
         val matrix = Matrix2x2d()
         assertEquals(1.0, matrix.m00)
         assertEquals(0.0, matrix.m01)
@@ -40,7 +40,7 @@ class Matrix2x2dTest {
     }
 
     @Test
-    fun `constructor with value should initialize all components`() {
+    fun constructorWithValueShouldInitializeAllComponents() {
         val matrix = Matrix2x2d(2.0)
         assertEquals(2.0, matrix.m00)
         assertEquals(2.0, matrix.m01)
@@ -49,7 +49,7 @@ class Matrix2x2dTest {
     }
 
     @Test
-    fun `companion object properties should be correct`() {
+    fun companionObjectPropertiesShouldBeCorrect() {
         assertEquals(Double::class, Matrix2x2d.componentType)
         assertEquals(Double.SIZE_BYTES, Matrix2x2d.componentSize)
         assertEquals(2, Matrix2x2d.rows)
@@ -62,14 +62,14 @@ class Matrix2x2dTest {
     }
 
     @Test
-    fun `fromArray should create matrix from array at offset`() {
+    fun fromArrayShouldCreateMatrixFromArrayAtOffset() {
         val array = doubleArrayOf(0.0, 1.0, 2.0, 3.0, 4.0, 5.0)
         val matrix = Matrix2x2d.fromArray(array, 1)
         assertEquals(Matrix2x2d(1.0, 2.0, 3.0, 4.0), matrix)
     }
 
     @Test
-    fun `fromArray should create matrix from array at offset with properties`() {
+    fun fromArrayShouldCreateMatrixFromArrayAtOffsetWithProperties() {
         val array = doubleArrayOf(0.0, 1.0, 2.0, 3.0, 4.0, 5.0)
         val matrix = Matrix2x2d.fromArray(array, 1, MatrixProperties.AFFINE)
         assertEquals(Matrix2x2d(1.0, 2.0, 3.0, 4.0, MatrixProperties.AFFINE), matrix)
@@ -77,7 +77,7 @@ class Matrix2x2dTest {
     }
 
     @Test
-    fun `fromRows should create matrix from vectors`() {
+    fun fromRowsShouldCreateMatrixFromVectors() {
         val row0 = Vector2d(1.0, 2.0)
         val row1 = Vector2d(3.0, 4.0)
         val matrix = Matrix2x2d.fromRows(row0, row1, MatrixProperties.AFFINE)
@@ -85,7 +85,7 @@ class Matrix2x2dTest {
     }
 
     @Test
-    fun `fromColumns should create matrix from vectors`() {
+    fun fromColumnsShouldCreateMatrixFromVectors() {
         val column0 = Vector2d(1.0, 3.0)
         val column1 = Vector2d(2.0, 4.0)
         val matrix = Matrix2x2d.fromColumns(column0, column1, MatrixProperties.AFFINE)
@@ -93,39 +93,39 @@ class Matrix2x2dTest {
     }
 
     @Test
-    fun `row accessors should return correct vectors`() {
+    fun rowAccessorsShouldReturnCorrectVectors() {
         val matrix = Matrix2x2d(1.0, 2.0, 3.0, 4.0)
         assertEquals(Vector2d(1.0, 2.0), matrix.row0)
         assertEquals(Vector2d(3.0, 4.0), matrix.row1)
     }
 
     @Test
-    fun `column accessors should return correct vectors`() {
+    fun columnAccessorsShouldReturnCorrectVectors() {
         val matrix = Matrix2x2d(1.0, 2.0, 3.0, 4.0)
         assertEquals(Vector2d(1.0, 3.0), matrix.column0)
         assertEquals(Vector2d(2.0, 4.0), matrix.column1)
     }
 
     @Test
-    fun `type should return Matrix2x2d`() {
+    fun typeShouldReturnMatrix2x2d() {
         assertEquals(Matrix2x2d, Matrix2x2d().type)
     }
 
     @Test
-    fun `extend should return Matrix3x3d`() {
+    fun extendShouldReturnMatrix3x3d() {
         val matrix = Matrix2x2d(1.0, 2.0, 3.0, 4.0)
         val extended = matrix.extend()
         assertEquals(Matrix3x3d(1.0, 2.0, 0.0, 3.0, 4.0, 0.0, 0.0, 0.0, 1.0), extended)
     }
 
     @Test
-    fun `transpose should return transposed matrix`() {
+    fun transposeShouldReturnTransposedMatrix() {
         val matrix = Matrix2x2d(1.0, 2.0, 3.0, 4.0)
         assertEquals(Matrix2x2d(1.0, 3.0, 2.0, 4.0), matrix.transpose())
     }
 
     @Test
-    fun `times operator with matrix should multiply matrices`() {
+    fun timesOperatorWithMatrixShouldMultiplyMatrices() {
         val m1 = Matrix2x2d(1.0, 2.0, 3.0, 4.0)
         val m2 = Matrix2x2d(5.0, 6.0, 7.0, 8.0)
         // [1 2] [5 6] = [1*5+2*7 1*6+2*8] = [19 22]
@@ -138,7 +138,7 @@ class Matrix2x2dTest {
     }
 
     @Test
-    fun `times operator with identity should return existing matrix`() {
+    fun timesOperatorWithIdentityShouldReturnExistingMatrix() {
         val matrix = Matrix2x2d(1.0, 2.0, 3.0, 4.0, MatrixProperties.AFFINE)
         val identity = Matrix2x2d.identity
         assertSame(matrix, matrix * identity)
@@ -148,7 +148,7 @@ class Matrix2x2dTest {
     }
 
     @Test
-    fun `times operator with diagonal matrices should multiply scales`() {
+    fun timesOperatorWithDiagonalMatricesShouldMultiplyScales() {
         val result = Matrix2x2d.scale(2.0, 3.0) * Matrix2x2d.scale(5.0, 7.0)
         assertEquals(Matrix2x2d(10.0, 0.0, 0.0, 21.0), result)
         assertTrue(result.properties.isAffine)
@@ -157,7 +157,7 @@ class Matrix2x2dTest {
     }
 
     @Test
-    fun `times operator with diagonal operand should preserve linear result only`() {
+    fun timesOperatorWithDiagonalOperandShouldPreserveLinearResultOnly() {
         val generic = Matrix2x2d(1.0, 2.0, 3.0, 4.0, MatrixProperties.AFFINE or MatrixProperties.LINEAR)
         val result = generic * Matrix2x2d.scale(5.0, 7.0)
         assertEquals(Matrix2x2d(5.0, 14.0, 15.0, 28.0), result)
@@ -168,7 +168,7 @@ class Matrix2x2dTest {
     }
 
     @Test
-    fun `times operator with rotation matrices should preserve rotation`() {
+    fun timesOperatorWithRotationMatricesShouldPreserveRotation() {
         val result = Matrix2x2d.rotation(30.0) * Matrix2x2d.rotation(60.0)
         assertMatrixEquals(Matrix2x2d.rotation(90.0), result)
         assertTrue(result.properties.isAffine)
@@ -177,7 +177,7 @@ class Matrix2x2dTest {
     }
 
     @Test
-    fun `times operator with vector should multiply matrix by vector`() {
+    fun timesOperatorWithVectorShouldMultiplyMatrixByVector() {
         val matrix = Matrix2x2d(1.0, 2.0, 3.0, 4.0)
         val vector = Vector2d(5.0, 6.0)
         // [1 2] [5] = [1*5+2*6] = [17]
@@ -186,7 +186,7 @@ class Matrix2x2dTest {
     }
 
     @Test
-    fun `get should return component by index`() {
+    fun getShouldReturnComponentByIndex() {
         val matrix = Matrix2x2d(1.0, 2.0, 3.0, 4.0)
         assertEquals(1.0, matrix[0])
         assertEquals(2.0, matrix[1])
@@ -196,7 +196,7 @@ class Matrix2x2dTest {
     }
 
     @Test
-    fun `get should return component by MatrixComponent`() {
+    fun getShouldReturnComponentByMatrixComponent() {
         val matrix = Matrix2x2d(1.0, 2.0, 3.0, 4.0)
         assertEquals(1.0, matrix[MatrixComponent.M00])
         assertEquals(2.0, matrix[MatrixComponent.M01])
@@ -206,13 +206,13 @@ class Matrix2x2dTest {
     }
 
     @Test
-    fun `toDoubleArray should return components as float array`() {
+    fun toDoubleArrayShouldReturnComponentsAsFloatArray() {
         val matrix = Matrix2x2d(1.0, 2.0, 3.0, 4.0)
         assertContentEquals(doubleArrayOf(1.0, 2.0, 3.0, 4.0), matrix.toDoubleArray())
     }
 
     @Test
-    fun `rotationRad should return rotation matrix`() {
+    fun rotationRadShouldReturnRotationMatrix() {
         val angle = PI / 2.0
         val matrix = Matrix2x2d.rotationRad(angle)
         // cos(pi/2) = 0, sin(pi/2) = 1
@@ -223,33 +223,33 @@ class Matrix2x2dTest {
     }
 
     @Test
-    fun `rotation should return rotation matrix`() {
+    fun rotationShouldReturnRotationMatrix() {
         val matrix = Matrix2x2d.rotation(90.0)
         assertMatrixEquals(Matrix2x2d(0.0, -1.0, 1.0, 0.0), matrix)
     }
 
     @Test
-    fun `scale with x and y should return scale matrix`() {
+    fun scaleWithXAndYShouldReturnScaleMatrix() {
         val matrix = Matrix2x2d.scale(2.0, 3.0)
         assertEquals(Matrix2x2d(2.0, 0.0, 0.0, 3.0), matrix)
         assertTrue(matrix.properties.isDiagonal)
     }
 
     @Test
-    fun `scale with uniform value should return scale matrix`() {
+    fun scaleWithUniformValueShouldReturnScaleMatrix() {
         val matrix = Matrix2x2d.scale(2.0)
         assertEquals(Matrix2x2d(2.0, 0.0, 0.0, 2.0), matrix)
     }
 
     @Test
-    fun `times operator with incompatible matrix should throw exception`() {
+    fun timesOperatorWithIncompatibleMatrixShouldThrowException() {
         val m1 = Matrix2x2d()
         val m2 = Matrix3x3d()
         assertFailsWith<IllegalArgumentException> { m1.times(m2) }
     }
 
     @Test
-    fun `times operator with incompatible vector should throw exception`() {
+    fun timesOperatorWithIncompatibleVectorShouldThrowException() {
         val matrix = Matrix2x2d()
         val vector = dev.karmakrafts.kgml.vector.Vector3d()
         assertFailsWith<IllegalArgumentException> { matrix.times(vector) }

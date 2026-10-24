@@ -24,7 +24,7 @@ import kotlin.test.assertEquals
 
 class Rotation3dTest {
     @Test
-    fun `Rotation3d invoke should apply rotation`() {
+    fun rotation3dInvokeShouldApplyRotation() {
         val rad = (PI / 2)
         val rotation = Rotation3d(rad, rad, rad)
         val matrix = Matrix3x3d.identity
@@ -35,7 +35,7 @@ class Rotation3dTest {
     }
 
     @Test
-    fun `Rotation3d fromDegrees should create correct rotation`() {
+    fun rotation3dFromDegreesShouldCreateCorrectRotation() {
         val rotation = Rotation3d.fromDegrees(Vector3d(90.0, 90.0, 90.0))
         val rad = (PI / 2)
         assertEquals(rad, rotation.rotation.x, 1e-6)

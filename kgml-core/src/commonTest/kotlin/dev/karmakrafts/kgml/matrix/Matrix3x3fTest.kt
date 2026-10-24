@@ -29,7 +29,7 @@ import kotlin.test.assertSame
 
 class Matrix3x3fTest {
     @Test
-    fun `constructor should initialize to identity`() {
+    fun constructorShouldInitializeToIdentity() {
         val matrix = Matrix3x3f()
         assertEquals(1F, matrix.m00)
         assertEquals(0F, matrix.m01)
@@ -43,7 +43,7 @@ class Matrix3x3fTest {
     }
 
     @Test
-    fun `constructor with value should initialize all components`() {
+    fun constructorWithValueShouldInitializeAllComponents() {
         val matrix = Matrix3x3f(2F)
         for (i in 0 until 9) {
             assertEquals(2F, matrix[i])
@@ -51,7 +51,7 @@ class Matrix3x3fTest {
     }
 
     @Test
-    fun `companion object properties should be correct`() {
+    fun companionObjectPropertiesShouldBeCorrect() {
         assertEquals(Float::class, Matrix3x3f.componentType)
         assertEquals(Float.SIZE_BYTES, Matrix3x3f.componentSize)
         assertEquals(3, Matrix3x3f.rows)
@@ -60,14 +60,14 @@ class Matrix3x3fTest {
     }
 
     @Test
-    fun `fromArray should create matrix from array at offset`() {
+    fun fromArrayShouldCreateMatrixFromArrayAtOffset() {
         val array = FloatArray(10) { it.toFloat() }
         val matrix = Matrix3x3f.fromArray(array, 1)
         assertEquals(Matrix3x3f(1F, 2F, 3F, 4F, 5F, 6F, 7F, 8F, 9F), matrix)
     }
 
     @Test
-    fun `fromArray should create matrix from array at offset with properties`() {
+    fun fromArrayShouldCreateMatrixFromArrayAtOffsetWithProperties() {
         val array = FloatArray(10) { it.toFloat() }
         val matrix = Matrix3x3f.fromArray(array, 1, MatrixProperties.AFFINE)
         assertEquals(Matrix3x3f(1F, 2F, 3F, 4F, 5F, 6F, 7F, 8F, 9F, MatrixProperties.AFFINE), matrix)
@@ -75,7 +75,7 @@ class Matrix3x3fTest {
     }
 
     @Test
-    fun `fromRows should create matrix from vectors`() {
+    fun fromRowsShouldCreateMatrixFromVectors() {
         val row0 = Vector3f(1F, 2F, 3F)
         val row1 = Vector3f(4F, 5F, 6F)
         val row2 = Vector3f(7F, 8F, 9F)
@@ -84,7 +84,7 @@ class Matrix3x3fTest {
     }
 
     @Test
-    fun `fromColumns should create matrix from vectors`() {
+    fun fromColumnsShouldCreateMatrixFromVectors() {
         val column0 = Vector3f(1F, 4F, 7F)
         val column1 = Vector3f(2F, 5F, 8F)
         val column2 = Vector3f(3F, 6F, 9F)
@@ -93,7 +93,7 @@ class Matrix3x3fTest {
     }
 
     @Test
-    fun `row accessors should return correct vectors`() {
+    fun rowAccessorsShouldReturnCorrectVectors() {
         val matrix = Matrix3x3f(1F, 2F, 3F, 4F, 5F, 6F, 7F, 8F, 9F)
         assertEquals(Vector3f(1F, 2F, 3F), matrix.row0)
         assertEquals(Vector3f(4F, 5F, 6F), matrix.row1)
@@ -101,7 +101,7 @@ class Matrix3x3fTest {
     }
 
     @Test
-    fun `column accessors should return correct vectors`() {
+    fun columnAccessorsShouldReturnCorrectVectors() {
         val matrix = Matrix3x3f(1F, 2F, 3F, 4F, 5F, 6F, 7F, 8F, 9F)
         assertEquals(Vector3f(1F, 4F, 7F), matrix.column0)
         assertEquals(Vector3f(2F, 5F, 8F), matrix.column1)
@@ -109,25 +109,25 @@ class Matrix3x3fTest {
     }
 
     @Test
-    fun `type should return Matrix3x3f`() {
+    fun typeShouldReturnMatrix3x3f() {
         assertEquals(Matrix3x3f, Matrix3x3f().type)
     }
 
     @Test
-    fun `extend should return Matrix4x4f`() {
+    fun extendShouldReturnMatrix4x4f() {
         val matrix = Matrix3x3f(1F, 2F, 3F, 4F, 5F, 6F, 7F, 8F, 9F)
         val extended = matrix.extend()
         assertEquals(Matrix4x4f(1F, 2F, 3F, 0F, 4F, 5F, 6F, 0F, 7F, 8F, 9F, 0F, 0F, 0F, 0F, 1F), extended)
     }
 
     @Test
-    fun `transpose should return transposed matrix`() {
+    fun transposeShouldReturnTransposedMatrix() {
         val matrix = Matrix3x3f(1F, 2F, 3F, 4F, 5F, 6F, 7F, 8F, 9F)
         assertEquals(Matrix3x3f(1F, 4F, 7F, 2F, 5F, 8F, 3F, 6F, 9F), matrix.transpose())
     }
 
     @Test
-    fun `times operator with matrix should multiply matrices`() {
+    fun timesOperatorWithMatrixShouldMultiplyMatrices() {
         val m1 = Matrix3x3f(1F, 2F, 3F, 4F, 5F, 6F, 7F, 8F, 9F)
         val m2 = Matrix3x3f(9F, 8F, 7F, 6F, 5F, 4F, 3F, 2F, 1F)
         // [1 2 3] [9 8 7]   [1*9+2*6+3*3 1*8+2*5+3*2 1*7+2*4+3*1]   [30 24 18]
@@ -141,7 +141,7 @@ class Matrix3x3fTest {
     }
 
     @Test
-    fun `times operator with identity should return existing matrix`() {
+    fun timesOperatorWithIdentityShouldReturnExistingMatrix() {
         val matrix = Matrix3x3f(1F, 2F, 3F, 4F, 5F, 6F, 7F, 8F, 9F, MatrixProperties.AFFINE)
         val identity = Matrix3x3f.identity
         assertSame(matrix, matrix * identity)
@@ -151,7 +151,7 @@ class Matrix3x3fTest {
     }
 
     @Test
-    fun `times operator with affine translations should preserve translation property`() {
+    fun timesOperatorWithAffineTranslationsShouldPreserveTranslationProperty() {
         val left = Matrix3x3f.translation(2F, 3F)
         val right = Matrix3x3f.translation(5F, 7F)
 
@@ -164,7 +164,7 @@ class Matrix3x3fTest {
     }
 
     @Test
-    fun `times operator with affine translation and linear matrices should match generic multiplication`() {
+    fun timesOperatorWithAffineTranslationAndLinearMatricesShouldMatchGenericMultiplication() {
         val translation = Matrix3x3f.translation(2F, 3F)
         val scale = Matrix3x3f.scale(4F, 5F)
 
@@ -178,7 +178,7 @@ class Matrix3x3fTest {
     }
 
     @Test
-    fun `times operator with linear matrices should preserve linear property`() {
+    fun timesOperatorWithLinearMatricesShouldPreserveLinearProperty() {
         val left = Matrix3x3f.scale(2F, 3F)
         val right = Matrix3x3f.rotationRad(angleZ = PI.toFloat() / 2F)
 
@@ -191,7 +191,7 @@ class Matrix3x3fTest {
     }
 
     @Test
-    fun `times operator with vector should multiply matrix by vector`() {
+    fun timesOperatorWithVectorShouldMultiplyMatrixByVector() {
         val matrix = Matrix3x3f(1F, 2F, 3F, 4F, 5F, 6F, 7F, 8F, 9F)
         val vector = Vector3f(10F, 11F, 12F)
         // [1 2 3] [10] = [1*10+2*11+3*12] = [10+22+36] = [68]
@@ -201,7 +201,7 @@ class Matrix3x3fTest {
     }
 
     @Test
-    fun `get should return component by index`() {
+    fun getShouldReturnComponentByIndex() {
         val matrix = Matrix3x3f(1F, 2F, 3F, 4F, 5F, 6F, 7F, 8F, 9F)
         for (i in 0 until 9) {
             assertEquals((i + 1).toFloat(), matrix[i])
@@ -210,7 +210,7 @@ class Matrix3x3fTest {
     }
 
     @Test
-    fun `get should return component by MatrixComponent`() {
+    fun getShouldReturnComponentByMatrixComponent() {
         val matrix = Matrix3x3f(1F, 2F, 3F, 4F, 5F, 6F, 7F, 8F, 9F)
         assertEquals(1F, matrix[MatrixComponent.M00])
         assertEquals(2F, matrix[MatrixComponent.M01])
@@ -225,13 +225,13 @@ class Matrix3x3fTest {
     }
 
     @Test
-    fun `toFloatArray should return components as float array`() {
+    fun toFloatArrayShouldReturnComponentsAsFloatArray() {
         val matrix = Matrix3x3f(1F, 2F, 3F, 4F, 5F, 6F, 7F, 8F, 9F)
         assertContentEquals(floatArrayOf(1F, 2F, 3F, 4F, 5F, 6F, 7F, 8F, 9F), matrix.toFloatArray())
     }
 
     @Test
-    fun `rotationZRad should return rotation matrix around Z`() {
+    fun rotationZRadShouldReturnRotationMatrixAroundZ() {
         val angle = PI.toFloat() / 2F
         val matrix = Matrix3x3f.rotationRad(angleZ = angle)
         // [0 -1 0]
@@ -241,7 +241,7 @@ class Matrix3x3fTest {
     }
 
     @Test
-    fun `rotationXRad should return rotation matrix around X`() {
+    fun rotationXRadShouldReturnRotationMatrixAroundX() {
         val angle = PI.toFloat() / 2F
         val matrix = Matrix3x3f.rotationRad(angleX = angle)
         // [1 0  0]
@@ -251,7 +251,7 @@ class Matrix3x3fTest {
     }
 
     @Test
-    fun `rotationYRad should return rotation matrix around Y`() {
+    fun rotationYRadShouldReturnRotationMatrixAroundY() {
         val angle = PI.toFloat() / 2F
         val matrix = Matrix3x3f.rotationRad(angleY = angle)
         // [ 0 0 1]
@@ -261,13 +261,13 @@ class Matrix3x3fTest {
     }
 
     @Test
-    fun `translation should return translation matrix`() {
+    fun translationShouldReturnTranslationMatrix() {
         val matrix = Matrix3x3f.translation(2F, 3F)
         assertEquals(Matrix3x3f(1F, 0F, 2F, 0F, 1F, 3F, 0F, 0F, 1F), matrix)
     }
 
     @Test
-    fun `scale should return linear matrix`() {
+    fun scaleShouldReturnLinearMatrix() {
         val matrix = Matrix3x3f.scale(2F, 3F)
         assertEquals(
             Matrix3x3f(
@@ -286,14 +286,14 @@ class Matrix3x3fTest {
     }
 
     @Test
-    fun `times operator with incompatible matrix should throw exception`() {
+    fun timesOperatorWithIncompatibleMatrixShouldThrowException() {
         val m1 = Matrix3x3f()
         val m2 = Matrix2x2f()
         assertFailsWith<IllegalArgumentException> { m1.times(m2) }
     }
 
     @Test
-    fun `times operator with incompatible vector should throw exception`() {
+    fun timesOperatorWithIncompatibleVectorShouldThrowException() {
         val matrix = Matrix3x3f()
         val vector = dev.karmakrafts.kgml.vector.Vector2f()
         assertFailsWith<IllegalArgumentException> { matrix.times(vector) }

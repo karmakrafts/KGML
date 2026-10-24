@@ -4,6 +4,8 @@ javaCompile = "25"
 javaTarget = "17"
 
 androidGradle = "9.4.1" # https://developer.android.com/reference/tools/gradle-api
+desugarJdkLibs = "2.1.5" # https://mvnrepository.com/artifact/com.android.tools/desugar_jdk_libs
+
 kgml = "1.6.0"
 kotlin = "2.5.0-Beta2" # https://github.com/JetBrains/kotlin/releases
 kotlinBrowser = "2026.10.1" # https://github.com/JetBrains/kotlin-wrappers/releases
@@ -23,6 +25,7 @@ joml = "1.10.9" # https://github.com/JOML-CI/JOML/releases
 
 [libraries]
 
+android-desugarJdkLibs = { module = "com.android.tools:desugar_jdk_libs", version.ref = "desugarJdkLibs" }
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
 kotlin-test-junit = { module = "org.jetbrains.kotlin:kotlin-test-junit", version.ref = "kotlin" }
 kotlin-wrappers-browser = { module = "org.jetbrains.kotlin-wrappers:kotlin-browser", version.ref = "kotlinBrowser" }
