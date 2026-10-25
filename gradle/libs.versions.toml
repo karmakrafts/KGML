@@ -8,7 +8,7 @@ desugarJdkLibs = "2.1.5" # https://mvnrepository.com/artifact/com.android.tools/
 
 kgml = "1.6.0"
 kotlin = "2.5.0-Beta2" # https://github.com/JetBrains/kotlin/releases
-kotlinBrowser = "2026.10.1" # https://github.com/JetBrains/kotlin-wrappers/releases
+kotlinBrowser = "2026.10.4" # https://github.com/JetBrains/kotlin-wrappers/releases
 dokka = "2.3.0-Beta" # https://github.com/Kotlin/dokka/releases
 karmaConventions = "1.23.0.315-SNAPSHOT" # https://github.com/karmakrafts/karma-conventions/tags
 
