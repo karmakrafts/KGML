@@ -41,12 +41,12 @@ import kotlin.math.withSign
  */
 @Suppress("NOTHING_TO_INLINE")
 @JvmInline
-value class Quaternion4f(@PublishedApi internal val value: Vector4f) : Transform<Matrix4x4f> {
-    companion object {
+public value class Quaternion4f(@PublishedApi internal val value: Vector4f) : Transform<Matrix4x4f> {
+    public companion object {
         /**
          * The identity quaternion.
          */
-        val identity: Quaternion4f = Quaternion4f()
+        public val identity: Quaternion4f = Quaternion4f()
 
         /**
          * Creates a quaternion from the given Euler angles in radians.
@@ -56,7 +56,7 @@ value class Quaternion4f(@PublishedApi internal val value: Vector4f) : Transform
          * @param angleZ The angle around the Z axis in radians.
          * @return A new [Quaternion4f].
          */
-        fun fromAnglesRad( // @formatter:off
+        public fun fromAnglesRad( // @formatter:off
             angleX: Float = 0F,
             angleY: Float = 0F,
             angleZ: Float = 0F
@@ -86,7 +86,7 @@ value class Quaternion4f(@PublishedApi internal val value: Vector4f) : Transform
          * @param angleZ The angle around the Z axis in degrees.
          * @return A new [Quaternion4f].
          */
-        inline fun fromAngles( // @formatter:off
+        public inline fun fromAngles( // @formatter:off
             angleX: Float = 0F,
             angleY: Float = 0F,
             angleZ: Float = 0F
@@ -100,22 +100,22 @@ value class Quaternion4f(@PublishedApi internal val value: Vector4f) : Transform
     /**
      * The X component of the quaternion.
      */
-    inline val x: Float get() = value.x
+    public inline val x: Float get() = value.x
 
     /**
      * The Y component of the quaternion.
      */
-    inline val y: Float get() = value.y
+    public inline val y: Float get() = value.y
 
     /**
      * The Z component of the quaternion.
      */
-    inline val z: Float get() = value.z
+    public inline val z: Float get() = value.z
 
     /**
      * The W component of the quaternion.
      */
-    inline val w: Float get() = value.w
+    public inline val w: Float get() = value.w
 
     /**
      * Creates a quaternion from the given components.
@@ -125,33 +125,33 @@ value class Quaternion4f(@PublishedApi internal val value: Vector4f) : Transform
      * @param z The Z component.
      * @param w The W component.
      */
-    constructor(x: Float, y: Float, z: Float, w: Float) : this(Vector4f(x, y, z, w))
+    public constructor(x: Float, y: Float, z: Float, w: Float) : this(Vector4f(x, y, z, w))
 
     /**
      * Creates an identity quaternion.
      */
-    constructor() : this(0F, 0F, 0F, 1F)
+    public constructor() : this(0F, 0F, 0F, 1F)
 
     /**
      * Returns the rotation around the X axis in radians.
      *
      * @return The rotation around the X axis in radians.
      */
-    fun getAngleXRad(): Float = atan2(2F * fma(w, x, y * z), 1F - 2F * fma(x, x, y * y))
+    public fun getAngleXRad(): Float = atan2(2F * fma(w, x, y * z), 1F - 2F * fma(x, x, y * y))
 
     /**
      * Returns the rotation around the X axis in degrees.
      *
      * @return The rotation around the X axis in degrees.
      */
-    inline fun getAngleX(): Float = toDegrees(getAngleXRad())
+    public inline fun getAngleX(): Float = toDegrees(getAngleXRad())
 
     /**
      * Returns the rotation around the Y axis in radians.
      *
      * @return The rotation around the Y axis in radians.
      */
-    fun getAngleYRad(): Float {
+    public fun getAngleYRad(): Float {
         val sinp = 2F * (w * y - z * x)
         return if (abs(sinp) >= 1F) (PI * 0.5).toFloat().withSign(sinp)
         else asin(sinp)
@@ -162,21 +162,21 @@ value class Quaternion4f(@PublishedApi internal val value: Vector4f) : Transform
      *
      * @return The rotation around the Y axis in degrees.
      */
-    inline fun getAngleY(): Float = toDegrees(getAngleYRad())
+    public inline fun getAngleY(): Float = toDegrees(getAngleYRad())
 
     /**
      * Returns the rotation around the Z axis in radians.
      *
      * @return The rotation around the Z axis in radians.
      */
-    fun getAngleZRad(): Float = atan2(2F * fma(w, z, x * y), 1F - 2F * fma(y, y, z * z))
+    public fun getAngleZRad(): Float = atan2(2F * fma(w, z, x * y), 1F - 2F * fma(y, y, z * z))
 
     /**
      * Returns the rotation around the Z axis in degrees.
      *
      * @return The rotation around the Z axis in degrees.
      */
-    inline fun getAngleZ(): Float = toDegrees(getAngleZRad())
+    public inline fun getAngleZ(): Float = toDegrees(getAngleZRad())
 
     /**
      * Multiplies this quaternion by the given quaternion.
@@ -184,7 +184,7 @@ value class Quaternion4f(@PublishedApi internal val value: Vector4f) : Transform
      * @param other The quaternion to multiply by.
      * @return The result of the multiplication.
      */
-    operator fun times(other: Quaternion4f): Quaternion4f {
+    public operator fun times(other: Quaternion4f): Quaternion4f {
         val ax = x
         val ay = y
         val az = z
@@ -207,7 +207,7 @@ value class Quaternion4f(@PublishedApi internal val value: Vector4f) : Transform
      * @param other The scalar to multiply by.
      * @return The result of the multiplication.
      */
-    inline operator fun times(other: Float): Quaternion4f = Quaternion4f(value * other)
+    public inline operator fun times(other: Float): Quaternion4f = Quaternion4f(value * other)
 
     /**
      * Performs a spherical linear interpolation between this quaternion and the given quaternion.
@@ -216,7 +216,7 @@ value class Quaternion4f(@PublishedApi internal val value: Vector4f) : Transform
      * @param factor The interpolation factor.
      * @return The interpolated quaternion.
      */
-    fun slerp(other: Quaternion4f, factor: Float): Quaternion4f {
+    public fun slerp(other: Quaternion4f, factor: Float): Quaternion4f {
         val ax = x
         val ay = y
         val az = z
@@ -262,7 +262,7 @@ value class Quaternion4f(@PublishedApi internal val value: Vector4f) : Transform
      *
      * @return A new [Matrix3x3f] representing the rotation.
      */
-    fun toRotationMatrix3x3f(): Matrix3x3f {
+    public fun toRotationMatrix3x3f(): Matrix3x3f {
         val qx = x
         val qy = y
         val qz = z
@@ -295,7 +295,7 @@ value class Quaternion4f(@PublishedApi internal val value: Vector4f) : Transform
      *
      * @return A new [Matrix4x4f] representing the rotation.
      */
-    fun toRotationMatrix4x4f(): Matrix4x4f {
+    public fun toRotationMatrix4x4f(): Matrix4x4f {
         val qx = x
         val qy = y
         val qz = z
@@ -336,7 +336,7 @@ value class Quaternion4f(@PublishedApi internal val value: Vector4f) : Transform
      * @return The underlying [Vector4f].
      */
     @Suppress("NOTHING_TO_INLINE")
-    inline fun asVector4f(): Vector4f = value
+    public inline fun asVector4f(): Vector4f = value
 
     /**
      * Creates a copy of this quaternion with the given components.
@@ -348,7 +348,7 @@ value class Quaternion4f(@PublishedApi internal val value: Vector4f) : Transform
      * @return A new [Quaternion4f] with the given components.
      */
     @Suppress("NOTHING_TO_INLINE")
-    inline fun copy( // @formatter:off
+    public inline fun copy( // @formatter:off
         x: Float = this.x,
         y: Float = this.y,
         z: Float = this.z,
@@ -363,11 +363,11 @@ value class Quaternion4f(@PublishedApi internal val value: Vector4f) : Transform
      */
     override operator fun invoke(matrix: Matrix4x4f): Matrix4x4f = matrix * this
 
-    inline operator fun component1(): Float = value.x
+    public inline operator fun component1(): Float = value.x
 
-    inline operator fun component2(): Float = value.y
+    public inline operator fun component2(): Float = value.y
 
-    inline operator fun component3(): Float = value.z
+    public inline operator fun component3(): Float = value.z
 
-    inline operator fun component4(): Float = value.w
+    public inline operator fun component4(): Float = value.w
 }

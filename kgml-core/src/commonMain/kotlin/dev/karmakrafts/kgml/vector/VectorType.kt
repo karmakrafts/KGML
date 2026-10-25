@@ -21,34 +21,34 @@ import kotlin.reflect.KClass
 /**
  * Represents the type information for a vector.
  */
-sealed interface VectorType {
+public sealed interface VectorType {
     /**
      * The type of the components in the vector.
      *
      * @return The component type.
      */
-    val componentType: KClass<*>
+    public val componentType: KClass<*>
 
     /**
      * The size of a single component in bytes.
      *
      * @return The component size in bytes.
      */
-    val componentSize: Int
+    public val componentSize: Int
 
     /**
      * The number of dimensions in the vector.
      *
      * @return The number of dimensions.
      */
-    val dimensions: Int
+    public val dimensions: Int
 
     /**
      * The components of the vector.
      *
      * @return The components.
      */
-    val components: Array<VectorComponent>
+    public val components: Array<VectorComponent>
 }
 
 /**
@@ -56,4 +56,4 @@ sealed interface VectorType {
  *
  * @return The total size in bytes.
  */
-inline val VectorType.size: Int get() = componentSize * dimensions
+public inline val VectorType.size: Int get() = componentSize * dimensions

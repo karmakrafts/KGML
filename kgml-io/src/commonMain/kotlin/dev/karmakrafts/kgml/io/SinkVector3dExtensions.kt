@@ -26,7 +26,7 @@ import kotlinx.io.writeDouble
  *
  * @param vector The vector to write.
  */
-fun Sink.writeVector3d(vector: Vector3d) {
+public fun Sink.writeVector3d(vector: Vector3d) {
     writeDouble(vector.x)
     writeDouble(vector.y)
     writeDouble(vector.z)
@@ -37,7 +37,7 @@ fun Sink.writeVector3d(vector: Vector3d) {
  *
  * @param vector The vector to write.
  */
-fun Sink.writeVector3dLe(vector: Vector3d) {
+public fun Sink.writeVector3dLe(vector: Vector3d) {
     writeDoubleLeFast(vector.x)
     writeDoubleLeFast(vector.y)
     writeDoubleLeFast(vector.z)

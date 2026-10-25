@@ -37,7 +37,7 @@ import kotlin.reflect.KClass
  * @property properties The properties of the matrix.
  */
 @Suppress("NOTHING_TO_INLINE")
-data class Matrix3x3f(
+public data class Matrix3x3f(
     @JvmField val m00: Float,
     @JvmField val m01: Float,
     @JvmField val m02: Float,
@@ -52,7 +52,7 @@ data class Matrix3x3f(
     /**
      * The type of [Matrix3x3f].
      */
-    companion object : MatrixType {
+    public companion object : MatrixType {
         override val componentType: KClass<*> = Float::class
         override val componentSize: Int = Float.SIZE_BYTES
         override val rows: Int = 3
@@ -67,7 +67,7 @@ data class Matrix3x3f(
         /**
          * The identity matrix for [Matrix3x3f].
          */
-        val identity: Matrix3x3f = Matrix3x3f()
+        public val identity: Matrix3x3f = Matrix3x3f()
 
         /**
          * Creates a [Matrix3x3f] from the given float array.
@@ -76,7 +76,7 @@ data class Matrix3x3f(
          * @param offset The offset in the array.
          * @return The created matrix.
          */
-        inline fun fromArray( // @formatter:off
+        public inline fun fromArray( // @formatter:off
             array: FloatArray,
             offset: Int = 0,
             properties: MatrixProperties = MatrixProperties.NONE
@@ -102,7 +102,7 @@ data class Matrix3x3f(
          * @param properties The properties of the matrix.
          * @return The created matrix.
          */
-        inline fun fromRows( // @formatter:off
+        public inline fun fromRows( // @formatter:off
             row0: Vector3f,
             row1: Vector3f,
             row2: Vector3f,
@@ -123,7 +123,7 @@ data class Matrix3x3f(
          * @param properties The properties of the matrix.
          * @return The created matrix.
          */
-        inline fun fromColumns( // @formatter:off
+        public inline fun fromColumns( // @formatter:off
             column0: Vector3f,
             column1: Vector3f,
             column2: Vector3f,
@@ -139,7 +139,7 @@ data class Matrix3x3f(
     /**
      * Creates an identity matrix.
      */
-    constructor() : this( // @formatter:off
+    public constructor() : this( // @formatter:off
         1F, 0F, 0F,
         0F, 1F, 0F,
         0F, 0F, 1F,
@@ -151,7 +151,7 @@ data class Matrix3x3f(
      *
      * @param value The value to set all components to.
      */
-    constructor(value: Float) : this( // @formatter:off
+    public constructor(value: Float) : this( // @formatter:off
         value, value, value,
         value, value, value,
         value, value, value
@@ -209,7 +209,7 @@ data class Matrix3x3f(
      *
      * @return The converted matrix.
      */
-    inline fun toMatrix3x3d(): Matrix3x3d = Matrix3x3d( // @formatter:off
+    public inline fun toMatrix3x3d(): Matrix3x3d = Matrix3x3d( // @formatter:off
         m00.toDouble(), m01.toDouble(), m02.toDouble(),
         m10.toDouble(), m11.toDouble(), m12.toDouble(),
         m20.toDouble(), m21.toDouble(), m22.toDouble()
@@ -220,7 +220,7 @@ data class Matrix3x3f(
      *
      * @return The extended 4x4 matrix.
      */
-    inline fun extend(): Matrix4x4f = Matrix4x4f( // @formatter:off
+    public inline fun extend(): Matrix4x4f = Matrix4x4f( // @formatter:off
         m00, m01, m02, 0F,
         m10, m11, m12, 0F,
         m20, m21, m22, 0F,
@@ -233,7 +233,7 @@ data class Matrix3x3f(
      *
      * @return The transposed matrix.
      */
-    inline fun transpose(): Matrix3x3f = Matrix3x3f( // @formatter:off
+    public inline fun transpose(): Matrix3x3f = Matrix3x3f( // @formatter:off
         m00, m10, m20,
         m01, m11, m21,
         m02, m12, m22,
@@ -246,7 +246,7 @@ data class Matrix3x3f(
      * @param other The matrix to multiply with.
      * @return The result of the multiplication.
      */
-    operator fun times(other: Matrix3x3f): Matrix3x3f {
+    public operator fun times(other: Matrix3x3f): Matrix3x3f {
         val otherProps = other.properties
         return when {
             properties.isIdentity -> other
@@ -392,7 +392,7 @@ data class Matrix3x3f(
      * @param other The vector to multiply with.
      * @return The result of the multiplication.
      */
-    operator fun times(other: Vector3f): Vector3f = Vector3f(
+    public operator fun times(other: Vector3f): Vector3f = Vector3f(
         fma(m00, other.x, fma(m01, other.y, m02 * other.z)),
         fma(m10, other.x, fma(m11, other.y, m12 * other.z)),
         fma(m20, other.x, fma(m21, other.y, m22 * other.z))

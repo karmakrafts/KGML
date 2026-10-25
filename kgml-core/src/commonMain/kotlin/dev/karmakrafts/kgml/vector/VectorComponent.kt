@@ -19,7 +19,7 @@ package dev.karmakrafts.kgml.vector
 /**
  * Represents the components of a vector.
  */
-enum class VectorComponent {
+public enum class VectorComponent {
     // @formatter:off
     /**
      * The X component.

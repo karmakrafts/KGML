@@ -28,7 +28,7 @@ import kotlinx.io.readDouble
  *
  * @return The read matrix.
  */
-fun Source.readMatrix4x4d(): Matrix4x4d = Matrix4x4d( // @formatter:off
+public fun Source.readMatrix4x4d(): Matrix4x4d = Matrix4x4d( // @formatter:off
     m00 = readDouble(), m01 = readDouble(), m02 = readDouble(), m03 = readDouble(),
     m10 = readDouble(), m11 = readDouble(), m12 = readDouble(), m13 = readDouble(),
     m20 = readDouble(), m21 = readDouble(), m22 = readDouble(), m23 = readDouble(),
@@ -42,7 +42,7 @@ fun Source.readMatrix4x4d(): Matrix4x4d = Matrix4x4d( // @formatter:off
  *
  * @return The read matrix.
  */
-fun Source.readMatrix4x4dLe(): Matrix4x4d = Matrix4x4d( // @formatter:off
+public fun Source.readMatrix4x4dLe(): Matrix4x4d = Matrix4x4d( // @formatter:off
     m00 = readDoubleLeFast(), m01 = readDoubleLeFast(), m02 = readDoubleLeFast(), m03 = readDoubleLeFast(),
     m10 = readDoubleLeFast(), m11 = readDoubleLeFast(), m12 = readDoubleLeFast(), m13 = readDoubleLeFast(),
     m20 = readDoubleLeFast(), m21 = readDoubleLeFast(), m22 = readDoubleLeFast(), m23 = readDoubleLeFast(),

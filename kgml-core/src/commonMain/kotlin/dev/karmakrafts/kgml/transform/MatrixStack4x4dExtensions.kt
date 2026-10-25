@@ -26,7 +26,7 @@ import dev.karmakrafts.kgml.matrix.MatrixStack
  * @param angleY The angle around the Y axis in radians.
  * @param angleZ The angle around the Z axis in radians.
  */
-fun MatrixStack<Matrix4x4d>.rotateRad( // @formatter:off
+public fun MatrixStack<Matrix4x4d>.rotateRad( // @formatter:off
     angleX: Double = 0.0,
     angleY: Double = 0.0,
     angleZ: Double = 0.0
@@ -41,7 +41,7 @@ fun MatrixStack<Matrix4x4d>.rotateRad( // @formatter:off
  * @param angleY The angle around the Y axis in degrees.
  * @param angleZ The angle around the Z axis in degrees.
  */
-fun MatrixStack<Matrix4x4d>.rotate( // @formatter:off
+public fun MatrixStack<Matrix4x4d>.rotate( // @formatter:off
     angleX: Double = 0.0,
     angleY: Double = 0.0,
     angleZ: Double = 0.0
@@ -54,7 +54,7 @@ fun MatrixStack<Matrix4x4d>.rotate( // @formatter:off
  *
  * @param quat The quaternion to rotate by.
  */
-fun MatrixStack<Matrix4x4d>.rotate(quat: Quaternion4d) {
+public fun MatrixStack<Matrix4x4d>.rotate(quat: Quaternion4d) {
     swap(current() * quat)
 }
 
@@ -65,7 +65,7 @@ fun MatrixStack<Matrix4x4d>.rotate(quat: Quaternion4d) {
  * @param scaleY The scale factor on the Y axis.
  * @param scaleZ The scale factor on the Z axis.
  */
-fun MatrixStack<Matrix4x4d>.scale( // @formatter:off
+public fun MatrixStack<Matrix4x4d>.scale( // @formatter:off
     scaleX: Double = 1.0,
     scaleY: Double = 1.0,
     scaleZ: Double = 1.0
@@ -80,7 +80,7 @@ fun MatrixStack<Matrix4x4d>.scale( // @formatter:off
  * @param y The translation on the Y axis.
  * @param z The translation on the Z axis.
  */
-fun MatrixStack<Matrix4x4d>.translate( // @formatter:off
+public fun MatrixStack<Matrix4x4d>.translate( // @formatter:off
     x: Double = 0.0,
     y: Double = 0.0,
     z: Double = 0.0
@@ -98,7 +98,7 @@ fun MatrixStack<Matrix4x4d>.translate( // @formatter:off
  * @param zx The skew factor of the Z axis towards the X axis.
  * @param zy The skew factor of the Z axis towards the Y axis.
  */
-fun MatrixStack<Matrix4x4d>.skew( // @formatter:off
+public fun MatrixStack<Matrix4x4d>.skew( // @formatter:off
     xy: Double = 0.0,
     xz: Double = 0.0,
     yx: Double = 0.0,

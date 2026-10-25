@@ -27,7 +27,7 @@ import kotlinx.io.readFloat
  *
  * @return The read matrix.
  */
-fun Source.readMatrix3x3f(): Matrix3x3f = Matrix3x3f( // @formatter:off
+public fun Source.readMatrix3x3f(): Matrix3x3f = Matrix3x3f( // @formatter:off
     m00 = readFloat(), m01 = readFloat(), m02 = readFloat(),
     m10 = readFloat(), m11 = readFloat(), m12 = readFloat(),
     m20 = readFloat(), m21 = readFloat(), m22 = readFloat()
@@ -39,7 +39,7 @@ fun Source.readMatrix3x3f(): Matrix3x3f = Matrix3x3f( // @formatter:off
  *
  * @return The read matrix.
  */
-fun Source.readMatrix3x3fLe(): Matrix3x3f = Matrix3x3f( // @formatter:off
+public fun Source.readMatrix3x3fLe(): Matrix3x3f = Matrix3x3f( // @formatter:off
     m00 = readFloatLeFast(), m01 = readFloatLeFast(), m02 = readFloatLeFast(),
     m10 = readFloatLeFast(), m11 = readFloatLeFast(), m12 = readFloatLeFast(),
     m20 = readFloatLeFast(), m21 = readFloatLeFast(), m22 = readFloatLeFast()

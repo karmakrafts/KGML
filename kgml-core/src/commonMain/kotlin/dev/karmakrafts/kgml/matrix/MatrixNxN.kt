@@ -21,13 +21,13 @@ import dev.karmakrafts.kgml.vector.VectorN
 /**
  * Base interface for all square matrices.
  */
-sealed interface MatrixNxN {
+public sealed interface MatrixNxN {
     /**
      * The type of the matrix.
      *
      * @return The matrix type.
      */
-    val type: MatrixType
+    public val type: MatrixType
 
     /**
      * The specific properties of this matrix.
@@ -35,7 +35,7 @@ sealed interface MatrixNxN {
      *
      * @return The matrix properties.
      */
-    val properties: MatrixProperties
+    public val properties: MatrixProperties
 
     /**
      * Multiplies this matrix with another matrix.
@@ -43,7 +43,7 @@ sealed interface MatrixNxN {
      * @param other The matrix to multiply with.
      * @return The result of the multiplication.
      */
-    operator fun times(other: MatrixNxN): MatrixNxN
+    public operator fun times(other: MatrixNxN): MatrixNxN
 
     /**
      * Multiplies this matrix with a vector.
@@ -51,5 +51,5 @@ sealed interface MatrixNxN {
      * @param other The vector to multiply with.
      * @return The result of the multiplication.
      */
-    operator fun times(other: VectorN): VectorN
+    public operator fun times(other: VectorN): VectorN
 }

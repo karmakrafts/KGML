@@ -26,7 +26,7 @@ import kotlinx.io.writeDouble
  *
  * @param vector The vector to write.
  */
-fun Sink.writeVector2d(vector: Vector2d) {
+public fun Sink.writeVector2d(vector: Vector2d) {
     writeDouble(vector.x)
     writeDouble(vector.y)
 }
@@ -36,7 +36,7 @@ fun Sink.writeVector2d(vector: Vector2d) {
  *
  * @param vector The vector to write.
  */
-fun Sink.writeVector2dLe(vector: Vector2d) {
+public fun Sink.writeVector2dLe(vector: Vector2d) {
     writeDoubleLeFast(vector.x)
     writeDoubleLeFast(vector.y)
 }

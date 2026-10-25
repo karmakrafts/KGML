@@ -21,7 +21,7 @@ package dev.karmakrafts.kgml.util
 import android.os.Build
 
 @Suppress("NOTHING_TO_INLINE")
-actual inline fun fma(a: Float, b: Float, c: Float): Float {
+public actual inline fun fma(a: Float, b: Float, c: Float): Float {
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
         return Math.fma(a, b, c)
     }
@@ -29,7 +29,7 @@ actual inline fun fma(a: Float, b: Float, c: Float): Float {
 }
 
 @Suppress("NOTHING_TO_INLINE")
-actual inline fun fma(a: Double, b: Double, c: Double): Double {
+public actual inline fun fma(a: Double, b: Double, c: Double): Double {
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
         return Math.fma(a, b, c)
     }

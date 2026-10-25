@@ -26,7 +26,7 @@ import kotlin.jvm.JvmInline
  * @property scale The scale factors for the X, Y, and Z axes.
  */
 @JvmInline
-value class Scale3f(val scale: Vector3f) : Transform<Matrix4x4f> {
+public value class Scale3f(public val scale: Vector3f) : Transform<Matrix4x4f> {
     /**
      * Creates a scale from the given factors.
      *
@@ -34,7 +34,7 @@ value class Scale3f(val scale: Vector3f) : Transform<Matrix4x4f> {
      * @param scaleY The scale factor on the Y axis.
      * @param scaleZ The scale factor on the Z axis.
      */
-    constructor( // @formatter:off
+    public constructor( // @formatter:off
         scaleX: Float = 1F,
         scaleY: Float = 1F,
         scaleZ: Float = 1F

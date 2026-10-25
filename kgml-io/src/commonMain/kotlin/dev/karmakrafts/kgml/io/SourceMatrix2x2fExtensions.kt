@@ -27,7 +27,7 @@ import kotlinx.io.readFloat
  *
  * @return The read matrix.
  */
-fun Source.readMatrix2x2f(): Matrix2x2f = Matrix2x2f( // @formatter:off
+public fun Source.readMatrix2x2f(): Matrix2x2f = Matrix2x2f( // @formatter:off
     m00 = readFloat(), m01 = readFloat(),
     m10 = readFloat(), m11 = readFloat()
 ) // @formatter:on
@@ -38,7 +38,7 @@ fun Source.readMatrix2x2f(): Matrix2x2f = Matrix2x2f( // @formatter:off
  *
  * @return The read matrix.
  */
-fun Source.readMatrix2x2fLe(): Matrix2x2f = Matrix2x2f( // @formatter:off
+public fun Source.readMatrix2x2fLe(): Matrix2x2f = Matrix2x2f( // @formatter:off
     m00 = readFloatLeFast(), m01 = readFloatLeFast(),
     m10 = readFloatLeFast(), m11 = readFloatLeFast()
 ) // @formatter:on

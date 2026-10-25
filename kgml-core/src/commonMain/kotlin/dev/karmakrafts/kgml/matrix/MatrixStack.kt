@@ -24,7 +24,7 @@ package dev.karmakrafts.kgml.matrix
  * @param initialSize The initial size of the stack.
  */
 @Suppress("NOTHING_TO_INLINE")
-class MatrixStack<M : MatrixNxN>( // @formatter:off
+public class MatrixStack<M : MatrixNxN>( // @formatter:off
     initialSize: Int = 8,
     @PublishedApi internal val identityProvider: () -> M
 ) { // @formatter:on
@@ -39,7 +39,7 @@ class MatrixStack<M : MatrixNxN>( // @formatter:off
      *
      * @param matrix The matrix to swap with.
      */
-    inline fun swap(matrix: M) {
+    public inline fun swap(matrix: M) {
         matrices[matrices.lastIndex] = matrix
     }
 
@@ -48,14 +48,14 @@ class MatrixStack<M : MatrixNxN>( // @formatter:off
      *
      * @return The current matrix.
      */
-    inline fun current(): M = matrices.last()
+    public inline fun current(): M = matrices.last()
 
     /**
      * Pushes a new matrix onto the stack.
      *
      * @param matrix The matrix to push. Defaults to an identity matrix from [identityProvider].
      */
-    inline fun push(matrix: M = identityProvider()) {
+    public inline fun push(matrix: M = identityProvider()) {
         matrices += matrix
     }
 
@@ -64,7 +64,7 @@ class MatrixStack<M : MatrixNxN>( // @formatter:off
      *
      * @return The popped matrix, or null if the stack is empty.
      */
-    inline fun pop(): M? = matrices.removeLastOrNull()
+    public inline fun pop(): M? = matrices.removeLastOrNull()
 
     /**
      * Reduces the matrices in the stack using the given reducer.
@@ -73,5 +73,5 @@ class MatrixStack<M : MatrixNxN>( // @formatter:off
      * @return The reduced matrix.
      */
     @Suppress("UNCHECKED_CAST")
-    inline fun reduce(reducer: (M, M) -> M = { a, b -> (a * b) as M }): M = matrices.reduce(reducer)
+    public inline fun reduce(reducer: (M, M) -> M = { a, b -> (a * b) as M }): M = matrices.reduce(reducer)
 }

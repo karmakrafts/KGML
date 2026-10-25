@@ -31,7 +31,7 @@ import kotlin.math.tan
  * @param far The far coordinate of the clipping volume.
  * @return A new orthographic projection [Matrix4x4f].
  */
-fun Matrix4x4f.Companion.orthographic( // @formatter:off
+public fun Matrix4x4f.Companion.orthographic( // @formatter:off
     left: Float,
     right: Float,
     bottom: Float,
@@ -60,7 +60,7 @@ fun Matrix4x4f.Companion.orthographic( // @formatter:off
  * @param far The far coordinate of the clipping volume.
  * @return A new perspective projection [Matrix4x4f].
  */
-fun Matrix4x4f.Companion.perspective( // @formatter:off
+public fun Matrix4x4f.Companion.perspective( // @formatter:off
     fov: Float,
     aspect: Float,
     near: Float,

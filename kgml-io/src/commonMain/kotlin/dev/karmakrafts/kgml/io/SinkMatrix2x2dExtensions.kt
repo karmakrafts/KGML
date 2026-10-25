@@ -27,7 +27,7 @@ import kotlinx.io.writeDouble
  *
  * @param matrix The matrix to write.
  */
-fun Sink.writeMatrix2x2d(matrix: Matrix2x2d) {
+public fun Sink.writeMatrix2x2d(matrix: Matrix2x2d) {
     writeDouble(matrix.m00)
     writeDouble(matrix.m01)
     writeDouble(matrix.m10)
@@ -40,7 +40,7 @@ fun Sink.writeMatrix2x2d(matrix: Matrix2x2d) {
  *
  * @param matrix The matrix to write.
  */
-fun Sink.writeMatrix2x2dLe(matrix: Matrix2x2d) {
+public fun Sink.writeMatrix2x2dLe(matrix: Matrix2x2d) {
     writeDoubleLeFast(matrix.m00)
     writeDoubleLeFast(matrix.m01)
     writeDoubleLeFast(matrix.m10)

@@ -21,41 +21,41 @@ import kotlin.reflect.KClass
 /**
  * Represents the type of a matrix, including its component type and dimensions.
  */
-sealed interface MatrixType {
+public sealed interface MatrixType {
     /**
      * The type of the components in the matrix.
      *
      * @return The component type.
      */
-    val componentType: KClass<*>
+    public val componentType: KClass<*>
 
     /**
      * The size of a single component in bytes.
      *
      * @return The component size.
      */
-    val componentSize: Int
+    public val componentSize: Int
 
     /**
      * The number of rows in the matrix.
      *
      * @return The number of rows.
      */
-    val rows: Int
+    public val rows: Int
 
     /**
      * The number of columns in the matrix.
      *
      * @return The number of columns.
      */
-    val columns: Int
+    public val columns: Int
 
     /**
      * The components present in the matrix.
      *
      * @return The components.
      */
-    val components: Array<MatrixComponent>
+    public val components: Array<MatrixComponent>
 }
 
 /**
@@ -63,4 +63,4 @@ sealed interface MatrixType {
  *
  * @return The total size of the matrix in bytes.
  */
-inline val MatrixType.size: Int get() = componentSize * (rows * columns)
+public inline val MatrixType.size: Int get() = componentSize * (rows * columns)

@@ -23,12 +23,12 @@ import dev.karmakrafts.kgml.matrix.MatrixNxN
  *
  * @param M The matrix type.
  */
-sealed interface Transform<M : MatrixNxN> {
+public sealed interface Transform<M : MatrixNxN> {
     /**
      * Applies this transformation to the given matrix.
      *
      * @param matrix The matrix to transform.
      * @return The transformed matrix.
      */
-    operator fun invoke(matrix: M): M
+    public operator fun invoke(matrix: M): M
 }

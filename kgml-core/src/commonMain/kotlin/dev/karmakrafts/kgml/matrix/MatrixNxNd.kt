@@ -19,14 +19,14 @@ package dev.karmakrafts.kgml.matrix
 /**
  * Base interface for all square double matrices.
  */
-sealed interface MatrixNxNd : MatrixNxN {
+public sealed interface MatrixNxNd : MatrixNxN {
     /**
      * Gets the component at the given index.
      *
      * @param index The index of the component.
      * @return The component at the given index.
      */
-    operator fun get(index: Int): Double
+    public operator fun get(index: Int): Double
 
     /**
      * Gets the component for the given [MatrixComponent].
@@ -34,12 +34,12 @@ sealed interface MatrixNxNd : MatrixNxN {
      * @param component The component to get.
      * @return The component for the given [MatrixComponent].
      */
-    operator fun get(component: MatrixComponent): Double
+    public operator fun get(component: MatrixComponent): Double
 
     /**
      * Converts this matrix to a double array.
      *
      * @return The matrix as a double array.
      */
-    fun toDoubleArray(): DoubleArray
+    public fun toDoubleArray(): DoubleArray
 }

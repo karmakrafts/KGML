@@ -25,6 +25,6 @@ import dev.karmakrafts.kgml.matrix.MatrixStack
  * @param M The matrix type.
  * @param transform The transform to apply.
  */
-fun <M : MatrixNxN> MatrixStack<M>.apply(transform: Transform<M>) {
+public fun <M : MatrixNxN> MatrixStack<M>.apply(transform: Transform<M>) {
     swap(transform(current()))
 }

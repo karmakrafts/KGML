@@ -17,7 +17,7 @@
 package dev.karmakrafts.kgml.util
 
 @Suppress("NOTHING_TO_INLINE")
-actual inline fun fma(a: Float, b: Float, c: Float): Float = a * b + c
+public actual inline fun fma(a: Float, b: Float, c: Float): Float = a * b + c
 
 @Suppress("NOTHING_TO_INLINE")
-actual inline fun fma(a: Double, b: Double, c: Double): Double = a * b + c
+public actual inline fun fma(a: Double, b: Double, c: Double): Double = a * b + c

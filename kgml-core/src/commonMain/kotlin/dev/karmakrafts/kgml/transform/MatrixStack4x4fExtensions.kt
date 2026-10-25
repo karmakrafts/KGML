@@ -26,7 +26,7 @@ import dev.karmakrafts.kgml.matrix.MatrixStack
  * @param angleY The angle around the Y axis in radians.
  * @param angleZ The angle around the Z axis in radians.
  */
-fun MatrixStack<Matrix4x4f>.rotateRad( // @formatter:off
+public fun MatrixStack<Matrix4x4f>.rotateRad( // @formatter:off
     angleX: Float = 0F,
     angleY: Float = 0F,
     angleZ: Float = 0F
@@ -41,7 +41,7 @@ fun MatrixStack<Matrix4x4f>.rotateRad( // @formatter:off
  * @param angleY The angle around the Y axis in degrees.
  * @param angleZ The angle around the Z axis in degrees.
  */
-fun MatrixStack<Matrix4x4f>.rotate( // @formatter:off
+public fun MatrixStack<Matrix4x4f>.rotate( // @formatter:off
     angleX: Float = 0F,
     angleY: Float = 0F,
     angleZ: Float = 0F
@@ -54,7 +54,7 @@ fun MatrixStack<Matrix4x4f>.rotate( // @formatter:off
  *
  * @param quat The quaternion to rotate by.
  */
-fun MatrixStack<Matrix4x4f>.rotate(quat: Quaternion4f) {
+public fun MatrixStack<Matrix4x4f>.rotate(quat: Quaternion4f) {
     swap(current() * quat)
 }
 
@@ -65,7 +65,7 @@ fun MatrixStack<Matrix4x4f>.rotate(quat: Quaternion4f) {
  * @param scaleY The scale factor on the Y axis.
  * @param scaleZ The scale factor on the Z axis.
  */
-fun MatrixStack<Matrix4x4f>.scale( // @formatter:off
+public fun MatrixStack<Matrix4x4f>.scale( // @formatter:off
     scaleX: Float = 1F,
     scaleY: Float = 1F,
     scaleZ: Float = 1F
@@ -80,7 +80,7 @@ fun MatrixStack<Matrix4x4f>.scale( // @formatter:off
  * @param y The translation on the Y axis.
  * @param z The translation on the Z axis.
  */
-fun MatrixStack<Matrix4x4f>.translate( // @formatter:off
+public fun MatrixStack<Matrix4x4f>.translate( // @formatter:off
     x: Float = 0F,
     y: Float = 0F,
     z: Float = 0F
@@ -98,7 +98,7 @@ fun MatrixStack<Matrix4x4f>.translate( // @formatter:off
  * @param zx The skew factor of the Z axis towards the X axis.
  * @param zy The skew factor of the Z axis towards the Y axis.
  */
-fun MatrixStack<Matrix4x4f>.skew( // @formatter:off
+public fun MatrixStack<Matrix4x4f>.skew( // @formatter:off
     xy: Float = 0F,
     xz: Float = 0F,
     yx: Float = 0F,

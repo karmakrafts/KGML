@@ -30,7 +30,7 @@ import dev.karmakrafts.kgml.util.toRadians
  * @param angleZ The angle around the Z axis in radians.
  * @return A new rotation [Matrix3x3f].
  */
-fun Matrix3x3f.Companion.rotationRad( // @formatter:off
+public fun Matrix3x3f.Companion.rotationRad( // @formatter:off
     angleX: Float = 0F,
     angleY: Float = 0F,
     angleZ: Float = 0F
@@ -51,7 +51,7 @@ fun Matrix3x3f.Companion.rotationRad( // @formatter:off
  * @param angleZ The angle around the Z axis in degrees.
  * @return A new rotation [Matrix3x3f].
  */
-inline fun Matrix3x3f.Companion.rotation( // @formatter:off
+public inline fun Matrix3x3f.Companion.rotation( // @formatter:off
     angleX: Float = 0F,
     angleY: Float = 0F,
     angleZ: Float = 0F
@@ -67,7 +67,7 @@ inline fun Matrix3x3f.Companion.rotation( // @formatter:off
  * @param quat The quaternion to multiply by.
  * @return The result of the multiplication.
  */
-inline operator fun Matrix3x3f.times(quat: Quaternion4f): Matrix3x3f = this * quat.toRotationMatrix3x3f()
+public inline operator fun Matrix3x3f.times(quat: Quaternion4f): Matrix3x3f = this * quat.toRotationMatrix3x3f()
 
 /**
  * Creates a translation matrix from the given X and Y offsets.
@@ -76,7 +76,7 @@ inline operator fun Matrix3x3f.times(quat: Quaternion4f): Matrix3x3f = this * qu
  * @param y The translation on the Y axis.
  * @return A new translation [Matrix3x3f].
  */
-fun Matrix3x3f.Companion.translation(x: Float, y: Float): Matrix3x3f = Matrix3x3f( // @formatter:off
+public fun Matrix3x3f.Companion.translation(x: Float, y: Float): Matrix3x3f = Matrix3x3f( // @formatter:off
     1F, 0F, x,
     0F, 1F, y,
     0F, 0F, 1F,
@@ -90,7 +90,7 @@ fun Matrix3x3f.Companion.translation(x: Float, y: Float): Matrix3x3f = Matrix3x3
  * @param y The scale factor on the Y axis.
  * @return A new scale [Matrix3x3f].
  */
-fun Matrix3x3f.Companion.scale(x: Float, y: Float): Matrix3x3f = Matrix3x3f( // @formatter:off
+public fun Matrix3x3f.Companion.scale(x: Float, y: Float): Matrix3x3f = Matrix3x3f( // @formatter:off
     x,  0F, 0F,
     0F, y,  0F,
     0F, 0F, 1F,

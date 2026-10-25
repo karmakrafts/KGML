@@ -27,15 +27,15 @@ import kotlin.jvm.JvmInline
  * @property rotation The rotation angles in radians for each axis.
  */
 @JvmInline
-value class Rotation3f(val rotation: Vector3f) : Transform<Matrix3x3f> {
-    companion object {
+public value class Rotation3f(public val rotation: Vector3f) : Transform<Matrix3x3f> {
+    public companion object {
         /**
          * Creates a rotation from the given angles in degrees.
          *
          * @param rotation The rotation angles in degrees.
          * @return A new [Rotation3f].
          */
-        fun fromDegrees(rotation: Vector3f): Rotation3f = Rotation3f( // @formatter:off
+        public fun fromDegrees(rotation: Vector3f): Rotation3f = Rotation3f( // @formatter:off
             toRadians(rotation.x),
             toRadians(rotation.y),
             toRadians(rotation.z)
@@ -49,7 +49,7 @@ value class Rotation3f(val rotation: Vector3f) : Transform<Matrix3x3f> {
      * @param angleY The angle around the Y axis in radians.
      * @param angleZ The angle around the Z axis in radians.
      */
-    constructor( // @formatter:off
+    public constructor( // @formatter:off
         angleX: Float = 0F,
         angleY: Float = 0F,
         angleZ: Float = 0F

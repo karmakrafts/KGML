@@ -28,7 +28,7 @@ import kotlin.jvm.JvmName
  * @param angleZ The angle around the Z axis in radians.
  */
 @JvmName("rotateRad33")
-fun MatrixStack<Matrix3x3f>.rotateRad( // @formatter:off
+public fun MatrixStack<Matrix3x3f>.rotateRad( // @formatter:off
     angleX: Float = 0F,
     angleY: Float = 0F,
     angleZ: Float = 0F
@@ -44,7 +44,7 @@ fun MatrixStack<Matrix3x3f>.rotateRad( // @formatter:off
  * @param angleZ The angle around the Z axis in degrees.
  */
 @JvmName("rotate33")
-fun MatrixStack<Matrix3x3f>.rotate( // @formatter:off
+public fun MatrixStack<Matrix3x3f>.rotate( // @formatter:off
     angleX: Float = 0F,
     angleY: Float = 0F,
     angleZ: Float = 0F
@@ -59,7 +59,7 @@ fun MatrixStack<Matrix3x3f>.rotate( // @formatter:off
  * @param scaleY The scale factor on the Y axis.
  */
 @JvmName("scale33")
-fun MatrixStack<Matrix3x3f>.scale( // @formatter:off
+public fun MatrixStack<Matrix3x3f>.scale( // @formatter:off
     scaleX: Float = 1F,
     scaleY: Float = 1F
 ) { // @formatter:on
@@ -72,7 +72,7 @@ fun MatrixStack<Matrix3x3f>.scale( // @formatter:off
  * @param x The translation on the X axis.
  * @param y The translation on the Y axis.
  */
-fun MatrixStack<Matrix3x3f>.translate( // @formatter:off
+public fun MatrixStack<Matrix3x3f>.translate( // @formatter:off
     x: Float = 0F,
     y: Float = 0F
 ) { // @formatter:on

@@ -26,7 +26,7 @@ import kotlinx.io.readFloat
  *
  * @return The read vector.
  */
-fun Source.readVector3f(): Vector3f = Vector3f( // @formatter:off
+public fun Source.readVector3f(): Vector3f = Vector3f( // @formatter:off
     x = readFloat(),
     y = readFloat(),
     z = readFloat()
@@ -37,7 +37,7 @@ fun Source.readVector3f(): Vector3f = Vector3f( // @formatter:off
  *
  * @return The read vector.
  */
-fun Source.readVector3fLe(): Vector3f = Vector3f( // @formatter:off
+public fun Source.readVector3fLe(): Vector3f = Vector3f( // @formatter:off
     x = readFloatLeFast(),
     y = readFloatLeFast(),
     z = readFloatLeFast()

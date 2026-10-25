@@ -45,7 +45,7 @@ import kotlin.reflect.KClass
  * @property properties The properties of the matrix.
  */
 @Suppress("NOTHING_TO_INLINE")
-data class Matrix4x4d(
+public data class Matrix4x4d(
     @JvmField val m00: Double,
     @JvmField val m01: Double,
     @JvmField val m02: Double,
@@ -67,7 +67,7 @@ data class Matrix4x4d(
     /**
      * The type of [Matrix4x4d].
      */
-    companion object : MatrixType {
+    public companion object : MatrixType {
         override val componentType: KClass<*> = Double::class
         override val componentSize: Int = Double.SIZE_BYTES
         override val rows: Int = 4
@@ -77,7 +77,7 @@ data class Matrix4x4d(
         /**
          * The identity matrix for [Matrix4x4d].
          */
-        val identity: Matrix4x4d = Matrix4x4d()
+        public val identity: Matrix4x4d = Matrix4x4d()
 
         /**
          * Creates a [Matrix4x4d] from the given double array.
@@ -86,7 +86,7 @@ data class Matrix4x4d(
          * @param offset The offset in the array.
          * @return The created matrix.
          */
-        inline fun fromArray( // @formatter:off
+        public inline fun fromArray( // @formatter:off
             array: DoubleArray,
             offset: Int = 0,
             properties: MatrixProperties = MatrixProperties.NONE
@@ -120,7 +120,7 @@ data class Matrix4x4d(
          * @param properties The properties of the matrix.
          * @return The created matrix.
          */
-        inline fun fromRows( // @formatter:off
+        public inline fun fromRows( // @formatter:off
             row0: Vector4d,
             row1: Vector4d,
             row2: Vector4d,
@@ -144,7 +144,7 @@ data class Matrix4x4d(
          * @param properties The properties of the matrix.
          * @return The created matrix.
          */
-        inline fun fromColumns( // @formatter:off
+        public inline fun fromColumns( // @formatter:off
             column0: Vector4d,
             column1: Vector4d,
             column2: Vector4d,
@@ -162,7 +162,7 @@ data class Matrix4x4d(
     /**
      * Creates an identity matrix.
      */
-    constructor() : this( // @formatter:off
+    public constructor() : this( // @formatter:off
         1.0, 0.0, 0.0, 0.0,
         0.0, 1.0, 0.0, 0.0,
         0.0, 0.0, 1.0, 0.0,
@@ -175,7 +175,7 @@ data class Matrix4x4d(
      *
      * @param value The value to set all components to.
      */
-    constructor(value: Double) : this( // @formatter:off
+    public constructor(value: Double) : this( // @formatter:off
         value, value, value, value,
         value, value, value, value,
         value, value, value, value,
@@ -248,7 +248,7 @@ data class Matrix4x4d(
      *
      * @return The converted matrix.
      */
-    inline fun toMatrix4x4f(): Matrix4x4f = Matrix4x4f( // @formatter:off
+    public inline fun toMatrix4x4f(): Matrix4x4f = Matrix4x4f( // @formatter:off
         m00.toFloat(), m01.toFloat(), m02.toFloat(), m03.toFloat(),
         m10.toFloat(), m11.toFloat(), m12.toFloat(), m13.toFloat(),
         m20.toFloat(), m21.toFloat(), m22.toFloat(), m23.toFloat(),
@@ -260,7 +260,7 @@ data class Matrix4x4d(
      *
      * @return The transposed matrix.
      */
-    inline fun transpose(): Matrix4x4d = Matrix4x4d( // @formatter:off
+    public inline fun transpose(): Matrix4x4d = Matrix4x4d( // @formatter:off
         m00, m10, m20, m30,
         m01, m11, m21, m31,
         m02, m12, m22, m32,
@@ -274,7 +274,7 @@ data class Matrix4x4d(
      * @param other The matrix to multiply with.
      * @return The result of the multiplication.
      */
-    operator fun times(other: Matrix4x4d): Matrix4x4d {
+    public operator fun times(other: Matrix4x4d): Matrix4x4d {
         val otherProps = other.properties
         return when {
             properties.isIdentity -> other
@@ -460,7 +460,7 @@ data class Matrix4x4d(
      * @param other The vector to multiply with.
      * @return The result of the multiplication.
      */
-    operator fun times(other: Vector4d): Vector4d {
+    public operator fun times(other: Vector4d): Vector4d {
         val (ox, oy, oz, ow) = other
         return Vector4d(
             fma(m00, ox, fma(m01, oy, fma(m02, oz, m03 * ow))),

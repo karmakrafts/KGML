@@ -26,7 +26,7 @@ import kotlinx.io.writeFloat
  *
  * @param vector The vector to write.
  */
-fun Sink.writeVector2f(vector: Vector2f) {
+public fun Sink.writeVector2f(vector: Vector2f) {
     writeFloat(vector.x)
     writeFloat(vector.y)
 }
@@ -36,7 +36,7 @@ fun Sink.writeVector2f(vector: Vector2f) {
  *
  * @param vector The vector to write.
  */
-fun Sink.writeVector2fLe(vector: Vector2f) {
+public fun Sink.writeVector2fLe(vector: Vector2f) {
     writeFloatLeFast(vector.x)
     writeFloatLeFast(vector.y)
 }

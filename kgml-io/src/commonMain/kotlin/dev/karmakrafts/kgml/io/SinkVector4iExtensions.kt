@@ -25,7 +25,7 @@ import kotlinx.io.Sink
  *
  * @param vector The vector to write.
  */
-fun Sink.writeVector4i(vector: Vector4i) {
+public fun Sink.writeVector4i(vector: Vector4i) {
     writeInt(vector.x)
     writeInt(vector.y)
     writeInt(vector.z)
@@ -37,7 +37,7 @@ fun Sink.writeVector4i(vector: Vector4i) {
  *
  * @param vector The vector to write.
  */
-fun Sink.writeVector4iLe(vector: Vector4i) {
+public fun Sink.writeVector4iLe(vector: Vector4i) {
     writeIntLeFast(vector.x)
     writeIntLeFast(vector.y)
     writeIntLeFast(vector.z)

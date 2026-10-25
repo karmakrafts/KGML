@@ -32,7 +32,7 @@ internal const val TO_DEG: Double = 180.0 / PI
  * @return The converted value in radians.
  */
 @Suppress("NOTHING_TO_INLINE")
-inline fun toDegrees(value: Float): Float = (value * TO_DEG).toFloat()
+public inline fun toDegrees(value: Float): Float = (value * TO_DEG).toFloat()
 
 /**
  * Convert the given value from degrees into radians.
@@ -41,7 +41,7 @@ inline fun toDegrees(value: Float): Float = (value * TO_DEG).toFloat()
  * @return The converted value in radians.
  */
 @Suppress("NOTHING_TO_INLINE")
-inline fun toDegrees(value: Double): Double = value * TO_DEG
+public inline fun toDegrees(value: Double): Double = value * TO_DEG
 
 /**
  * Convert the given value from radians into degrees.
@@ -51,7 +51,7 @@ inline fun toDegrees(value: Double): Double = value * TO_DEG
  * @return The converted value in degrees.
  */
 @Suppress("NOTHING_TO_INLINE")
-inline fun toRadians(value: Float): Float = (value * TO_RAD).toFloat()
+public inline fun toRadians(value: Float): Float = (value * TO_RAD).toFloat()
 
 /**
  * Convert the given value from radians into degrees.
@@ -60,4 +60,4 @@ inline fun toRadians(value: Float): Float = (value * TO_RAD).toFloat()
  * @return The converted value in degrees.
  */
 @Suppress("NOTHING_TO_INLINE")
-inline fun toRadians(value: Double): Double = value * TO_RAD
+public inline fun toRadians(value: Double): Double = value * TO_RAD

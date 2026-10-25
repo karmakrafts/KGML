@@ -57,6 +57,7 @@ kotlin {
     compilerOptions {
         freeCompilerArgs.add("-Xexpect-actual-classes")
     }
+    explicitApi()
     defaultCompilerOptions()
     withSourcesJar()
     withAndroidLibrary("$group.core") {

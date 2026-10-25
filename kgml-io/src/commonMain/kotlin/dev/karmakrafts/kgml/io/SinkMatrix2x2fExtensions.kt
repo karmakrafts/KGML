@@ -27,7 +27,7 @@ import kotlinx.io.writeFloat
  *
  * @param matrix The matrix to write.
  */
-fun Sink.writeMatrix2x2f(matrix: Matrix2x2f) {
+public fun Sink.writeMatrix2x2f(matrix: Matrix2x2f) {
     writeFloat(matrix.m00)
     writeFloat(matrix.m01)
     writeFloat(matrix.m10)
@@ -40,7 +40,7 @@ fun Sink.writeMatrix2x2f(matrix: Matrix2x2f) {
  *
  * @param matrix The matrix to write.
  */
-fun Sink.writeMatrix2x2fLe(matrix: Matrix2x2f) {
+public fun Sink.writeMatrix2x2fLe(matrix: Matrix2x2f) {
     writeFloatLeFast(matrix.m00)
     writeFloatLeFast(matrix.m01)
     writeFloatLeFast(matrix.m10)

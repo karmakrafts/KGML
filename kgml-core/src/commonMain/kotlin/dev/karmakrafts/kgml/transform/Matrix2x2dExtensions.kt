@@ -28,7 +28,7 @@ import kotlin.math.sin
  * @param rad The angle in radians.
  * @return A new rotation [Matrix2x2d].
  */
-fun Matrix2x2d.Companion.rotationRad(rad: Double): Matrix2x2d {
+public fun Matrix2x2d.Companion.rotationRad(rad: Double): Matrix2x2d {
     val c = cos(rad)
     val s = sin(rad)
     return Matrix2x2d(c, -s, s, c, MatrixProperties.AFFINE or MatrixProperties.LINEAR or MatrixProperties.ROTATION)
@@ -41,7 +41,7 @@ fun Matrix2x2d.Companion.rotationRad(rad: Double): Matrix2x2d {
  * @return A new rotation [Matrix2x2d].
  */
 @Suppress("NOTHING_TO_INLINE")
-inline fun Matrix2x2d.Companion.rotation(deg: Double): Matrix2x2d = rotationRad(toRadians(deg))
+public inline fun Matrix2x2d.Companion.rotation(deg: Double): Matrix2x2d = rotationRad(toRadians(deg))
 
 /**
  * Creates a scale matrix from the given X and Y scale factors.
@@ -50,7 +50,7 @@ inline fun Matrix2x2d.Companion.rotation(deg: Double): Matrix2x2d = rotationRad(
  * @param scaleY The scale factor on the Y axis.
  * @return A new scale [Matrix2x2d].
  */
-fun Matrix2x2d.Companion.scale(scaleX: Double, scaleY: Double): Matrix2x2d = Matrix2x2d( // @formatter:off
+public fun Matrix2x2d.Companion.scale(scaleX: Double, scaleY: Double): Matrix2x2d = Matrix2x2d( // @formatter:off
     scaleX, 0.0,
     0.0, scaleY,
     MatrixProperties.AFFINE or MatrixProperties.LINEAR or MatrixProperties.DIAGONAL
@@ -63,4 +63,4 @@ fun Matrix2x2d.Companion.scale(scaleX: Double, scaleY: Double): Matrix2x2d = Mat
  * @return A new scale [Matrix2x2d].
  */
 @Suppress("NOTHING_TO_INLINE")
-inline fun Matrix2x2d.Companion.scale(scale: Double): Matrix2x2d = scale(scale, scale)
+public inline fun Matrix2x2d.Companion.scale(scale: Double): Matrix2x2d = scale(scale, scale)

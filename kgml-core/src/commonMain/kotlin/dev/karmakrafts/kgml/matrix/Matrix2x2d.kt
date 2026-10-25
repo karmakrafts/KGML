@@ -33,7 +33,7 @@ import kotlin.reflect.KClass
  * @property properties The properties of the matrix.
  */
 @Suppress("NOTHING_TO_INLINE")
-data class Matrix2x2d( // @formatter:off
+public data class Matrix2x2d( // @formatter:off
     @JvmField val m00: Double,
     @JvmField val m01: Double,
     @JvmField val m10: Double,
@@ -43,7 +43,7 @@ data class Matrix2x2d( // @formatter:off
     /**
      * The type of [Matrix2x2d].
      */
-    companion object : MatrixType {
+    public companion object : MatrixType {
         override val componentType: KClass<*> = Double::class
         override val componentSize: Int = Double.SIZE_BYTES
         override val rows: Int = 2
@@ -57,7 +57,7 @@ data class Matrix2x2d( // @formatter:off
         /**
          * The identity matrix for [Matrix2x2d].
          */
-        val identity: Matrix2x2d = Matrix2x2d()
+        public val identity: Matrix2x2d = Matrix2x2d()
 
         /**
          * Creates a [Matrix2x2d] from the given double array.
@@ -66,7 +66,7 @@ data class Matrix2x2d( // @formatter:off
          * @param offset The offset in the array.
          * @return The created matrix.
          */
-        inline fun fromArray( // @formatter:off
+        public inline fun fromArray( // @formatter:off
             array: DoubleArray,
             offset: Int = 0,
             properties: MatrixProperties = MatrixProperties.NONE
@@ -86,7 +86,7 @@ data class Matrix2x2d( // @formatter:off
          * @param properties The properties of the matrix.
          * @return The created matrix.
          */
-        inline fun fromRows( // @formatter:off
+        public inline fun fromRows( // @formatter:off
             row0: Vector2d,
             row1: Vector2d,
             properties: MatrixProperties = MatrixProperties.NONE
@@ -104,7 +104,7 @@ data class Matrix2x2d( // @formatter:off
          * @param properties The properties of the matrix.
          * @return The created matrix.
          */
-        inline fun fromColumns( // @formatter:off
+        public inline fun fromColumns( // @formatter:off
             column0: Vector2d,
             column1: Vector2d,
             properties: MatrixProperties = MatrixProperties.NONE
@@ -118,7 +118,7 @@ data class Matrix2x2d( // @formatter:off
     /**
      * Creates an identity matrix.
      */
-    constructor() : this( // @formatter:off
+    public constructor() : this( // @formatter:off
         1.0, 0.0,
         0.0, 1.0,
         MatrixProperties.IDENTITY
@@ -129,7 +129,7 @@ data class Matrix2x2d( // @formatter:off
      *
      * @param value The value to set all components to.
      */
-    constructor(value: Double) : this( // @formatter:off
+    public constructor(value: Double) : this( // @formatter:off
         value, value,
         value, value
     ) // @formatter:on
@@ -172,7 +172,7 @@ data class Matrix2x2d( // @formatter:off
      *
      * @return The converted matrix.
      */
-    inline fun toMatrix2x2f(): Matrix2x2f = Matrix2x2f( // @formatter:off
+    public inline fun toMatrix2x2f(): Matrix2x2f = Matrix2x2f( // @formatter:off
         m00.toFloat(), m01.toFloat(),
         m10.toFloat(), m11.toFloat()
     ) // @formatter:on
@@ -182,7 +182,7 @@ data class Matrix2x2d( // @formatter:off
      *
      * @return The extended 3x3 matrix.
      */
-    inline fun extend(): Matrix3x3d = Matrix3x3d( // @formatter:off
+    public inline fun extend(): Matrix3x3d = Matrix3x3d( // @formatter:off
         m00, m01, 0.0,
         m10, m11, 0.0,
         0.0, 0.0, 1.0,
@@ -194,7 +194,7 @@ data class Matrix2x2d( // @formatter:off
      *
      * @return The transposed matrix.
      */
-    inline fun transpose(): Matrix2x2d = Matrix2x2d( // @formatter:off
+    public inline fun transpose(): Matrix2x2d = Matrix2x2d( // @formatter:off
         m00, m10,
         m01, m11,
         properties
@@ -206,7 +206,7 @@ data class Matrix2x2d( // @formatter:off
      * @param other The matrix to multiply with.
      * @return The result of the multiplication.
      */
-    operator fun times(other: Matrix2x2d): Matrix2x2d {
+    public operator fun times(other: Matrix2x2d): Matrix2x2d {
         val otherProps = other.properties
         return when {
             properties.isIdentity -> other
@@ -289,7 +289,7 @@ data class Matrix2x2d( // @formatter:off
      * @param other The vector to multiply with.
      * @return The result of the multiplication.
      */
-    operator fun times(other: Vector2d): Vector2d = Vector2d( // @formatter:off
+    public operator fun times(other: Vector2d): Vector2d = Vector2d( // @formatter:off
         fma(m00, other.x, m01 * other.y),
         fma(m10, other.x, m11 * other.y)
     ) // @formatter:on

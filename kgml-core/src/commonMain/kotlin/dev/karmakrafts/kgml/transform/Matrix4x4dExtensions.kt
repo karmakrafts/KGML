@@ -28,7 +28,7 @@ import dev.karmakrafts.kgml.util.toRadians
  * @param quat The quaternion to multiply by.
  * @return The result of the multiplication.
  */
-inline operator fun Matrix4x4d.times(quat: Quaternion4d): Matrix4x4d = this * quat.toRotationMatrix4x4d()
+public inline operator fun Matrix4x4d.times(quat: Quaternion4d): Matrix4x4d = this * quat.toRotationMatrix4x4d()
 
 /**
  * Creates a rotation matrix from the given Euler angles in radians.
@@ -38,7 +38,7 @@ inline operator fun Matrix4x4d.times(quat: Quaternion4d): Matrix4x4d = this * qu
  * @param angleZ The angle around the Z axis in radians.
  * @return A new rotation [Matrix4x4d].
  */
-fun Matrix4x4d.Companion.rotationRad( // @formatter:off
+public fun Matrix4x4d.Companion.rotationRad( // @formatter:off
     angleX: Double = 0.0,
     angleY: Double = 0.0,
     angleZ: Double = 0.0
@@ -56,7 +56,7 @@ fun Matrix4x4d.Companion.rotationRad( // @formatter:off
  * @param angleZ The angle around the Z axis in degrees.
  * @return A new rotation [Matrix4x4d].
  */
-fun Matrix4x4d.Companion.rotation( // @formatter:off
+public fun Matrix4x4d.Companion.rotation( // @formatter:off
     angleX: Double = 0.0,
     angleY: Double = 0.0,
     angleZ: Double = 0.0
@@ -74,7 +74,7 @@ fun Matrix4x4d.Companion.rotation( // @formatter:off
  * @param z The translation on the Z axis.
  * @return A new translation [Matrix4x4d].
  */
-fun Matrix4x4d.Companion.translation( // @formatter:off
+public fun Matrix4x4d.Companion.translation( // @formatter:off
     x: Double = 0.0,
     y: Double = 0.0,
     z: Double = 0.0
@@ -94,7 +94,7 @@ fun Matrix4x4d.Companion.translation( // @formatter:off
  * @param scaleZ The scale factor on the Z axis.
  * @return A new scale [Matrix4x4d].
  */
-fun Matrix4x4d.Companion.scale( // @formatter:off
+public fun Matrix4x4d.Companion.scale( // @formatter:off
     scaleX: Double = 1.0,
     scaleY: Double = 1.0,
     scaleZ: Double = 1.0
@@ -117,7 +117,7 @@ fun Matrix4x4d.Companion.scale( // @formatter:off
  * @param zy The skew factor of the Z axis towards the Y axis.
  * @return A new skew [Matrix4x4d].
  */
-fun Matrix4x4d.Companion.skew( // @formatter:off
+public fun Matrix4x4d.Companion.skew( // @formatter:off
     xy: Double = 0.0,
     xz: Double = 0.0,
     yx: Double = 0.0,

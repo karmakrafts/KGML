@@ -27,7 +27,7 @@ import kotlinx.io.readDouble
  *
  * @return The read matrix.
  */
-fun Source.readMatrix2x2d(): Matrix2x2d = Matrix2x2d( // @formatter:off
+public fun Source.readMatrix2x2d(): Matrix2x2d = Matrix2x2d( // @formatter:off
     m00 = readDouble(), m01 = readDouble(),
     m10 = readDouble(), m11 = readDouble()
 ) // @formatter:on
@@ -38,7 +38,7 @@ fun Source.readMatrix2x2d(): Matrix2x2d = Matrix2x2d( // @formatter:off
  *
  * @return The read matrix.
  */
-fun Source.readMatrix2x2dLe(): Matrix2x2d = Matrix2x2d( // @formatter:off
+public fun Source.readMatrix2x2dLe(): Matrix2x2d = Matrix2x2d( // @formatter:off
     m00 = readDoubleLeFast(), m01 = readDoubleLeFast(),
     m10 = readDoubleLeFast(), m11 = readDoubleLeFast()
 ) // @formatter:on

@@ -32,7 +32,7 @@ import kotlin.reflect.KClass
  * @param w The W component.
  */
 @Suppress("NOTHING_TO_INLINE")
-data class Vector4i( // @formatter:off
+public data class Vector4i( // @formatter:off
     @JvmField val x: Int,
     @JvmField val y: Int,
     @JvmField val z: Int,
@@ -41,7 +41,7 @@ data class Vector4i( // @formatter:off
     /**
      * The type of [Vector4i].
      */
-    companion object : VectorType {
+    public companion object : VectorType {
         /**
          * The type of the components in the vector.
          */
@@ -65,57 +65,57 @@ data class Vector4i( // @formatter:off
         /**
          * A vector with all components set to 0.
          */
-        val ZERO: Vector4i = Vector4i()
+        public val ZERO: Vector4i = Vector4i()
 
         /**
          * A vector with all components set to 1.
          */
-        val ONE: Vector4i = Vector4i(1)
+        public val ONE: Vector4i = Vector4i(1)
 
         /**
          * A vector with the X component set to 1 and all other components set to 0.
          */
-        val X_POS: Vector4i = Vector4i(1, 0, 0, 0)
+        public val X_POS: Vector4i = Vector4i(1, 0, 0, 0)
 
         /**
          * A vector with the X component set to -1 and all other components set to 0.
          */
-        val X_NEG: Vector4i = Vector4i(-1, 0, 0, 0)
+        public val X_NEG: Vector4i = Vector4i(-1, 0, 0, 0)
 
         /**
          * A vector with the Y component set to 1 and all other components set to 0.
          */
-        val Y_POS: Vector4i = Vector4i(0, 1, 0, 0)
+        public val Y_POS: Vector4i = Vector4i(0, 1, 0, 0)
 
         /**
          * A vector with the Y component set to -1 and all other components set to 0.
          */
-        val Y_NEG: Vector4i = Vector4i(0, -1, 0, 0)
+        public val Y_NEG: Vector4i = Vector4i(0, -1, 0, 0)
 
         /**
          * A vector with the Z component set to 1 and all other components set to 0.
          */
-        val Z_POS: Vector4i = Vector4i(0, 0, 1, 0)
+        public val Z_POS: Vector4i = Vector4i(0, 0, 1, 0)
 
         /**
          * A vector with the Z component set to -1 and all other components set to 0.
          */
-        val Z_NEG: Vector4i = Vector4i(0, 0, -1, 0)
+        public val Z_NEG: Vector4i = Vector4i(0, 0, -1, 0)
 
         /**
          * A vector with the W component set to 1 and all other components set to 0.
          */
-        val W_POS: Vector4i = Vector4i(0, 0, 0, 1)
+        public val W_POS: Vector4i = Vector4i(0, 0, 0, 1)
 
         /**
          * A vector with the W component set to -1 and all other components set to 0.
          */
-        val W_NEG: Vector4i = Vector4i(0, 0, 0, -1)
+        public val W_NEG: Vector4i = Vector4i(0, 0, 0, -1)
 
         /**
          * A lexicographical comparator for [Vector4i].
          */
-        val lexComparator: Comparator<Vector4i> = { a, b ->
+        public val lexComparator: Comparator<Vector4i> = { a, b ->
             val (ax, ay, az, aw) = a
             val (bx, by, bz, bw) = b
             if (ax != bx) ax.compareTo(bx)
@@ -135,7 +135,7 @@ data class Vector4i( // @formatter:off
          * @param offset The offset in the [array].
          * @return The created [Vector4i].
          */
-        inline fun fromArray(array: IntArray, offset: Int = 0): Vector4i = Vector4i( // @formatter:off
+        public inline fun fromArray(array: IntArray, offset: Int = 0): Vector4i = Vector4i( // @formatter:off
             array[offset],
             array[offset + 1],
             array[offset + 2],
@@ -148,12 +148,12 @@ data class Vector4i( // @formatter:off
      *
      * @param xyzw The value to set all components to.
      */
-    constructor(xyzw: Int) : this(xyzw, xyzw, xyzw, xyzw)
+    public constructor(xyzw: Int) : this(xyzw, xyzw, xyzw, xyzw)
 
     /**
      * Creates a [Vector4i] with all components set to 0.
      */
-    constructor() : this(0)
+    public constructor() : this(0)
 
     /**
      * The type of [Vector4i].
@@ -166,7 +166,7 @@ data class Vector4i( // @formatter:off
      * @param xyzw The value to add.
      * @return The result of the addition.
      */
-    inline operator fun plus(xyzw: Int): Vector4i = Vector4i(x + xyzw, y + xyzw, z + xyzw, w + xyzw)
+    public inline operator fun plus(xyzw: Int): Vector4i = Vector4i(x + xyzw, y + xyzw, z + xyzw, w + xyzw)
 
     /**
      * Adds [other] to this vector.
@@ -174,7 +174,8 @@ data class Vector4i( // @formatter:off
      * @param other The vector to add.
      * @return The result of the addition.
      */
-    inline operator fun plus(other: Vector4i): Vector4i = Vector4i(x + other.x, y + other.y, z + other.z, w + other.w)
+    public inline operator fun plus(other: Vector4i): Vector4i =
+        Vector4i(x + other.x, y + other.y, z + other.z, w + other.w)
 
     /**
      * Subtracts [xyzw] from all components of this vector.
@@ -182,7 +183,7 @@ data class Vector4i( // @formatter:off
      * @param xyzw The value to subtract.
      * @return The result of the subtraction.
      */
-    inline operator fun minus(xyzw: Int): Vector4i = Vector4i(x - xyzw, y - xyzw, z - xyzw, w - xyzw)
+    public inline operator fun minus(xyzw: Int): Vector4i = Vector4i(x - xyzw, y - xyzw, z - xyzw, w - xyzw)
 
     /**
      * Subtracts [other] from this vector.
@@ -190,7 +191,8 @@ data class Vector4i( // @formatter:off
      * @param other The vector to subtract.
      * @return The result of the subtraction.
      */
-    inline operator fun minus(other: Vector4i): Vector4i = Vector4i(x - other.x, y - other.y, z - other.z, w - other.w)
+    public inline operator fun minus(other: Vector4i): Vector4i =
+        Vector4i(x - other.x, y - other.y, z - other.z, w - other.w)
 
     /**
      * Multiplies all components of this vector by [xyzw].
@@ -198,7 +200,7 @@ data class Vector4i( // @formatter:off
      * @param xyzw The value to multiply by.
      * @return The result of the multiplication.
      */
-    inline operator fun times(xyzw: Int): Vector4i = Vector4i(x * xyzw, y * xyzw, z * xyzw, w * xyzw)
+    public inline operator fun times(xyzw: Int): Vector4i = Vector4i(x * xyzw, y * xyzw, z * xyzw, w * xyzw)
 
     /**
      * Multiplies this vector by [other].
@@ -206,7 +208,8 @@ data class Vector4i( // @formatter:off
      * @param other The vector to multiply by.
      * @return The result of the multiplication.
      */
-    inline operator fun times(other: Vector4i): Vector4i = Vector4i(x * other.x, y * other.y, z * other.z, w * other.w)
+    public inline operator fun times(other: Vector4i): Vector4i =
+        Vector4i(x * other.x, y * other.y, z * other.z, w * other.w)
 
     /**
      * Divides all components of this vector by [xyzw].
@@ -214,7 +217,7 @@ data class Vector4i( // @formatter:off
      * @param xyzw The value to divide by.
      * @return The result of the division.
      */
-    inline operator fun div(xyzw: Int): Vector4i = Vector4i(x / xyzw, y / xyzw, z / xyzw, w / xyzw)
+    public inline operator fun div(xyzw: Int): Vector4i = Vector4i(x / xyzw, y / xyzw, z / xyzw, w / xyzw)
 
     /**
      * Divides this vector by [other].
@@ -222,7 +225,8 @@ data class Vector4i( // @formatter:off
      * @param other The vector to divide by.
      * @return The result of the division.
      */
-    inline operator fun div(other: Vector4i): Vector4i = Vector4i(x / other.x, y / other.y, z / other.z, w / other.w)
+    public inline operator fun div(other: Vector4i): Vector4i =
+        Vector4i(x / other.x, y / other.y, z / other.z, w / other.w)
 
     /**
      * Calculates the remainder of all components of this vector divided by [xyzw].
@@ -230,7 +234,7 @@ data class Vector4i( // @formatter:off
      * @param xyzw The value to divide by.
      * @return The result of the remainder operation.
      */
-    inline operator fun rem(xyzw: Int): Vector4i = Vector4i(x % xyzw, y % xyzw, z % xyzw, w % xyzw)
+    public inline operator fun rem(xyzw: Int): Vector4i = Vector4i(x % xyzw, y % xyzw, z % xyzw, w % xyzw)
 
     /**
      * Calculates the remainder of this vector divided by [other].
@@ -238,7 +242,8 @@ data class Vector4i( // @formatter:off
      * @param other The vector to divide by.
      * @return The result of the remainder operation.
      */
-    inline operator fun rem(other: Vector4i): Vector4i = Vector4i(x % other.x, y % other.y, z % other.z, w % other.w)
+    public inline operator fun rem(other: Vector4i): Vector4i =
+        Vector4i(x % other.x, y % other.y, z % other.z, w % other.w)
 
     /**
      * Calculates the fused multiply-add of this vector, [b] and [c].
@@ -247,7 +252,7 @@ data class Vector4i( // @formatter:off
      * @param c The addend.
      * @return The result of the fused multiply-add.
      */
-    fun fma(b: Vector4i, c: Vector4i): Vector4i = Vector4i( // @formatter:off
+    public fun fma(b: Vector4i, c: Vector4i): Vector4i = Vector4i( // @formatter:off
         fma(x, b.x, c.x),
         fma(y, b.y, c.y),
         fma(z, b.z, c.z),
@@ -261,7 +266,7 @@ data class Vector4i( // @formatter:off
      * @param factor The interpolation factor.
      * @return The interpolated vector.
      */
-    fun lerp(other: Vector4i, factor: Float): Vector4i = Vector4i( // @formatter:off
+    public fun lerp(other: Vector4i, factor: Float): Vector4i = Vector4i( // @formatter:off
         fma((other.x - x).toFloat(), factor, x.toFloat()).toInt(),
         fma((other.y - y).toFloat(), factor, y.toFloat()).toInt(),
         fma((other.z - z).toFloat(), factor, z.toFloat()).toInt(),
@@ -274,7 +279,7 @@ data class Vector4i( // @formatter:off
      * @param other The other vector.
      * @return The squared distance.
      */
-    infix fun distanceSq(other: Vector4i): Int {
+    public infix fun distanceSq(other: Vector4i): Int {
         val dx = other.x - x
         val dy = other.y - y
         val dz = other.z - z
@@ -288,7 +293,7 @@ data class Vector4i( // @formatter:off
      * @param other The other vector.
      * @return The distance.
      */
-    inline infix fun distance(other: Vector4i): Int = sqrt(distanceSq(other).toFloat()).toInt()
+    public inline infix fun distance(other: Vector4i): Int = sqrt(distanceSq(other).toFloat()).toInt()
 
     /**
      * Returns the minimum of this vector and [other] based on their length.
@@ -296,7 +301,7 @@ data class Vector4i( // @formatter:off
      * @param other The other vector.
      * @return The minimum vector.
      */
-    infix fun min(other: Vector4i): Vector4i = when {
+    public infix fun min(other: Vector4i): Vector4i = when {
         this > other -> other
         else -> this
     }
@@ -307,7 +312,7 @@ data class Vector4i( // @formatter:off
      * @param other The other vector.
      * @return The vector containing the minimum components.
      */
-    infix fun minComponents(other: Vector4i): Vector4i = Vector4i( // @formatter:off
+    public infix fun minComponents(other: Vector4i): Vector4i = Vector4i( // @formatter:off
         min(x, other.x),
         min(y, other.y),
         min(z, other.z),
@@ -320,7 +325,7 @@ data class Vector4i( // @formatter:off
      * @param other The other vector.
      * @return The maximum vector.
      */
-    infix fun max(other: Vector4i): Vector4i = when {
+    public infix fun max(other: Vector4i): Vector4i = when {
         this < other -> other
         else -> this
     }
@@ -331,7 +336,7 @@ data class Vector4i( // @formatter:off
      * @param other The other vector.
      * @return The vector containing the maximum components.
      */
-    infix fun maxComponents(other: Vector4i): Vector4i = Vector4i( // @formatter:off
+    public infix fun maxComponents(other: Vector4i): Vector4i = Vector4i( // @formatter:off
         max(x, other.x),
         max(y, other.y),
         max(z, other.z),
@@ -343,21 +348,21 @@ data class Vector4i( // @formatter:off
      *
      * @return The squared length.
      */
-    fun lengthSq(): Int = fma(x, x, fma(y, y, fma(z, z, w * w)))
+    public fun lengthSq(): Int = fma(x, x, fma(y, y, fma(z, z, w * w)))
 
     /**
      * Calculates the length of this vector.
      *
      * @return The length.
      */
-    inline fun length(): Int = sqrt(lengthSq().toFloat()).toInt()
+    public inline fun length(): Int = sqrt(lengthSq().toFloat()).toInt()
 
     /**
      * Returns a normalized version of this vector.
      *
      * @return The normalized vector.
      */
-    inline fun normalized(): Vector4i = this / length()
+    public inline fun normalized(): Vector4i = this / length()
 
     /**
      * Calculates the dot product of this vector and [other].
@@ -365,21 +370,21 @@ data class Vector4i( // @formatter:off
      * @param other The other vector.
      * @return The dot product.
      */
-    infix fun dot(other: Vector4i): Int = fma(x, other.x, fma(y, other.y, fma(z, other.z, w * other.w)))
+    public infix fun dot(other: Vector4i): Int = fma(x, other.x, fma(y, other.y, fma(z, other.z, w * other.w)))
 
     /**
      * Converts this vector to a [Vector4f].
      *
      * @return The converted vector.
      */
-    inline fun toVector4f(): Vector4f = Vector4f(x.toFloat(), y.toFloat(), z.toFloat(), w.toFloat())
+    public inline fun toVector4f(): Vector4f = Vector4f(x.toFloat(), y.toFloat(), z.toFloat(), w.toFloat())
 
     /**
      * Converts this vector to a [Vector4d].
      *
      * @return The converted vector.
      */
-    inline fun toVector4d(): Vector4d = Vector4d(x.toDouble(), y.toDouble(), z.toDouble(), w.toDouble())
+    public inline fun toVector4d(): Vector4d = Vector4d(x.toDouble(), y.toDouble(), z.toDouble(), w.toDouble())
 
     /**
      * Compares this vector to [other] based on their length.
@@ -435,7 +440,7 @@ data class Vector4i( // @formatter:off
      * @param w The component to use for the new W.
      * @return The swizzled vector.
      */
-    inline fun swizzle( // @formatter:off
+    public inline fun swizzle( // @formatter:off
         x: VectorComponent,
         y: VectorComponent,
         z: VectorComponent,
@@ -450,7 +455,7 @@ data class Vector4i( // @formatter:off
      * @param z The component to use for the new Z.
      * @return The swizzled vector.
      */
-    inline fun swizzle3( // @formatter:off
+    public inline fun swizzle3( // @formatter:off
         x: VectorComponent,
         y: VectorComponent,
         z: VectorComponent
@@ -463,7 +468,7 @@ data class Vector4i( // @formatter:off
      * @param y The component to use for the new Y.
      * @return The swizzled vector.
      */
-    inline fun swizzle2( // @formatter:off
+    public inline fun swizzle2( // @formatter:off
         x: VectorComponent,
         y: VectorComponent
     ): Vector2i = Vector2i(this[x], this[y]) // @formatter:on

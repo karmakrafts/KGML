@@ -19,14 +19,14 @@ package dev.karmakrafts.kgml.vector
 /**
  * Base interface for all integer vectors.
  */
-sealed interface VectorNi : VectorN {
+public sealed interface VectorNi : VectorN {
     /**
      * Gets the component at the given [index].
      *
      * @param index The index of the component.
      * @return The component at the given [index].
      */
-    operator fun get(index: Int): Int
+    public operator fun get(index: Int): Int
 
     /**
      * Gets the component for the given [component].
@@ -34,12 +34,12 @@ sealed interface VectorNi : VectorN {
      * @param component The component to get.
      * @return The value of the component.
      */
-    operator fun get(component: VectorComponent): Int
+    public operator fun get(component: VectorComponent): Int
 
     /**
      * Returns the components of this vector as an [IntArray].
      *
      * @return The components of this vector.
      */
-    fun toIntArray(): IntArray
+    public fun toIntArray(): IntArray
 }

@@ -19,14 +19,14 @@ package dev.karmakrafts.kgml.matrix
 /**
  * Base interface for all square float matrices.
  */
-sealed interface MatrixNxNf : MatrixNxN {
+public sealed interface MatrixNxNf : MatrixNxN {
     /**
      * Gets the component at the given index.
      *
      * @param index The index of the component.
      * @return The component at the given index.
      */
-    operator fun get(index: Int): Float
+    public operator fun get(index: Int): Float
 
     /**
      * Gets the component for the given [MatrixComponent].
@@ -34,12 +34,12 @@ sealed interface MatrixNxNf : MatrixNxN {
      * @param component The component to get.
      * @return The component for the given [MatrixComponent].
      */
-    operator fun get(component: MatrixComponent): Float
+    public operator fun get(component: MatrixComponent): Float
 
     /**
      * Converts this matrix to a float array.
      *
      * @return The matrix as a float array.
      */
-    fun toFloatArray(): FloatArray
+    public fun toFloatArray(): FloatArray
 }

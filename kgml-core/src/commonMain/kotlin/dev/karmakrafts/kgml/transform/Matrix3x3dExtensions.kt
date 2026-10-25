@@ -30,7 +30,7 @@ import dev.karmakrafts.kgml.util.toRadians
  * @param angleZ The angle around the Z axis in radians.
  * @return A new rotation [Matrix3x3d].
  */
-fun Matrix3x3d.Companion.rotationRad( // @formatter:off
+public fun Matrix3x3d.Companion.rotationRad( // @formatter:off
     angleX: Double = 0.0,
     angleY: Double = 0.0,
     angleZ: Double = 0.0
@@ -51,7 +51,7 @@ fun Matrix3x3d.Companion.rotationRad( // @formatter:off
  * @param angleZ The angle around the Z axis in degrees.
  * @return A new rotation [Matrix3x3d].
  */
-inline fun Matrix3x3d.Companion.rotation( // @formatter:off
+public inline fun Matrix3x3d.Companion.rotation( // @formatter:off
     angleX: Double = 0.0,
     angleY: Double = 0.0,
     angleZ: Double = 0.0
@@ -67,7 +67,7 @@ inline fun Matrix3x3d.Companion.rotation( // @formatter:off
  * @param quat The quaternion to multiply by.
  * @return The result of the multiplication.
  */
-inline operator fun Matrix3x3d.times(quat: Quaternion4d): Matrix3x3d = this * quat.toRotationMatrix3x3d()
+public inline operator fun Matrix3x3d.times(quat: Quaternion4d): Matrix3x3d = this * quat.toRotationMatrix3x3d()
 
 /**
  * Creates a translation matrix from the given X and Y offsets.
@@ -76,7 +76,7 @@ inline operator fun Matrix3x3d.times(quat: Quaternion4d): Matrix3x3d = this * qu
  * @param y The translation on the Y axis.
  * @return A new translation [Matrix3x3d].
  */
-fun Matrix3x3d.Companion.translation(x: Double, y: Double): Matrix3x3d = Matrix3x3d( // @formatter:off
+public fun Matrix3x3d.Companion.translation(x: Double, y: Double): Matrix3x3d = Matrix3x3d( // @formatter:off
     1.0, 0.0, x,
     0.0, 1.0, y,
     0.0, 0.0, 1.0,
@@ -90,7 +90,7 @@ fun Matrix3x3d.Companion.translation(x: Double, y: Double): Matrix3x3d = Matrix3
  * @param y The scale factor on the Y axis.
  * @return A new scale [Matrix3x3d].
  */
-fun Matrix3x3d.Companion.scale(x: Double, y: Double): Matrix3x3d = Matrix3x3d( // @formatter:off
+public fun Matrix3x3d.Companion.scale(x: Double, y: Double): Matrix3x3d = Matrix3x3d( // @formatter:off
     x,   0.0, 0.0,
     0.0, y,   0.0,
     0.0, 0.0, 1.0,

@@ -26,7 +26,7 @@ import kotlinx.io.readDouble
  *
  * @return The read vector.
  */
-fun Source.readVector4d(): Vector4d = Vector4d( // @formatter:off
+public fun Source.readVector4d(): Vector4d = Vector4d( // @formatter:off
     x = readDouble(),
     y = readDouble(),
     z = readDouble(),
@@ -38,7 +38,7 @@ fun Source.readVector4d(): Vector4d = Vector4d( // @formatter:off
  *
  * @return The read vector.
  */
-fun Source.readVector4dLe(): Vector4d = Vector4d( // @formatter:off
+public fun Source.readVector4dLe(): Vector4d = Vector4d( // @formatter:off
     x = readDoubleLeFast(),
     y = readDoubleLeFast(),
     z = readDoubleLeFast(),

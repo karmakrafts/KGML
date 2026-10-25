@@ -19,14 +19,14 @@ package dev.karmakrafts.kgml.vector
 /**
  * Base interface for all double vectors.
  */
-sealed interface VectorNd : VectorN {
+public sealed interface VectorNd : VectorN {
     /**
      * Gets the component at the given [index].
      *
      * @param index The index of the component.
      * @return The component at the given [index].
      */
-    operator fun get(index: Int): Double
+    public operator fun get(index: Int): Double
 
     /**
      * Gets the component for the given [component].
@@ -34,12 +34,12 @@ sealed interface VectorNd : VectorN {
      * @param component The component to get.
      * @return The value of the component.
      */
-    operator fun get(component: VectorComponent): Double
+    public operator fun get(component: VectorComponent): Double
 
     /**
      * Returns the components of this vector as a [DoubleArray].
      *
      * @return The components of this vector.
      */
-    fun toDoubleArray(): DoubleArray
+    public fun toDoubleArray(): DoubleArray
 }

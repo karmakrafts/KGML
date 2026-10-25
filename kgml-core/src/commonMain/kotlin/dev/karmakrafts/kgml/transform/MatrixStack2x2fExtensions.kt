@@ -25,7 +25,7 @@ import kotlin.jvm.JvmName
  *
  * @param angle The angle in radians.
  */
-fun MatrixStack<Matrix2x2f>.rotateRad(angle: Float) {
+public fun MatrixStack<Matrix2x2f>.rotateRad(angle: Float) {
     swap(current() * Matrix2x2f.rotationRad(angle))
 }
 
@@ -34,7 +34,7 @@ fun MatrixStack<Matrix2x2f>.rotateRad(angle: Float) {
  *
  * @param angle The angle in degrees.
  */
-fun MatrixStack<Matrix2x2f>.rotate(angle: Float) {
+public fun MatrixStack<Matrix2x2f>.rotate(angle: Float) {
     swap(current() * Matrix2x2f.rotation(angle))
 }
 
@@ -45,7 +45,7 @@ fun MatrixStack<Matrix2x2f>.rotate(angle: Float) {
  * @param scaleY The scale factor on the Y axis.
  */
 @JvmName("scale22")
-fun MatrixStack<Matrix2x2f>.scale( // @formatter:off
+public fun MatrixStack<Matrix2x2f>.scale( // @formatter:off
     scaleX: Float = 1F,
     scaleY: Float = 1F
 ) { // @formatter:on

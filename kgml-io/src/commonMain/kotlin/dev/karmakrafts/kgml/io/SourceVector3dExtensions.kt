@@ -26,7 +26,7 @@ import kotlinx.io.readDouble
  *
  * @return The read vector.
  */
-fun Source.readVector3d(): Vector3d = Vector3d( // @formatter:off
+public fun Source.readVector3d(): Vector3d = Vector3d( // @formatter:off
     x = readDouble(),
     y = readDouble(),
     z = readDouble()
@@ -37,7 +37,7 @@ fun Source.readVector3d(): Vector3d = Vector3d( // @formatter:off
  *
  * @return The read vector.
  */
-fun Source.readVector3dLe(): Vector3d = Vector3d( // @formatter:off
+public fun Source.readVector3dLe(): Vector3d = Vector3d( // @formatter:off
     x = readDoubleLeFast(),
     y = readDoubleLeFast(),
     z = readDoubleLeFast()

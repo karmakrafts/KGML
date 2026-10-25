@@ -26,7 +26,7 @@ import kotlin.jvm.JvmInline
  * @property translation The translation offsets for the X, Y, and Z axes.
  */
 @JvmInline
-value class Translation3f(val translation: Vector3f) : Transform<Matrix4x4f> {
+public value class Translation3f(public val translation: Vector3f) : Transform<Matrix4x4f> {
     /**
      * Creates a translation from the given offsets.
      *
@@ -34,7 +34,7 @@ value class Translation3f(val translation: Vector3f) : Transform<Matrix4x4f> {
      * @param y The translation on the Y axis.
      * @param z The translation on the Z axis.
      */
-    constructor( // @formatter:off
+    public constructor( // @formatter:off
         x: Float = 0F,
         y: Float = 0F,
         z: Float = 0F

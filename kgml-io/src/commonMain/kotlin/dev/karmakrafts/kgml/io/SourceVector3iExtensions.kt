@@ -25,7 +25,7 @@ import kotlinx.io.Source
  *
  * @return The read vector.
  */
-fun Source.readVector3i(): Vector3i = Vector3i( // @formatter:off
+public fun Source.readVector3i(): Vector3i = Vector3i( // @formatter:off
     x = readInt(),
     y = readInt(),
     z = readInt()
@@ -36,7 +36,7 @@ fun Source.readVector3i(): Vector3i = Vector3i( // @formatter:off
  *
  * @return The read vector.
  */
-fun Source.readVector3iLe(): Vector3i = Vector3i( // @formatter:off
+public fun Source.readVector3iLe(): Vector3i = Vector3i( // @formatter:off
     x = readIntLeFast(),
     y = readIntLeFast(),
     z = readIntLeFast()

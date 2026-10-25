@@ -26,14 +26,14 @@ import kotlin.jvm.JvmInline
  * @property value The scale factors for the X and Y axes.
  */
 @JvmInline
-value class Scale2f(val value: Vector2f) : Transform<Matrix3x3f> {
+public value class Scale2f(public val value: Vector2f) : Transform<Matrix3x3f> {
     /**
      * Creates a scale from the given factors.
      *
      * @param scaleX The scale factor on the X axis.
      * @param scaleY The scale factor on the Y axis.
      */
-    constructor( // @formatter:off
+    public constructor( // @formatter:off
         scaleX: Float = 1F,
         scaleY: Float = 1F
     ) : this(Vector2f(scaleX, scaleY)) // @formatter:on
