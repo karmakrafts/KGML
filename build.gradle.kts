@@ -19,11 +19,11 @@ import dev.karmakrafts.conventions.apache2License
 import dev.karmakrafts.conventions.defaultDependencyLocking
 import dev.karmakrafts.conventions.setRepository
 import dev.karmakrafts.conventions.signPublications
-import kotlin.io.encoding.ExperimentalEncodingApi
 
 plugins {
     alias(libs.plugins.dokka) apply false
     alias(libs.plugins.kotlin.multiplatform) apply false
+    alias(libs.plugins.kotlinx.serialization) apply false
     alias(libs.plugins.android.library) apply false
     alias(libs.plugins.kotlinx.benchmark) apply false
     alias(libs.plugins.karmaConventions)
@@ -34,7 +34,7 @@ plugins {
 group = "dev.karmakrafts.kgml"
 version = GitLabCI.getDefaultVersion(libs.versions.kgml)
 
-@OptIn(ExperimentalEncodingApi::class) subprojects {
+subprojects {
     group = rootProject.group
     version = rootProject.version
     if (GitLabCI.isCI) defaultDependencyLocking()
