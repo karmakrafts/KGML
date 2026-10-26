@@ -19,30 +19,22 @@ package dev.karmakrafts.kgml.serialization
 import dev.karmakrafts.kgml.matrix.Matrix2x2f
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.SerializationException
+import kotlinx.serialization.builtins.FloatArraySerializer
 import kotlinx.serialization.descriptors.SerialDescriptor
-import kotlinx.serialization.descriptors.buildClassSerialDescriptor
-import kotlinx.serialization.descriptors.element
-import kotlinx.serialization.encoding.CompositeDecoder
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 
 /**
  * A [KSerializer] for [Matrix2x2f].
  *
- * Matrix components are represented as named fields in row-major order.
+ * Matrix components are represented as a [FloatArray] in row-major order.
  * Matrix properties are not serialized.
  */
 public object Matrix2x2fSerializer : KSerializer<Matrix2x2f> {
     /**
-     * The `Matrix2x2f` class descriptor with four [Float] elements named
-     * `m00`, `m01`, `m10`, and `m11` in row-major order.
+     * The [FloatArray] descriptor for components in row-major order.
      */
-    override val descriptor: SerialDescriptor = buildClassSerialDescriptor("Matrix2x2f") {
-        element<Float>("m00")
-        element<Float>("m01")
-        element<Float>("m10")
-        element<Float>("m11")
-    }
+    override val descriptor: SerialDescriptor = FloatArraySerializer().descriptor
 
     /**
      * Encodes the components of [value] using [encoder].
@@ -51,7 +43,7 @@ public object Matrix2x2fSerializer : KSerializer<Matrix2x2f> {
      * @param value The matrix to serialize.
      */
     override fun serialize(encoder: Encoder, value: Matrix2x2f) {
-        encoder.beginStructure(descriptor).apply {
+        encoder.beginCollection(descriptor, 4).apply {
             encodeFloatElement(descriptor, 0, value.m00)
             encodeFloatElement(descriptor, 1, value.m01)
             encodeFloatElement(descriptor, 2, value.m10)
@@ -76,9 +68,8 @@ public object Matrix2x2fSerializer : KSerializer<Matrix2x2f> {
             var m01 = 0F
             var m10 = 0F
             var m11 = 0F
-            while (true) {
-                when (val index = composite.decodeElementIndex(descriptor)) {
-                    CompositeDecoder.DECODE_DONE -> break
+            composite.decodeArray(descriptor) { index ->
+                when (index) {
                     0 -> m00 = composite.decodeFloatElement(descriptor, 0)
                     1 -> m01 = composite.decodeFloatElement(descriptor, 1)
                     2 -> m10 = composite.decodeFloatElement(descriptor, 2)

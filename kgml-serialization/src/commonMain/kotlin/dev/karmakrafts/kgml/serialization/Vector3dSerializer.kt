@@ -19,27 +19,21 @@ package dev.karmakrafts.kgml.serialization
 import dev.karmakrafts.kgml.vector.Vector3d
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.SerializationException
+import kotlinx.serialization.builtins.DoubleArraySerializer
 import kotlinx.serialization.descriptors.SerialDescriptor
-import kotlinx.serialization.descriptors.buildClassSerialDescriptor
-import kotlinx.serialization.descriptors.element
-import kotlinx.serialization.encoding.CompositeDecoder
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 
 /**
  * A [KSerializer] for [Vector3d].
  *
- * Vector components are represented as named [Double] fields `x`, `y`, and `z`.
+ * Vector components are represented as a [DoubleArray] in `x`, `y`, `z` order.
  */
 public object Vector3dSerializer : KSerializer<Vector3d> {
     /**
-     * The `Vector3d` class descriptor with [Double] elements `x`, `y`, and `z`, in that order.
+     * The [DoubleArray] descriptor for components in `x`, `y`, `z` order.
      */
-    override val descriptor: SerialDescriptor = buildClassSerialDescriptor("Vector3d") {
-        element<Double>("x")
-        element<Double>("y")
-        element<Double>("z")
-    }
+    override val descriptor: SerialDescriptor = DoubleArraySerializer().descriptor
 
     /**
      * Encodes the components of [value] using [encoder].
@@ -48,7 +42,7 @@ public object Vector3dSerializer : KSerializer<Vector3d> {
      * @param value The vector to serialize.
      */
     override fun serialize(encoder: Encoder, value: Vector3d) {
-        encoder.beginStructure(descriptor).apply {
+        encoder.beginCollection(descriptor, 3).apply {
             encodeDoubleElement(descriptor, 0, value.x)
             encodeDoubleElement(descriptor, 1, value.y)
             encodeDoubleElement(descriptor, 2, value.z)
@@ -70,9 +64,8 @@ public object Vector3dSerializer : KSerializer<Vector3d> {
             var x = 0.0
             var y = 0.0
             var z = 0.0
-            while (true) {
-                when (val index = composite.decodeElementIndex(descriptor)) {
-                    CompositeDecoder.DECODE_DONE -> break
+            composite.decodeArray(descriptor) { index ->
+                when (index) {
                     0 -> x = composite.decodeDoubleElement(descriptor, 0)
                     1 -> y = composite.decodeDoubleElement(descriptor, 1)
                     2 -> z = composite.decodeDoubleElement(descriptor, 2)

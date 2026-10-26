@@ -35,25 +35,24 @@ import kotlin.test.assertSame
 import kotlin.test.assertTrue
 
 internal fun assertDescriptor(
-    serializer: KSerializer<*>, name: String, kind: PrimitiveKind, vararg elements: String
+    serializer: KSerializer<*>, name: String, kind: PrimitiveKind, elements: Int
 ) {
     val descriptor = serializer.descriptor
     assertEquals(name, descriptor.serialName)
-    assertEquals(StructureKind.CLASS, descriptor.kind)
+    assertEquals(StructureKind.LIST, descriptor.kind)
     assertFalse(descriptor.isNullable)
-    assertEquals(elements.size, descriptor.elementsCount)
-    elements.forEachIndexed { index, element ->
-        assertEquals(element, descriptor.getElementName(index))
-        assertEquals(index, descriptor.getElementIndex(element))
+    assertEquals(1, descriptor.elementsCount)
+    for (index in 0..elements) {
+        assertEquals(index.toString(), descriptor.getElementName(index))
+        assertEquals(index, descriptor.getElementIndex(index.toString()))
         assertEquals(kind, descriptor.getElementDescriptor(index).kind)
         assertFalse(descriptor.getElementDescriptor(index).isNullable)
         assertFalse(descriptor.isElementOptional(index))
     }
-    assertEquals(CompositeDecoder.UNKNOWN_NAME, descriptor.getElementIndex("unknown"))
 }
 
 internal fun <T> assertSerializes(serializer: KSerializer<T>, value: T, vararg components: Number) {
-    val encoder = ComponentEncoder(serializer.descriptor)
+    val encoder = ComponentEncoder(serializer.descriptor, components.size)
     serializer.serialize(encoder, value)
     assertEquals(components.mapIndexed { index, component -> index to component }, encoder.elements)
     encoder.assertComplete()
@@ -63,12 +62,27 @@ internal fun <T> decode(serializer: KSerializer<T>, vararg elements: Pair<Int, N
     val decoder = ComponentDecoder(serializer.descriptor, elements.toList())
     val result = serializer.deserialize(decoder)
     decoder.assertComplete()
+    if (elements.indices.all { elements[it].first == it }) {
+        val sequentialDecoder = ComponentDecoder(serializer.descriptor, elements.toList(), sequential = true)
+        assertEquals(result, serializer.deserialize(sequentialDecoder))
+        sequentialDecoder.assertComplete()
+    }
     return result
 }
 
 internal fun <T> assertDeserializes(serializer: KSerializer<T>, expected: T, vararg components: Number) {
     val elements = components.mapIndexed { index, component -> index to component }.reversed()
     assertEquals(expected, decode(serializer, *elements.toTypedArray()))
+    val decoder = ComponentDecoder(serializer.descriptor, elements.reversed(), sequential = true)
+    assertEquals(expected, serializer.deserialize(decoder))
+    decoder.assertComplete()
+    for (size in 0 until components.size) {
+        val prefix = elements.reversed().take(size)
+        val expectedPrefix = decode(serializer, *prefix.toTypedArray())
+        val prefixDecoder = ComponentDecoder(serializer.descriptor, prefix, sequential = true)
+        assertEquals(expectedPrefix, serializer.deserialize(prefixDecoder))
+        prefixDecoder.assertComplete()
+    }
 }
 
 internal fun <T> assertRoundTrips(serializer: KSerializer<T>, value: T) {
@@ -78,20 +92,37 @@ internal fun <T> assertRoundTrips(serializer: KSerializer<T>, value: T) {
     assertEquals(value, decode(serializer, *encoder.elements.toTypedArray()))
 }
 
-internal fun assertRejectsUnexpectedIndices(serializer: KSerializer<*>) {
-    for (index in listOf(CompositeDecoder.UNKNOWN_NAME, serializer.descriptor.elementsCount)) {
+internal fun assertRejectsUnexpectedIndices(serializer: KSerializer<*>, name: String, size: Int) {
+    for (index in listOf(CompositeDecoder.UNKNOWN_NAME, size, size + 1)) {
         val decoder = ComponentDecoder(serializer.descriptor, listOf(index to 0))
         val exception = assertFailsWith<SerializationException> { serializer.deserialize(decoder) }
-        assertEquals("Unexpected element index in ${serializer.descriptor.serialName} $index", exception.message)
+        assertEquals("Unexpected element index in $name $index", exception.message)
     }
+    val zero: Number = when (serializer.descriptor.getElementDescriptor(0).kind) {
+        PrimitiveKind.DOUBLE -> 0.0
+        PrimitiveKind.FLOAT -> 0F
+        else -> 0
+    }
+    val decoder = ComponentDecoder(serializer.descriptor, List(size + 1) { it to zero }, sequential = true)
+    val exception = assertFailsWith<SerializationException> { serializer.deserialize(decoder) }
+    assertEquals("Unexpected element index in $name $size", exception.message)
 }
 
-private class ComponentEncoder(private val expectedDescriptor: SerialDescriptor) : AbstractEncoder() {
+private class ComponentEncoder(
+    private val expectedDescriptor: SerialDescriptor, private val expectedSize: Int? = null
+) : AbstractEncoder() {
     override val serializersModule = EmptySerializersModule()
     val elements = mutableListOf<Pair<Int, Number>>()
     private var beginCount = 0
     private var endCount = 0
     private var currentIndex = -1
+    private var collectionSize = -1
+
+    override fun beginCollection(descriptor: SerialDescriptor, collectionSize: Int): CompositeEncoder {
+        expectedSize?.let { assertEquals(it, collectionSize) }
+        this.collectionSize = collectionSize
+        return beginStructure(descriptor)
+    }
 
     override fun beginStructure(descriptor: SerialDescriptor): CompositeEncoder {
         assertSame(expectedDescriptor, descriptor)
@@ -103,7 +134,7 @@ private class ComponentEncoder(private val expectedDescriptor: SerialDescriptor)
         assertSame(expectedDescriptor, descriptor)
         assertEquals(1, beginCount)
         assertEquals(0, endCount)
-        assertTrue(index in 0 until descriptor.elementsCount)
+        assertTrue(index in 0 until collectionSize)
         currentIndex = index
         return true
     }
@@ -121,11 +152,14 @@ private class ComponentEncoder(private val expectedDescriptor: SerialDescriptor)
     fun assertComplete() {
         assertEquals(1, beginCount, "Encoder must begin the structure")
         assertEquals(1, endCount, "Encoder must end the structure")
+        assertEquals(elements.size, collectionSize, "Encoder must declare the array size")
     }
 }
 
 private class ComponentDecoder(
-    private val expectedDescriptor: SerialDescriptor, private val elements: List<Pair<Int, Number>>
+    private val expectedDescriptor: SerialDescriptor,
+    private val elements: List<Pair<Int, Number>>,
+    private val sequential: Boolean = false
 ) : AbstractDecoder() {
     override val serializersModule = EmptySerializersModule()
     private var beginCount = 0
@@ -140,6 +174,7 @@ private class ComponentDecoder(
     }
 
     override fun decodeElementIndex(descriptor: SerialDescriptor): Int {
+        assertFalse(sequential, "Sequential decoders do not report element indices")
         assertSame(expectedDescriptor, descriptor)
         assertEquals(1, beginCount)
         assertEquals(0, endCount)
@@ -149,8 +184,15 @@ private class ComponentDecoder(
         return elements[position].first
     }
 
+    override fun decodeSequentially(): Boolean = sequential
+
+    override fun decodeCollectionSize(descriptor: SerialDescriptor): Int {
+        assertSame(expectedDescriptor, descriptor)
+        return elements.size
+    }
+
     override fun decodeValue(): Any {
-        assertTrue(pendingValue, "Component must be requested before decoding")
+        assertTrue(sequential || pendingValue, "Component must be requested before decoding")
         pendingValue = false
         return elements[position++].second
     }

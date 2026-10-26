@@ -29,18 +29,7 @@ class Matrix3x3dSerializerTest {
 
     @Test
     fun descriptorShouldDescribeDoubleComponentsInRowMajorOrder() = assertDescriptor(
-        Matrix3x3dSerializer,
-        "Matrix3x3d",
-        PrimitiveKind.DOUBLE,
-        "m00",
-        "m01",
-        "m02",
-        "m10",
-        "m11",
-        "m12",
-        "m20",
-        "m21",
-        "m22"
+        Matrix3x3dSerializer, "kotlin.DoubleArray", PrimitiveKind.DOUBLE, 9
     )
 
     @Test
@@ -62,7 +51,7 @@ class Matrix3x3dSerializerTest {
     }
 
     @Test
-    fun deserializeShouldRejectUnexpectedIndices() = assertRejectsUnexpectedIndices(Matrix3x3dSerializer)
+    fun deserializeShouldRejectUnexpectedIndices() = assertRejectsUnexpectedIndices(Matrix3x3dSerializer, "Matrix3x3d", 9)
 
     @Test
     fun componentsShouldRoundTrip() = assertRoundTrips(Matrix3x3dSerializer, value)

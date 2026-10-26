@@ -19,37 +19,22 @@ package dev.karmakrafts.kgml.serialization
 import dev.karmakrafts.kgml.matrix.Matrix3x3f
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.SerializationException
+import kotlinx.serialization.builtins.FloatArraySerializer
 import kotlinx.serialization.descriptors.SerialDescriptor
-import kotlinx.serialization.descriptors.buildClassSerialDescriptor
-import kotlinx.serialization.descriptors.element
-import kotlinx.serialization.encoding.CompositeDecoder
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 
 /**
  * A [KSerializer] for [Matrix3x3f].
  *
- * The descriptor lists matrix components as named fields in row-major order.
+ * Matrix components are represented as a [FloatArray] in row-major order.
  * Matrix properties are not serialized.
  */
 public object Matrix3x3fSerializer : KSerializer<Matrix3x3f> {
     /**
-     * The `Matrix3x3f` class descriptor with nine [Float] elements named `m00` through `m22`
-     * in row-major order.
+     * The [FloatArray] descriptor for components in row-major order.
      */
-    override val descriptor: SerialDescriptor = buildClassSerialDescriptor("Matrix3x3f") {
-        element<Float>("m00")
-        element<Float>("m01")
-        element<Float>("m02")
-
-        element<Float>("m10")
-        element<Float>("m11")
-        element<Float>("m12")
-
-        element<Float>("m20")
-        element<Float>("m21")
-        element<Float>("m22")
-    }
+    override val descriptor: SerialDescriptor = FloatArraySerializer().descriptor
 
     /**
      * Encodes the components of [value] in row-major order using [encoder].
@@ -58,7 +43,7 @@ public object Matrix3x3fSerializer : KSerializer<Matrix3x3f> {
      * @param value The matrix to serialize.
      */
     override fun serialize(encoder: Encoder, value: Matrix3x3f) {
-        encoder.beginStructure(descriptor).apply {
+        encoder.beginCollection(descriptor, 9).apply {
             encodeFloatElement(descriptor, 0, value.m00)
             encodeFloatElement(descriptor, 1, value.m01)
             encodeFloatElement(descriptor, 2, value.m02)
@@ -93,9 +78,8 @@ public object Matrix3x3fSerializer : KSerializer<Matrix3x3f> {
             var m20 = 0F
             var m21 = 0F
             var m22 = 0F
-            while (true) {
-                when (val index = composite.decodeElementIndex(descriptor)) {
-                    CompositeDecoder.DECODE_DONE -> break
+            composite.decodeArray(descriptor) { index ->
+                when (index) {
                     0 -> m00 = composite.decodeFloatElement(descriptor, 0)
                     1 -> m01 = composite.decodeFloatElement(descriptor, 1)
                     2 -> m02 = composite.decodeFloatElement(descriptor, 2)

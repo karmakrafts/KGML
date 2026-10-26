@@ -19,26 +19,21 @@ package dev.karmakrafts.kgml.serialization
 import dev.karmakrafts.kgml.vector.Vector2d
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.SerializationException
+import kotlinx.serialization.builtins.DoubleArraySerializer
 import kotlinx.serialization.descriptors.SerialDescriptor
-import kotlinx.serialization.descriptors.buildClassSerialDescriptor
-import kotlinx.serialization.descriptors.element
-import kotlinx.serialization.encoding.CompositeDecoder
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 
 /**
  * A [KSerializer] for [Vector2d].
  *
- * Vector components are represented as named [Double] fields `x` and `y`.
+ * Vector components are represented as a [DoubleArray] in `x`, `y` order.
  */
 public object Vector2dSerializer : KSerializer<Vector2d> {
     /**
-     * The `Vector2d` class descriptor with [Double] elements `x` and `y`, in that order.
+     * The [DoubleArray] descriptor for components in `x`, `y` order.
      */
-    override val descriptor: SerialDescriptor = buildClassSerialDescriptor("Vector2d") {
-        element<Double>("x")
-        element<Double>("y")
-    }
+    override val descriptor: SerialDescriptor = DoubleArraySerializer().descriptor
 
     /**
      * Encodes the components of [value] using [encoder].
@@ -47,7 +42,7 @@ public object Vector2dSerializer : KSerializer<Vector2d> {
      * @param value The vector to serialize.
      */
     override fun serialize(encoder: Encoder, value: Vector2d) {
-        encoder.beginStructure(descriptor).apply {
+        encoder.beginCollection(descriptor, 2).apply {
             encodeDoubleElement(descriptor, 0, value.x)
             encodeDoubleElement(descriptor, 1, value.y)
             endStructure(descriptor)
@@ -67,9 +62,8 @@ public object Vector2dSerializer : KSerializer<Vector2d> {
         return decoder.beginStructure(descriptor).let { composite ->
             var x = 0.0
             var y = 0.0
-            while (true) {
-                when (val index = composite.decodeElementIndex(descriptor)) {
-                    CompositeDecoder.DECODE_DONE -> break
+            composite.decodeArray(descriptor) { index ->
+                when (index) {
                     0 -> x = composite.decodeDoubleElement(descriptor, 0)
                     1 -> y = composite.decodeDoubleElement(descriptor, 1)
                     else -> throw SerializationException("Unexpected element index in Vector2d $index")

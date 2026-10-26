@@ -19,27 +19,21 @@ package dev.karmakrafts.kgml.serialization
 import dev.karmakrafts.kgml.vector.Vector3i
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.SerializationException
+import kotlinx.serialization.builtins.IntArraySerializer
 import kotlinx.serialization.descriptors.SerialDescriptor
-import kotlinx.serialization.descriptors.buildClassSerialDescriptor
-import kotlinx.serialization.descriptors.element
-import kotlinx.serialization.encoding.CompositeDecoder
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 
 /**
  * A [KSerializer] for [Vector3i].
  *
- * Vector components are represented as named [Int] fields `x`, `y`, and `z`.
+ * Vector components are represented as an [IntArray] in `x`, `y`, `z` order.
  */
 public object Vector3iSerializer : KSerializer<Vector3i> {
     /**
-     * The `Vector3i` class descriptor with [Int] elements `x`, `y`, and `z`, in that order.
+     * The [IntArray] descriptor for components in `x`, `y`, `z` order.
      */
-    override val descriptor: SerialDescriptor = buildClassSerialDescriptor("Vector3i") {
-        element<Int>("x")
-        element<Int>("y")
-        element<Int>("z")
-    }
+    override val descriptor: SerialDescriptor = IntArraySerializer().descriptor
 
     /**
      * Encodes the components of [value] using [encoder].
@@ -48,7 +42,7 @@ public object Vector3iSerializer : KSerializer<Vector3i> {
      * @param value The vector to serialize.
      */
     override fun serialize(encoder: Encoder, value: Vector3i) {
-        encoder.beginStructure(descriptor).apply {
+        encoder.beginCollection(descriptor, 3).apply {
             encodeIntElement(descriptor, 0, value.x)
             encodeIntElement(descriptor, 1, value.y)
             encodeIntElement(descriptor, 2, value.z)
@@ -70,9 +64,8 @@ public object Vector3iSerializer : KSerializer<Vector3i> {
             var x = 0
             var y = 0
             var z = 0
-            while (true) {
-                when (val index = composite.decodeElementIndex(descriptor)) {
-                    CompositeDecoder.DECODE_DONE -> break
+            composite.decodeArray(descriptor) { index ->
+                when (index) {
                     0 -> x = composite.decodeIntElement(descriptor, 0)
                     1 -> y = composite.decodeIntElement(descriptor, 1)
                     2 -> z = composite.decodeIntElement(descriptor, 2)

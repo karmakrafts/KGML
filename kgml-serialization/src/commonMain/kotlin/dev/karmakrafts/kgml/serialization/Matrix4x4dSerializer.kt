@@ -19,45 +19,22 @@ package dev.karmakrafts.kgml.serialization
 import dev.karmakrafts.kgml.matrix.Matrix4x4d
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.SerializationException
+import kotlinx.serialization.builtins.DoubleArraySerializer
 import kotlinx.serialization.descriptors.SerialDescriptor
-import kotlinx.serialization.descriptors.buildClassSerialDescriptor
-import kotlinx.serialization.descriptors.element
-import kotlinx.serialization.encoding.CompositeDecoder
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 
 /**
  * A [KSerializer] for [Matrix4x4d].
  *
- * The descriptor lists matrix components as named fields in row-major order.
+ * Matrix components are represented as a [DoubleArray] in row-major order.
  * Matrix properties are not serialized.
  */
 public object Matrix4x4dSerializer : KSerializer<Matrix4x4d> {
     /**
-     * The `Matrix4x4d` class descriptor with sixteen [Double] elements named `m00` through `m33`
-     * in row-major order.
+     * The [DoubleArray] descriptor for components in row-major order.
      */
-    override val descriptor: SerialDescriptor = buildClassSerialDescriptor("Matrix4x4d") {
-        element<Double>("m00")
-        element<Double>("m01")
-        element<Double>("m02")
-        element<Double>("m03")
-
-        element<Double>("m10")
-        element<Double>("m11")
-        element<Double>("m12")
-        element<Double>("m13")
-
-        element<Double>("m20")
-        element<Double>("m21")
-        element<Double>("m22")
-        element<Double>("m23")
-
-        element<Double>("m30")
-        element<Double>("m31")
-        element<Double>("m32")
-        element<Double>("m33")
-    }
+    override val descriptor: SerialDescriptor = DoubleArraySerializer().descriptor
 
     /**
      * Encodes the components of [value] in row-major order using [encoder].
@@ -66,7 +43,7 @@ public object Matrix4x4dSerializer : KSerializer<Matrix4x4d> {
      * @param value The matrix to serialize.
      */
     override fun serialize(encoder: Encoder, value: Matrix4x4d) {
-        encoder.beginStructure(descriptor).apply {
+        encoder.beginCollection(descriptor, 16).apply {
             encodeDoubleElement(descriptor, 0, value.m00)
             encodeDoubleElement(descriptor, 1, value.m01)
             encodeDoubleElement(descriptor, 2, value.m02)
@@ -115,9 +92,8 @@ public object Matrix4x4dSerializer : KSerializer<Matrix4x4d> {
             var m31 = 0.0
             var m32 = 0.0
             var m33 = 0.0
-            while (true) {
-                when (val index = composite.decodeElementIndex(descriptor)) {
-                    CompositeDecoder.DECODE_DONE -> break
+            composite.decodeArray(descriptor) { index ->
+                when (index) {
                     0 -> m00 = composite.decodeDoubleElement(descriptor, 0)
                     1 -> m01 = composite.decodeDoubleElement(descriptor, 1)
                     2 -> m02 = composite.decodeDoubleElement(descriptor, 2)

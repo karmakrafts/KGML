@@ -27,7 +27,7 @@ class Matrix2x2dSerializerTest {
 
     @Test
     fun descriptorShouldDescribeDoubleComponentsInRowMajorOrder() = assertDescriptor(
-        Matrix2x2dSerializer, "Matrix2x2d", PrimitiveKind.DOUBLE, "m00", "m01", "m10", "m11"
+        Matrix2x2dSerializer, "kotlin.DoubleArray", PrimitiveKind.DOUBLE, 4
     )
 
     @Test
@@ -47,7 +47,7 @@ class Matrix2x2dSerializerTest {
     }
 
     @Test
-    fun deserializeShouldRejectUnexpectedIndices() = assertRejectsUnexpectedIndices(Matrix2x2dSerializer)
+    fun deserializeShouldRejectUnexpectedIndices() = assertRejectsUnexpectedIndices(Matrix2x2dSerializer, "Matrix2x2d", 4)
 
     @Test
     fun componentsShouldRoundTrip() = assertRoundTrips(Matrix2x2dSerializer, value)

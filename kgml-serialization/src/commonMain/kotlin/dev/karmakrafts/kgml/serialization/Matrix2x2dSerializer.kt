@@ -19,30 +19,22 @@ package dev.karmakrafts.kgml.serialization
 import dev.karmakrafts.kgml.matrix.Matrix2x2d
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.SerializationException
+import kotlinx.serialization.builtins.DoubleArraySerializer
 import kotlinx.serialization.descriptors.SerialDescriptor
-import kotlinx.serialization.descriptors.buildClassSerialDescriptor
-import kotlinx.serialization.descriptors.element
-import kotlinx.serialization.encoding.CompositeDecoder
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 
 /**
  * A [KSerializer] for [Matrix2x2d].
  *
- * Matrix components are represented as named fields in row-major order.
+ * Matrix components are represented as a [DoubleArray] in row-major order.
  * Matrix properties are not serialized.
  */
 public object Matrix2x2dSerializer : KSerializer<Matrix2x2d> {
     /**
-     * The `Matrix2x2d` class descriptor with four [Double] elements named
-     * `m00`, `m01`, `m10`, and `m11` in row-major order.
+     * The [DoubleArray] descriptor for components in row-major order.
      */
-    override val descriptor: SerialDescriptor = buildClassSerialDescriptor("Matrix2x2d") {
-        element<Double>("m00")
-        element<Double>("m01")
-        element<Double>("m10")
-        element<Double>("m11")
-    }
+    override val descriptor: SerialDescriptor = DoubleArraySerializer().descriptor
 
     /**
      * Encodes the components of [value] using [encoder].
@@ -51,7 +43,7 @@ public object Matrix2x2dSerializer : KSerializer<Matrix2x2d> {
      * @param value The matrix to serialize.
      */
     override fun serialize(encoder: Encoder, value: Matrix2x2d) {
-        encoder.beginStructure(descriptor).apply {
+        encoder.beginCollection(descriptor, 4).apply {
             encodeDoubleElement(descriptor, 0, value.m00)
             encodeDoubleElement(descriptor, 1, value.m01)
             encodeDoubleElement(descriptor, 2, value.m10)
@@ -76,9 +68,8 @@ public object Matrix2x2dSerializer : KSerializer<Matrix2x2d> {
             var m01 = 0.0
             var m10 = 0.0
             var m11 = 0.0
-            while (true) {
-                when (val index = composite.decodeElementIndex(descriptor)) {
-                    CompositeDecoder.DECODE_DONE -> break
+            composite.decodeArray(descriptor) { index ->
+                when (index) {
                     0 -> m00 = composite.decodeDoubleElement(descriptor, 0)
                     1 -> m01 = composite.decodeDoubleElement(descriptor, 1)
                     2 -> m10 = composite.decodeDoubleElement(descriptor, 2)

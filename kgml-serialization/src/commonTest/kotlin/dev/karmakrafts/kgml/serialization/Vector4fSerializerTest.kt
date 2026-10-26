@@ -24,7 +24,7 @@ import kotlin.test.assertEquals
 class Vector4fSerializerTest {
     @Test
     fun descriptorShouldDescribeFloatComponents() = assertDescriptor(
-        Vector4fSerializer, "Vector4f", PrimitiveKind.FLOAT, "x", "y", "z", "w"
+        Vector4fSerializer, "kotlin.FloatArray", PrimitiveKind.FLOAT, 4
     )
 
     @Test
@@ -44,7 +44,7 @@ class Vector4fSerializerTest {
     }
 
     @Test
-    fun deserializeShouldRejectUnexpectedIndices() = assertRejectsUnexpectedIndices(Vector4fSerializer)
+    fun deserializeShouldRejectUnexpectedIndices() = assertRejectsUnexpectedIndices(Vector4fSerializer, "Vector4f", 4)
 
     @Test
     fun componentsShouldRoundTrip() = assertRoundTrips(Vector4fSerializer, Vector4f(1.25F, -2.5F, 3.75F, -4.5F))

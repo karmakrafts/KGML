@@ -19,37 +19,22 @@ package dev.karmakrafts.kgml.serialization
 import dev.karmakrafts.kgml.matrix.Matrix3x3d
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.SerializationException
+import kotlinx.serialization.builtins.DoubleArraySerializer
 import kotlinx.serialization.descriptors.SerialDescriptor
-import kotlinx.serialization.descriptors.buildClassSerialDescriptor
-import kotlinx.serialization.descriptors.element
-import kotlinx.serialization.encoding.CompositeDecoder
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 
 /**
  * A [KSerializer] for [Matrix3x3d].
  *
- * The descriptor lists matrix components as named fields in row-major order.
+ * Matrix components are represented as a [DoubleArray] in row-major order.
  * Matrix properties are not serialized.
  */
 public object Matrix3x3dSerializer : KSerializer<Matrix3x3d> {
     /**
-     * The `Matrix3x3d` class descriptor with nine [Double] elements named `m00` through `m22`
-     * in row-major order.
+     * The [DoubleArray] descriptor for components in row-major order.
      */
-    override val descriptor: SerialDescriptor = buildClassSerialDescriptor("Matrix3x3d") {
-        element<Double>("m00")
-        element<Double>("m01")
-        element<Double>("m02")
-
-        element<Double>("m10")
-        element<Double>("m11")
-        element<Double>("m12")
-
-        element<Double>("m20")
-        element<Double>("m21")
-        element<Double>("m22")
-    }
+    override val descriptor: SerialDescriptor = DoubleArraySerializer().descriptor
 
     /**
      * Encodes the components of [value] in row-major order using [encoder].
@@ -58,7 +43,7 @@ public object Matrix3x3dSerializer : KSerializer<Matrix3x3d> {
      * @param value The matrix to serialize.
      */
     override fun serialize(encoder: Encoder, value: Matrix3x3d) {
-        encoder.beginStructure(descriptor).apply {
+        encoder.beginCollection(descriptor, 9).apply {
             encodeDoubleElement(descriptor, 0, value.m00)
             encodeDoubleElement(descriptor, 1, value.m01)
             encodeDoubleElement(descriptor, 2, value.m02)
@@ -93,9 +78,8 @@ public object Matrix3x3dSerializer : KSerializer<Matrix3x3d> {
             var m20 = 0.0
             var m21 = 0.0
             var m22 = 0.0
-            while (true) {
-                when (val index = composite.decodeElementIndex(descriptor)) {
-                    CompositeDecoder.DECODE_DONE -> break
+            composite.decodeArray(descriptor) { index ->
+                when (index) {
                     0 -> m00 = composite.decodeDoubleElement(descriptor, 0)
                     1 -> m01 = composite.decodeDoubleElement(descriptor, 1)
                     2 -> m02 = composite.decodeDoubleElement(descriptor, 2)

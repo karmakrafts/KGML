@@ -19,26 +19,21 @@ package dev.karmakrafts.kgml.serialization
 import dev.karmakrafts.kgml.vector.Vector2f
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.SerializationException
+import kotlinx.serialization.builtins.FloatArraySerializer
 import kotlinx.serialization.descriptors.SerialDescriptor
-import kotlinx.serialization.descriptors.buildClassSerialDescriptor
-import kotlinx.serialization.descriptors.element
-import kotlinx.serialization.encoding.CompositeDecoder
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 
 /**
  * A [KSerializer] for [Vector2f].
  *
- * Vector components are represented as named [Float] fields `x` and `y`.
+ * Vector components are represented as a [FloatArray] in `x`, `y` order.
  */
 public object Vector2fSerializer : KSerializer<Vector2f> {
     /**
-     * The `Vector2f` class descriptor with [Float] elements `x` and `y`, in that order.
+     * The [FloatArray] descriptor for components in `x`, `y` order.
      */
-    override val descriptor: SerialDescriptor = buildClassSerialDescriptor("Vector2f") {
-        element<Float>("x")
-        element<Float>("y")
-    }
+    override val descriptor: SerialDescriptor = FloatArraySerializer().descriptor
 
     /**
      * Encodes the components of [value] using [encoder].
@@ -47,7 +42,7 @@ public object Vector2fSerializer : KSerializer<Vector2f> {
      * @param value The vector to serialize.
      */
     override fun serialize(encoder: Encoder, value: Vector2f) {
-        encoder.beginStructure(descriptor).apply {
+        encoder.beginCollection(descriptor, 2).apply {
             encodeFloatElement(descriptor, 0, value.x)
             encodeFloatElement(descriptor, 1, value.y)
             endStructure(descriptor)
@@ -67,9 +62,8 @@ public object Vector2fSerializer : KSerializer<Vector2f> {
         return decoder.beginStructure(descriptor).let { composite ->
             var x = 0F
             var y = 0F
-            while (true) {
-                when (val index = composite.decodeElementIndex(descriptor)) {
-                    CompositeDecoder.DECODE_DONE -> break
+            composite.decodeArray(descriptor) { index ->
+                when (index) {
                     0 -> x = composite.decodeFloatElement(descriptor, 0)
                     1 -> y = composite.decodeFloatElement(descriptor, 1)
                     else -> throw SerializationException("Unexpected element index in Vector2f $index")

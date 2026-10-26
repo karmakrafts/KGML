@@ -24,7 +24,7 @@ import kotlin.test.assertEquals
 class Vector4iSerializerTest {
     @Test
     fun descriptorShouldDescribeIntComponents() = assertDescriptor(
-        Vector4iSerializer, "Vector4i", PrimitiveKind.INT, "x", "y", "z", "w"
+        Vector4iSerializer, "kotlin.IntArray", PrimitiveKind.INT, 4
     )
 
     @Test
@@ -44,7 +44,7 @@ class Vector4iSerializerTest {
     }
 
     @Test
-    fun deserializeShouldRejectUnexpectedIndices() = assertRejectsUnexpectedIndices(Vector4iSerializer)
+    fun deserializeShouldRejectUnexpectedIndices() = assertRejectsUnexpectedIndices(Vector4iSerializer, "Vector4i", 4)
 
     @Test
     fun componentsShouldRoundTrip() = assertRoundTrips(Vector4iSerializer, Vector4i(1, -2, 3, -4))

@@ -19,28 +19,21 @@ package dev.karmakrafts.kgml.serialization
 import dev.karmakrafts.kgml.vector.Vector4f
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.SerializationException
+import kotlinx.serialization.builtins.FloatArraySerializer
 import kotlinx.serialization.descriptors.SerialDescriptor
-import kotlinx.serialization.descriptors.buildClassSerialDescriptor
-import kotlinx.serialization.descriptors.element
-import kotlinx.serialization.encoding.CompositeDecoder
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 
 /**
  * A [KSerializer] for [Vector4f].
  *
- * Vector components are represented as named [Float] fields `x`, `y`, `z`, and `w`.
+ * Vector components are represented as a [FloatArray] in `x`, `y`, `z`, `w` order.
  */
 public object Vector4fSerializer : KSerializer<Vector4f> {
     /**
-     * The `Vector4f` class descriptor with [Float] elements `x`, `y`, `z`, and `w`, in that order.
+     * The [FloatArray] descriptor for components in `x`, `y`, `z`, `w` order.
      */
-    override val descriptor: SerialDescriptor = buildClassSerialDescriptor("Vector4f") {
-        element<Float>("x")
-        element<Float>("y")
-        element<Float>("z")
-        element<Float>("w")
-    }
+    override val descriptor: SerialDescriptor = FloatArraySerializer().descriptor
 
     /**
      * Encodes the components of [value] using [encoder].
@@ -49,7 +42,7 @@ public object Vector4fSerializer : KSerializer<Vector4f> {
      * @param value The vector to serialize.
      */
     override fun serialize(encoder: Encoder, value: Vector4f) {
-        encoder.beginStructure(descriptor).apply {
+        encoder.beginCollection(descriptor, 4).apply {
             encodeFloatElement(descriptor, 0, value.x)
             encodeFloatElement(descriptor, 1, value.y)
             encodeFloatElement(descriptor, 2, value.z)
@@ -73,9 +66,8 @@ public object Vector4fSerializer : KSerializer<Vector4f> {
             var y = 0F
             var z = 0F
             var w = 0F
-            while (true) {
-                when (val index = composite.decodeElementIndex(descriptor)) {
-                    CompositeDecoder.DECODE_DONE -> break
+            composite.decodeArray(descriptor) { index ->
+                when (index) {
                     0 -> x = composite.decodeFloatElement(descriptor, 0)
                     1 -> y = composite.decodeFloatElement(descriptor, 1)
                     2 -> z = composite.decodeFloatElement(descriptor, 2)

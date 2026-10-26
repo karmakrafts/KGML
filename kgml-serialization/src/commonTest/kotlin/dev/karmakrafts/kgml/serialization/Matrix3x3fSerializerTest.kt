@@ -29,18 +29,7 @@ class Matrix3x3fSerializerTest {
 
     @Test
     fun descriptorShouldDescribeFloatComponentsInRowMajorOrder() = assertDescriptor(
-        Matrix3x3fSerializer,
-        "Matrix3x3f",
-        PrimitiveKind.FLOAT,
-        "m00",
-        "m01",
-        "m02",
-        "m10",
-        "m11",
-        "m12",
-        "m20",
-        "m21",
-        "m22"
+        Matrix3x3fSerializer, "kotlin.FloatArray", PrimitiveKind.FLOAT, 9
     )
 
     @Test
@@ -62,7 +51,7 @@ class Matrix3x3fSerializerTest {
     }
 
     @Test
-    fun deserializeShouldRejectUnexpectedIndices() = assertRejectsUnexpectedIndices(Matrix3x3fSerializer)
+    fun deserializeShouldRejectUnexpectedIndices() = assertRejectsUnexpectedIndices(Matrix3x3fSerializer, "Matrix3x3f", 9)
 
     @Test
     fun componentsShouldRoundTrip() = assertRoundTrips(Matrix3x3fSerializer, value)

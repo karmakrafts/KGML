@@ -19,45 +19,22 @@ package dev.karmakrafts.kgml.serialization
 import dev.karmakrafts.kgml.matrix.Matrix4x4f
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.SerializationException
+import kotlinx.serialization.builtins.FloatArraySerializer
 import kotlinx.serialization.descriptors.SerialDescriptor
-import kotlinx.serialization.descriptors.buildClassSerialDescriptor
-import kotlinx.serialization.descriptors.element
-import kotlinx.serialization.encoding.CompositeDecoder
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 
 /**
  * A [KSerializer] for [Matrix4x4f].
  *
- * The descriptor lists matrix components as named fields in row-major order.
+ * Matrix components are represented as a [FloatArray] in row-major order.
  * Matrix properties are not serialized.
  */
 public object Matrix4x4fSerializer : KSerializer<Matrix4x4f> {
     /**
-     * The `Matrix4x4f` class descriptor with sixteen [Float] elements named `m00` through `m33`
-     * in row-major order.
+     * The [FloatArray] descriptor for components in row-major order.
      */
-    override val descriptor: SerialDescriptor = buildClassSerialDescriptor("Matrix4x4f") {
-        element<Float>("m00")
-        element<Float>("m01")
-        element<Float>("m02")
-        element<Float>("m03")
-
-        element<Float>("m10")
-        element<Float>("m11")
-        element<Float>("m12")
-        element<Float>("m13")
-
-        element<Float>("m20")
-        element<Float>("m21")
-        element<Float>("m22")
-        element<Float>("m23")
-
-        element<Float>("m30")
-        element<Float>("m31")
-        element<Float>("m32")
-        element<Float>("m33")
-    }
+    override val descriptor: SerialDescriptor = FloatArraySerializer().descriptor
 
     /**
      * Encodes the components of [value] in row-major order using [encoder].
@@ -66,7 +43,7 @@ public object Matrix4x4fSerializer : KSerializer<Matrix4x4f> {
      * @param value The matrix to serialize.
      */
     override fun serialize(encoder: Encoder, value: Matrix4x4f) {
-        encoder.beginStructure(descriptor).apply {
+        encoder.beginCollection(descriptor, 16).apply {
             encodeFloatElement(descriptor, 0, value.m00)
             encodeFloatElement(descriptor, 1, value.m01)
             encodeFloatElement(descriptor, 2, value.m02)
@@ -115,9 +92,8 @@ public object Matrix4x4fSerializer : KSerializer<Matrix4x4f> {
             var m31 = 0F
             var m32 = 0F
             var m33 = 0F
-            while (true) {
-                when (val index = composite.decodeElementIndex(descriptor)) {
-                    CompositeDecoder.DECODE_DONE -> break
+            composite.decodeArray(descriptor) { index ->
+                when (index) {
                     0 -> m00 = composite.decodeFloatElement(descriptor, 0)
                     1 -> m01 = composite.decodeFloatElement(descriptor, 1)
                     2 -> m02 = composite.decodeFloatElement(descriptor, 2)
