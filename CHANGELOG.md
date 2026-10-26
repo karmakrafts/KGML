@@ -3,6 +3,7 @@
 ### Added
 
 - `kgml-serialization` module for optional KGML `kotlinx.serialization` serializer
+- Unit tests for all vector and matrix serializers in `kgml-serialization`
 
 ### Changed
 

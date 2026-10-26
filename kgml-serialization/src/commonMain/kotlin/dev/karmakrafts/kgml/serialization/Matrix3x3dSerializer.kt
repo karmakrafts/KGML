@@ -17,7 +17,6 @@
 package dev.karmakrafts.kgml.serialization
 
 import dev.karmakrafts.kgml.matrix.Matrix3x3d
-import dev.karmakrafts.kgml.matrix.Matrix3x3f
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.SerializationException
 import kotlinx.serialization.descriptors.SerialDescriptor
@@ -35,31 +34,25 @@ import kotlinx.serialization.encoding.Encoder
  */
 public object Matrix3x3dSerializer : KSerializer<Matrix3x3d> {
     /**
-     * The `Matrix3x3d` class descriptor with nine elements named `m00` through `m22`
+     * The `Matrix3x3d` class descriptor with nine [Double] elements named `m00` through `m22`
      * in row-major order.
-     *
-     * The descriptor currently declares [Float] elements, while encoding and decoding
-     * use [Double] values.
      */
     override val descriptor: SerialDescriptor = buildClassSerialDescriptor("Matrix3x3d") {
-        element<Float>("m00")
-        element<Float>("m01")
-        element<Float>("m02")
+        element<Double>("m00")
+        element<Double>("m01")
+        element<Double>("m02")
 
-        element<Float>("m10")
-        element<Float>("m11")
-        element<Float>("m12")
+        element<Double>("m10")
+        element<Double>("m11")
+        element<Double>("m12")
 
-        element<Float>("m20")
-        element<Float>("m21")
-        element<Float>("m22")
+        element<Double>("m20")
+        element<Double>("m21")
+        element<Double>("m22")
     }
 
     /**
-     * Encodes [value] using [encoder].
-     *
-     * The current implementation writes only `m00`, `m01`, `m10`, and `m11`
-     * at element indices 0 through 3, respectively.
+     * Encodes the components of [value] in row-major order using [encoder].
      *
      * @param encoder The encoder to write to.
      * @param value The matrix to serialize.
@@ -68,8 +61,14 @@ public object Matrix3x3dSerializer : KSerializer<Matrix3x3d> {
         encoder.beginStructure(descriptor).apply {
             encodeDoubleElement(descriptor, 0, value.m00)
             encodeDoubleElement(descriptor, 1, value.m01)
-            encodeDoubleElement(descriptor, 2, value.m10)
-            encodeDoubleElement(descriptor, 3, value.m11)
+            encodeDoubleElement(descriptor, 2, value.m02)
+            encodeDoubleElement(descriptor, 3, value.m10)
+            encodeDoubleElement(descriptor, 4, value.m11)
+            encodeDoubleElement(descriptor, 5, value.m12)
+            encodeDoubleElement(descriptor, 6, value.m20)
+            encodeDoubleElement(descriptor, 7, value.m21)
+            encodeDoubleElement(descriptor, 8, value.m22)
+            endStructure(descriptor)
         }
     }
 
@@ -109,6 +108,7 @@ public object Matrix3x3dSerializer : KSerializer<Matrix3x3d> {
                     else -> throw SerializationException("Unexpected element index in Matrix3x3d $index")
                 }
             }
+            composite.endStructure(descriptor)
             Matrix3x3d( // @formatter:off
                 m00, m01, m02,
                 m10, m11, m12,

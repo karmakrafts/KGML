@@ -56,6 +56,7 @@ public object Matrix2x2dSerializer : KSerializer<Matrix2x2d> {
             encodeDoubleElement(descriptor, 1, value.m01)
             encodeDoubleElement(descriptor, 2, value.m10)
             encodeDoubleElement(descriptor, 3, value.m11)
+            endStructure(descriptor)
         }
     }
 
@@ -85,6 +86,7 @@ public object Matrix2x2dSerializer : KSerializer<Matrix2x2d> {
                     else -> throw SerializationException("Unexpected element index in Matrix2x2d $index")
                 }
             }
+            composite.endStructure(descriptor)
             Matrix2x2d(m00, m01, m10, m11)
         }
     }

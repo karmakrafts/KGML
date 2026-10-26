@@ -52,6 +52,7 @@ public object Vector3dSerializer : KSerializer<Vector3d> {
             encodeDoubleElement(descriptor, 0, value.x)
             encodeDoubleElement(descriptor, 1, value.y)
             encodeDoubleElement(descriptor, 2, value.z)
+            endStructure(descriptor)
         }
     }
 
@@ -78,6 +79,7 @@ public object Vector3dSerializer : KSerializer<Vector3d> {
                     else -> throw SerializationException("Unexpected element index in Vector3d $index")
                 }
             }
+            composite.endStructure(descriptor)
             Vector3d(x, y, z)
         }
     }

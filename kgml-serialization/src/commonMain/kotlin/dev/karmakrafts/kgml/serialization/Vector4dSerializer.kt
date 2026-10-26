@@ -54,6 +54,7 @@ public object Vector4dSerializer : KSerializer<Vector4d> {
             encodeDoubleElement(descriptor, 1, value.y)
             encodeDoubleElement(descriptor, 2, value.z)
             encodeDoubleElement(descriptor, 3, value.w)
+            endStructure(descriptor)
         }
     }
 
@@ -82,6 +83,7 @@ public object Vector4dSerializer : KSerializer<Vector4d> {
                     else -> throw SerializationException("Unexpected element index in Vector4d $index")
                 }
             }
+            composite.endStructure(descriptor)
             Vector4d(x, y, z, w)
         }
     }

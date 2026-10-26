@@ -52,10 +52,7 @@ public object Matrix3x3fSerializer : KSerializer<Matrix3x3f> {
     }
 
     /**
-     * Encodes [value] using [encoder].
-     *
-     * The current implementation writes only `m00`, `m01`, `m10`, and `m11`
-     * at element indices 0 through 3, respectively.
+     * Encodes the components of [value] in row-major order using [encoder].
      *
      * @param encoder The encoder to write to.
      * @param value The matrix to serialize.
@@ -64,8 +61,14 @@ public object Matrix3x3fSerializer : KSerializer<Matrix3x3f> {
         encoder.beginStructure(descriptor).apply {
             encodeFloatElement(descriptor, 0, value.m00)
             encodeFloatElement(descriptor, 1, value.m01)
-            encodeFloatElement(descriptor, 2, value.m10)
-            encodeFloatElement(descriptor, 3, value.m11)
+            encodeFloatElement(descriptor, 2, value.m02)
+            encodeFloatElement(descriptor, 3, value.m10)
+            encodeFloatElement(descriptor, 4, value.m11)
+            encodeFloatElement(descriptor, 5, value.m12)
+            encodeFloatElement(descriptor, 6, value.m20)
+            encodeFloatElement(descriptor, 7, value.m21)
+            encodeFloatElement(descriptor, 8, value.m22)
+            endStructure(descriptor)
         }
     }
 
@@ -105,6 +108,7 @@ public object Matrix3x3fSerializer : KSerializer<Matrix3x3f> {
                     else -> throw SerializationException("Unexpected element index in Matrix3x3f $index")
                 }
             }
+            composite.endStructure(descriptor)
             Matrix3x3f( // @formatter:off
                 m00, m01, m02,
                 m10, m11, m12,

@@ -60,10 +60,7 @@ public object Matrix4x4fSerializer : KSerializer<Matrix4x4f> {
     }
 
     /**
-     * Encodes [value] using [encoder].
-     *
-     * The current implementation writes only `m00`, `m01`, `m10`, and `m11`
-     * at element indices 0 through 3, respectively.
+     * Encodes the components of [value] in row-major order using [encoder].
      *
      * @param encoder The encoder to write to.
      * @param value The matrix to serialize.
@@ -72,8 +69,21 @@ public object Matrix4x4fSerializer : KSerializer<Matrix4x4f> {
         encoder.beginStructure(descriptor).apply {
             encodeFloatElement(descriptor, 0, value.m00)
             encodeFloatElement(descriptor, 1, value.m01)
-            encodeFloatElement(descriptor, 2, value.m10)
-            encodeFloatElement(descriptor, 3, value.m11)
+            encodeFloatElement(descriptor, 2, value.m02)
+            encodeFloatElement(descriptor, 3, value.m03)
+            encodeFloatElement(descriptor, 4, value.m10)
+            encodeFloatElement(descriptor, 5, value.m11)
+            encodeFloatElement(descriptor, 6, value.m12)
+            encodeFloatElement(descriptor, 7, value.m13)
+            encodeFloatElement(descriptor, 8, value.m20)
+            encodeFloatElement(descriptor, 9, value.m21)
+            encodeFloatElement(descriptor, 10, value.m22)
+            encodeFloatElement(descriptor, 11, value.m23)
+            encodeFloatElement(descriptor, 12, value.m30)
+            encodeFloatElement(descriptor, 13, value.m31)
+            encodeFloatElement(descriptor, 14, value.m32)
+            encodeFloatElement(descriptor, 15, value.m33)
+            endStructure(descriptor)
         }
     }
 
@@ -127,6 +137,7 @@ public object Matrix4x4fSerializer : KSerializer<Matrix4x4f> {
                     else -> throw SerializationException("Unexpected element index in Matrix4x4f $index")
                 }
             }
+            composite.endStructure(descriptor)
             Matrix4x4f( // @formatter:off
                 m00, m01, m02, m03,
                 m10, m11, m12, m13,

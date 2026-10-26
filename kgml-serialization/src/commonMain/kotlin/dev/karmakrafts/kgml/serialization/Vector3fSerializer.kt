@@ -52,6 +52,7 @@ public object Vector3fSerializer : KSerializer<Vector3f> {
             encodeFloatElement(descriptor, 0, value.x)
             encodeFloatElement(descriptor, 1, value.y)
             encodeFloatElement(descriptor, 2, value.z)
+            endStructure(descriptor)
         }
     }
 
@@ -78,6 +79,7 @@ public object Vector3fSerializer : KSerializer<Vector3f> {
                     else -> throw SerializationException("Unexpected element index in Vector3f $index")
                 }
             }
+            composite.endStructure(descriptor)
             Vector3f(x, y, z)
         }
     }
