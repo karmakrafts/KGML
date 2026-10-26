@@ -120,6 +120,7 @@ test:android:arm64:
       junit:
         - kgml-core/build/outputs/androidTest-results/managedDevice/**/TEST-*.xml
         - kgml-io/build/outputs/androidTest-results/managedDevice/**/TEST-*.xml
+        - kgml-serialization/build/outputs/androidTest-results/managedDevice/**/TEST-*.xml
   tags:
     - macos
     - arm64
@@ -138,11 +139,13 @@ test:linux:amd64:
     paths:
       - kgml-core/build/bin/linuxArm64/debugTest/test.kexe
       - kgml-io/build/bin/linuxArm64/debugTest/test.kexe
+      - kgml-serialization/build/bin/linuxArm64/debugTest/test.kexe
     expire_in: 1 days
     reports:
       junit:
         - kgml-core/build/test-results/**/TEST-*.xml
         - kgml-io/build/test-results/**/TEST-*.xml
+        - kgml-serialization/build/test-results/**/TEST-*.xml
   tags:
     - linux
     - shell
@@ -161,6 +164,7 @@ test:linux:arm64:
   script:
     - chmod +x kgml-core/build/bin/linuxArm64/debugTest/test.kexe
     - chmod +x kgml-io/build/bin/linuxArm64/debugTest/test.kexe
+    - chmod +x kgml-serialization/build/bin/linuxArm64/debugTest/test.kexe
     - ./gradlew linuxArm64StandaloneTest jvmTest --stacktrace
   artifacts:
     when: always
@@ -168,6 +172,7 @@ test:linux:arm64:
       junit:
         - kgml-core/build/test-results/**/TEST-*.xml
         - kgml-io/build/test-results/**/TEST-*.xml
+        - kgml-serialization/build/test-results/**/TEST-*.xml
   tags:
     - linux
     - docker
@@ -187,6 +192,7 @@ test:macos:arm64:
       junit:
         - kgml-core/build/test-results/**/TEST-*.xml
         - kgml-io/build/test-results/**/TEST-*.xml
+        - kgml-serialization/build/test-results/**/TEST-*.xml
   tags:
     - macos
     - arm64
@@ -205,6 +211,7 @@ test:ios:arm64:
       junit:
         - kgml-core/build/test-results/**/TEST-*.xml
         - kgml-io/build/test-results/**/TEST-*.xml
+        - kgml-serialization/build/test-results/**/TEST-*.xml
   tags:
     - macos
     - arm64
@@ -223,6 +230,7 @@ test:tvos:arm64:
       junit:
         - kgml-core/build/test-results/**/TEST-*.xml
         - kgml-io/build/test-results/**/TEST-*.xml
+        - kgml-serialization/build/test-results/**/TEST-*.xml
   tags:
     - macos
     - arm64
@@ -241,6 +249,7 @@ test:watchos:arm64:
       junit:
         - kgml-core/build/test-results/**/TEST-*.xml
         - kgml-io/build/test-results/**/TEST-*.xml
+        - kgml-serialization/build/test-results/**/TEST-*.xml
   tags:
     - macos
     - arm64
@@ -259,6 +268,7 @@ test:windows:amd64:
       junit:
         - kgml-core/build/test-results/**/TEST-*.xml
         - kgml-io/build/test-results/**/TEST-*.xml
+        - kgml-serialization/build/test-results/**/TEST-*.xml
   tags:
     - windows
     - amd64
@@ -277,6 +287,7 @@ test:js:browser:
       junit:
         - kgml-core/build/test-results/**/TEST-*.xml
         - kgml-io/build/test-results/**/TEST-*.xml
+        - kgml-serialization/build/test-results/**/TEST-*.xml
   tags:
     - macos
     - arm64
@@ -295,6 +306,7 @@ test:wasm:browser:
       junit:
         - kgml-core/build/test-results/**/TEST-*.xml
         - kgml-io/build/test-results/**/TEST-*.xml
+        - kgml-serialization/build/test-results/**/TEST-*.xml
   tags:
     - macos
     - arm64
@@ -313,6 +325,7 @@ test:js:node:
       junit:
         - kgml-core/build/test-results/**/TEST-*.xml
         - kgml-io/build/test-results/**/TEST-*.xml
+        - kgml-serialization/build/test-results/**/TEST-*.xml
   tags:
     - macos
     - arm64
@@ -331,6 +344,7 @@ test:wasm:node:
       junit:
         - kgml-core/build/test-results/**/TEST-*.xml
         - kgml-io/build/test-results/**/TEST-*.xml
+        - kgml-serialization/build/test-results/**/TEST-*.xml
   tags:
     - macos
     - arm64
@@ -349,6 +363,7 @@ test:wasi:wasmtime:
       junit:
         - kgml-core/build/test-results/**/TEST-*.xml
         - kgml-io/build/test-results/**/TEST-*.xml
+        - kgml-serialization/build/test-results/**/TEST-*.xml
   tags:
     - macos
     - arm64
