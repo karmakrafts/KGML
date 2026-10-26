@@ -67,11 +67,7 @@ kotlin {
         withDefaultHostTests()
         withDefaultDeviceTests()
     }
-    withNative {
-        binaries {
-            test(listOf(NativeBuildType.RELEASE))
-        }
-    }
+    withNative()
     withLinuxArm64StandaloneTests()
     withJvm {
         testRuns {

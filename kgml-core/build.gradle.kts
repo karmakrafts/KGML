@@ -64,9 +64,6 @@ kotlin {
         withDefaultDeviceTests()
     }
     withNative {
-        binaries {
-            test(listOf(NativeBuildType.RELEASE))
-        }
         compilations {
             named("main") {
                 cinterops {
