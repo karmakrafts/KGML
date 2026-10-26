@@ -26,13 +26,27 @@ import kotlinx.serialization.encoding.CompositeDecoder
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 
+/**
+ * A [KSerializer] for [Vector3d].
+ *
+ * Vector components are represented as named [Double] fields `x`, `y`, and `z`.
+ */
 public object Vector3dSerializer : KSerializer<Vector3d> {
+    /**
+     * The `Vector3d` class descriptor with [Double] elements `x`, `y`, and `z`, in that order.
+     */
     override val descriptor: SerialDescriptor = buildClassSerialDescriptor("Vector3d") {
         element<Double>("x")
         element<Double>("y")
         element<Double>("z")
     }
 
+    /**
+     * Encodes the components of [value] using [encoder].
+     *
+     * @param encoder The encoder to write to.
+     * @param value The vector to serialize.
+     */
     override fun serialize(encoder: Encoder, value: Vector3d) {
         encoder.beginStructure(descriptor).apply {
             encodeDoubleElement(descriptor, 0, value.x)
@@ -41,6 +55,15 @@ public object Vector3dSerializer : KSerializer<Vector3d> {
         }
     }
 
+    /**
+     * Decodes a [Vector3d] using [decoder].
+     *
+     * Components not reported by the decoder default to zero.
+     *
+     * @param decoder The decoder to read from.
+     * @return The decoded vector.
+     * @throws SerializationException If the decoder reports an unexpected element index.
+     */
     override fun deserialize(decoder: Decoder): Vector3d {
         return decoder.beginStructure(descriptor).let { composite ->
             var x = 0.0

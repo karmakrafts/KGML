@@ -26,7 +26,17 @@ import kotlinx.serialization.encoding.CompositeDecoder
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 
+/**
+ * A [KSerializer] for [Matrix4x4f].
+ *
+ * The descriptor lists matrix components as named fields in row-major order.
+ * Matrix properties are not serialized.
+ */
 public object Matrix4x4fSerializer : KSerializer<Matrix4x4f> {
+    /**
+     * The `Matrix4x4f` class descriptor with sixteen [Float] elements named `m00` through `m33`
+     * in row-major order.
+     */
     override val descriptor: SerialDescriptor = buildClassSerialDescriptor("Matrix4x4f") {
         element<Float>("m00")
         element<Float>("m01")
@@ -49,6 +59,15 @@ public object Matrix4x4fSerializer : KSerializer<Matrix4x4f> {
         element<Float>("m33")
     }
 
+    /**
+     * Encodes [value] using [encoder].
+     *
+     * The current implementation writes only `m00`, `m01`, `m10`, and `m11`
+     * at element indices 0 through 3, respectively.
+     *
+     * @param encoder The encoder to write to.
+     * @param value The matrix to serialize.
+     */
     override fun serialize(encoder: Encoder, value: Matrix4x4f) {
         encoder.beginStructure(descriptor).apply {
             encodeFloatElement(descriptor, 0, value.m00)
@@ -58,6 +77,16 @@ public object Matrix4x4fSerializer : KSerializer<Matrix4x4f> {
         }
     }
 
+    /**
+     * Decodes a [Matrix4x4f] using [decoder].
+     *
+     * Components not reported by the decoder default to zero.
+     * Matrix properties use the default provided by the matrix constructor.
+     *
+     * @param decoder The decoder to read from.
+     * @return The decoded matrix.
+     * @throws SerializationException If the decoder reports an unexpected element index.
+     */
     override fun deserialize(decoder: Decoder): Matrix4x4f {
         return decoder.beginStructure(descriptor).let { composite ->
             var m00 = 0F

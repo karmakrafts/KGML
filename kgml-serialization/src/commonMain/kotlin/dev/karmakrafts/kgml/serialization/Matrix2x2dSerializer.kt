@@ -26,7 +26,17 @@ import kotlinx.serialization.encoding.CompositeDecoder
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 
+/**
+ * A [KSerializer] for [Matrix2x2d].
+ *
+ * Matrix components are represented as named fields in row-major order.
+ * Matrix properties are not serialized.
+ */
 public object Matrix2x2dSerializer : KSerializer<Matrix2x2d> {
+    /**
+     * The `Matrix2x2d` class descriptor with four [Double] elements named
+     * `m00`, `m01`, `m10`, and `m11` in row-major order.
+     */
     override val descriptor: SerialDescriptor = buildClassSerialDescriptor("Matrix2x2d") {
         element<Double>("m00")
         element<Double>("m01")
@@ -34,6 +44,12 @@ public object Matrix2x2dSerializer : KSerializer<Matrix2x2d> {
         element<Double>("m11")
     }
 
+    /**
+     * Encodes the components of [value] using [encoder].
+     *
+     * @param encoder The encoder to write to.
+     * @param value The matrix to serialize.
+     */
     override fun serialize(encoder: Encoder, value: Matrix2x2d) {
         encoder.beginStructure(descriptor).apply {
             encodeDoubleElement(descriptor, 0, value.m00)
@@ -43,6 +59,16 @@ public object Matrix2x2dSerializer : KSerializer<Matrix2x2d> {
         }
     }
 
+    /**
+     * Decodes a [Matrix2x2d] using [decoder].
+     *
+     * Components not reported by the decoder default to zero.
+     * Matrix properties use the default provided by the matrix constructor.
+     *
+     * @param decoder The decoder to read from.
+     * @return The decoded matrix.
+     * @throws SerializationException If the decoder reports an unexpected element index.
+     */
     override fun deserialize(decoder: Decoder): Matrix2x2d {
         return decoder.beginStructure(descriptor).let { composite ->
             var m00 = 0.0

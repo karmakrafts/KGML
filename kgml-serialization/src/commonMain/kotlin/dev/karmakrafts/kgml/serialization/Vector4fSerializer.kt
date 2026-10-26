@@ -26,7 +26,15 @@ import kotlinx.serialization.encoding.CompositeDecoder
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 
+/**
+ * A [KSerializer] for [Vector4f].
+ *
+ * Vector components are represented as named [Float] fields `x`, `y`, `z`, and `w`.
+ */
 public object Vector4fSerializer : KSerializer<Vector4f> {
+    /**
+     * The `Vector4f` class descriptor with [Float] elements `x`, `y`, `z`, and `w`, in that order.
+     */
     override val descriptor: SerialDescriptor = buildClassSerialDescriptor("Vector4f") {
         element<Float>("x")
         element<Float>("y")
@@ -34,6 +42,12 @@ public object Vector4fSerializer : KSerializer<Vector4f> {
         element<Float>("w")
     }
 
+    /**
+     * Encodes the components of [value] using [encoder].
+     *
+     * @param encoder The encoder to write to.
+     * @param value The vector to serialize.
+     */
     override fun serialize(encoder: Encoder, value: Vector4f) {
         encoder.beginStructure(descriptor).apply {
             encodeFloatElement(descriptor, 0, value.x)
@@ -43,6 +57,15 @@ public object Vector4fSerializer : KSerializer<Vector4f> {
         }
     }
 
+    /**
+     * Decodes a [Vector4f] using [decoder].
+     *
+     * Components not reported by the decoder default to zero.
+     *
+     * @param decoder The decoder to read from.
+     * @return The decoded vector.
+     * @throws SerializationException If the decoder reports an unexpected element index.
+     */
     override fun deserialize(decoder: Decoder): Vector4f {
         return decoder.beginStructure(descriptor).let { composite ->
             var x = 0F
