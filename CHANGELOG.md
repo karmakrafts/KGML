@@ -9,7 +9,7 @@
 
 - Updated to Gradle 9.8.2
 - Updated to Kotlin 2.5.0-Beta2
-- Updated to Kotlin Wrappers 2026.10.4
+- Updated to Kotlin Wrappers 2026.10.5
 - Updated to Dokka 2.3.0-Beta
 - Updated to Karma Conventions 1.23.0.315-SNAPSHOT
 - Updated to Karbide 1.14.0.122-SNAPSHOT
